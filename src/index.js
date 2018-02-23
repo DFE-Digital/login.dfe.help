@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('cookie-session');
 const expressLayouts = require('express-ejs-layouts');
 const morgan = require('morgan');
 const logger = require('./infrastructure/logger');
@@ -9,6 +11,8 @@ const path = require('path');
 const config = require('./infrastructure/config');
 const helmet = require('helmet');
 const sanitization = require('login.dfe.sanitization');
+const csurf = require('csurf');
+const mountRoutes = require('./routes');
 
 const app = express();
 app.use(helmet({
@@ -18,11 +22,35 @@ app.use(helmet({
   },
 }));
 
+let expiryInMinutes = 30;
+const sessionExpiry = parseInt(config.hostingEnvironment.sessionCookieExpiryInMinutes);
+if (!isNaN(sessionExpiry)) {
+  expiryInMinutes = sessionExpiry;
+}
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: config.hostingEnvironment.sessionSecret,
+  cookie: {
+    httpOnly: true,
+    secure: true,
+    expires: new Date(Date.now() + (60 * expiryInMinutes * 1000)),
+  },
+}));
+
+const csrf = csurf({
+  cookie: {
+    secure: true,
+    httpOnly: true,
+  },
+});
+
 if (config.hostingEnvironment.env !== 'dev') {
   app.set('trust proxy', 1);
 }
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(sanitization());
 app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
 app.use(morgan('dev'));
@@ -30,6 +58,8 @@ app.set('view engine', 'ejs');
 app.set('views', path.resolve(__dirname, 'app'));
 app.use(expressLayouts);
 app.set('layout', 'layouts/layout');
+
+mountRoutes(app, csrf);
 
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;
