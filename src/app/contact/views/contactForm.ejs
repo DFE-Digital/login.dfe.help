@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-12">
+        <h1 class="heading-xlarge">
+            Service request for DfE Sign-in
+        </h1>
+        <p>To make a request to the DfE Sign-in service desk please fill in your details and include any information you think would be helpful for the service desk team.</p>
+    </div>
+    <div class="col-12">
+        <form method="post" id="form-contact-servicedesk">
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+            <fieldset>
+                <legend class="vh">Service request for DfE Sign-in</legend>
+                <div class="form-group <%= (locals.validationMessages.name !== undefined) ? 'form-group-error' : '' %>">
+                    <label class="form-label" for="name">Name</span> </label>
+                    <% if (locals.validationMessages.name !== undefined) { %>
+                    <p class="error-message" id="validation-name"><%=locals.validationMessages.name %></p>
+                    <% } %>
+                    <input class="form-control full-width" id="name" name="name" type="text" <% if (locals.validationMessages.name !== undefined) { %> aria-invalid="true" aria-describedby="validation-name" <% } %> value="<%=name%>">
+                </div>
+                <div class="form-group <%= (locals.validationMessages.email !== undefined) ? 'form-group-error' : '' %>">
+                    <label class="form-label" for="email">Email address</span> </label>
+                    <% if (locals.validationMessages.email !== undefined) { %>
+                    <p class="error-message" id="validation-email"><%=locals.validationMessages.email %></p>
+                    <% } %>
+                    <input class="form-control full-width" id="email" name="email" type="email" <% if (locals.validationMessages.email !== undefined) { %> aria-invalid="true" aria-describedby="validation-email" <% } %> value="<%=email%>">
+                </div>
+                <div class="form-group <%= (locals.validationMessages.phone !== undefined) ? 'form-group-error' : '' %>">
+                    <label class="form-label" for="phone">Telephone number (optional)</span> </label>
+                    <% if (locals.validationMessages.phone !== undefined) { %>
+                    <p class="error-message" id="validation-phone"><%=locals.validationMessages.phone %></p>
+                    <% } %>
+                    <input class="form-control full-width" id="phone" name="phone" type="text" <% if (locals.validationMessages.phone !== undefined) { %> aria-invalid="true" aria-describedby="validation-phone" <% } %> value="<%=phone%>">
+                </div>
+                <div class="form-group <%= (locals.validationMessages.message !== undefined) ? 'form-group-error' : '' %>">
+                    <label class="form-label" for="message">Request details</span> </label>
+                    <% if (locals.validationMessages.message !== undefined) { %>
+                    <p class="error-message" id="validation-message"><%=locals.validationMessages.message %></p>
+                    <% } %>
+                    <textarea class="form-control full-width" id="message" name="message" rows="6" maxlength="1000" <% if (locals.validationMessages.message !== undefined) { %> aria-invalid="true" aria-describedby="validation-message" <% } %>><%=message%></textarea>
+                </div>
+            </fieldset>
+            <div class="form-submit submit-buttons">
+                <button type="submit" class="button">Submit</button>
+                <a href="#" name="cancel" class="button button-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
