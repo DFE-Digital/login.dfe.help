@@ -14,6 +14,13 @@ const sanitization = require('login.dfe.sanitization');
 const csurf = require('csurf');
 const mountRoutes = require('./routes');
 
+const { helpSchema, validateConfig } = require('login.dfe.config.schema');
+
+validateConfig(helpSchema, config, logger, config.hostingEnvironment.env !== 'dev');
+if (config.hostingEnvironment.applicationInsights) {
+  appInsights.setup(config.hostingEnvironment.applicationInsights).start();
+}
+
 const app = express();
 app.use(helmet({
   noCache: true,
