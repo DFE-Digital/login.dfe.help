@@ -41,8 +41,11 @@ const postContactForm = async (req, res) => {
     });
   }
 
-  await notificationClient.sendSupportRequest(req.body.name, req.body.email, req.body.phone, req.body.message, 'TODO1234');
+  const reference = `SIR${Math.floor((new Date().getTime() - new Date(2018, 1, 1).getTime()) / 1000)}`;
 
+  await notificationClient.sendSupportRequest(req.body.name, req.body.email, req.body.phone, req.body.message, reference);
+
+  req.session.reference = reference;
   return res.redirect('/contact/confirm');
 };
 

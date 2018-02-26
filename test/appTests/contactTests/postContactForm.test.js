@@ -22,7 +22,7 @@ const createString = (length) => {
     str = str + charset[Math.random() * charset.length];
   }
   return str;
-}
+};
 
 describe('When handling postback of contact form', () => {
   let req;
@@ -38,6 +38,7 @@ describe('When handling postback of contact form', () => {
         phone: '01234 567890',
         message: 'Please help me',
       },
+      session:{},
     };
 
     res = {
@@ -79,6 +80,13 @@ describe('When handling postback of contact form', () => {
     expect(sendSupportRequest.mock.calls[0][1]).toBe(req.body.email);
     expect(sendSupportRequest.mock.calls[0][2]).toBe(req.body.phone);
     expect(sendSupportRequest.mock.calls[0][3]).toBe(req.body.message);
+  });
+
+  it('then it should send support request job with generated reference', async () => {
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(1);
+    expect(sendSupportRequest.mock.calls[0][4]).toMatch(/SIR[0-9]{7}/);
   });
 
   it('then it should render error view if name is missing', async () => {
