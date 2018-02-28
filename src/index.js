@@ -68,6 +68,13 @@ app.set('layout', 'layouts/layout');
 
 mountRoutes(app, csrf);
 
+Object.assign(app.locals, {
+    urls: {
+        interactions: config.hostingEnvironment.interactionsUrl,
+    },
+    gaTrackingId: config.hostingEnvironment.gaTrackingId,
+});
+
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;
 
