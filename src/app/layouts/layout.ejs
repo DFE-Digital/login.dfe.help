@@ -2,6 +2,15 @@
 <html lang="en">
 <head>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114739594-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '<%=locals.gaTrackingId || 'UA-114739594-1'%>');
+    </script>
+
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -86,9 +95,22 @@
     <div class="footer-wrapper">
         <nav>
             <ul>
-                <li></li>
+                <li><a href="<%=locals.urls.interactions%>/cookies">Cookies</a></li>
+                <li><a href="<%=locals.urls.interactions%>/terms">Terms and conditions</a></li>
+                <li><a href="/contact">Need help using this service?</a></li>
             </ul>
         </nav>
+        <div class="footer-meta">
+            <div class="footer-meta-inner">
+                <div class="open-government-licence">
+                    <p class="logo"><a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence</a></p>
+                    <p>All content is available under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, except where otherwise stated</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <a href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/copyright-and-re-use/crown-copyright/">&copy; Crown copyright</a>
+            </div>
+        </div>
     </div>
 </footer>
 
