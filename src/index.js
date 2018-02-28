@@ -35,15 +35,15 @@ if (!isNaN(sessionExpiry)) {
   expiryInMinutes = sessionExpiry;
 }
 app.use(session({
-  resave: true,
-  saveUninitialized: true,
-  secret: config.hostingEnvironment.sessionSecret,
-  cookie: {
-    httpOnly: true,
-    secure: true,
-    expires: new Date(Date.now() + (60 * expiryInMinutes * 1000)),
-  },
+  keys: [config.hostingEnvironment.sessionSecret],
+  maxAge: expiryInMinutes * 60000, // Expiry in milliseconds
+  httpOnly: true,
+  secure: true,
 }));
+app.use((req, res, next) => {
+  req.session.now = Date.now();
+  next();
+});
 
 const csrf = csurf({
   cookie: {
