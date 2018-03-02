@@ -13,6 +13,7 @@ const helmet = require('helmet');
 const sanitization = require('login.dfe.sanitization');
 const csurf = require('csurf');
 const mountRoutes = require('./routes');
+const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-handling');
 
 const { helpSchema, validateConfig } = require('login.dfe.config.schema');
 
@@ -69,11 +70,19 @@ app.set('layout', 'layouts/layout');
 mountRoutes(app, csrf);
 
 Object.assign(app.locals, {
-    urls: {
-        interactions: config.hostingEnvironment.interactionsUrl,
-    },
-    gaTrackingId: config.hostingEnvironment.gaTrackingId,
+  urls: {
+    interactions: config.hostingEnvironment.interactionsUrl,
+  },
+  gaTrackingId: config.hostingEnvironment.gaTrackingId,
 });
+
+const errorPageRenderer = ejsErrorPages.getErrorPageRenderer({
+  help: config.hostingEnvironment.helpUrl,
+}, config.hostingEnvironment.env === 'dev');
+app.use(getErrorHandler({
+  logger,
+  errorPageRenderer,
+}));
 
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;
