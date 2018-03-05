@@ -11,7 +11,7 @@ const getConfirm = require('./getConfirm');
 const router = express.Router({ mergeParams: true });
 
 const routes = (csrf) => {
-  router.get('/', csrf, asyncWrapper(getContactForm);
+  router.get('/', csrf, asyncWrapper(getContactForm));
   router.post('/', csrf, asyncWrapper(postContactForm));
 
   router.get('/confirm', csrf, asyncWrapper(getConfirm));
