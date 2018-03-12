@@ -5,6 +5,7 @@ const session = require('cookie-session');
 const expressLayouts = require('express-ejs-layouts');
 const morgan = require('morgan');
 const logger = require('./infrastructure/logger');
+const http = require('http');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
@@ -14,6 +15,7 @@ const sanitization = require('login.dfe.sanitization');
 const csurf = require('csurf');
 const mountRoutes = require('./routes');
 const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-handling');
+const KeepAliveAgent = require('agentkeepalive');
 
 const { helpSchema, validateConfig } = require('login.dfe.config.schema');
 
@@ -21,6 +23,19 @@ validateConfig(helpSchema, config, logger, config.hostingEnvironment.env !== 'de
 if (config.hostingEnvironment.applicationInsights) {
   appInsights.setup(config.hostingEnvironment.applicationInsights).start();
 }
+
+http.GlobalAgent = new KeepAliveAgent({
+  maxSockets: 10,
+  maxFreeSockets: 2,
+  timeout: 60000,
+  keepAliveTimeout: 300000,
+});
+https.GlobalAgent = new KeepAliveAgent({
+  maxSockets: 10,
+  maxFreeSockets: 2,
+  timeout: 60000,
+  keepAliveTimeout: 300000,
+});
 
 const app = express();
 app.use(helmet({
