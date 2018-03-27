@@ -33,7 +33,7 @@ if (config.hostingEnvironment.applicationInsights) {
   appInsights.setup(config.hostingEnvironment.applicationInsights).setAutoCollectConsole(false, false).start();
   loggerConfig.transports.push(new AppInsightsTransport({
     client: appInsights.defaultClient,
-    applicationName: config.loggerSettings.applicationName || 'Directories',
+    applicationName: config.loggerSettings.applicationName || 'Help',
     type: 'event',
     treatErrorsAsExceptions: true,
   }));
