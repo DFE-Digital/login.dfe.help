@@ -36,6 +36,7 @@ const postContactForm = async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       phone: req.body.phone,
+      service: req.body.service,
       message: req.body.message,
       validationMessages: validationResult.validationMessages,
     });
@@ -43,7 +44,7 @@ const postContactForm = async (req, res) => {
 
   const reference = `SIR${Math.floor((new Date().getTime() - new Date(2018, 1, 1).getTime()) / 1000)}`;
 
-  await notificationClient.sendSupportRequest(req.body.name, req.body.email, req.body.phone, req.body.message, reference);
+  await notificationClient.sendSupportRequest(req.body.name, req.body.email, req.body.phone, req.body.service, req.body.message, reference);
 
   req.session.reference = reference;
   return res.redirect('/contact/confirm');
