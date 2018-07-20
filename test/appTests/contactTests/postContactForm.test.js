@@ -36,6 +36,7 @@ describe('When handling postback of contact form', () => {
         name: 'User One',
         email: 'user.one@unit.test',
         phone: '01234 567890',
+        service: 'DfE Sign-in Client Service',
         message: 'Please help me',
       },
       session:{},
@@ -79,14 +80,15 @@ describe('When handling postback of contact form', () => {
     expect(sendSupportRequest.mock.calls[0][0]).toBe(req.body.name);
     expect(sendSupportRequest.mock.calls[0][1]).toBe(req.body.email);
     expect(sendSupportRequest.mock.calls[0][2]).toBe(req.body.phone);
-    expect(sendSupportRequest.mock.calls[0][3]).toBe(req.body.message);
+    expect(sendSupportRequest.mock.calls[0][3]).toBe(req.body.service);
+    expect(sendSupportRequest.mock.calls[0][4]).toBe(req.body.message);
   });
 
   it('then it should send support request job with generated reference', async () => {
     await postContactForm(req, res);
 
     expect(sendSupportRequest.mock.calls).toHaveLength(1);
-    expect(sendSupportRequest.mock.calls[0][4]).toMatch(/SIR[0-9]{7}/);
+    expect(sendSupportRequest.mock.calls[0][5]).toMatch(/SIR[0-9]{7}/);
   });
 
   it('then it should render error view if name is missing', async () => {
@@ -102,6 +104,7 @@ describe('When handling postback of contact form', () => {
       name: req.body.name,
       email: req.body.email,
       phone: req.body.phone,
+      service: req.body.service,
       message: req.body.message,
       validationMessages: {
         name: 'Please enter your full name',
@@ -122,6 +125,7 @@ describe('When handling postback of contact form', () => {
       name: req.body.name,
       email: req.body.email,
       phone: req.body.phone,
+      service: req.body.service,
       message: req.body.message,
       validationMessages: {
         email: 'Please enter your email address',
@@ -142,6 +146,7 @@ describe('When handling postback of contact form', () => {
       name: req.body.name,
       email: req.body.email,
       phone: req.body.phone,
+      service: req.body.service,
       message: req.body.message,
       validationMessages: {
         message: 'Please enter a details of the support your require',
@@ -162,6 +167,7 @@ describe('When handling postback of contact form', () => {
       name: req.body.name,
       email: req.body.email,
       phone: req.body.phone,
+      service: req.body.service,
       message: req.body.message,
       validationMessages: {
         message: 'Message cannot be longer than 1000 characters',
