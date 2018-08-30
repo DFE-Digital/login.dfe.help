@@ -28,7 +28,23 @@ const validate = (req) => {
   };
 };
 
+
 const postContactForm = async (req, res) => {
+  let message = req.body.message;
+  const excludeSanitization = {
+    '&#13;': '  ',
+    '&#10;': '  ',
+    '&#39;': "'",
+    '&#33;': "!",
+    '&#63;': '?',
+    '&#58;': ':'
+  };
+  Object.keys(excludeSanitization).forEach((e) => {
+    const regex = new RegExp(e, 'g');
+
+    message = message.replace(regex, excludeSanitization[e])
+  });
+
   const validationResult = validate(req);
   if (!validationResult.isValid) {
     return res.render('contact/views/contactForm', {
@@ -38,14 +54,14 @@ const postContactForm = async (req, res) => {
       phone: req.body.phone,
       service: req.body.service,
       type: req.body.type,
-      message: req.body.message,
+      message: message,
       validationMessages: validationResult.validationMessages,
     });
   }
 
   const reference = `SIR${Math.floor((new Date().getTime() - new Date(2018, 1, 1).getTime()) / 1000)}`;
 
-  await notificationClient.sendSupportRequest(req.body.name, req.body.email, req.body.phone, req.body.service, req.body.type, req.body.message, reference);
+  await notificationClient.sendSupportRequest(req.body.name, req.body.email, req.body.phone, req.body.service, req.body.type, message, reference);
 
   req.session.reference = reference;
   return res.redirect('/contact/confirm');
