@@ -9,9 +9,11 @@ jest.mock('login.dfe.notifications.client');
 
 const NotificationClient = require('login.dfe.notifications.client');
 const sendSupportRequest = jest.fn();
+const sendSupportRequestConfirmation = jest.fn();
 NotificationClient.mockImplementation(() => {
   return {
     sendSupportRequest,
+    sendSupportRequestConfirmation,
   };
 });
 
@@ -49,9 +51,11 @@ describe('When handling postback of contact form', () => {
     };
 
     sendSupportRequest.mockReset();
+    sendSupportRequestConfirmation.mockReset();
     NotificationClient.mockImplementation(() => {
       return {
         sendSupportRequest,
+        sendSupportRequestConfirmation
       };
     });
 
@@ -59,6 +63,7 @@ describe('When handling postback of contact form', () => {
     NotificationClient.mockImplementation(() => {
       return {
         sendSupportRequest,
+        sendSupportRequestConfirmation
       };
     });
 
