@@ -37,6 +37,7 @@ describe('When handling postback of contact form', () => {
       body: {
         name: 'User One',
         email: 'user.one@unit.test',
+        saUsername: 'userOne',
         phone: '01234 567890',
         service: 'Teaching Jobs',
         type: 'I have multiple accounts',
@@ -89,6 +90,7 @@ describe('When handling postback of contact form', () => {
     expect(sendSupportRequest.mock.calls[0][3]).toBe(req.body.service);
     expect(sendSupportRequest.mock.calls[0][4]).toBe(req.body.type);
     expect(sendSupportRequest.mock.calls[0][5]).toBe(req.body.message);
+    expect(sendSupportRequest.mock.calls[0][7]).toBe(req.body.saUsername);
   });
 
   it('then it should send support request job with generated reference', async () => {
@@ -110,6 +112,7 @@ describe('When handling postback of contact form', () => {
       csrfToken: 'csrf-token',
       name: req.body.name,
       email: req.body.email,
+      saUsername: req.body.saUsername,
       phone: req.body.phone,
       service: req.body.service,
       type: req.body.type,
@@ -132,6 +135,7 @@ describe('When handling postback of contact form', () => {
       csrfToken: 'csrf-token',
       name: req.body.name,
       email: req.body.email,
+      saUsername: req.body.saUsername,
       phone: req.body.phone,
       service: req.body.service,
       type: req.body.type,
@@ -154,6 +158,7 @@ describe('When handling postback of contact form', () => {
       csrfToken: 'csrf-token',
       name: req.body.name,
       email: req.body.email,
+      saUsername: req.body.saUsername,
       phone: req.body.phone,
       service: req.body.service,
       type: req.body.type,
@@ -176,6 +181,7 @@ describe('When handling postback of contact form', () => {
       csrfToken: 'csrf-token',
       name: req.body.name,
       email: req.body.email,
+      saUsername: req.body.saUsername,
       phone: req.body.phone,
       service: req.body.service,
       type: req.body.type,
