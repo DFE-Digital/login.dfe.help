@@ -11,6 +11,7 @@ const getContactForm = async (req, res) => {
     type: '',
     message: '',
     validationMessages: {},
+    isHidden: true,
   });
 };
 
