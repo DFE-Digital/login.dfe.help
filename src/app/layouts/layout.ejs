@@ -14,7 +14,9 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <% if (locals.isHidden === true) { %>
+    <meta name="robots" content="noindex">
+    <% } %>
     <title><%=locals.title || (locals.app ? locals.app.title : null) || 'DfE Sign-in'%></title>
 
     <link rel="stylesheet" href="https://rawgit.com/DFE-Digital/dfe.ui.toolkit/master/dist/css/govuk/fonts.css">
