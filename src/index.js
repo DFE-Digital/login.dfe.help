@@ -88,6 +88,7 @@ mountRoutes(app, csrf);
 Object.assign(app.locals, {
   urls: {
     interactions: config.hostingEnvironment.interactionsUrl,
+    services: config.hostingEnvironment.servicesUrl,
   },
   gaTrackingId: config.hostingEnvironment.gaTrackingId,
 });
