@@ -6,6 +6,8 @@ const getContactForm = async (req, res) => {
     name: '',
     email: '',
     saUsername: '',
+    orgName: '',
+    urn: '',
     phone: '',
     service: '',
     type: '',
