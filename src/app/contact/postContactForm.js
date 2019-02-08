@@ -17,9 +17,15 @@ const validate = (req) => {
   }
 
   if (!req.body.message) {
-    validationMessages.message = 'Please enter a details of the support your require';
+    validationMessages.message = 'Please enter the details of the support you require';
   } else if (req.body.message.length > 1000) {
     validationMessages.message = 'Message cannot be longer than 1000 characters';
+  }
+  if (!req.body.service) {
+    validationMessages.service = 'Please select the service you are using';
+  }
+  if(!req.body.type) {
+    validationMessages.type = 'Please select a type of issue'
   }
 
   return {
