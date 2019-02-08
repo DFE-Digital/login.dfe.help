@@ -164,7 +164,53 @@ describe('When handling postback of contact form', () => {
       type: req.body.type,
       message: req.body.message,
       validationMessages: {
-        message: 'Please enter a details of the support your require',
+        message: 'Please enter the details of the support you require',
+      },
+    });
+  });
+
+  it('then it should render error view if service is missing', async () => {
+    req.body.service = '';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contact/views/contactForm');
+    expect(res.render.mock.calls[0][1]).toEqual({
+      csrfToken: 'csrf-token',
+      name: req.body.name,
+      email: req.body.email,
+      saUsername: req.body.saUsername,
+      phone: req.body.phone,
+      service: req.body.service,
+      type: req.body.type,
+      message: req.body.message,
+      validationMessages: {
+        service: 'Please select the service you are using',
+      },
+    });
+  });
+
+  it('then it should render error view if type is missing', async () => {
+    req.body.type = '';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contact/views/contactForm');
+    expect(res.render.mock.calls[0][1]).toEqual({
+      csrfToken: 'csrf-token',
+      name: req.body.name,
+      email: req.body.email,
+      saUsername: req.body.saUsername,
+      phone: req.body.phone,
+      service: req.body.service,
+      type: req.body.type,
+      message: req.body.message,
+      validationMessages: {
+        type: 'Please select a type of issue',
       },
     });
   });
