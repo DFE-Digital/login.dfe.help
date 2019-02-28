@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-8">
+        <h1 class="heading-xlarge">
+            Which service are you trying to access?
+        </h1>
+
+        <p>Please select the service you are trying to access.  If the service is not listed select ‘Other’.</p>
+        <form method="post">
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
+            <div class="form-group">
+                <label for="select-service"></label>
+                <select class="form-control full-width" id="select-service" name="select-box">
+                    <option disabled selected>Please select a service</option>
+                    <% for (let i = 0; i < locals.services.length; i++) {
+                    let service = locals.services[i];%>
+                        <option value="<%=service.id%>"><%=service.name%></option>
+                    <% } %>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-submit submit-buttons">
+                <button type="submit" class="button">Continue</button>
+            </div>
+        </form>
+
+    </div>
+</div>
