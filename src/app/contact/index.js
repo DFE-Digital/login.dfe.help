@@ -8,7 +8,8 @@ const getFaqs = require('./getFaqs');
 const getContactForm = require('./getContactForm');
 const postContactForm = require('./postContactForm');
 const getConfirm = require('./getConfirm');
-const { get: getSelectService } = require('./selectService');
+const { get: getSelectService, post: postSelectService } = require('./selectService');
+const { get: getServiceHelp } = require('./serviceHelp');
 
 const router = express.Router({ mergeParams: true });
 
@@ -21,7 +22,11 @@ const routes = (csrf) => {
 
   router.get('/confirm', csrf, asyncWrapper(getConfirm));
 
-  router.get('/select-service', csrf, asyncWrapper(getSelectService));
+  router.get('/service', csrf, asyncWrapper(getSelectService));
+  router.post('/service', csrf, asyncWrapper(postSelectService));
+
+  router.get('/service/:sid', csrf, asyncWrapper(getServiceHelp));
+  router.post('/service/:sid', csrf, asyncWrapper());
 
   return router;
 };
