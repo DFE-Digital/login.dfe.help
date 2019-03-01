@@ -27,5 +27,8 @@
   },
   "notifications": {
     "connectionString": "redis://localhost:6379?db=2"
+  },
+  "applications": {
+    "type":"static"
   }
 }

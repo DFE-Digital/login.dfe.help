@@ -17,9 +17,10 @@ const mountRoutes = require('./routes');
 const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-handling');
 const KeepAliveAgent = require('agentkeepalive');
 
-const { helpSchema, validateConfig } = require('login.dfe.config.schema');
+const configSchema = require('./infrastructure/config/schema');
 
-validateConfig(helpSchema, config, logger, config.hostingEnvironment.env !== 'dev');
+configSchema.validate();
+
 if (config.hostingEnvironment.applicationInsights) {
   appInsights.setup(config.hostingEnvironment.applicationInsights).start();
 }
