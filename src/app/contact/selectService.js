@@ -21,6 +21,7 @@ const get = async (req, res) => {
     selectedService: '',
     validationMessages: {},
     services,
+    title: 'Contact DfE Sign-in',
   };
   return res.render('contact/views/selectService', model);
 };
@@ -31,6 +32,7 @@ const validate = async (req) => {
     selectedService: req.body.selectedService,
     validationMessages: {},
     services,
+    title: 'Contact DfE Sign-in',
   };
   if (!model.selectedService) {
     model.validationMessages.service = 'Please select a service'

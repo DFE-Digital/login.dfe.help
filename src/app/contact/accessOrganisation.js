@@ -3,16 +3,10 @@ const get = async (req, res) => {
     csrfToken: req.csrfToken(),
     validationMessages: {},
   };
-  return res.render('contact/views/serviceHelp', model);
-
-};
-
-
-const post = async (req, res) => {
+  return res.render('contact/views/accessOrganisation', model);
 
 };
 
 module.exports = {
   get,
-  post,
 };
