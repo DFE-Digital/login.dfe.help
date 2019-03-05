@@ -11,7 +11,6 @@ const getConfirm = require('./getConfirm');
 const { get: getSelectService, post: postSelectService } = require('./selectService');
 const { get: getServiceHelp } = require('./serviceHelp');
 const { get: getHelp, post: postHelp} = require('./help');
-const { get: getAccessOrganisation } = require('./accessOrganisation');
 const { get: getEmailPasswordHelp } = require('./emailPasswordHelp');
 const { get: getApproverHelp } = require('./approverHelp');
 
@@ -26,8 +25,6 @@ const routes = (csrf) => {
   router.post('/form', csrf, asyncWrapper(postContactForm));
 
   router.get('/confirm', csrf, asyncWrapper(getConfirm));
-
-  router.get('/organisation', csrf, asyncWrapper(getAccessOrganisation));
 
   router.get('/email-password', csrf, asyncWrapper(getEmailPasswordHelp));
 

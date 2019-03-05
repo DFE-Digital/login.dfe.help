@@ -3,7 +3,7 @@ const get = async (req, res) => {
     csrfToken: req.csrfToken(),
     selectedHelp: '',
     validationMessages: {},
-    title: 'Contact DfE Sign-in',
+    title: 'DfE Sign-in help',
   };
   return res.render('contact/views/help', model);
 };
@@ -13,7 +13,7 @@ const validate = (req) => {
     csrfToken: req.csrfToken(),
     selectedHelp: req.body.selectedHelp,
     validationMessages: {},
-    title: 'Contact DfE Sign-in',
+    title: 'DfE Sign-in help',
   };
 
   if (!model.selectedHelp) {
@@ -30,9 +30,6 @@ const post = async (req, res) => {
 
   if (model.selectedHelp === 'access-service') {
     return res.redirect('contact/service')
-  }
-  if (model.selectedHelp === 'access-org') {
-    return res.redirect('contact/organisation')
   }
   if (model.selectedHelp === 'email-password') {
     return res.redirect('contact/email-password')

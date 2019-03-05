@@ -27,7 +27,7 @@ describe('when selecting the help required', () => {
     expect(res.render.mock.calls[0][1]).toEqual({
       csrfToken: 'token',
       selectedHelp: undefined,
-      title: 'Contact DfE Sign-in',
+      title: 'DfE Sign-in help',
       validationMessages: {
         selectedHelp: 'Please answer this question',
       },
@@ -40,14 +40,6 @@ describe('when selecting the help required', () => {
 
     expect(res.redirect.mock.calls).toHaveLength(1);
     expect(res.redirect.mock.calls[0][0]).toBe(`contact/service`);
-  });
-
-  it('then it should redirect to organisation if query about accessing a organisation', async () => {
-    req.body.selectedHelp = 'access-org';
-    await postHelp(req, res);
-
-    expect(res.redirect.mock.calls).toHaveLength(1);
-    expect(res.redirect.mock.calls[0][0]).toBe(`contact/organisation`);
   });
 
   it('then it should redirect to email-password if query about email/password', async () => {
