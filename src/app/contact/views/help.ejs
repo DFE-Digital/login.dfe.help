@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-8">
         <h1 class="heading-xlarge">
-            What do you need help with?
+            DfE Sign-in help
         </h1>
         <form method="post">
             <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
@@ -11,7 +11,7 @@
                     <% if (locals.validationMessages.selectedHelp !== undefined) { %>
                     <p class="error-message" id="validation-selected-organisation"><%=locals.validationMessages.selectedHelp %></p>
                     <% } %>
-                    <legend class="vh">Select what you need help with </legend>
+                    <legend><h2 class="heading-medium">What do you need help with?</h2> </legend>
                     <div class="multiple-choice">
                         <input id="access-service" type="radio" name="selectedHelp" value="access-service">
                         <label for="access-service">Using a DfE service</label>
