@@ -90,6 +90,7 @@ Object.assign(app.locals, {
   urls: {
     interactions: config.hostingEnvironment.interactionsUrl,
     services: config.hostingEnvironment.servicesUrl,
+    profile: config.hostingEnvironment.profileUrl,
   },
   gaTrackingId: config.hostingEnvironment.gaTrackingId,
 });

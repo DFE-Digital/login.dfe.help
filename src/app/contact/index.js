@@ -11,8 +11,9 @@ const getConfirm = require('./getConfirm');
 const { get: getSelectService, post: postSelectService } = require('./selectService');
 const { get: getServiceHelp } = require('./serviceHelp');
 const { get: getHelp, post: postHelp} = require('./help');
-const { get: getEmailPasswordHelp } = require('./emailPasswordHelp');
+const getEmailPasswordHelp = require('./getEmailPasswordhelp');
 const { get: getApproverHelp } = require('./approverHelp');
+const getVerificationEmailHelp = require('./getVerificationEmailHelp');
 
 const router = express.Router({ mergeParams: true });
 
@@ -27,6 +28,8 @@ const routes = (csrf) => {
   router.get('/confirm', csrf, asyncWrapper(getConfirm));
 
   router.get('/email-password', csrf, asyncWrapper(getEmailPasswordHelp));
+
+  router.get('/verification-email', csrf, asyncWrapper(getVerificationEmailHelp));
 
   router.get('/approver', csrf, asyncWrapper(getApproverHelp));
 
