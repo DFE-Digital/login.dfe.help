@@ -15,6 +15,8 @@ const getEmailPasswordHelp = require('./getEmailPasswordhelp');
 const getApproverHelp = require('./getApproverHelp');
 const getVerificationEmailHelp = require('./getVerificationEmailHelp');
 const getNewApprover = require('./getNewApprover');
+const getAccessService = require('./getAccessService');
+const getCreateAccountHelp = require('./getCreateAccountHelp');
 
 const router = express.Router({ mergeParams: true });
 
@@ -40,6 +42,9 @@ const routes = (csrf) => {
 
   router.get('/service/:sid', csrf, asyncWrapper(getServiceHelp));
   router.post('/service/:sid', csrf, asyncWrapper(postServiceHelp));
+  router.get('/service/:sid/verification-email', csrf, asyncWrapper(getVerificationEmailHelp));
+  router.get('/service/:sid/access-service', csrf, asyncWrapper(getAccessService));
+  router.get('/service/:sid/create-account', csrf, asyncWrapper(getCreateAccountHelp));
 
   return router;
 };

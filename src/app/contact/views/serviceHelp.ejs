@@ -4,7 +4,7 @@
             DfE Sign-in help
         </h1>
 
-        <p>In order to use <%=locals.service.name%> you will need a <a href="">DfE Sign-in account</a>.</p>
+        <p>In order to use <%=locals.service.name%> you will need a <a href="<%=locals.service.id%>/create-account">DfE Sign-in account</a>.</p>
 
         <form method="post">
             <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>

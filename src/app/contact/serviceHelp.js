@@ -28,7 +28,7 @@ const validate = async (req) => {
   };
 
   if (!model.selectedServiceHelp) {
-    model.validationMessages.selectedServiceHelp = 'Please answer this question'
+    model.validationMessages.selectedServiceHelp = 'An answer must be selected'
   }
   return model;
 };
@@ -41,11 +41,11 @@ const post = async (req, res) => {
   }
 
   if (model.selectedServiceHelp === 'add-service') {
-    //redirect to add service page
+    return res.redirect(`${req.params.sid}/access-service`)
   }
 
   if (model.selectedServiceHelp === 'verification-email') {
-    //redirect to verification email page
+    return res.redirect(`${req.params.sid}/verification-email`)
   }
 };
 
