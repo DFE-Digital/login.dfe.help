@@ -3,24 +3,24 @@ jest.mock('./../../../src/infrastructure/config', () => require('./../../utils')
 const { getRequestMock, getResponseMock } = require('./../../utils');
 const res = getResponseMock();
 
-describe('when displaying the approver help page', () => {
+describe('when displaying the new approver help page', () => {
   let req;
-  const getApproverHelp = require('./../../../src/app/contact/getApproverHelp');
+  const getNewApprover = require('./../../../src/app/contact/getNewApprover');
 
   beforeEach(() => {
     req = getRequestMock({});
     res.mockResetAll();
   });
 
-  it('then it should render the approver help page', async () => {
-    await getApproverHelp(req, res);
+  it('then it should render the new approver help page', async () => {
+    await getNewApprover(req, res);
 
     expect(res.render.mock.calls).toHaveLength(1);
-    expect(res.render.mock.calls[0][0]).toBe('contact/views/approverHelp');
+    expect(res.render.mock.calls[0][0]).toBe('contact/views/newApprover');
   });
 
   it('then it should include csrf token', async () => {
-    await getApproverHelp(req, res);
+    await getNewApprover(req, res);
 
     expect(res.render.mock.calls[0][1]).toMatchObject({
       csrfToken: 'token',
@@ -28,11 +28,11 @@ describe('when displaying the approver help page', () => {
   });
 
   it('then it should include the title', async () => {
-    await getApproverHelp(req, res);
+    await getNewApprover(req, res);
 
     expect(res.render.mock.calls[0][1]).toMatchObject({
       title: 'DfE Sign-in help'
     });
   });
-
 });
+
