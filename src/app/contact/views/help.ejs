@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-8">
+        <h1 class="heading-xlarge">
+            DfE Sign-in help
+        </h1>
+        <form method="post">
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
+
+            <div class="form-group <%= (locals.validationMessages.selectedHelp !== undefined) ? 'form-group-error' : '' %>">
+                <fieldset>
+                    <% if (locals.validationMessages.selectedHelp !== undefined) { %>
+                    <p class="error-message" id="validation-selected-organisation"><%=locals.validationMessages.selectedHelp %></p>
+                    <% } %>
+                    <legend><h2 class="heading-medium">What do you need help with?</h2> </legend>
+                    <div class="multiple-choice">
+                        <input id="access-service" type="radio" name="selectedHelp" value="access-service">
+                        <label for="access-service">Using a DfE service</label>
+                    </div>
+
+                    <div class="multiple-choice">
+                        <input id="email-password" type="radio" name="selectedHelp" value="email-password">
+                        <label for="email-password">Changing my email or password</label>
+                    </div>
+
+                    <div class="multiple-choice">
+                        <input id="approver" type="radio" name="selectedHelp" value="approver">
+                        <label for="approver">Managing my users as an approver</label>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="form-submit">
+                <button class="button">Continue</button>
+            </div>
+        </form>
+    </div>
+</div>

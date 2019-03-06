@@ -10,17 +10,25 @@ const postContactForm = require('./postContactForm');
 const getConfirm = require('./getConfirm');
 const { get: getSelectService, post: postSelectService } = require('./selectService');
 const { get: getServiceHelp } = require('./serviceHelp');
+const { get: getHelp, post: postHelp} = require('./help');
+const { get: getEmailPasswordHelp } = require('./emailPasswordHelp');
+const { get: getApproverHelp } = require('./approverHelp');
 
 const router = express.Router({ mergeParams: true });
 
 const routes = (csrf) => {
 
-  router.get('/', csrf, asyncWrapper(getFaqs));
+  router.get('/', csrf, asyncWrapper(getHelp));
+  router.post('/', csrf, asyncWrapper(postHelp));
 
   router.get('/form', csrf, asyncWrapper(getContactForm));
   router.post('/form', csrf, asyncWrapper(postContactForm));
 
   router.get('/confirm', csrf, asyncWrapper(getConfirm));
+
+  router.get('/email-password', csrf, asyncWrapper(getEmailPasswordHelp));
+
+  router.get('/approver', csrf, asyncWrapper(getApproverHelp));
 
   router.get('/service', csrf, asyncWrapper(getSelectService));
   router.post('/service', csrf, asyncWrapper(postSelectService));

@@ -49,6 +49,7 @@ describe('when displaying the select service help page', () => {
     expect(res.render.mock.calls[0][1]).toEqual({
       csrfToken: 'token',
       selectedService: undefined,
+      title: 'DfE Sign-in help',
       services: [
         {
           id: 'service1',
