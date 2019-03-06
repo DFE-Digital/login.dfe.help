@@ -2,20 +2,51 @@ const { getServiceById } = require('./../../infrastructure/applications');
 
 const get = async (req, res) => {
   const service = await getServiceById(req.params.sid, req.id);
+
   if (service && service.relyingParty && service.relyingParty.params && service.relyingParty.params.helpDestination) {
     return res.redirect(service.relyingParty.params.helpDestination);
   }
+
   const model = {
     service,
+    selectedServiceHelp: '',
     csrfToken: req.csrfToken(),
     validationMessages: {},
+    title: 'DfE Sign-in help'
   };
   return res.render('contact/views/serviceHelp', model);
 };
 
+const validate = async (req) => {
+  const service = await getServiceById(req.params.sid, req.id);
+  const model = {
+    service,
+    selectedServiceHelp: req.body.selectedServiceHelp,
+    csrfToken: req.csrfToken(),
+    validationMessages: {},
+    title: 'DfE Sign-in help'
+  };
+
+  if (!model.selectedServiceHelp) {
+    model.validationMessages.selectedServiceHelp = 'Please answer this question'
+  }
+  return model;
+};
 
 const post = async (req, res) => {
+  const model = await validate(req);
+  if (Object.keys(model.validationMessages).length > 0) {
+    model.csrfToken = req.csrfToken();
+    return res.render('contact/views/serviceHelp', model);
+  }
 
+  if (model.selectedServiceHelp === 'add-service') {
+    //redirect to add service page
+  }
+
+  if (model.selectedServiceHelp === 'verification-email') {
+    //redirect to verification email page
+  }
 };
 
 module.exports = {

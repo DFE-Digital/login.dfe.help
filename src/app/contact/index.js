@@ -9,7 +9,7 @@ const getContactForm = require('./getContactForm');
 const postContactForm = require('./postContactForm');
 const getConfirm = require('./getConfirm');
 const { get: getSelectService, post: postSelectService } = require('./selectService');
-const { get: getServiceHelp } = require('./serviceHelp');
+const { get: getServiceHelp, post: postServiceHelp } = require('./serviceHelp');
 const { get: getHelp, post: postHelp} = require('./help');
 const getEmailPasswordHelp = require('./getEmailPasswordhelp');
 const getApproverHelp = require('./getApproverHelp');
@@ -39,7 +39,7 @@ const routes = (csrf) => {
   router.post('/service', csrf, asyncWrapper(postSelectService));
 
   router.get('/service/:sid', csrf, asyncWrapper(getServiceHelp));
-  router.post('/service/:sid', csrf, asyncWrapper());
+  router.post('/service/:sid', csrf, asyncWrapper(postServiceHelp));
 
   return router;
 };
