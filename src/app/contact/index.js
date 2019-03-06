@@ -12,7 +12,7 @@ const { get: getSelectService, post: postSelectService } = require('./selectServ
 const { get: getServiceHelp } = require('./serviceHelp');
 const { get: getHelp, post: postHelp} = require('./help');
 const getEmailPasswordHelp = require('./getEmailPasswordhelp');
-const { get: getApproverHelp } = require('./approverHelp');
+const getApproverHelp = require('./getApproverHelp');
 const getVerificationEmailHelp = require('./getVerificationEmailHelp');
 
 const router = express.Router({ mergeParams: true });
