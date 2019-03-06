@@ -28,7 +28,7 @@ const validate = async (req) => {
   };
 
   if (!model.selectedServiceHelp) {
-    model.validationMessages.selectedServiceHelp = 'An answer must be selected'
+    model.validationMessages.selectedServiceHelp = 'An option must be selected'
   }
   return model;
 };
