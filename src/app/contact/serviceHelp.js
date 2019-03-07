@@ -12,7 +12,8 @@ const get = async (req, res) => {
     selectedServiceHelp: '',
     csrfToken: req.csrfToken(),
     validationMessages: {},
-    title: 'DfE Sign-in help'
+    title: 'DfE Sign-in help',
+    backLink: true,
   };
   return res.render('contact/views/serviceHelp', model);
 };
@@ -24,7 +25,8 @@ const validate = async (req) => {
     selectedServiceHelp: req.body.selectedServiceHelp,
     csrfToken: req.csrfToken(),
     validationMessages: {},
-    title: 'DfE Sign-in help'
+    title: 'DfE Sign-in help',
+    backLink: true,
   };
 
   if (!model.selectedServiceHelp) {

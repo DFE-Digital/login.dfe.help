@@ -50,6 +50,7 @@ describe('when displaying the select service help page', () => {
       csrfToken: 'token',
       selectedService: undefined,
       title: 'DfE Sign-in help',
+      backLink: true,
       services: [
         {
           id: 'service1',
