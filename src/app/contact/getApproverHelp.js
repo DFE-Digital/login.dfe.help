@@ -1,11 +1,9 @@
-const get = async (req, res) => {
+const getApproverHelp = async (req, res) => {
   const model = {
     csrfToken: req.csrfToken(),
-    validationMessages: {},
+    title: 'DfE Sign-in help',
   };
   return res.render('contact/views/approverHelp', model);
 };
 
-module.exports = {
-  get,
-};
+module.exports = getApproverHelp;

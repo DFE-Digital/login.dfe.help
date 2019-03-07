@@ -12,8 +12,9 @@ const { get: getSelectService, post: postSelectService } = require('./selectServ
 const { get: getServiceHelp } = require('./serviceHelp');
 const { get: getHelp, post: postHelp} = require('./help');
 const getEmailPasswordHelp = require('./getEmailPasswordhelp');
-const { get: getApproverHelp } = require('./approverHelp');
+const getApproverHelp = require('./getApproverHelp');
 const getVerificationEmailHelp = require('./getVerificationEmailHelp');
+const getNewApprover = require('./getNewApprover');
 
 const router = express.Router({ mergeParams: true });
 
@@ -32,6 +33,7 @@ const routes = (csrf) => {
   router.get('/verification-email', csrf, asyncWrapper(getVerificationEmailHelp));
 
   router.get('/approver', csrf, asyncWrapper(getApproverHelp));
+  router.get('/approver/new-approver', csrf, asyncWrapper(getNewApprover));
 
   router.get('/service', csrf, asyncWrapper(getSelectService));
   router.post('/service', csrf, asyncWrapper(postSelectService));
