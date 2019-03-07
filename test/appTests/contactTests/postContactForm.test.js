@@ -117,6 +117,8 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      backLink: true,
+      isHidden: true,
       validationMessages: {
         name: 'Please enter your full name',
       },
@@ -140,6 +142,8 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      backLink: true,
+      isHidden: true,
       validationMessages: {
         email: 'Please enter your email address',
       },
@@ -163,6 +167,8 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      backLink: true,
+      isHidden: true,
       validationMessages: {
         message: 'Please enter the details of the support you require',
       },
@@ -186,6 +192,8 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      backLink: true,
+      isHidden: true,
       validationMessages: {
         service: 'Please select the service you are using',
       },
@@ -209,6 +217,8 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      backLink: true,
+      isHidden: true,
       validationMessages: {
         type: 'Please select a type of issue',
       },
@@ -232,6 +242,8 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      backLink: true,
+      isHidden: true,
       validationMessages: {
         message: 'Message cannot be longer than 1000 characters',
       },

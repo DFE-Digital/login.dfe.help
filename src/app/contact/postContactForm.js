@@ -65,6 +65,8 @@ const postContactForm = async (req, res) => {
       type: req.body.type,
       message: message,
       validationMessages: validationResult.validationMessages,
+      isHidden: true,
+      backLink: true,
     });
   }
 
