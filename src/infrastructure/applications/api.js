@@ -43,6 +43,11 @@ const listAllServices = async (correlationId) => {
   return await callApi(`services`, 'GET', undefined, correlationId);
 };
 
+const getServiceById = async (sid, correlationId) => {
+  return await callApi(`services/${sid}`, 'GET', undefined, correlationId);
+};
+
 module.exports = {
   listAllServices,
+  getServiceById,
 };
