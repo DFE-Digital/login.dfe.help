@@ -1,10 +1,5 @@
-jest.mock('./../../../src/infrastructure/config', () => {
-  return {
-    notifications: {
-      connectionString: 'redis://localhost:6379?db=99',
-    },
-  };
-});
+jest.mock('./../../../src/infrastructure/config', () => require('./../../utils').configMockFactory());
+
 jest.mock('login.dfe.notifications.client');
 
 const NotificationClient = require('login.dfe.notifications.client');
@@ -71,7 +66,8 @@ describe('When handling postback of contact form', () => {
     postContactForm = require('./../../../src/app/contact/postContactForm');
   });
 
-  it('then it should create NotificationClient with config connection string', async () => {
+  it(
+    'then it should create NotificationClient with config connection string', async () => {
     await postContactForm(req, res);
 
     expect(NotificationClient.mock.calls).toHaveLength(1);

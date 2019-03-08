@@ -1,5 +1,6 @@
 const config = require('./../../infrastructure/config');
 const NotificationClient = require('login.dfe.notifications.client');
+const { getAndMapExternalServices } = require('./utils');
 
 const notificationClient = new NotificationClient({
   connectionString: config.notifications.connectionString,
@@ -51,6 +52,7 @@ const postContactForm = async (req, res) => {
     message = message.replace(regex, excludeSanitization[e])
   });
 
+  const services = await getAndMapExternalServices(req.id);
   const validationResult = validate(req);
   if (!validationResult.isValid) {
     return res.render('contact/views/contactForm', {
@@ -67,6 +69,7 @@ const postContactForm = async (req, res) => {
       validationMessages: validationResult.validationMessages,
       isHidden: true,
       backLink: true,
+      services,
     });
   }
 

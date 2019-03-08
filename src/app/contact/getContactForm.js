@@ -1,4 +1,7 @@
+const { getAndMapExternalServices } = require('./utils');
+
 const getContactForm = async (req, res) => {
+  const services = await getAndMapExternalServices(req.id);
   req.session = null;
 
   res.render('contact/views/contactForm', {
@@ -15,6 +18,7 @@ const getContactForm = async (req, res) => {
     validationMessages: {},
     isHidden: true,
     backLink: true,
+    services,
   });
 };
 
