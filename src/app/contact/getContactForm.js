@@ -13,7 +13,7 @@ const getContactForm = async (req, res) => {
     urn: '',
     phone: '',
     service: '',
-    type: '',
+    type: req.query.type ? req.query.type : '',
     message: '',
     validationMessages: {},
     isHidden: true,
