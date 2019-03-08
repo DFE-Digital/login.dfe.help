@@ -32,7 +32,7 @@ describe('when selecting the type of service issue', () => {
       selectedServiceHelp: undefined,
       title: 'DfE Sign-in help',
       validationMessages: {
-        selectedServiceHelp: 'An answer must be selected',
+        selectedServiceHelp: 'An option must be selected',
       },
     });
   });

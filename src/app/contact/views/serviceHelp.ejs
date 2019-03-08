@@ -4,7 +4,7 @@
             DfE Sign-in help
         </h1>
 
-        <p>In order to use <%=locals.service.name%> you will need a <a href="<%=locals.service.id%>/create-account">DfE Sign-in account</a>.</p>
+        <p>In order to use <b><%=locals.service.name%></b> you will need a <a href="<%=locals.service.id%>/create-account">DfE Sign-in account</a>.</p>
 
         <form method="post">
             <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
@@ -17,7 +17,7 @@
                     <legend style="margin-bottom: 1.25em">If you already have a DfE Sign-in account please select from the following:</legend>
                     <div class="multiple-choice">
                         <input id="add-service" type="radio" name="selectedServiceHelp" value="add-service">
-                        <label for="add-service">I need <%=locals.service.name%> added to my account</label>
+                        <label for="add-service">I need <b><%=locals.service.name%></b> added to my account</label>
                     </div>
 
                     <div class="multiple-choice">
