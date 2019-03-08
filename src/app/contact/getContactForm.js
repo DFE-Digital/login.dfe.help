@@ -12,7 +12,7 @@ const getContactForm = async (req, res) => {
     orgName: '',
     urn: '',
     phone: '',
-    service: '',
+    service: req.query.service ? req.query.service : '',
     type: req.query.type ? req.query.type : '',
     message: '',
     validationMessages: {},

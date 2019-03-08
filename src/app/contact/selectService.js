@@ -50,9 +50,8 @@ const post = async (req, res) => {
   }
 
   if (model.selectedService === 'other') {
-    return res.redirect('/contact/form');
+    return res.redirect('/contact/form?type=service-access&service=Other');
   } else {
-    // TODO: redirect to services help page if certain service
     return res.redirect(`service/${model.selectedService}`);
   }
 };
