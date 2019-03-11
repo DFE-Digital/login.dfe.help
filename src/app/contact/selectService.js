@@ -22,6 +22,7 @@ const get = async (req, res) => {
     validationMessages: {},
     services,
     title: 'DfE Sign-in help',
+    backLink: true,
   };
   return res.render('contact/views/selectService', model);
 };
@@ -33,6 +34,7 @@ const validate = async (req) => {
     validationMessages: {},
     services,
     title: 'DfE Sign-in help',
+    backLink: true,
   };
   if (!model.selectedService) {
     model.validationMessages.service = 'Please select a service'
@@ -48,9 +50,8 @@ const post = async (req, res) => {
   }
 
   if (model.selectedService === 'other') {
-    return res.redirect('/contact/form');
+    return res.redirect('/contact/form?type=service-access&service=Other');
   } else {
-    // TODO: redirect to services help page if certain service
     return res.redirect(`service/${model.selectedService}`);
   }
 };

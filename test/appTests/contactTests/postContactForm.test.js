@@ -1,11 +1,12 @@
-jest.mock('./../../../src/infrastructure/config', () => {
+jest.mock('./../../../src/infrastructure/config', () => require('./../../utils').configMockFactory());
+
+jest.mock('login.dfe.notifications.client');
+
+jest.mock('./../../../src/infrastructure/applications', () => {
   return {
-    notifications: {
-      connectionString: 'redis://localhost:6379?db=99',
-    },
+    listAllServices: jest.fn(),
   };
 });
-jest.mock('login.dfe.notifications.client');
 
 const NotificationClient = require('login.dfe.notifications.client');
 const sendSupportRequest = jest.fn();
@@ -25,6 +26,8 @@ const createString = (length) => {
   }
   return str;
 };
+
+const { listAllServices } = require('./../../../src/infrastructure/applications');
 
 describe('When handling postback of contact form', () => {
   let req;
@@ -68,15 +71,32 @@ describe('When handling postback of contact form', () => {
       };
     });
 
+    listAllServices.mockReset().mockReturnValue({
+      services: [
+      {
+        id: 'service1',
+        name: 'analyse school performance',
+        isExternalService: true,
+      },
+      {
+        id: 'service2',
+        name: 'COLLECT',
+        isExternalService: true,
+      }
+      ],
+    }
+    );
+
     postContactForm = require('./../../../src/app/contact/postContactForm');
   });
 
-  it('then it should create NotificationClient with config connection string', async () => {
+  it(
+    'then it should create NotificationClient with config connection string', async () => {
     await postContactForm(req, res);
 
     expect(NotificationClient.mock.calls).toHaveLength(1);
     expect(NotificationClient.mock.calls[0][0]).toEqual({
-      connectionString: 'redis://localhost:6379?db=99',
+      connectionString: 'test',
     });
   });
 
@@ -117,6 +137,18 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      backLink: true,
+      isHidden: true,
+      services: [
+        {
+          id: 'service2',
+          name: 'COLLECT'
+        },
+        {
+          id: 'service1',
+          name: 'analyse school performance'
+        }
+      ],
       validationMessages: {
         name: 'Please enter your full name',
       },
@@ -140,6 +172,18 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      backLink: true,
+      isHidden: true,
+      services: [
+        {
+          id: 'service2',
+          name: 'COLLECT'
+        },
+        {
+          id: 'service1',
+          name: 'analyse school performance'
+        }
+      ],
       validationMessages: {
         email: 'Please enter your email address',
       },
@@ -163,6 +207,18 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      backLink: true,
+      isHidden: true,
+      services: [
+        {
+          id: 'service2',
+          name: 'COLLECT'
+        },
+        {
+          id: 'service1',
+          name: 'analyse school performance'
+        }
+      ],
       validationMessages: {
         message: 'Please enter the details of the support you require',
       },
@@ -186,6 +242,18 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      backLink: true,
+      isHidden: true,
+      services: [
+        {
+          id: 'service2',
+          name: 'COLLECT'
+        },
+        {
+          id: 'service1',
+          name: 'analyse school performance'
+        }
+      ],
       validationMessages: {
         service: 'Please select the service you are using',
       },
@@ -209,6 +277,18 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      backLink: true,
+      isHidden: true,
+      services: [
+        {
+          id: 'service2',
+          name: 'COLLECT'
+        },
+        {
+          id: 'service1',
+          name: 'analyse school performance'
+        }
+      ],
       validationMessages: {
         type: 'Please select a type of issue',
       },
@@ -232,6 +312,18 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      backLink: true,
+      isHidden: true,
+      services: [
+        {
+          id: 'service2',
+          name: 'COLLECT'
+        },
+        {
+          id: 'service1',
+          name: 'analyse school performance'
+        }
+      ],
       validationMessages: {
         message: 'Message cannot be longer than 1000 characters',
       },

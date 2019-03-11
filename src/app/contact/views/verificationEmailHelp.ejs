@@ -11,7 +11,7 @@
         <details>
             <summary><span class="summary">Still having problems?</span></summary>
             <div class="panel panel-border-narrow">
-                <p>If you are still having problems, please <a href="/contact/form">submit a support request</a>.</p>
+                <p>If you are still having problems, please <a href="<%= locals.service ? '/contact/form?type=service-access&service=' + locals.service.name : '/contact/form' %>">submit a support request</a>.</p>
             </div>
         </details>
     </div>

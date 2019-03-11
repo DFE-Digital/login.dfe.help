@@ -31,6 +31,7 @@ describe('when selecting the type of service issue', () => {
       csrfToken: 'token',
       selectedServiceHelp: undefined,
       title: 'DfE Sign-in help',
+      backLink: true,
       validationMessages: {
         selectedServiceHelp: 'An option must be selected',
       },

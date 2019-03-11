@@ -1,4 +1,7 @@
+const { getAndMapExternalServices } = require('./utils');
+
 const getContactForm = async (req, res) => {
+  const services = await getAndMapExternalServices(req.id);
   req.session = null;
 
   res.render('contact/views/contactForm', {
@@ -9,11 +12,13 @@ const getContactForm = async (req, res) => {
     orgName: '',
     urn: '',
     phone: '',
-    service: '',
-    type: '',
+    service: req.query.service ? req.query.service : '',
+    type: req.query.type ? req.query.type : '',
     message: '',
     validationMessages: {},
     isHidden: true,
+    backLink: true,
+    services,
   });
 };
 

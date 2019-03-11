@@ -50,6 +50,7 @@ describe('when displaying the select service help page', () => {
       csrfToken: 'token',
       selectedService: undefined,
       title: 'DfE Sign-in help',
+      backLink: true,
       services: [
         {
           id: 'service1',
@@ -75,6 +76,6 @@ describe('when displaying the select service help page', () => {
     await postSelectService(req, res);
 
     expect(res.redirect.mock.calls).toHaveLength(1);
-    expect(res.redirect.mock.calls[0][0]).toBe(`/contact/form`);
+    expect(res.redirect.mock.calls[0][0]).toBe(`/contact/form?type=service-access&service=Other`);
   });
 });

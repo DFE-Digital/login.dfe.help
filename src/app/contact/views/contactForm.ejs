@@ -53,42 +53,32 @@
                     <input class="form-control" id="phone" name="phone" type="text" <% if (locals.validationMessages.phone !== undefined) { %> aria-invalid="true" aria-describedby="validation-phone" <% } %> value="<%=phone%>">
                 </div>
 
+                <div class="form-group <%= (locals.validationMessages.type !== undefined) ? 'form-group-error' : '' %>">
+                    <label class="form-label" for="type">What do you need help with? </label>
+                    <% if (locals.validationMessages.type !== undefined) { %>
+                    <p class="error-message" id="validation-service"><%=locals.validationMessages.type %></p>
+                    <% } %>
+                    <select id="type" name="type" class="form-control select">
+                        <option disabled selected value>Select what you need help with</option>
+                        <option value="service-access" <%= locals.type === 'service-access' ? 'selected' : '' %>>Using a DfE service</option>
+                        <option value="email-password" <%= locals.type === 'email-password' ? 'selected' : '' %>>Changing my email or password</option>
+                        <option value="approver" <%= locals.type === 'approver' ? 'selected' : '' %>>Managing my users as an approver</option>
+                        <option value="Other" <%=locals.type === 'Other' ? 'selected' : ''%>>Other</option>
+                    </select>
+                </div>
+
                 <div class="form-group <%= (locals.validationMessages.service !== undefined) ? 'form-group-error' : '' %>">
-                    <label class="form-label" for="service">Service or application you are using</label>
+                    <label class="form-label" for="service">What service were you trying to use?</label>
                     <% if (locals.validationMessages.service !== undefined) { %>
                     <p class="error-message" id="validation-service"><%=locals.validationMessages.service %></p>
                     <% } %>
                     <select id="service" name="service" class="form-control select">
                         <option disabled selected value>Select a service</option>
-                        <option value="Analyse School Performance"<%=locals.service === 'Analyse School Performance' ? 'selected' : ''%>>Analyse School Performance</option>
-                        <option value="COLLECT" <%=locals.service === 'COLLECT' ? 'selected' : ''%>>COLLECT</option>
-                        <option value="GIAS" <%=locals.service === 'GIAS' ? 'selected' : ''%>>Get Information About Schools</option>
-                        <option value="Information Exchange" <%=locals.service === 'Information Exchange' ? 'selected' : ''%>>Information Exchange</option>
-                        <option value="Key to Success(LAs)" <%=locals.service === 'Key to Success(LAs)' ? 'selected' : ''%>>Key to Success (LAs)</option>
-                        <option value="Key to Success(Schools)" <%=locals.service === 'Key to Success(Schools)' ? 'selected' : ''%>>Key to Success (Schools)</option>
-                        <option value="Post 16 Portal" <%=locals.service === 'Post 16 Portal' ? 'selected' : ''%>>Post 16 Portal</option>
-                        <option value="Publish Teacher Training Courses" <%=locals.service === 'Publish Teacher Training Courses' ? 'selected' : ''%>>Publish Teacher Training Courses</option>
-                        <option value="School to School(s2s)" <%=locals.service === 'School to School(s2s)' ? 'selected' : '' %>>School to School</option>
-                        <option value="Teacher Services" <%=locals.service === 'Teacher Services' ? 'selected' : ''%>>Teacher Services</option>
-                        <option value="Teaching Vacancies" <%=locals.service === 'Teaching Vacancies' ? 'selected' : ''%>>Teaching Vacancies</option>
-                        <option value="Trainee Teacher Portal" <%=locals.service === 'Trainee Teacher Portal' ? 'selected' : ''%>>Trainee Teacher Portal</option>
+                        <% for (let i = 0; i < locals.services.length; i++) {
+                        const service = locals.services[i]; %>
+                        <option value="<%= service.name %>"<%=locals.service === service.name ? 'selected' : ''%>><%= service.name %></option>
+                        <% } %>
                         <option value="Other" <%=locals.service === 'Other' ? 'selected' : ''%>>Other</option>
-                    </select>
-                </div>
-                <div class="form-group <%= (locals.validationMessages.type !== undefined) ? 'form-group-error' : '' %>">
-                    <label class="form-label" for="type">Type of issue </label>
-                    <% if (locals.validationMessages.type !== undefined) { %>
-                    <p class="error-message" id="validation-service"><%=locals.validationMessages.type %></p>
-                    <% } %>
-                    <select id="type" name="type" class="form-control select">
-                        <option disabled selected value>Select a type of issue </option>
-                        <option value="Migration" <%=locals.type === 'Migration' ? 'selected' : ''%>>I am unable to migrate my Secure Access account</option>
-                        <option value="SA Username/Password" <%=locals.type === 'SA Username/Password' ? 'selected' : ''%>>I can’t remember my Secure Access username or password</option>
-                        <option value="Multiple Accounts" <%=locals.type === 'Multiple Accounts' ? 'selected' : ''%>>I have multiple accounts</option>
-                        <option value="Accessing Services" <%=locals.type === 'Accessing Services' ? 'selected' : ''%>>I can’t access all the services I need to</option>
-                        <option value="Unknown Approver" <%=locals.type === 'Unknown Approver' ? 'selected' : ''%>>I don't know who my approver is</option>
-                        <option value="Approver adding user" <%=locals.type === 'Approver adding user' ? 'selected' : ''%>>I am an approver, how do I create new users</option>
-                        <option value="Other" <%=locals.type === 'Other' ? 'selected' : ''%>>Other</option>
                     </select>
                 </div>
                 <div class="form-group <%= (locals.validationMessages.message !== undefined) ? 'form-group-error' : '' %>">
