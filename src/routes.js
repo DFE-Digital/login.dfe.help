@@ -8,7 +8,7 @@ const mountRoutes = (app, csrf) => {
   app.use('/contact', contact(csrf));
 
   app.get('*', (req, res) => {
-    res.status(404).render('errors/views/notFound');
+    res.redirect('/contact')
   });
 };
 
