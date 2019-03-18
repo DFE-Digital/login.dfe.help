@@ -50,7 +50,7 @@ const post = async (req, res) => {
   }
 
   if (model.selectedService === 'other') {
-    return res.redirect('/contact/form?type=service-access&service=Other');
+    return res.redirect('/contact/submit?type=service-access&service=Other');
   } else {
     return res.redirect(`service/${model.selectedService}`);
   }

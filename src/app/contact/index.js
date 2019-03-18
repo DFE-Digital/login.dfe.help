@@ -25,8 +25,8 @@ const routes = (csrf) => {
   router.get('/', csrf, asyncWrapper(getHelp));
   router.post('/', csrf, asyncWrapper(postHelp));
 
-  router.get('/form', csrf, asyncWrapper(getContactForm));
-  router.post('/form', csrf, asyncWrapper(postContactForm));
+  router.get('/submit', csrf, asyncWrapper(getContactForm));
+  router.post('/submit', csrf, asyncWrapper(postContactForm));
 
   router.get('/confirm', csrf, asyncWrapper(getConfirm));
 
