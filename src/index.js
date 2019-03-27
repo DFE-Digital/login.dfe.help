@@ -92,6 +92,9 @@ Object.assign(app.locals, {
     services: config.hostingEnvironment.servicesUrl,
     profile: config.hostingEnvironment.profileUrl,
   },
+  app: {
+    environmentBannerMessage: config.hostingEnvironment.environmentBannerMessage,
+  },
   gaTrackingId: config.hostingEnvironment.gaTrackingId,
 });
 
