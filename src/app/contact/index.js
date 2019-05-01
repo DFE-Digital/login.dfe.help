@@ -33,6 +33,8 @@ const routes = (csrf) => {
   router.get('/email-password', csrf, asyncWrapper(getEmailPasswordHelp));
 
   router.get('/verification-email', csrf, asyncWrapper(getVerificationEmailHelp));
+  
+  router.get('/create-account', csrf, asyncWrapper(getCreateAccountHelp));
 
   router.get('/approver', csrf, asyncWrapper(getApproverHelp));
   router.get('/approver/new-approver', csrf, asyncWrapper(getNewApprover));

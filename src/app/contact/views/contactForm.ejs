@@ -60,6 +60,7 @@
                     <% } %>
                     <select id="type" name="type" class="form-control select">
                         <option disabled selected value>Select what you need help with</option>
+                        <option value="create-account" <%= locals.type === 'create-account' ? 'selected' : '' %>>Setting up a DfE Sign-in account</option>
                         <option value="service-access" <%= locals.type === 'service-access' ? 'selected' : '' %>>Using a DfE service</option>
                         <option value="email-password" <%= locals.type === 'email-password' ? 'selected' : '' %>>Changing my email or password</option>
                         <option value="approver" <%= locals.type === 'approver' ? 'selected' : '' %>>Managing my users as an approver</option>

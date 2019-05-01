@@ -12,6 +12,11 @@
                     <p class="error-message" id="validation-selected-organisation"><%=locals.validationMessages.selectedHelp %></p>
                     <% } %>
                     <legend><h2 class="heading-medium">What do you need help with?</h2> </legend>
+
+                    <div class="multiple-choice">
+                        <input id="create-account" type="radio" name="selectedHelp" value="create-account">
+                        <label for="create-account">Setting up a DfE Sign-in account</label>
+                    </div>
                     <div class="multiple-choice">
                         <input id="access-service" type="radio" name="selectedHelp" value="access-service">
                         <label for="access-service">Using a DfE service</label>

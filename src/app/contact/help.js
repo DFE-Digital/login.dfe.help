@@ -28,6 +28,9 @@ const post = async (req, res) => {
     return res.render('contact/views/help', model);
   }
 
+  if (model.selectedHelp === 'create-account') {
+    return res.redirect('contact/create-account')
+  }
   if (model.selectedHelp === 'access-service') {
     return res.redirect('contact/service')
   }
@@ -37,6 +40,7 @@ const post = async (req, res) => {
   if (model.selectedHelp === 'approver') {
     return res.redirect('contact/approver')
   }
+
 };
 module.exports = {
   get,
