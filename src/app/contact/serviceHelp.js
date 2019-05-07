@@ -49,6 +49,10 @@ const post = async (req, res) => {
   if (model.selectedServiceHelp === 'verification-email') {
     return res.redirect(`${req.params.sid}/verification-email`)
   }
+
+  if (model.selectedServiceHelp === 'error') {
+    return res.redirect(`/contact/submit?type=service-access&service=${model.service.name}`);
+  }
 };
 
 module.exports = {

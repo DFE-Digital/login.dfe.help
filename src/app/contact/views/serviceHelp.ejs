@@ -24,6 +24,11 @@
                         <input id="verification-email" type="radio" name="selectedServiceHelp" value="verification-email">
                         <label for="verification-email">I have not received a verification email</label>
                     </div>
+
+                    <div class="multiple-choice">
+                        <input id="error" type="radio" name="selectedServiceHelp" value="error">
+                        <label for="error">I have received an error when trying to access <%= locals.service.name %></label>
+                    </div>
                 </fieldset>
             </div>
             <div class="form-submit">
