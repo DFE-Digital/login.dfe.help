@@ -110,7 +110,6 @@ describe('When handling postback of contact form', () => {
     expect(sendSupportRequest.mock.calls[0][3]).toBe(req.body.service);
     expect(sendSupportRequest.mock.calls[0][4]).toBe(req.body.type);
     expect(sendSupportRequest.mock.calls[0][5]).toBe(req.body.message);
-    expect(sendSupportRequest.mock.calls[0][7]).toBe(req.body.saUsername);
   });
 
   it('then it should send support request job with generated reference', async () => {
