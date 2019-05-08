@@ -59,7 +59,6 @@ const postContactForm = async (req, res) => {
       csrfToken: req.csrfToken(),
       name: req.body.name,
       email: req.body.email,
-      saUsername: req.body.saUsername,
       phone: req.body.phone,
       orgName: req.body.orgName,
       urn: req.body.urn,

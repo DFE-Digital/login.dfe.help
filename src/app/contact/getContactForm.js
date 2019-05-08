@@ -8,7 +8,6 @@ const getContactForm = async (req, res) => {
     csrfToken: req.csrfToken(),
     name: '',
     email: '',
-    saUsername: '',
     orgName: '',
     urn: '',
     phone: '',
