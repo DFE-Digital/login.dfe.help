@@ -38,6 +38,9 @@ const validate = (req) => {
 
 const postContactForm = async (req, res) => {
   let message = req.body.message;
+  let email = req.body.email;
+  let org = req.body.orgName;
+  let name = req.body.name;
   const excludeSanitization = {
     '&#13;': '  ',
     '&#10;': '  ',
@@ -49,7 +52,10 @@ const postContactForm = async (req, res) => {
   Object.keys(excludeSanitization).forEach((e) => {
     const regex = new RegExp(e, 'g');
 
-    message = message.replace(regex, excludeSanitization[e])
+    message = message.replace(regex, excludeSanitization[e]);
+    email = email.replace(regex, excludeSanitization[e]);
+    org = org.replace(regex, excludeSanitization[e]);
+    name = name.replace(regex, excludeSanitization[e]);
   });
 
   const services = await getAndMapExternalServices(req.id);
@@ -57,10 +63,10 @@ const postContactForm = async (req, res) => {
   if (!validationResult.isValid) {
     return res.render('contact/views/contactForm', {
       csrfToken: req.csrfToken(),
-      name: req.body.name,
-      email: req.body.email,
+      name: name,
+      email: email,
       phone: req.body.phone,
-      orgName: req.body.orgName,
+      orgName: org,
       urn: req.body.urn,
       service: req.body.service,
       type: req.body.type,
@@ -74,8 +80,8 @@ const postContactForm = async (req, res) => {
 
   const reference = `SIR${Math.floor((new Date().getTime() - new Date(2018, 1, 1).getTime()) / 1000)}`;
 
-  await notificationClient.sendSupportRequest(req.body.name, req.body.email, req.body.phone, req.body.service, req.body.type, message, reference, req.body.orgName, req.body.urn);
-  await notificationClient.sendSupportRequestConfirmation(req.body.name, req.body.email, req.body.service, reference);
+  await notificationClient.sendSupportRequest(name, email, req.body.phone, req.body.service, req.body.type, message, reference, org, req.body.urn);
+  await notificationClient.sendSupportRequestConfirmation(name, email, req.body.service, reference);
   req.session.reference = reference;
   return res.redirect('/contact/confirm');
 };

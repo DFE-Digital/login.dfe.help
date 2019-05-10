@@ -45,6 +45,7 @@ describe('When handling postback of contact form', () => {
         service: 'Teaching Jobs',
         type: 'I have multiple accounts',
         message: 'Please help me',
+        orgName: ''
       },
       session:{},
     };
@@ -135,6 +136,7 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      orgName: req.body.orgName,
       backLink: true,
       isHidden: true,
       services: [
@@ -169,6 +171,7 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      orgName: req.body.orgName,
       backLink: true,
       isHidden: true,
       services: [
@@ -203,6 +206,7 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      orgName: req.body.orgName,
       backLink: true,
       isHidden: true,
       services: [
@@ -237,6 +241,7 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      orgName: req.body.orgName,
       backLink: true,
       isHidden: true,
       services: [
@@ -271,6 +276,7 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      orgName: req.body.orgName,
       backLink: true,
       isHidden: true,
       services: [
@@ -305,6 +311,7 @@ describe('When handling postback of contact form', () => {
       service: req.body.service,
       type: req.body.type,
       message: req.body.message,
+      orgName: req.body.orgName,
       backLink: true,
       isHidden: true,
       services: [
