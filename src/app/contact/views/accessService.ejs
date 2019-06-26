@@ -7,24 +7,32 @@
         <p>A DfE Sign-in account will allow you to access DfE online services for your organisation.</p>
 
         <h2 class="heading-medium">
-            How do I access <%=locals.service.name%>?
+            How do I add <%=locals.service.name%> to my account?
         </h2>
         <p>An approver at your organisation will be able to provide you with access to <%=locals.service.name%>.</p>
+        <p>Services added to your account are listed on your DfE Sign-in <a href="<%=locals.urls.services%>/my-services">Services</a> page.</p>
+        <p>If you are an approver you can add services to your account, by selecting your name from the <a href="<%=locals.urls.services%>/approvals/users">Users</a> page and add services.</p>
 
         <h2 class="heading-medium">
             What is an approver?
         </h2>
-        <p>An approver can create user accounts, add and remove services and update roles within organisations.</p>
+        <p>An approver can invite users to DfE Sign-in, link users to an organisation and give access to services.</p>
 
         <h2 class="heading-medium">
             Find an approver
         </h2>
-        <p>Your approver's details can be found in the <a href="<%=locals.urls.services%>/organisations">'My Organisations'</a> section of your DfE Sign-in account.</p>
+        <p>If you have a DfE Sign-in account, you can view your organisation approvers from the <a href="<%=locals.urls.services%>/organisations">Organisations</a> page and select the information and approvers link.</p>
+
+        <h2 class="heading-medium">
+            Become an approver
+        </h2>
+
+        <p>An existing approver can make a user an approver by accessing that individual's account from the <a href="<%=locals.urls.services%>/approvals/users">Users</a> page.</p>
 
         <h2 class="heading-medium">
             There are no approvers at my organisation
         </h2>
-        <p>If there are no approvers at your organisation, an approver can be assigned by sending a signed letter to the <a href="/contact/approver/new-approver">Service Team</a>.</p>
+        <p>To set up the first approver at your organisation please forward an email from the head or senior individual of your organisation to the <a href="/contact/approver/new-approver">Service Team</a>.</p>
 
         <details>
             <summary><span class="summary">Still having problems?</span></summary>
