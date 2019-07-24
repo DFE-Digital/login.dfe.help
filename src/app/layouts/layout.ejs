@@ -75,18 +75,16 @@
                     </p>
                 </div>
             </div>
-            <% if (locals.user !== undefined) { %>
-            <div class="account-information" role="navigation">
-                <p class="signed-in-as"><span class="vh">You are signed in as</span> <%= locals.displayName %></p>
-                <nav id="user-nav">
-                    <ul role="menubar">
-                        <li><a href="/profile" role="menuitem">Profile</a></li>
-                        <li><a href="/signout" role="menuitem">Sign out</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <% } %>
         </div>
+    </div>
+
+    <div class="global-navigation">
+        <nav>
+            <ul>
+                <li class="pull-right"><a href="<%=locals.urls.services%>/auth">Sign in</a> </li>
+                <li class="pull-right"><a href="<%=locals.urls.help%>/contact" class="current">Help</a></li>
+            </ul>
+        </nav>
     </div>
 
 
