@@ -47,7 +47,9 @@ const postContactForm = async (req, res) => {
     '&#39;': "'",
     '&#33;': "!",
     '&#63;': '?',
-    '&#58;': ':'
+    '&#58;': ':',
+    '&quot;': '"',
+    '&amp;': '&',
   };
   Object.keys(excludeSanitization).forEach((e) => {
     const regex = new RegExp(e, 'g');
