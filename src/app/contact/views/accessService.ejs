@@ -1,14 +1,12 @@
 <div class="row">
     <div class="col-8">
         <h1 class="heading-xlarge">
-            Access a DfE service
+            How do I add <%=locals.service.name%>?
         </h1>
 
-        <p>A DfE Sign-in account will allow you to access DfE online services for your organisation.</p>
-
-        <h2 class="heading-medium">
-            How do I add <%=locals.service.name%> to my account?
-        </h2>
+        <% if (locals.service.relyingParty && locals.service.relyingParty.params && locals.service.relyingParty.params.customAccessServiceMessage) { %>
+            <%- locals.service.relyingParty.params.customAccessServiceMessage %>
+        <% } else { %>
         <p>An approver at your organisation will be able to provide you with access to <%=locals.service.name%>.</p>
         <p>Services added to your account are listed on your DfE Sign-in <a href="<%=locals.urls.services%>/my-services">Services</a> page.</p>
         <p>If you are an approver you can add services to your own account and a user's account within your organisation by selecting the user from <a href="<%=locals.urls.services%>/approvals/users">Manage users</a> followed by add services.</p>
@@ -34,6 +32,7 @@
         </h2>
         <p>To set up the first approver at your organisation, you will need to send an email to the <a href="/contact/approver/new-approver">Service Team</a>.</p>
 
+        <% } %>
         <details>
             <summary><span class="summary">Still having problems?</span></summary>
             <div class="panel panel-border-narrow">
