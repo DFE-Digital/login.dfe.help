@@ -94,6 +94,7 @@ Object.assign(app.locals, {
     services: config.hostingEnvironment.servicesUrl,
     profile: config.hostingEnvironment.profileUrl,
     assets: assetsUrl,
+    survey: config.hostingEnvironment.surveyUrl,
   },
   app: {
     environmentBannerMessage: config.hostingEnvironment.environmentBannerMessage,
