@@ -86,11 +86,15 @@ app.set('layout', 'layouts/layout');
 
 mountRoutes(app, csrf);
 
+let assetsUrl = config.hostingEnvironment.assetsUrl || 'https://rawgit.com/DFE-Digital/dfe.ui.toolkit/master/dist/';
+assetsUrl = assetsUrl.endsWith('/') ? assetsUrl.substr(0, assetsUrl.length - 1) : assetsUrl;
 Object.assign(app.locals, {
   urls: {
     interactions: config.hostingEnvironment.interactionsUrl,
     services: config.hostingEnvironment.servicesUrl,
     profile: config.hostingEnvironment.profileUrl,
+    assets: assetsUrl,
+    survey: config.hostingEnvironment.surveyUrl,
   },
   app: {
     environmentBannerMessage: config.hostingEnvironment.environmentBannerMessage,
@@ -100,6 +104,7 @@ Object.assign(app.locals, {
 
 const errorPageRenderer = ejsErrorPages.getErrorPageRenderer({
   help: config.hostingEnvironment.helpUrl,
+  assets: assetsUrl,
 }, config.hostingEnvironment.env === 'dev');
 app.use(getErrorHandler({
   logger,

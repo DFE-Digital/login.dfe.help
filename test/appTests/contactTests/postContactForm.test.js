@@ -113,13 +113,6 @@ describe('When handling postback of contact form', () => {
     expect(sendSupportRequest.mock.calls[0][5]).toBe(req.body.message);
   });
 
-  it('then it should send support request job with generated reference', async () => {
-    await postContactForm(req, res);
-
-    expect(sendSupportRequest.mock.calls).toHaveLength(1);
-    expect(sendSupportRequest.mock.calls[0][6]).toMatch(/SIR[0-9]{7}/);
-  });
-
   it('then it should render error view if name is missing', async () => {
     req.body.name = '';
 
