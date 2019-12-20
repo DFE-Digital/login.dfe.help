@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-8">
         <h1 class="heading-xlarge">
-            How do I add <%=locals.service.name%>?
+            How do I add <%=locals.service.name%> to my DfE account?
         </h1>
 
         <% if (locals.service.relyingParty && locals.service.relyingParty.params && locals.service.relyingParty.params.customAccessServiceMessage) { %>
@@ -14,23 +14,19 @@
         <h2 class="heading-medium">
             What is an approver?
         </h2>
-        <p>An approver can invite users to DfE Sign-in, link users to an organisation and give access to services.</p>
+        <p>You might have noticed the term ‘approver’ during your account creation.</p>
+        <p>An approver is someone at your organisation responsible for controlling who has access to DfE Sign-in and the services within the system.</p>
+        <p>It is usually a senior person, such as an administrator, manager, or headteacher. </p>
+        <p>For security reasons, you will need the approval of your organisation’s approver before you can access services.</p>
+        <h2 class="heading-medium">
+            How can I find a relevant approver?
+        </h2>
+        <p>Once you add your organisation to your account, you can find a list of all recognised approvers under the <a href="<%=locals.urls.services%>/organisations">organisation</a> section of your DfE Sign-in account.</p>
 
         <h2 class="heading-medium">
-            Find an approver
+            What if there are no approvers at my organisation?
         </h2>
-        <p>If you have a DfE Sign-in account, you can view your organisation approvers from the <a href="<%=locals.urls.services%>/organisations">Organisations</a> page and select the information and approvers link.</p>
-
-        <h2 class="heading-medium">
-            Become an approver
-        </h2>
-
-        <p>An existing approver can make a user an approver by accessing the individual's account from <a href="<%=locals.urls.services%>/approvals/users">Manage users</a>.</p>
-
-        <h2 class="heading-medium">
-            There are no approvers at my organisation
-        </h2>
-        <p>To set up the first approver at your organisation, you will need to send an email to the <a href="/contact/approver/new-approver">Service Team</a>.</p>
+        <p>Send an email to our <a href="/contact/approver/new-approver">service team</a>, and we’ll get an approver set up for your organisation as soon as possible.</p>
 
         <% } %>
         <details>
