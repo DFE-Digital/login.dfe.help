@@ -18,6 +18,8 @@ const getNewApprover = require('./getNewApprover');
 const getAccessService = require('./getAccessService');
 const getCreateAccountHelp = require('./getCreateAccountHelp');
 
+const getAddOrganisationHelp = require('./getAddOrganisationHelp');
+
 const router = express.Router({ mergeParams: true });
 
 const routes = (csrf) => {
@@ -33,7 +35,7 @@ const routes = (csrf) => {
   router.get('/email-password', csrf, asyncWrapper(getEmailPasswordHelp));
 
   router.get('/verification-email', csrf, asyncWrapper(getVerificationEmailHelp));
-  
+
   router.get('/create-account', csrf, asyncWrapper(getCreateAccountHelp));
 
   router.get('/approver', csrf, asyncWrapper(getApproverHelp));
@@ -47,6 +49,8 @@ const routes = (csrf) => {
   router.get('/service/:sid/verification-email', csrf, asyncWrapper(getVerificationEmailHelp));
   router.get('/service/:sid/access-service', csrf, asyncWrapper(getAccessService));
   router.get('/service/:sid/create-account', csrf, asyncWrapper(getCreateAccountHelp));
+
+  router.get('/add-org', csrf, asyncWrapper(getAddOrganisationHelp));
 
   return router;
 };
