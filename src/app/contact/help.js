@@ -40,6 +40,9 @@ const post = async (req, res) => {
   if (model.selectedHelp === 'approver') {
     return res.redirect('contact/approver')
   }
+  if (model.selectedHelp === 'add-org') {
+    return res.redirect('contact/add-org')
+  }
 
 };
 module.exports = {
