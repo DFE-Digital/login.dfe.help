@@ -16,7 +16,7 @@
                     <% for (let i = 0; i < locals.services.length; i++) {
                     const service = locals.services[i];%>
                     <div class="multiple-choice">
-                        <input id="<%= service.id %>" type="radio" name="selectedService" value="<%= service.id %>">
+                        <input id="<%= service.id %>" type="radio" name="selectedService" value="<%=service.id  %>,<%=service.name%>">
                         <label for="<%= service.id %>"> <%= service.name %> </label>
                     </div>
                     <% } %>
