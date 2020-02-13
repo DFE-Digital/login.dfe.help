@@ -51,7 +51,7 @@ const post = async (req, res) => {
 const serviceIdentity = model.selectedService.split(',');
   if (model.selectedService === 'other') {
     return res.redirect('/contact/submit?type=service-access&service=Other');
-  }else if (serviceIdentity[1] === 'Course Directory') {
+  }else if ((serviceIdentity && serviceIdentity[1]) && serviceIdentity[1] === 'Course Directory') {
     return res.redirect('/contact/course-directory')
   }
   else {
