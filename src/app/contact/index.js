@@ -19,6 +19,7 @@ const getAccessService = require('./getAccessService');
 const getCreateAccountHelp = require('./getCreateAccountHelp');
 
 const getAddOrganisationHelp = require('./getAddOrganisationHelp');
+const getCourseDirectoryHelp = require('./getCourseDirectoryHelp');
 
 const router = express.Router({ mergeParams: true });
 
@@ -51,6 +52,7 @@ const routes = (csrf) => {
   router.get('/service/:sid/create-account', csrf, asyncWrapper(getCreateAccountHelp));
 
   router.get('/add-org', csrf, asyncWrapper(getAddOrganisationHelp));
+  router.get('/course-directory', csrf, asyncWrapper(getCourseDirectoryHelp));
 
   return router;
 };

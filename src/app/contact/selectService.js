@@ -48,11 +48,14 @@ const post = async (req, res) => {
     model.csrfToken = req.csrfToken();
     return res.render('contact/views/selectService', model);
   }
-
+const serviceIdentity = model.selectedService.split(',');
   if (model.selectedService === 'other') {
     return res.redirect('/contact/submit?type=service-access&service=Other');
-  } else {
-    return res.redirect(`service/${model.selectedService}`);
+  }else if ((serviceIdentity && serviceIdentity[1]) && serviceIdentity[1] === 'Course Directory') {
+    return res.redirect('/contact/course-directory')
+  }
+  else {
+    return res.redirect(`service/${serviceIdentity[0]}`);
   }
 };
 
