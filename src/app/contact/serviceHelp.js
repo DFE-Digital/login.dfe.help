@@ -30,7 +30,7 @@ const validate = async (req) => {
   };
 
   if (!model.selectedServiceHelp) {
-    model.validationMessages.selectedServiceHelp = 'An option must be selected'
+    model.validationMessages.selectedServiceHelp = 'An option must be selected';
   }
   return model;
 };
@@ -43,11 +43,11 @@ const post = async (req, res) => {
   }
 
   if (model.selectedServiceHelp === 'add-service') {
-    return res.redirect(`${req.params.sid}/access-service`)
+    return res.redirect(`${req.params.sid}/access-service`);
   }
 
   if (model.selectedServiceHelp === 'verification-email') {
-    return res.redirect(`${req.params.sid}/verification-email`)
+    return res.redirect(`${req.params.sid}/verification-email`);
   }
 
   if (model.selectedServiceHelp === 'error') {
