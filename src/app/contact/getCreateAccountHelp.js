@@ -8,6 +8,7 @@ const getCreateAccountHelp = async (req, res) => {
     title: 'DfE Sign-in help',
     backLink: true,
     service,
+    profileUrl: req.app.locals.urls.profile
   };
   return res.render('contact/views/createAccountHelp', model);
 };

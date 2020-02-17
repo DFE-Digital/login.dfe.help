@@ -9,6 +9,7 @@ describe('when displaying the create account help page', () => {
 
   beforeEach(() => {
     req = getRequestMock({});
+    req.app.locals.urls.profile = "somepath";
     res.mockResetAll();
   });
 
