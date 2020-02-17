@@ -1,10 +1,24 @@
 const config = require('./../../infrastructure/config');
 const NotificationClient = require('login.dfe.notifications.client');
 const { getAndMapExternalServices } = require('./utils');
+const emailValidator = require('email-validator');
 
 const notificationClient = new NotificationClient({
   connectionString: config.notifications.connectionString,
 });
+
+const validateEmail = (email) => {
+  const emailValidationMessage = 'Please enter your email address';
+  let invalidEmailMessage;
+
+  if (email.length === 0) {
+    invalidEmailMessage = emailValidationMessage;
+  } else if (!emailValidator.validate(email)) {
+    invalidEmailMessage = emailValidationMessage;
+  }
+
+  return invalidEmailMessage;
+};
 
 const validate = (req) => {
   const validationMessages = {};
@@ -13,8 +27,9 @@ const validate = (req) => {
     validationMessages.name = 'Please enter your full name';
   }
 
-  if (!req.body.email) {
-    validationMessages.email = 'Please enter your email address';
+  const invalidEmailMessage = validateEmail(req.body.email);
+  if (invalidEmailMessage) {
+    validationMessages.email = invalidEmailMessage;
   }
 
   if (!req.body.message) {
@@ -25,8 +40,8 @@ const validate = (req) => {
   if (!req.body.service) {
     validationMessages.service = 'Please select the service you are using';
   }
-  if(!req.body.type) {
-    validationMessages.type = 'Please select a type of issue'
+  if (!req.body.type) {
+    validationMessages.type = 'Please select a type of issue';
   }
 
   return {
@@ -45,7 +60,7 @@ const postContactForm = async (req, res) => {
     '&#13;': '  ',
     '&#10;': '  ',
     '&#39;': "'",
-    '&#33;': "!",
+    '&#33;': '!',
     '&#63;': '?',
     '&#58;': ':',
     '&quot;': '"',
@@ -65,14 +80,14 @@ const postContactForm = async (req, res) => {
   if (!validationResult.isValid) {
     return res.render('contact/views/contactForm', {
       csrfToken: req.csrfToken(),
-      name: name,
-      email: email,
+      name,
+      email,
       phone: req.body.phone,
       orgName: org,
       urn: req.body.urn,
       service: req.body.service,
       type: req.body.type,
-      message: message,
+      message,
       validationMessages: validationResult.validationMessages,
       isHidden: true,
       backLink: true,
