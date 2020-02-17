@@ -35,6 +35,7 @@ const getRequestMock = (customRequest = {}) => {
       sub: 'suser1',
       email: 'super.user@unit.test',
     },
+    app: { locals: { urls: { profile: 'profileurl' } } },
     session: {},
   }, customRequest);
 };
