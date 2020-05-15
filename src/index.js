@@ -15,7 +15,6 @@ const sanitization = require('login.dfe.sanitization');
 const csurf = require('csurf');
 const mountRoutes = require('./routes');
 const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-handling');
-const KeepAliveAgent = require('agentkeepalive');
 
 const configSchema = require('./infrastructure/config/schema');
 
@@ -25,18 +24,7 @@ if (config.hostingEnvironment.applicationInsights) {
   appInsights.setup(config.hostingEnvironment.applicationInsights).start();
 }
 
-http.GlobalAgent = new KeepAliveAgent({
-  maxSockets: config.hostingEnvironment.agentKeepAlive.maxSockets,
-  maxFreeSockets: config.hostingEnvironment.agentKeepAlive.maxFreeSockets,
-  timeout: config.hostingEnvironment.agentKeepAlive.timeout,
-  keepAliveTimeout: config.hostingEnvironment.agentKeepAlive.keepAliveTimeout,
-});
-https.GlobalAgent = new KeepAliveAgent({
-  maxSockets: config.hostingEnvironment.agentKeepAlive.maxSockets,
-  maxFreeSockets: config.hostingEnvironment.agentKeepAlive.maxFreeSockets,
-  timeout: config.hostingEnvironment.agentKeepAlive.timeout,
-  keepAliveTimeout: config.hostingEnvironment.agentKeepAlive.keepAliveTimeout,
-});
+https.globalAgent.maxSockets = http.globalAgent.maxSockets = config.hostingEnvironment.agentKeepAlive.maxSockets || 50;
 
 const app = express();
 app.use(helmet({
