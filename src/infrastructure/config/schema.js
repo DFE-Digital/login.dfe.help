@@ -4,7 +4,7 @@ const config = require('./index');
 const logger = require('./../logger');
 
 const notificationsSchema = new SimpleSchema({
-  connectionString: patterns.redis
+  connectionString: patterns.redis,
 });
 
 const schema = new SimpleSchema({
@@ -12,6 +12,7 @@ const schema = new SimpleSchema({
   hostingEnvironment: schemas.hostingEnvironment,
   applications: schemas.apiClient,
   notifications: notificationsSchema,
+  assets: schemas.assets,
 });
 
 module.exports.validate = () => {

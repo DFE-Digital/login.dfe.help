@@ -88,6 +88,9 @@ Object.assign(app.locals, {
     environmentBannerMessage: config.hostingEnvironment.environmentBannerMessage,
   },
   gaTrackingId: config.hostingEnvironment.gaTrackingId,
+  assets: {
+    version: config.assets.version,
+  },
 });
 
 const errorPageRenderer = ejsErrorPages.getErrorPageRenderer({
