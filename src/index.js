@@ -15,6 +15,8 @@ const sanitization = require('login.dfe.sanitization');
 const csurf = require('csurf');
 const mountRoutes = require('./routes');
 const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-handling');
+const uuid = require('uuid/v4');
+const { setUserContext } = require('./infrastructure/utils');
 
 const configSchema = require('./infrastructure/config/schema');
 
@@ -47,6 +49,7 @@ app.use(session({
 }));
 app.use((req, res, next) => {
   req.session.now = Date.now();
+  req.session.gaClientId = req.session.gaClientId || uuid();
   next();
 });
 
@@ -71,6 +74,8 @@ app.use(express.static(path.resolve(__dirname, 'dist')));
 app.set('views', path.resolve(__dirname, 'app'));
 app.use(expressLayouts);
 app.set('layout', 'layouts/layout');
+
+app.use(setUserContext);
 
 mountRoutes(app, csrf);
 
