@@ -69,8 +69,8 @@ app.use(morgan('dev'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.resolve(__dirname, 'dist')));
 app.use(expressLayouts);
-app.set('layout', 'shared/layout');
-app.set('views', path.resolve(__dirname, 'app/views'));
+app.set('views', path.resolve(__dirname, 'app'));
+app.set('layout', 'shared/views/layout');
 
 mountRoutes(app, csrf);
 
