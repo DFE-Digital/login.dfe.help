@@ -1,4 +1,4 @@
-const { getServiceById } = require('./../../infrastructure/applications');
+const { getServiceById } = require('../../infrastructure/applications');
 
 const get = async (req, res) => {
   const service = await getServiceById(req.params.sid, req.id);

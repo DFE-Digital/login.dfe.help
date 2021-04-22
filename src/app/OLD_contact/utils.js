@@ -1,4 +1,4 @@
-const { listAllServices } = require('./../../infrastructure/applications');
+const { listAllServices } = require('../../infrastructure/applications');
 const sortBy = require('lodash/sortBy');
 const uniqBy = require('lodash/uniqBy');
 
