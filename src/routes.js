@@ -7,6 +7,9 @@ const mountRoutes = (app, csrf) => {
 
   app.use('/dashboard', dashboard(csrf));
 
+  // keeping also original route to help page to avoid having to update all links in footers
+  app.use('/content', dashboard(csrf));
+
   app.get('*', (req, res) => {
     res.redirect('/dashboard');
   });
