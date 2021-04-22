@@ -68,9 +68,9 @@ app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flag
 app.use(morgan('dev'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.resolve(__dirname, 'dist')));
-app.set('views', path.resolve(__dirname, 'app'));
 app.use(expressLayouts);
-app.set('layout', 'layouts/layout');
+app.set('layout', 'shared/layout');
+app.set('views', path.resolve(__dirname, 'app/views'));
 
 mountRoutes(app, csrf);
 
