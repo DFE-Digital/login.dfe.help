@@ -3,89 +3,50 @@
     <div class="govuk-grid-column-two-thirds">
 
         <!-- help dashboard title -->
-        <div id="dashboard-title" class="govuk-!-margin-bottom-8">
-            <h1 class="govuk-heading-xl">
-                Find help with...
-            </h1>
-            <p class="govuk-body govuk-!-margin-right-6">
-                Choose the main topic for which you need assistance. Each category contains articles designed to help with specific questions.
-            </p>    
-        </div>
-        
+        <% if (locals.header !== undefined && locals.description !== undefined) { %>
+
+            <div id="dashboard-title" class="govuk-!-margin-bottom-8">
+                <h1 class="govuk-heading-xl"><%- locals.header %></h1>
+                <p class="govuk-body govuk-!-margin-right-6"><%- locals.description %></p>    
+            </div>
+            
+        <% } %>
+
         <!-- list of help sections with their decription -->
-        <ul class="govuk-list">
+        <% if (locals.sections !== undefined && locals.sections.length !== 0) { %>
 
-            <li>
-                <h3 class="govuk-heading-m"><a href="/services" class="govuk-link">Services</a></h3>
-                <p class="govuk-body">
-                    Find help with services, including how to add or request a service, and what to do when a service is unavailable.
-                </p>
-            </li>
-            <hr class="custom-section-break">
+            <ul class="govuk-list">
+                <% for (const index in locals.sections) { %>
+                    <li>
+                        <h3 class="govuk-heading-m"><a href="<%= locals.sections[index].link %>" class="govuk-link"><%- locals.sections[index].title %></a></h3>
+                        <p class="govuk-body"><%- locals.sections[index].text %></p>
+                        <% if (locals.sections[index].updated !== undefined) { %>
+                            <p class="govuk-body font-style-italic">
+                                Updated <%- locals.sections[index].updated %>
+                            </p>
+                        <% } %>
+                    </li>
+                    <hr class="custom-section-break">
+                <% } %>
+            </ul>
 
-            <li>
-                <h3 class="govuk-heading-m"><a href="#" class="govuk-link">Organisations</a></h3>
-                <p class="govuk-body">
-                    Find help with organisations, including how to request access to an organisation, and how to add multiple organisations to a single account.
-                </p>
-            </li>
-            <hr class="custom-section-break">
-
-            <li>
-                <h3 class="govuk-heading-m"><a href="#" class="govuk-link">Manage users</a></h3>
-                <p class="govuk-body">
-                    Find help with manage users, including how to invite new users, and how to add a service to a user.
-                </p>
-            </li>
-            <hr class="custom-section-break">
-
-            <li>
-                <h3 class="govuk-heading-m"><a href="#" class="govuk-link">Requests</a></h3>
-                <p class="govuk-body">
-                    Find help with requests, including how to raise a request, and how to either approve or reject the requests that you manage.
-                </p>
-            </li>
-            <hr class="custom-section-break">
-
-            <li>
-                <h3 class="govuk-heading-m"><a href="#" class="govuk-link">Profile</a></h3>
-                <p class="govuk-body">
-                    Find help with your profile, including how to change your email address and password.
-                </p>
-            </li>
-            <hr class="custom-section-break">
-
-            <li>
-                <h3 class="govuk-heading-m"><a href="#" class="govuk-link">Approvers</a></h3>
-                <p class="govuk-body">
-                    Find help with approver-related questions, including what an approver is and what they do.
-                </p>
-            </li>
-            <hr class="custom-section-break">
-
-            <li>
-                <h3 class="govuk-heading-m"><a href="#" class="govuk-link">End users</a></h3>
-                <p class="govuk-body">
-                    Find help with end user-related questions, including how to add a service to an end user.
-                </p>
-            </li>
-            <hr class="custom-section-break">
-
-        </ul>
+        <% } %>
 
         <!-- related articles to show at the bottom of the page -->
-        <div id="related-articles" class="govuk-!-margin-bottom-8">
-            <h1 class="govuk-heading-xl">
-                Most popular help topics
-            </h1>
-            <ul class="govuk-list">
-                <li><a class="govuk-link" href="#">How do I approve a request?</a></li>
-                <li><a class="govuk-link" href="#">What is an approver?</a></li>
-                <li><a class="govuk-link" href="#">How do I request access to a service?</a></li>
-                <li><a class="govuk-link" href="#">How do I add a service to my account?</a></li>
-                <li><a class="govuk-link" href="#">Do I need a separate email address for each organisation?</a></li>
-            </ul>
-        </div>
+        <% if (locals.relatedArticles !== undefined && locals.relatedArticles.items.length !== 0) { %>
+            
+            <div id="related-articles" class="govuk-!-margin-bottom-8">
+                <h1 class="govuk-heading-xl">
+                    <%= locals.relatedArticles.title %>
+                </h1>
+                <ul class="govuk-list">
+                    <% for (const index in locals.relatedArticles.items) { %>
+                        <li><a class="govuk-link" href="<%= locals.relatedArticles.items[index].link %>"><%- locals.relatedArticles.items[index].text %></a></li>
+                    <% } %>
+                </ul>
+            </div>
+            
+        <% } %>
 
     </div>
 
