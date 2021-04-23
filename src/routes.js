@@ -1,7 +1,13 @@
 const config = require('./infrastructure/config');
 const healthCheck = require('login.dfe.healthcheck');
 const dashboard = require('./app/dashboard');
-const services = require('./app/services')
+const services = require('./app/services');
+const organisations = require('./app/organisations');
+const manageUsers = require('./app/manageUsers');
+const requests = require('./app/requests');
+const profile = require('./app/profile');
+const approvers = require('./app/approvers');
+const endUsers = require('./app/endUsers');
 
 const mountRoutes = (app, csrf) => {
   app.use('/healthcheck', healthCheck({ config }));
@@ -13,6 +19,12 @@ const mountRoutes = (app, csrf) => {
 
   // mount additional routes for services, approvers, etc
   app.use('/services', services(csrf));
+  app.use('/organisations', organisations(csrf));
+  app.use('/manage-users', manageUsers(csrf));
+  app.use('/requests', requests(csrf));
+  app.use('/profile', profile(csrf));
+  app.use('/approvers', approvers(csrf));
+  app.use('/end-users', endUsers(csrf));
 
   app.get('*', (req, res) => {
     res.redirect('/dashboard');
