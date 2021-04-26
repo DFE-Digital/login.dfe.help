@@ -5,14 +5,14 @@ const express = require('express');
 const { asyncWrapper } = require('login.dfe.express-error-handling');
 
 const { get: getServices } = require('./services');
+const { get: getDoINeedAccess } = require('./doINeedAccess');
 
 const router = express.Router({ mergeParams: true });
 
 const routes = (csrf) => {
 
   router.get('/', csrf, asyncWrapper(getServices));
-
-  // add all other routes to new pages here
+  router.get('/do-I-need-access', csrf, asyncWrapper(getDoINeedAccess));
 
   return router;
 };
