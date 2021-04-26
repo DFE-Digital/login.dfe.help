@@ -5,14 +5,14 @@ const express = require('express');
 const { asyncWrapper } = require('login.dfe.express-error-handling');
 
 const { get: getEndUsers } = require('./endUsers');
+const { get: getWhatIsEndUser } = require('./whatIsEndUser');
 
 const router = express.Router({ mergeParams: true });
 
 const routes = (csrf) => {
 
   router.get('/', csrf, asyncWrapper(getEndUsers));
-
-  // add all other routes to new pages here
+  router.get('/what-is', csrf, asyncWrapper(getWhatIsEndUser));
 
   return router;
 };
