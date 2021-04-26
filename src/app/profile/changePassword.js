@@ -3,7 +3,7 @@ const get = async (req, res) => {
     csrfToken: req.csrfToken(),
     title: 'DfE Sign-in help',
   };
-  return res.render('profile/views/setupAccount', model);
+  return res.render('profile/views/changePassword', model);
 };
 
 module.exports = {
