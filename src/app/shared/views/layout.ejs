@@ -77,10 +77,10 @@
     <div class="global-navigation">
         <nav>
             <ul>
-                <li><a class="govuk-link" href="<%=locals.urls.services%>/my-services">Services</a></li>
-                <li><a class="govuk-link" href="<%=locals.urls.services%>/organisations">Organisations</a></li>
+                <li><a class="govuk-link-bold" href="<%=locals.urls.services%>/my-services">Services</a></li>
+                <li><a class="govuk-link-bold" href="<%=locals.urls.services%>/organisations">Organisations</a></li>
                 <div class="pull-right">
-                    <li><a class="govuk-link" href="<%=locals.urls.profile%>">Profile</a></li>
+                    <li><a class="govuk-link-bold" href="<%=locals.urls.profile%>">Profile</a></li>
                     <li><a class="govuk-link current" href="<%=locals.urls.help%>/contact">Help</a></li>
                 </div>
             </ul>
@@ -118,7 +118,7 @@
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
                         <% for (const prop in locals.validationMessages) { %>
-                            <li><a class="govuk-link" href="#<%=prop%>"><%-locals.validationMessages[prop]%></a></li>
+                            <li><a class="govuk-link-bold" href="#<%=prop%>"><%-locals.validationMessages[prop]%></a></li>
                             <% } %>
                         </ul>
                     </div>
