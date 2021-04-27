@@ -16,8 +16,6 @@ const routes = (csrf) => {
   router.get('/make-someone-approver', csrf, asyncWrapper(getMakeSomeoneApprover));
   router.get('/what-is-approver', csrf, asyncWrapper(getWhatIsApprover));
 
-  // add all other routes to new pages here
-
   return router;
 };
 
