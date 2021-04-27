@@ -4,6 +4,7 @@ const get = async (req, res) => {
     selectedHelp: '',
     validationMessages: {},
     title: 'DfE Sign-in help',
+    backLink: true,
   };
   return res.render('contact/views/help', model);
 };
@@ -14,6 +15,7 @@ const validate = (req) => {
     selectedHelp: req.body.selectedHelp,
     validationMessages: {},
     title: 'DfE Sign-in help',
+    backLink: true,
   };
 
   if (!model.selectedHelp) {
