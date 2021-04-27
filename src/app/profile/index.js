@@ -18,8 +18,6 @@ const routes = (csrf) => {
   router.get('/change-password', csrf, asyncWrapper(getChangePassword));
   router.get('/change-email', csrf, asyncWrapper(getChangeEmail));
 
-  // add all other routes to new pages here
-
   return router;
 };
 

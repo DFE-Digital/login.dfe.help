@@ -1,0 +1,132 @@
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+        <div id="dashboard-title" class="help-section-title">
+            <h2 class="govuk-heading-l">
+                Contact us for further help
+            </h2>
+            <p class="govuk-body govuk-!-margin-right-6">
+                Need a helping hand? Fill in your details and include any information you think would be helpful 
+                for our service desk team.
+            </p>
+            <p class="govuk-body govuk-!-margin-right-6">
+                We will attempt to respond within the next 5 working days.
+            </p>
+        </div>
+        
+        <form method="post" id="form-contact-servicedesk">
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+
+            <div class="govuk-form-group <%= (locals.validationMessages.name !== undefined) ? 'govuk-form-group--error' : '' %>">
+                <label class="govuk-label govuk-label--s" for="name">Name</label>
+                <% if (locals.validationMessages.name !== undefined) { %>
+                    <span id="validation-name" class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.name %>
+                    </span>
+                <% } %>
+                <input class="govuk-input govuk-!-width-three-quarters" id="name" name="name"
+                        type="text" <% if (locals.validationMessages.name !== undefined) { %> aria-invalid="true" aria-describedby="validation-name" <% } %> value="<%=name%>">
+            </div>
+
+            <div class="govuk-form-group <%= (locals.validationMessages.email !== undefined) ? 'govuk-form-group--error' : '' %>">
+                <label class="govuk-label govuk-label--s" for="email">Email address </label>
+                <% if (locals.validationMessages.email !== undefined) { %>
+                    <span id="validation-email" class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.email %>
+                    </span>
+                <% } %>
+                <input class="govuk-input govuk-!-width-three-quarters" id="email" name="email"
+                        type="email" <% if (locals.validationMessages.email !== undefined) { %> aria-invalid="true" aria-describedby="validation-email" <% } %> value="<%=email%>">
+            </div>
+
+            <div class="govuk-form-group <%= (locals.validationMessages.orgName !== undefined) ? 'govuk-form-group--error' : '' %>">
+                <label class="govuk-label govuk-label--s" for="orgName">Organisation name (optional) </label>
+                <% if (locals.validationMessages.orgName !== undefined) { %>
+                    <span id="validation-orgName" class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.orgName %>
+                    </span>
+                <% } %>
+                <input class="govuk-input govuk-!-width-three-quarters" id="orgName" name="orgName"
+                        type="text" <% if (locals.validationMessages.orgName !== undefined) { %> aria-invalid="true" aria-describedby="validation-orgName" <% } %> value="<%=orgName%>">
+            </div>
+
+            <div class="govuk-form-group <%= (locals.validationMessages.urn !== undefined) ? 'govuk-form-group--error' : '' %>">
+                <label class="govuk-label govuk-label--s" for="urn">URN (optional) </label>
+                <% if (locals.validationMessages.urn !== undefined) { %>
+                    <span id="validation-urn" class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.urn %>
+                    </span>
+                <% } %>
+                <input class="govuk-input govuk-!-width-three-quarters" id="urn" name="urn"]
+                        type="text" <% if (locals.validationMessages.urn !== undefined) { %> aria-invalid="true" aria-describedby="validation-urn" <% } %> value="<%=urn%>">
+            </div>
+
+            <div class="govuk-form-group <%= (locals.validationMessages.phone !== undefined) ? 'govuk-form-group--error' : '' %>">
+                <label class="govuk-label govuk-label--s" for="phone">Telephone number (optional) </label>
+                <% if (locals.validationMessages.phone !== undefined) { %>
+                    <span id="validation-phone" class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.phone %>
+                    </span>
+                <% } %>
+                <input class="govuk-input govuk-!-width-three-quarters" id="phone" name="phone"
+                        type="text" <% if (locals.validationMessages.phone !== undefined) { %> aria-invalid="true" aria-describedby="validation-phone" <% } %> value="<%=phone%>">
+            </div>
+
+            <div class="govuk-form-group <%= (locals.validationMessages.type !== undefined) ? 'govuk-form-group--error' : '' %>">
+                <label class="govuk-label govuk-label--s" for="type">What do you need help with? </label>
+                <% if (locals.validationMessages.type !== undefined) { %>
+                    <span id="validation-type" class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.type %>
+                    </span>
+                <% } %>
+                <select id="type" name="type" class="govuk-select govuk-!-width-three-quarters">
+                    <option disabled selected value>Select what you need help with</option>
+                    <option value="create-account" <%= locals.type === 'create-account' ? 'selected' : '' %>>Setting up a DfE Sign-in account</option>
+                    <option value="service-access" <%= locals.type === 'service-access' ? 'selected' : '' %>>Using a DfE service</option>
+                    <option value="email-password" <%= locals.type === 'email-password' ? 'selected' : '' %>>Changing my email or password</option>
+                    <option value="approver" <%= locals.type === 'approver' ? 'selected' : '' %>>Managing my users as an approver</option>
+                    <option value="add-org" <%= locals.type === 'add-org' ? 'selected' : '' %>>Adding organisations to your account</option>
+                    <option value="course-directory" <%= locals.type === 'course-directory' ? 'selected' : '' %>>Accessing Publish to the course directory</option>
+                    <option value="Other" <%=locals.type === 'Other' ? 'selected' : ''%>>Other</option>
+                </select>
+            </div>
+
+            <div class="govuk-form-group <%= (locals.validationMessages.service !== undefined) ? 'govuk-form-group--error' : '' %>">
+                <label class="govuk-label govuk-label--s" for="service">What service were you trying to use?</label>
+                <% if (locals.validationMessages.service !== undefined) { %>
+                    <span id="validation-service" class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.service %>
+                    </span>
+                <% } %>
+                <select id="service" name="service" class="govuk-select govuk-!-width-three-quarters">
+                    <option disabled selected value>Select a service</option>
+                    <% for (let i = 0; i < locals.services.length; i++) {
+                        const service = locals.services[i]; %>
+                        <option value="<%= service.name %>"<%=locals.service === service.name ? 'selected' : ''%>><%= service.name %></option>
+                    <% } %>
+                    <option value="Other" <%=locals.service === 'Other' ? 'selected' : ''%>>Other</option>
+                </select>
+            </div>
+
+            <div class="govuk-form-group <%= (locals.validationMessages.message !== undefined) ? 'govuk-form-group--error' : '' %>">
+                <label class="govuk-label govuk-label--s" for="message">Request details </label>
+                <% if (locals.validationMessages.message !== undefined) { %>
+                    <span id="validation-message" class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.message %>
+                    </span>
+                <% } %>
+                <textarea class="govuk-textarea govuk-!-width-three-quarters" id="message" name="message" rows="6"
+                        maxlength="1000" <% if (locals.validationMessages.message !== undefined) { %> aria-invalid="true" aria-describedby="validation-message" <% } %>><%=message%>
+                </textarea>
+            </div>
+
+            <button type="submit" class="govuk-button govuk-!-margin-right-3">Submit</button>
+
+            <span><a class="govuk-button govuk-button--secondary" href="<%= locals.referrer %>" role="button">Cancel</a></span>
+
+        </form>
+
+    </div>
+
+</div>

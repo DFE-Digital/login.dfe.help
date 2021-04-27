@@ -18,8 +18,6 @@ const routes = (csrf) => {
   router.get('/how-to-reject', csrf, asyncWrapper(getHowToReject));
   router.get('/how-to-approve', csrf, asyncWrapper(getHowToApprove));
 
-  // add all other routes to new pages here
-
   return router;
 };
 

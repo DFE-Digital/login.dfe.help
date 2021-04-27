@@ -12,8 +12,6 @@ const routes = (csrf) => {
 
   router.get('/', csrf, asyncWrapper(getDashboard));
 
-  // add all other routes to new pages here
-
   return router;
 };
 
