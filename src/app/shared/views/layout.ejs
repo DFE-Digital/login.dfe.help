@@ -101,32 +101,37 @@
     </div>
 
 
-    <main id="content" class="govuk-width-container govuk-!-margin-bottom-9">
+    <main id="content" class="govuk-width-container">
 
         <% if (locals.backLink === true) { %>
             <span class="js-back-link"></span>
         <% } %>
 
-        <% if (locals.validationMessages !== undefined) { %>
+        <div class="govuk-main-wrapper">
 
-            <% const validationKeys = Object.keys(locals.validationMessages)  %>
-            <% if (validationKeys.length > 0) { %>
-                <div class="govuk-error-summary govuk-!-margin-top-6" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
-                    <h2 class="govuk-error-summary__title" id="error-summary">
-                        There is a problem
-                    </h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                        <% for (const prop in locals.validationMessages) { %>
-                            <li><a class="govuk-link-bold" href="#<%=prop%>"><%-locals.validationMessages[prop]%></a></li>
-                            <% } %>
-                        </ul>
+            <% if (locals.validationMessages !== undefined) { %>
+
+                <% const validationKeys = Object.keys(locals.validationMessages)  %>
+                <% if (validationKeys.length > 0) { %>
+                    <div class="govuk-error-summary govuk-!-margin-top-6" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+                        <h2 class="govuk-error-summary__title" id="error-summary">
+                            There is a problem
+                        </h2>
+                        <div class="govuk-error-summary__body">
+                            <ul class="govuk-list govuk-error-summary__list">
+                            <% for (const prop in locals.validationMessages) { %>
+                                <li><a class="govuk-link-bold" href="#<%=prop%>"><%-locals.validationMessages[prop]%></a></li>
+                                <% } %>
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                <% } %>
             <% } %>
-        <% } %>
+    
+            <%- body %>
 
-        <%- body %>
+        </div>
+
     </main>
 
 </div>
