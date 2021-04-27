@@ -4,7 +4,7 @@ const get = async (req, res) => {
     title: 'DfE Sign-in help',
     backLink: true,
   };
-  return res.render('profile/views/profile', model);
+  return res.render('services/views/howToAdd', model);
 };
 
 module.exports = {

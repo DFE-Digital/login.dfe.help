@@ -12,7 +12,7 @@ const router = express.Router({ mergeParams: true });
 const routes = (csrf) => {
 
   router.get('/', csrf, asyncWrapper(getEndUsers));
-  router.get('/what-is', csrf, asyncWrapper(getWhatIsEndUser));
+  router.get('/what-is-end-user', csrf, asyncWrapper(getWhatIsEndUser));
 
   return router;
 };
