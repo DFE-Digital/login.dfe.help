@@ -1,6 +1,6 @@
-jest.mock('./../../../src/infrastructure/config', () => require('./../../utils').configMockFactory());
+jest.mock('./../../../src/infrastructure/config', () => require('../../utils').configMockFactory());
 
-const { getRequestMock, getResponseMock } = require('./../../utils');
+const { getRequestMock, getResponseMock } = require('../../utils');
 const res = getResponseMock();
 
 describe('when displaying the help homepage', () => {
