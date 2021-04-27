@@ -2,6 +2,7 @@ const config = require('../../infrastructure/config');
 const NotificationClient = require('login.dfe.notifications.client');
 const { getAndMapExternalServices } = require('../shared/utils');
 const emailValidator = require('email-validator');
+const { get: getDashboard } = require('../dashboard/dashboard');
 
 const notificationClient = new NotificationClient({
   connectionString: config.notifications.connectionString,
@@ -97,7 +98,9 @@ const post = async (req, res) => {
 
   await notificationClient.sendSupportRequest(name, email, req.body.phone, req.body.service, req.body.type, message, org, req.body.urn);
 
-  return res.redirect('/contact/confirm');
+  // render dashboard with success message
+  // we should handle errors here but that hasn't been defined yet
+  return getDashboard(req, res, true);
 };
 
 module.exports = {
