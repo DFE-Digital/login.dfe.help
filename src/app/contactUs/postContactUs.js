@@ -1,4 +1,5 @@
 const config = require('../../infrastructure/config');
+const { decode } = require('html-entities');
 const NotificationClient = require('login.dfe.notifications.client');
 const emailValidator = require('email-validator');
 const { get: getDashboard } = require('../dashboard/dashboard');
@@ -20,25 +21,34 @@ const validateEmail = (email) => {
   return invalidEmailMessage;
 };
 
-const validate = (req) => {
+const isValidStringValue = (value) => {
+  const regex = /\w+/i;
+  const match = regex.exec(value);
+  if (match) {
+    return true;
+  }
+  return false;
+};
+
+const validate = (name, email, orgName, message) => {
   const validationMessages = {};
 
-  if (!req.body.name) {
+  if (!name || !isValidStringValue(name)) {
     validationMessages.name = 'Enter your name';
   }
 
-  const invalidEmailMessage = validateEmail(req.body.email);
+  const invalidEmailMessage = validateEmail(email);
   if (invalidEmailMessage) {
     validationMessages.email = invalidEmailMessage;
   }
 
-  if (!req.body.orgName) {
+  if (!orgName || !isValidStringValue(orgName)) {
     validationMessages.orgName = 'Enter your organisation name';
   }
 
-  if (!req.body.message) {
+  if (!message || !isValidStringValue(message)) {
     validationMessages.message = 'Enter information about your issue';
-  } else if (req.body.message.length > 1000) {
+  } else if (message.length > 1000) {
     validationMessages.message = 'Message cannot be longer than 1000 characters';
   }
 
@@ -50,37 +60,20 @@ const validate = (req) => {
 
 
 const post = async (req, res) => {
-  let message = req.body.message;
-  let email = req.body.email;
-  let org = req.body.orgName;
-  let name = req.body.name;
-  const excludeSanitization = {
-    '&#13;': '  ',
-    '&#10;': '  ',
-    '&#39;': "'",
-    '&#33;': '!',
-    '&#63;': '?',
-    '&#58;': ':',
-    '&quot;': '"',
-    '&amp;': '&',
-  };
-  Object.keys(excludeSanitization).forEach((e) => {
-    const regex = new RegExp(e, 'g');
+  const message = decode(req.body.message);
+  const email = decode(req.body.email);
+  const orgName = decode(req.body.orgName);
+  const name = decode(req.body.name);
+  const urn = decode(req.body.urn);
 
-    message = message.replace(regex, excludeSanitization[e]);
-    email = email.replace(regex, excludeSanitization[e]);
-    org = org.replace(regex, excludeSanitization[e]);
-    name = name.replace(regex, excludeSanitization[e]);
-  });
-
-  const validationResult = validate(req);
+  const validationResult = validate(name, email, orgName, message);
   if (!validationResult.isValid) {
     return res.render('contactUs/views/contactUs', {
       csrfToken: req.csrfToken(),
       name,
       email,
-      orgName: org,
-      urn: req.body.urn,
+      orgName,
+      urn,
       message,
       validationMessages: validationResult.validationMessages,
       isHidden: true,
@@ -88,7 +81,8 @@ const post = async (req, res) => {
     });
   }
 
-  await notificationClient.sendSupportRequest(name, email, message, org, req.body.urn);
+  // send details to notificationClient, which is expecting service, phone and type, so we send them as null
+  await notificationClient.sendSupportRequest(name, email, null, null, null, message, orgName, urn);
 
   // render dashboard with success message
   // we should handle errors here but that hasn't been defined yet

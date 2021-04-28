@@ -36,8 +36,8 @@
                         <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.email %>
                     </span>
                 <% } %>
-                <input class="govuk-input govuk-!-width-three-quarters" id="email" name="email"
-                        type="email" <% if (locals.validationMessages.email !== undefined) { %> aria-invalid="true" aria-describedby="validation-email" <% } %> value="<%=email%>">
+                <input class="govuk-input govuk-!-width-three-quarters" id="email" name="email" type="email" autocomplete="email"
+                        spellcheck="false" <% if (locals.validationMessages.email !== undefined) { %> aria-invalid="true" aria-describedby="validation-email" <% } %> value="<%=email%>">
             </div>
 
             <div class="govuk-form-group <%= (locals.validationMessages.orgName !== undefined) ? 'govuk-form-group--error' : '' %>">
