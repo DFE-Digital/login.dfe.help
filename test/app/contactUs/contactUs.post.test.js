@@ -1,4 +1,4 @@
-jest.mock('./../../../src/infrastructure/config', () => require('./../../utils').configMockFactory());
+jest.mock('./../../../src/infrastructure/config', () => require('../../utils').configMockFactory());
 
 jest.mock('login.dfe.notifications.client');
 
@@ -27,7 +27,7 @@ const createString = (length) => {
   return str;
 };
 
-const { listAllServices } = require('./../../../src/infrastructure/applications');
+const { listAllServices } = require('../../../src/infrastructure/applications');
 
 describe('When handling postback of contact form', () => {
   let req;
