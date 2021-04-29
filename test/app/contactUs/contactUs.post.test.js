@@ -2,12 +2,6 @@ jest.mock('./../../../src/infrastructure/config', () => require('../../utils').c
 
 jest.mock('login.dfe.notifications.client');
 
-jest.mock('./../../../src/infrastructure/applications', () => {
-  return {
-    listAllServices: jest.fn(),
-  };
-});
-
 const NotificationClient = require('login.dfe.notifications.client');
 const sendSupportRequest = jest.fn();
 const sendSupportRequestConfirmation = jest.fn();
@@ -27,9 +21,7 @@ const createString = (length) => {
   return str;
 };
 
-const { listAllServices } = require('../../../src/infrastructure/applications');
-
-describe('When handling postback of contact form', () => {
+describe('When handling post of contact form', () => {
   let req;
   let res;
   let postContactForm;
@@ -41,13 +33,10 @@ describe('When handling postback of contact form', () => {
         name: 'User One',
         email: 'user.one@unit.test',
         saUsername: 'userOne',
-        phone: '01234 567890',
-        service: 'Teaching Jobs',
-        type: 'I have multiple accounts',
         message: 'Please help me',
-        orgName: ''
+        orgName: 'Organisation name'
       },
-      session:{},
+      session: {},
     };
 
     res = {
@@ -60,7 +49,7 @@ describe('When handling postback of contact form', () => {
     NotificationClient.mockImplementation(() => {
       return {
         sendSupportRequest,
-        sendSupportRequestConfirmation
+        sendSupportRequestConfirmation,
       };
     });
 
@@ -68,27 +57,11 @@ describe('When handling postback of contact form', () => {
     NotificationClient.mockImplementation(() => {
       return {
         sendSupportRequest,
-        sendSupportRequestConfirmation
+        sendSupportRequestConfirmation,
       };
     });
 
-    listAllServices.mockReset().mockReturnValue({
-      services: [
-      {
-        id: 'service1',
-        name: 'analyse school performance',
-        isExternalService: true,
-      },
-      {
-        id: 'service2',
-        name: 'COLLECT',
-        isExternalService: true,
-      }
-      ],
-    }
-    );
-
-    postContactForm = require('./../../../src/app/contact/postContactForm');
+    postContactForm = require('./../../../src/app/contactUs/postContactUs');
   });
 
   it(
