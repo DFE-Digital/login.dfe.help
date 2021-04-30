@@ -38,7 +38,6 @@ const schema = new SimpleSchema({
   identifyingParty: identifyingPartySchema,
   organisations: schemas.apiClient,
   adapter: adapterSchema,
-  database: schemas.sequelizeConnection,
 });
 
 module.exports.validate = () => {
