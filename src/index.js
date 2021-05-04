@@ -19,7 +19,7 @@ const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-hand
 // imports for authentication
 const passport = require('passport');
 const getPassportStrategy = require('./infrastructure/oidc');
-const { setUserContext, setConfigContext } = require('./infrastructure/utils');
+const { setUserContext } = require('./infrastructure/utils');
 const appInsights = require('applicationinsights');
 
 const configSchema = require('./infrastructure/config/schema');
