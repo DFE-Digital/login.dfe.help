@@ -79,7 +79,6 @@ const init = async () => {
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(setUserContext);
-  app.use(setConfigContext);
   // finished setting up authentication middleware
 
   app.use(bodyParser.urlencoded({ extended: true }));
