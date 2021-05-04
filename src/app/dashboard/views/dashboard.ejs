@@ -4,13 +4,13 @@
     <% if (locals.flash.notification && locals.flash.heading && locals.flash.message) { %>
         <div class="govuk-grid-column-two-thirds">
 
-            <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+            <div id="notification-wrapper" class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
-                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                    <h2 class="govuk-notification-banner__title" id="notification-title">
                         <%= locals.flash.notification %>
                     </h2>
                 </div>
-                <div class="govuk-notification-banner__content">
+                <div class="govuk-notification-banner__content" id="notification-content">
                     <h3 class="govuk-notification-banner__heading">
                         <%= locals.flash.heading %>
                     </h3>
@@ -39,7 +39,7 @@
         <!-- list of help sections with their decription -->
         <ul class="govuk-list">
 
-            <li>
+            <li id="services">
                 <h3 class="govuk-heading-m">
                     <a href="/services" class="govuk-link">
                         Services
@@ -52,7 +52,7 @@
             </li>
             <hr class="custom-section-break">
 
-            <li>
+            <li id="organisations">
                 <h3 class="govuk-heading-m">
                     <a href="/organisations" class="govuk-link">
                         Organisations
@@ -65,7 +65,7 @@
             </li>
             <hr class="custom-section-break">
 
-            <li>
+            <li id="manage-users">
                 <h3 class="govuk-heading-m">
                     <a href="/manage-users" class="govuk-link">
                         Manage users
@@ -77,7 +77,7 @@
             </li>
             <hr class="custom-section-break">
 
-            <li>
+            <li id="requests">
                 <h3 class="govuk-heading-m">
                     <a href="/requests" class="govuk-link">
                         Requests
@@ -90,7 +90,7 @@
             </li>
             <hr class="custom-section-break">
 
-            <li>
+            <li id="profile">
                 <h3 class="govuk-heading-m">
                     <a href="/profile" class="govuk-link">
                         Profile
@@ -102,7 +102,7 @@
             </li>
             <hr class="custom-section-break">
 
-            <li>
+            <li id="approvers">
                 <h3 class="govuk-heading-m">
                     <a href="/approvers" class="govuk-link">
                         Approvers
@@ -114,7 +114,7 @@
             </li>
             <hr class="custom-section-break">
 
-            <li>
+            <li id="end-users">
                 <h3 class="govuk-heading-m">
                     <a href="/end-users" class="govuk-link">
                         End users
@@ -138,7 +138,7 @@
                 <li><a class="govuk-link-bold" href="/approvers/what-is-approver">What is an approver?</a></li>
                 <li><a class="govuk-link-bold" href="/services/request-access">How do I request access to a service?</a></li>
                 <li><a class="govuk-link-bold" href="/services/how-to-add">How do I add a service to my account?</a></li>
-                <li><a class="govuk-link-bold" href="/profile/change-email">Do I need a separate email address for each organisation?</a></li>
+                <li><a class="govuk-link-bold" href="/profile/change-email#separate-email">Do I need a separate email address for each organisation?</a></li>
             </ul>
         </div>
 
@@ -146,7 +146,7 @@
 
     <!-- side menu with related actions -->
     <div class="govuk-grid-column-one-third">
-        <aside>
+        <aside id="related-actions">
             <h2 class="govuk-heading-m">Related actions</h2>
             <ul class="govuk-list">
                 <li>
