@@ -1,0 +1,161 @@
+<div class="govuk-grid-row">
+
+    <!-- notification if coming from contact-us form -->
+    <% if (locals.showContactFormSubmitted === true) { %>
+        <div class="govuk-grid-column-two-thirds">
+
+            <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                    Success
+                    </h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <h3 class="govuk-notification-banner__heading">
+                    Contact DfE Sign-in form submitted
+                    </h3>
+                    <p class="govuk-body">
+                        We will respond as soon as possible (usually within 5 working days).
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    <% } %>
+
+    <div class="govuk-grid-column-two-thirds">
+
+        <!-- help dashboard title -->
+        <div id="dashboard-title" class="help-section-title">
+            <h2 class="govuk-heading-l">
+                Find help with...
+            </h2>
+            <p class="govuk-body govuk-!-margin-right-6">
+                Choose the main topic for which you need assistance. Each category contains articles designed to 
+                help with specific questions.
+            </p>    
+        </div>
+        
+        <!-- list of help sections with their decription -->
+        <ul class="govuk-list">
+
+            <li>
+                <h3 class="govuk-heading-m">
+                    <a href="/services" class="govuk-link">
+                        Services
+                    </a>
+                </h3>
+                <p class="govuk-body">
+                    Find help with services, including how to add or request a service, and what to do when a 
+                    service is unavailable.
+                </p>
+            </li>
+            <hr class="custom-section-break">
+
+            <li>
+                <h3 class="govuk-heading-m">
+                    <a href="/organisations" class="govuk-link">
+                        Organisations
+                    </a>
+                </h3>
+                <p class="govuk-body">
+                    Find help with organisations, including how to request access to an organisation, and how to 
+                    add multiple organisations to a single account.
+                </p>
+            </li>
+            <hr class="custom-section-break">
+
+            <li>
+                <h3 class="govuk-heading-m">
+                    <a href="/manage-users" class="govuk-link">
+                        Manage users
+                    </a>
+                </h3>
+                <p class="govuk-body">
+                    Find help with manage users, including how to invite new users, and how to add a service to a user.
+                </p>
+            </li>
+            <hr class="custom-section-break">
+
+            <li>
+                <h3 class="govuk-heading-m">
+                    <a href="/requests" class="govuk-link">
+                        Requests
+                    </a>
+                </h3>
+                <p class="govuk-body">
+                    Find help with requests, including how to raise a request, and how to either approve or reject 
+                    the requests that you manage.
+                </p>
+            </li>
+            <hr class="custom-section-break">
+
+            <li>
+                <h3 class="govuk-heading-m">
+                    <a href="/profile" class="govuk-link">
+                        Profile
+                    </a>
+                </h3>
+                <p class="govuk-body">
+                    Find help with your profile, including how to change your email address and password.
+                </p>
+            </li>
+            <hr class="custom-section-break">
+
+            <li>
+                <h3 class="govuk-heading-m">
+                    <a href="/approvers" class="govuk-link">
+                        Approvers
+                    </a>
+                </h3>
+                <p class="govuk-body">
+                    Find help with approver-related questions, including what an approver is and what they do.
+                </p>
+            </li>
+            <hr class="custom-section-break">
+
+            <li>
+                <h3 class="govuk-heading-m">
+                    <a href="/end-users" class="govuk-link">
+                        End users
+                    </a>
+                </h3>
+                <p class="govuk-body">
+                    Find help with end user-related questions, including how to add a service to an end user.
+                </p>
+            </li>
+            <hr class="custom-section-break">
+
+        </ul>
+
+        <!-- related articles to show at the bottom of the page -->
+        <div id="related-articles" class="help-section-title">
+            <h2 class="govuk-heading-m">
+                Most popular help topics
+            </h2>
+            <ul class="govuk-list">
+                <li><a class="govuk-link-bold" href="/requests/how-to-approve">How do I approve a request?</a></li>
+                <li><a class="govuk-link-bold" href="/approvers/what-is-approver">What is an approver?</a></li>
+                <li><a class="govuk-link-bold" href="/services/request-access">How do I request access to a service?</a></li>
+                <li><a class="govuk-link-bold" href="/services/how-to-add">How do I add a service to my account?</a></li>
+                <li><a class="govuk-link-bold" href="/profile/change-email">Do I need a separate email address for each organisation?</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- side menu with related actions -->
+    <div class="govuk-grid-column-one-third">
+        <aside>
+            <h2 class="govuk-heading-m">Related actions</h2>
+            <ul class="govuk-list">
+                <li>
+                    <h3 class="govuk-heading-s">
+                        <a class="govuk-link-bold" href="/contact-us">Contact DfE Sign-in</a>
+                    </h3>
+                </li>
+            </ul>
+        </aside>
+    </div>
+
+</div>
