@@ -1,21 +1,21 @@
 <div class="govuk-grid-row">
 
     <!-- notification if coming from contact-us form -->
-    <% if (locals.showContactFormSubmitted === true) { %>
+    <% if (locals.flash.notification && locals.flash.heading && locals.flash.message) { %>
         <div class="govuk-grid-column-two-thirds">
 
             <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-                    Success
+                        <%= locals.flash.notification %>
                     </h2>
                 </div>
                 <div class="govuk-notification-banner__content">
                     <h3 class="govuk-notification-banner__heading">
-                    Contact DfE Sign-in form submitted
+                        <%= locals.flash.heading %>
                     </h3>
                     <p class="govuk-body">
-                        We will respond as soon as possible (usually within 5 working days).
+                        <%= locals.flash.message %>
                     </p>
                 </div>
             </div>
