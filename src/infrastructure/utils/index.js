@@ -51,18 +51,11 @@ const asyncMiddleware = (fn) => (req, res, next) => {
   Promise.resolve(fn(req, res, next)).catch(next);
 };
 
-const setConfigContext = (req, res, next) => {
-  res.locals.profilesUrl = config.hostingEnvironment.profileUrl;
-  next();
-};
-
-
 module.exports = {
   isLoggedIn,
   getUserEmail,
   getUserDisplayName,
   setUserContext,
   asyncMiddleware,
-  setConfigContext,
   isApprover,
 };
