@@ -36,21 +36,4 @@ describe('when displaying the help dashboard', () => {
       title: 'DfE Sign-in help',
     });
   });
-
-  it('should send showContactFormSubmitted by default', async () => {
-    await getDashboard(req, res);
-
-    expect(res.render.mock.calls[0][1]).toMatchObject({
-      showContactFormSubmitted: undefined,
-    });
-  });
-
-
-  it('should send showContactFormSubmitted if passed in', async () => {
-    await getDashboard(req, res, true);
-
-    expect(res.render.mock.calls[0][1]).toMatchObject({
-      showContactFormSubmitted: true,
-    });
-  });
 });

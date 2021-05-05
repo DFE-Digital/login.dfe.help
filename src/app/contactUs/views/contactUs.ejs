@@ -2,7 +2,7 @@
 
     <div class="govuk-grid-column-two-thirds">
 
-        <div id="dashboard-title" class="help-section-title">
+        <div id="contact-us-title" class="help-section-title">
             <h2 class="govuk-heading-l">
                 Contact us for further help
             </h2>
@@ -73,9 +73,9 @@
                     id="message" name="message" rows="6" maxlength="1000" ><%=message%></textarea>
             </div>
 
-            <button type="submit" class="govuk-button govuk-!-margin-right-3">Submit</button>
+            <button id="submit" type="submit" class="govuk-button govuk-!-margin-right-3">Submit</button>
 
-            <span><a class="govuk-button govuk-button--secondary" href="<%= locals.referrer %>" role="button">Cancel</a></span>
+            <span><a id="cancel" class="govuk-button govuk-button--secondary" href="<%= locals.referrer %>" role="button">Cancel</a></span>
 
         </form>
 

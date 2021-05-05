@@ -43,6 +43,7 @@ describe('When handling post of contact form', () => {
     res = {
       redirect: jest.fn(),
       render: jest.fn(),
+      flash: jest.fn(),
     };
 
     sendSupportRequest.mockReset();
@@ -86,6 +87,18 @@ describe('When handling post of contact form', () => {
     expect(sendSupportRequest.mock.calls[0][5]).toBe(req.body.message);
     expect(sendSupportRequest.mock.calls[0][6]).toBe(req.body.orgName);
     expect(sendSupportRequest.mock.calls[0][7]).toBe(req.body.urn);
+  });
+
+  it('should set flash message if validation passes and form is sent', async () => {
+    await postContactForm(req, res);
+
+    expect(res.flash.mock.calls.length).toBe(3);
+    expect(res.flash.mock.calls[0][0]).toBe('notification');
+    expect(res.flash.mock.calls[0][1]).toBe('Success');
+    expect(res.flash.mock.calls[1][0]).toBe('heading');
+    expect(res.flash.mock.calls[1][1]).toBe('Contact DfE Sign-in form submitted');
+    expect(res.flash.mock.calls[2][0]).toBe('message');
+    expect(res.flash.mock.calls[2][1]).toBe('We will respond as soon as possible (usually within 5 working days).');
   });
 
   it('should render error view if name is missing', async () => {

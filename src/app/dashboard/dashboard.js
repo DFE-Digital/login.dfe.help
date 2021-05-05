@@ -1,9 +1,8 @@
-const get = async (req, res, showContactFormSubmitted) => {
+const get = async (req, res) => {
   const model = {
     csrfToken: req.csrfToken(),
     title: 'DfE Sign-in help',
     backLink: false,
-    showContactFormSubmitted,
   };
   return res.render('dashboard/views/dashboard', model);
 };

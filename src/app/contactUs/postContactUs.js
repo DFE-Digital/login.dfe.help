@@ -86,7 +86,10 @@ const post = async (req, res) => {
 
   // render dashboard with success message
   // we should handle errors here but that hasn't been defined yet
-  return getDashboard(req, res, true);
+  res.flash('notification', 'Success');
+  res.flash('heading', 'Contact DfE Sign-in form submitted');
+  res.flash('message', 'We will respond as soon as possible (usually within 5 working days).');
+  res.redirect('/dashboard');
 };
 
 module.exports = {
