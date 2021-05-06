@@ -6,10 +6,10 @@ const { organisation } = require('login.dfe.dao');
 const callApi = async (method, path, correlationId, body) => {
   const token = await jwtStrategy(config.organisations.service).getBearerToken();
 
-  const hasSeperator =
+  const hasSeparator =
     (config.organisations.service.url.endsWith('/') && !path.startsWith('/')) ||
     (!config.organisations.service.url.endsWith('/') && path.startsWith('/'));
-  const basePathSeperator = hasSeperator ? '' : '/';
+  const basePathSeperator = hasSeparator ? '' : '/';
   const opts = {
     method,
     uri: `${config.organisations.service.url}${basePathSeperator}${path}`,
