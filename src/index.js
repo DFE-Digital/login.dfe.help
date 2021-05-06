@@ -15,6 +15,7 @@ const sanitization = require('login.dfe.sanitization');
 const csurf = require('csurf');
 const mountRoutes = require('./routes');
 const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-handling');
+const flash = require('express-flash-2');
 
 // imports for authentication
 const passport = require('passport');
@@ -91,6 +92,7 @@ const init = async () => {
   app.use(expressLayouts);
   app.set('views', path.resolve(__dirname, 'app'));
   app.set('layout', 'shared/views/layout');
+  app.use(flash());
 
   mountRoutes(app, csrf);
 
