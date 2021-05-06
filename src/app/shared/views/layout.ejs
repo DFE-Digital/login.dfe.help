@@ -79,7 +79,7 @@
             <ul>
                 <li><a class="govuk-link-bold" href="<%=locals.urls.services%>/my-services">Services</a></li>
                 <li><a class="govuk-link-bold" href="<%=locals.urls.services%>/organisations">Organisations</a></li>
-                <% if (locals.isApprover && locals.useApproverJourney) { %>
+                <% if (locals.isApprover) { %>
                     <li><a href ="<%=locals.urls.services%>/approvals/users" class="govuk-link-bold">Manage users</a></li>
                 <% } %>
                 <div class="pull-right">
