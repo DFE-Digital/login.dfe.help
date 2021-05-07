@@ -23,7 +23,7 @@ const signUserOut = async (req, res) => {
       message: 'User logged out',
       meta: {
         email: req.user.email,
-        client: 'services',
+        client: 'help',
       },
     });
 
