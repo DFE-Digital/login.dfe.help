@@ -3,8 +3,7 @@
 const { getOrganisationAndServiceForUserV2, getAllRequestsForApprover } = require('./../organisations');
 
 const isLoggedIn = (req, res, next) => {
-  // TODO check if the second part of this condition makes sense in this case
-  if (req.isAuthenticated() || req.originalUrl.startsWith('/signout?redirected=true')) {
+  if (req.isAuthenticated()) {
     res.locals.isLoggedIn = true;
     return next();
   }
