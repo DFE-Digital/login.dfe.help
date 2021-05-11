@@ -1,6 +1,4 @@
 const get = async (req, res) => {
-  req.session = null;
-
   res.render('contactUs/views/contactUs', {
     csrfToken: req.csrfToken(),
     title: 'DfE Sign-in help',
