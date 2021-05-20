@@ -77,18 +77,20 @@
     <div id="navigation" class="global-navigation">
         <nav>
             <ul>
-                <li><a class="govuk-link-bold" href="<%=locals.urls.services%>/my-services">Services</a></li>
-                <li><a class="govuk-link-bold" href="<%=locals.urls.services%>/organisations">Organisations</a></li>
-                <% if (locals.isApprover) { %>
-                    <li><a href ="<%=locals.urls.services%>/approvals/users" class="govuk-link-bold">Manage users</a></li>
-                <% } %>
-                <div class="pull-right">
-                    <li><a class="govuk-link-bold" href="<%=locals.urls.profile%>">Profile</a></li>
-                    <li><a class="govuk-link-bold current" href="<%=locals.urls.help%>/dashboard">Help</a></li>
-                    <% if (locals.isLoggedIn) { %>
-                        <li><a class="govuk-link-bold" href="/signout">Sign out</a> </li>
+                <% if (locals.isLoggedIn) { %>
+                    <li><a class="govuk-link-bold" href="<%=locals.urls.services%>/my-services">Services</a></li>
+                    <li><a class="govuk-link-bold" href="<%=locals.urls.services%>/organisations">Organisations</a></li>
+                    <% if (locals.isApprover) { %>
+                        <li><a href ="<%=locals.urls.services%>/approvals/users" class="govuk-link-bold">Manage users</a></li>
                     <% } %>
-                </div>
+                    <div class="pull-right">
+                        <li><a class="govuk-link-bold" href="<%=locals.urls.profile%>">Profile</a></li>
+                        <li><a class="govuk-link-bold current" href="<%=locals.urls.help%>/dashboard">Help</a></li>
+                        <% if (locals.isLoggedIn) { %>
+                            <li><a class="govuk-link-bold" href="/signout">Sign out</a> </li>
+                        <% } %>
+                    </div>
+                <% } %>
             </ul>
         </nav>
     </div>
