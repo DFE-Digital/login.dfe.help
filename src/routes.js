@@ -61,6 +61,8 @@ const mountRoutes = (app, csrf) => {
   // app routes
   app.use('/healthcheck', healthCheck({ config }));
 
+  app.use('/contact-us', contactUs(csrf));
+
   // add authentication for the routes below
   app.use(isLoggedIn);
 
@@ -77,7 +79,6 @@ const mountRoutes = (app, csrf) => {
   app.use('/profile', profile(csrf));
   app.use('/approvers', approvers(csrf));
   app.use('/end-users', endUsers(csrf));
-  app.use('/contact-us', contactUs(csrf));
 
   app.get('*', (req, res) => {
     res.redirect('/dashboard');

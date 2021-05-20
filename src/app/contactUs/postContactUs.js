@@ -94,7 +94,7 @@ const post = async (req, res) => {
   res.flash('notification', 'Success');
   res.flash('heading', 'Contact DfE Sign-in form submitted');
   res.flash('message', 'We will respond as soon as possible (usually within 5 working days).');
-  res.redirect('/dashboard');
+  res.redirect('/contact-us/completed');
 };
 
 module.exports = {
