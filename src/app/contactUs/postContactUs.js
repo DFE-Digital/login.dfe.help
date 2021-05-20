@@ -2,7 +2,6 @@ const config = require('../../infrastructure/config');
 const { decode } = require('html-entities');
 const NotificationClient = require('login.dfe.notifications.client');
 const emailValidator = require('email-validator');
-const { get: getDashboard } = require('../dashboard/dashboard');
 
 const notificationClient = new NotificationClient({
   connectionString: config.notifications.connectionString,
@@ -68,6 +67,11 @@ const post = async (req, res) => {
 
   const validationResult = validate(name, email, orgName, message);
   if (!validationResult.isValid) {
+    // cancel button will take back to dashboard by default (if going directly to this page)
+    let cancelLink = '/dashboard';
+    if (req.body.currentReferrer) {
+      cancelLink = req.body.currentReferrer;
+    }
     return res.render('contactUs/views/contactUs', {
       csrfToken: req.csrfToken(),
       name,
@@ -78,6 +82,7 @@ const post = async (req, res) => {
       validationMessages: validationResult.validationMessages,
       isHidden: true,
       backLink: true,
+      referrer: cancelLink,
     });
   }
 

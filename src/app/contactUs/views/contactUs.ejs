@@ -17,6 +17,7 @@
         
         <form method="post" id="form-contact-servicedesk">
             <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+            <input type="hidden" name="currentReferrer" value="<%=locals.referrer%>" />
 
             <fieldset class="govuk-fieldset">
 
@@ -79,9 +80,10 @@
 
             </fieldset>
 
-            <button id="submit" type="submit" class="govuk-button govuk-!-margin-right-3">Submit</button>
-
-            <span><a id="cancel" class="govuk-button govuk-button--secondary" href="<%= locals.referrer %>" role="button">Cancel</a></span>
+            <div class="govuk-button-group">
+                <button id="submit" type="submit" class="govuk-button">Submit</button>
+                <a id="cancel" class="govuk-button govuk-button--secondary" href="<%= locals.referrer %>" role="button">Cancel</a>
+            </div>
 
         </form>
 
