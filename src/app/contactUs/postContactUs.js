@@ -66,30 +66,34 @@ const post = async (req, res) => {
   const urn = decode(req.body.urn);
 
   const validationResult = validate(name, email, orgName, message);
-  if (!validationResult.isValid) {
-    // cancel button will take back to dashboard by default (if going directly to this page)
-    let cancelLink = '/dashboard';
-    if (req.body.currentReferrer) {
-      cancelLink = req.body.currentReferrer;
-    }
-    return res.render('contactUs/views/contactUs', {
-      csrfToken: req.csrfToken(),
-      name,
-      email,
-      orgName,
-      urn,
-      message,
-      validationMessages: validationResult.validationMessages,
-      isHidden: true,
-      backLink: true,
-      referrer: cancelLink,
-    });
+  // if (!validationResult.isValid) {
+  //   // cancel button will take back to dashboard by default (if going directly to this page)
+  //   let cancelLink = '/dashboard';
+  //   if (req.body.currentReferrer) {
+  //     cancelLink = req.body.currentReferrer;
+  //   }
+  //   return res.render('contactUs/views/contactUs', {
+  //     csrfToken: req.csrfToken(),
+  //     name,
+  //     email,
+  //     orgName,
+  //     urn,
+  //     message,
+  //     validationMessages: validationResult.validationMessages,
+  //     isHidden: true,
+  //     backLink: true,
+  //     referrer: cancelLink,
+  //   });
+  // }
+
+  // // send details to notificationClient, which is expecting service, phone and type, so we send them as null
+  // await notificationClient.sendSupportRequest(name, email, null, null, null, message, orgName, urn);
+  
+  if (req.query.redirect_uri) {
+    res.redirect(`/contact-us/completed?redirect_uri=${req.query.redirect_uri}`);
+  } else {
+    res.redirect('/contact-us/completed');
   }
-
-  // send details to notificationClient, which is expecting service, phone and type, so we send them as null
-  await notificationClient.sendSupportRequest(name, email, null, null, null, message, orgName, urn);
-
-  res.redirect('/contact-us/completed');
 };
 
 module.exports = {
