@@ -95,19 +95,20 @@
         </nav>
     </div>
 
-    <div id="home-top" class="home-top">
-        <div class="govuk-width-container home-top__inner">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds">
-                    <h1 class="govuk-heading-xl govuk-!-margin-top-5 govuk-!-margin-bottom-5">Help using DfE Sign-in</h1>
-                </div>
-                <div class="govuk-grid-column-two-thirds">
-                    <h3 class="govuk-heading-m">This is where you'll find guidance, tips and articles to help you use DfE Sign-in.</h3>
+    <% if (locals.isHomeTopHidden === false) { %>
+        <div id="home-top" class="home-top">
+            <div class="govuk-width-container home-top__inner">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <h1 class="govuk-heading-xl govuk-!-margin-top-5 govuk-!-margin-bottom-5">Help using DfE Sign-in</h1>
+                    </div>
+                    <div class="govuk-grid-column-two-thirds">
+                        <h3 class="govuk-heading-m">This is where you'll find guidance, tips and articles to help you use DfE Sign-in.</h3>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    <% } %> 
 
     <main id="content" class="govuk-width-container">
 
