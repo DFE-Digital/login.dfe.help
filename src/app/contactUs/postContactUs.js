@@ -89,11 +89,6 @@ const post = async (req, res) => {
   // send details to notificationClient, which is expecting service, phone and type, so we send them as null
   await notificationClient.sendSupportRequest(name, email, null, null, null, message, orgName, urn);
 
-  // render dashboard with success message
-  // we should handle errors here but that hasn't been defined yet
-  res.flash('notification', 'Success');
-  res.flash('heading', 'Contact DfE Sign-in form submitted');
-  res.flash('message', 'We will respond as soon as possible (usually within 5 working days).');
   res.redirect('/contact-us/completed');
 };
 
