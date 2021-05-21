@@ -3,7 +3,7 @@ const get = async (req, res) => {
     csrfToken: req.csrfToken(),
     title: 'DfE Sign-in help',
     isHidden: true,
-    backLink: true,
+    isHomeTopHidden: true,
   });
 };
 
