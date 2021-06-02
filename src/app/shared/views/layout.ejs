@@ -86,16 +86,14 @@
                     <div class="pull-right">
                         <li><a class="govuk-link-bold" href="<%=locals.urls.profile%>">Profile</a></li>
                         <li><a class="govuk-link-bold current" href="<%=locals.urls.help%>/dashboard">Help</a></li>
-                        <% if (locals.isLoggedIn) { %>
-                            <li><a class="govuk-link-bold" href="/signout">Sign out</a> </li>
-                        <% } %>
+                        <li><a class="govuk-link-bold" href="/signout">Sign out</a> </li>
                     </div>
                 <% } %>
             </ul>
         </nav>
     </div>
 
-    <% if (locals.isHomeTopHidden === false) { %>
+    <% if (locals.isHomeTopHidden !== true) { %>
         <div id="home-top" class="home-top">
             <div class="govuk-width-container home-top__inner">
                 <div class="govuk-grid-row">

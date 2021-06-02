@@ -17,6 +17,7 @@ const get = async (req, res) => {
     isHidden: true,
     backLink: true,
     referrer: cancelLink,
+    isHomeTopHidden: true,
   });
 };
 
