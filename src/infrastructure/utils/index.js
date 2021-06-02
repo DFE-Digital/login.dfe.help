@@ -3,12 +3,21 @@
 const { getOrganisationAndServiceForUserV2, getAllRequestsForApprover } = require('./../organisations');
 
 const isLoggedIn = (req, res, next) => {
+  // if user is authenticated, set local value to show navigation menu
   if (req.isAuthenticated()) {
     res.locals.isLoggedIn = true;
-    return next();
   }
-  req.session.redirectUrl = req.originalUrl;
-  return res.status(302).redirect('/auth');
+  return next();
+};
+
+const authenticate = (req, res, next) => {
+  // if user not authenticated, redirect to authentication
+  if (!req.isAuthenticated()) {
+    req.session.redirectUrl = req.originalUrl;
+    return res.status(302).redirect('/auth');
+  }
+  // if user authenticated, continue
+  return next();
 };
 
 const setUserContext = async (req, res, next) => {
@@ -33,5 +42,6 @@ const setUserContext = async (req, res, next) => {
 
 module.exports = {
   isLoggedIn,
+  authenticate,
   setUserContext,
 };

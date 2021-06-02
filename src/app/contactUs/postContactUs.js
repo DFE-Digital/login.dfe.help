@@ -2,7 +2,6 @@ const config = require('../../infrastructure/config');
 const { decode } = require('html-entities');
 const NotificationClient = require('login.dfe.notifications.client');
 const emailValidator = require('email-validator');
-const { get: getDashboard } = require('../dashboard/dashboard');
 
 const notificationClient = new NotificationClient({
   connectionString: config.notifications.connectionString,
@@ -68,6 +67,11 @@ const post = async (req, res) => {
 
   const validationResult = validate(name, email, orgName, message);
   if (!validationResult.isValid) {
+    // cancel button will take back to dashboard by default (if going directly to this page)
+    let cancelLink = '/dashboard';
+    if (req.body.currentReferrer) {
+      cancelLink = req.body.currentReferrer;
+    }
     return res.render('contactUs/views/contactUs', {
       csrfToken: req.csrfToken(),
       name,
@@ -78,18 +82,18 @@ const post = async (req, res) => {
       validationMessages: validationResult.validationMessages,
       isHidden: true,
       backLink: true,
+      referrer: cancelLink,
     });
   }
 
   // send details to notificationClient, which is expecting service, phone and type, so we send them as null
   await notificationClient.sendSupportRequest(name, email, null, null, null, message, orgName, urn);
-
-  // render dashboard with success message
-  // we should handle errors here but that hasn't been defined yet
-  res.flash('notification', 'Success');
-  res.flash('heading', 'Contact DfE Sign-in form submitted');
-  res.flash('message', 'We will respond as soon as possible (usually within 5 working days).');
-  res.redirect('/dashboard');
+  
+  if (req.query.redirect_uri) {
+    res.redirect(`/contact-us/completed?redirect_uri=${req.query.redirect_uri}`);
+  } else {
+    res.redirect('/contact-us/completed');
+  }
 };
 
 module.exports = {

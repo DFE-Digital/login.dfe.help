@@ -13,7 +13,7 @@ const contactUs = require('./app/contactUs');
 const passport = require('passport');
 const signOut = require('./app/signOut');
 const logger = require('./infrastructure/logger');
-const { isLoggedIn } = require('./infrastructure/utils');
+const { isLoggedIn, authenticate } = require('./infrastructure/utils');
 
 const mountRoutes = (app, csrf) => {
 
@@ -61,8 +61,13 @@ const mountRoutes = (app, csrf) => {
   // app routes
   app.use('/healthcheck', healthCheck({ config }));
 
-  // add authentication for the routes below
+  // add middleware that sets local variable for templates if user already logged in
   app.use(isLoggedIn);
+
+  app.use('/contact-us', contactUs(csrf));
+
+  // add authentication for the routes below
+  app.use(authenticate);
 
   // route for the dashboard
   // keeping original route to help page to avoid having to update all links in footers
@@ -77,7 +82,6 @@ const mountRoutes = (app, csrf) => {
   app.use('/profile', profile(csrf));
   app.use('/approvers', approvers(csrf));
   app.use('/end-users', endUsers(csrf));
-  app.use('/contact-us', contactUs(csrf));
 
   app.get('*', (req, res) => {
     res.redirect('/dashboard');

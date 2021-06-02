@@ -1,28 +1,5 @@
 <div class="govuk-grid-row">
 
-    <!-- notification if coming from contact-us form -->
-    <% if (locals.flash.notification && locals.flash.heading && locals.flash.message) { %>
-        <div class="govuk-grid-column-two-thirds">
-
-            <div id="notification-wrapper" class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-                <div class="govuk-notification-banner__header">
-                    <h2 class="govuk-notification-banner__title" id="notification-title">
-                        <%= locals.flash.notification %>
-                    </h2>
-                </div>
-                <div class="govuk-notification-banner__content" id="notification-content">
-                    <h3 class="govuk-notification-banner__heading">
-                        <%= locals.flash.heading %>
-                    </h3>
-                    <p class="govuk-body">
-                        <%= locals.flash.message %>
-                    </p>
-                </div>
-            </div>
-
-        </div>
-    <% } %>
-
     <div class="govuk-grid-column-two-thirds">
 
         <!-- help dashboard title -->
