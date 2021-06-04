@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="govuk-form-group <%= (locals.validationMessages.urn !== undefined) ? 'govuk-form-group--error' : '' %>">
-                    <label class="govuk-label govuk-label--s" for="urn">Organisation URN (optional)</label>
+                    <label class="govuk-label govuk-label--s" for="urn">Organisation URN or UKPRN (optional)</label>
                     <% if (locals.validationMessages.urn !== undefined) { %>
                         <span id="validation-urn" class="govuk-error-message">
                             <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.urn %>
@@ -65,6 +65,55 @@
                     <% } %>
                     <input class="govuk-input govuk-!-width-three-quarters" id="urn" name="urn"]
                             type="text" <% if (locals.validationMessages.urn !== undefined) { %> aria-invalid="true" aria-describedby="validation-urn" <% } %> value="<%=urn%>">
+                </div>
+
+                <div class="govuk-form-group <%= (locals.validationMessages.type !== undefined) ? 'govuk-form-group--error' : '' %>">
+                    <label class="govuk-label govuk-label--s" for="type">What do you need help with?</label>
+                    <% if (locals.validationMessages.type !== undefined) { %>
+                        <span id="validation-type" class="govuk-error-message">
+                            <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.type %>
+                        </span>
+                    <% } %>
+                    <select id="type" name="type" class="govuk-select govuk-!-width-three-quarters" onchange="showHideOtherMessageInput()">
+                        <option disabled selected value>Tell us what you need help with</option>
+                        <option value="create-account" <%= locals.type === 'create-account' ? 'selected' : '' %>>Setting up a DfE Sign-in account</option>
+                        <option value="service-access" <%= locals.type === 'service-access' ? 'selected' : '' %>>Using a DfE service</option>
+                        <option value="email-password" <%= locals.type === 'email-password' ? 'selected' : '' %>>Changing my email or password</option>
+                        <option value="approver" <%= locals.type === 'approver' ? 'selected' : '' %>>Managing my users as an approver</option>
+                        <option value="add-org" <%= locals.type === 'add-org' ? 'selected' : '' %>>Adding organisations to your account</option>
+                        <option value="course-directory" <%= locals.type === 'course-directory' ? 'selected' : '' %>>Accessing Publish to the course directory</option>
+                        <option value="other" <%= locals.type === 'other' ? 'selected' : '' %>>Other (please specify)</option>
+                    </select>
+                </div>
+
+                <div id="typeOtherMessageGroup" class="govuk-form-group <%= (locals.validationMessages.typeOtherMessage !== undefined) ? 'govuk-form-group--error' : '' %>"
+                    style="<%= locals.type !== 'other' ? 'display: none' : '' %>">
+                    <label class="govuk-label govuk-label--s" for="typeOtherMessage">Tell us what you need help with</label>
+                    <% if (locals.validationMessages.typeOtherMessage !== undefined) { %>
+                        <span id="validation-typeOtherMessage" class="govuk-error-message">
+                            <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.typeOtherMessage %>
+                        </span>
+                    <% } %>
+                    <textarea class="govuk-textarea govuk-!-width-three-quarters" <% if (locals.validationMessages.typeOtherMessage !== undefined) { %> aria-invalid="true" aria-describedby="validation-typeOtherMessage" <% } %>
+                        id="typeOtherMessage" name="typeOtherMessage" rows="3" maxlength="500" ><%=typeOtherMessage%></textarea>
+                </div>
+
+                <div class="govuk-form-group <%= (locals.validationMessages.service !== undefined) ? 'govuk-form-group--error' : '' %>">
+                    <label class="govuk-label govuk-label--s" for="service">What service are you trying to use?</label>
+                    <% if (locals.validationMessages.service !== undefined) { %>
+                        <span id="validation-service" class="govuk-error-message">
+                            <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.service %>
+                        </span>
+                    <% } %>
+                    <select id="service" name="service" class="govuk-select govuk-!-width-three-quarters">
+                        <option disabled selected value>Tell us what service you are trying to use</option>
+                        <% for (let i = 0; i < locals.services.length; i++) {
+                            const service = locals.services[i]; %>
+                            <option value="<%= service.name %>"<%=locals.service === service.name ? 'selected' : ''%>><%= service.name %></option>
+                        <% } %>
+                        <option value="Other" <%=locals.service === 'Other' ? 'selected' : ''%>>Other</option>
+                        <option value="None" <%=locals.service === 'None' ? 'selected' : ''%>>None</option>
+                    </select>
                 </div>
 
                 <div class="govuk-form-group <%= (locals.validationMessages.message !== undefined) ? 'govuk-form-group--error' : '' %>">
@@ -90,3 +139,17 @@
     </div>
 
 </div>
+
+<script>
+    function showHideOtherMessageInput(){
+        var elemWrapper = document.getElementById("typeOtherMessageGroup");
+        var elem = document.getElementById("typeOtherMessage");
+        if (document.getElementById("type").value === 'other') {
+            elemWrapper.style.display = 'block';
+            elem.focus();
+        } else {
+            elemWrapper.style.display = 'none';
+            elem.value = '';
+        }
+    }
+</script>

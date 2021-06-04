@@ -1,5 +1,13 @@
 jest.mock('./../../../src/infrastructure/config', () => require('../../utils').configMockFactory());
 
+jest.mock('./../../../src/infrastructure/applications', () => {
+  return {
+    listAllServices: jest.fn(),
+  };
+});
+
+const { listAllServices } = require('./../../../src/infrastructure/applications');
+
 jest.mock('login.dfe.notifications.client');
 
 const NotificationClient = require('login.dfe.notifications.client');
@@ -21,6 +29,21 @@ const createString = (length) => {
   return str;
 };
 
+const mockServicesInput = [
+  {
+    id: 'service1',
+    name: 'analyse school performance',
+    isExternalService: true,
+  },
+];
+
+const mockServicesOutput = [
+  {
+    id: 'service1',
+    name: 'analyse school performance',
+  },
+];
+
 describe('When handling post of contact form', () => {
   let req;
   let res;
@@ -32,18 +55,20 @@ describe('When handling post of contact form', () => {
       body: {
         name: 'User One',
         email: 'user.one@unit.test',
-        saUsername: 'userOne',
         message: 'Please help me',
         orgName: 'Organisation name',
         urn: '1234',
+        service: 'test service',
+        type: 'test type',
+        typeOtherMessage: '',
       },
       session: {},
+      query: {},
     };
 
     res = {
       redirect: jest.fn(),
       render: jest.fn(),
-      flash: jest.fn(),
     };
 
     sendSupportRequest.mockReset();
@@ -61,6 +86,10 @@ describe('When handling post of contact form', () => {
         sendSupportRequest,
         sendSupportRequestConfirmation,
       };
+    });
+
+    listAllServices.mockReset().mockReturnValue({
+      services: mockServicesInput,
     });
 
     postContactForm = require('./../../../src/app/contactUs/postContactUs').post;
@@ -81,24 +110,28 @@ describe('When handling post of contact form', () => {
     expect(sendSupportRequest.mock.calls).toHaveLength(1);
     expect(sendSupportRequest.mock.calls[0][0]).toBe(req.body.name);
     expect(sendSupportRequest.mock.calls[0][1]).toBe(req.body.email);
-    expect(sendSupportRequest.mock.calls[0][2]).toBeNull();
-    expect(sendSupportRequest.mock.calls[0][3]).toBeNull();
-    expect(sendSupportRequest.mock.calls[0][4]).toBeNull();
-    expect(sendSupportRequest.mock.calls[0][5]).toBe(req.body.message);
-    expect(sendSupportRequest.mock.calls[0][6]).toBe(req.body.orgName);
-    expect(sendSupportRequest.mock.calls[0][7]).toBe(req.body.urn);
+    expect(sendSupportRequest.mock.calls[0][2]).toBe(req.body.service);
+    expect(sendSupportRequest.mock.calls[0][3]).toBe(req.body.type);
+    expect(sendSupportRequest.mock.calls[0][4]).toBe(req.body.typeOtherMessage);
+    expect(sendSupportRequest.mock.calls[0][5]).toBe(req.body.orgName);
+    expect(sendSupportRequest.mock.calls[0][6]).toBe(req.body.urn);
+    expect(sendSupportRequest.mock.calls[0][7]).toBe(req.body.message);
   });
 
-  it('should set flash message if validation passes and form is sent', async () => {
+  it('should redirect to contact form complete page', async () => {
     await postContactForm(req, res);
 
-    expect(res.flash.mock.calls.length).toBe(3);
-    expect(res.flash.mock.calls[0][0]).toBe('notification');
-    expect(res.flash.mock.calls[0][1]).toBe('Success');
-    expect(res.flash.mock.calls[1][0]).toBe('heading');
-    expect(res.flash.mock.calls[1][1]).toBe('Contact DfE Sign-in form submitted');
-    expect(res.flash.mock.calls[2][0]).toBe('message');
-    expect(res.flash.mock.calls[2][1]).toBe('We will respond as soon as possible (usually within 5 working days).');
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed');
+  });
+
+  it('should redirect to contact form complete page with redirect URI if provided in query', async () => {
+    req.query.redirect_uri = 'test_redirect';
+
+    await postContactForm(req, res);
+
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed?redirect_uri=test_redirect');
   });
 
   it('should render error view if name is missing', async () => {
@@ -115,6 +148,11 @@ describe('When handling post of contact form', () => {
       email: req.body.email,
       orgName: req.body.orgName,
       message: req.body.message,
+      referrer: '/dashboard',
+      service: 'test service',
+      services: mockServicesOutput,
+      type: 'test type',
+      typeOtherMessage: '',
       urn: req.body.urn,
       backLink: true,
       isHidden: true,
@@ -138,6 +176,11 @@ describe('When handling post of contact form', () => {
       email: req.body.email,
       orgName: req.body.orgName,
       message: req.body.message,
+      referrer: '/dashboard',
+      service: 'test service',
+      services: mockServicesOutput,
+      type: 'test type',
+      typeOtherMessage: '',
       urn: req.body.urn,
       backLink: true,
       isHidden: true,
@@ -161,6 +204,11 @@ describe('When handling post of contact form', () => {
       email: req.body.email,
       orgName: req.body.orgName,
       message: req.body.message,
+      referrer: '/dashboard',
+      service: 'test service',
+      services: mockServicesOutput,
+      type: 'test type',
+      typeOtherMessage: '',
       urn: req.body.urn,
       backLink: true,
       isHidden: true,
@@ -184,6 +232,11 @@ describe('When handling post of contact form', () => {
       email: req.body.email,
       orgName: req.body.orgName,
       message: req.body.message,
+      referrer: '/dashboard',
+      service: 'test service',
+      services: mockServicesOutput,
+      type: 'test type',
+      typeOtherMessage: '',
       urn: req.body.urn,
       backLink: true,
       isHidden: true,
@@ -207,6 +260,11 @@ describe('When handling post of contact form', () => {
       email: req.body.email,
       orgName: req.body.orgName,
       message: req.body.message,
+      referrer: '/dashboard',
+      service: 'test service',
+      services: mockServicesOutput,
+      type: 'test type',
+      typeOtherMessage: '',
       urn: req.body.urn,
       backLink: true,
       isHidden: true,
@@ -230,6 +288,11 @@ describe('When handling post of contact form', () => {
       email: req.body.email,
       orgName: req.body.orgName,
       message: req.body.message,
+      referrer: '/dashboard',
+      service: 'test service',
+      services: mockServicesOutput,
+      type: 'test type',
+      typeOtherMessage: '',
       urn: req.body.urn,
       backLink: true,
       isHidden: true,
