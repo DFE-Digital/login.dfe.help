@@ -53,7 +53,7 @@ const validate = (name, email, orgName, message, service, type, typeOtherMessage
     validationMessages.type = 'Enter information about what you need help with';
   }
 
-  if (type === 'Other' && (!typeOtherMessage || !isValidStringValue(typeOtherMessage))) {
+  if (type === 'other' && (!typeOtherMessage || !isValidStringValue(typeOtherMessage))) {
     validationMessages.typeOtherMessage = 'Enter information about your issue';
   }
 
