@@ -111,7 +111,7 @@
                             const service = locals.services[i]; %>
                             <option value="<%= service.name %>"<%=locals.service === service.name ? 'selected' : ''%>><%= service.name %></option>
                         <% } %>
-                        <option value="Other" <%=locals.service === 'Other' ? 'selected' : ''%>>Other</option>
+                        <option value="Other" <%=locals.service === 'Other' ? 'selected' : ''%>>Other (please specify)</option>
                         <option value="None" <%=locals.service === 'None' ? 'selected' : ''%>>None</option>
                     </select>
                 </div>
