@@ -103,6 +103,7 @@ const post = async (req, res) => {
       isHidden: true,
       backLink: true,
       referrer: cancelLink,
+      isHomeTopHidden: true,
       services,
     });
   }
