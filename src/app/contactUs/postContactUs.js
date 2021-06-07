@@ -22,7 +22,7 @@ const validateEmail = (email) => {
 };
 
 const isValidStringValue = (value) => {
-  const regex = /\w+/i;
+  const regex = /[a-zA-Z0-9]/i;
   const match = regex.exec(value);
   if (match) {
     return true;
