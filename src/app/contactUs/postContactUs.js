@@ -2,6 +2,7 @@ const config = require('../../infrastructure/config');
 const { decode } = require('html-entities');
 const NotificationClient = require('login.dfe.notifications.client');
 const emailValidator = require('email-validator');
+const { getAndMapExternalServices } = require('../shared/utils');
 
 const notificationClient = new NotificationClient({
   connectionString: config.notifications.connectionString,
@@ -29,7 +30,7 @@ const isValidStringValue = (value) => {
   return false;
 };
 
-const validate = (name, email, orgName, message) => {
+const validate = (name, email, orgName, message, service, type, typeOtherMessage) => {
   const validationMessages = {};
 
   if (!name || !isValidStringValue(name)) {
@@ -43,6 +44,17 @@ const validate = (name, email, orgName, message) => {
 
   if (!orgName || !isValidStringValue(orgName)) {
     validationMessages.orgName = 'Enter your organisation name';
+  }
+
+  if (!service) {
+    validationMessages.service = 'Enter information about the service you are trying to use';
+  }
+  if (!type) {
+    validationMessages.type = 'Enter information about what you need help with';
+  }
+
+  if (type === 'other' && (!typeOtherMessage || !isValidStringValue(typeOtherMessage))) {
+    validationMessages.typeOtherMessage = 'Enter information about your issue';
   }
 
   if (!message || !isValidStringValue(message)) {
@@ -64,31 +76,41 @@ const post = async (req, res) => {
   const orgName = decode(req.body.orgName);
   const name = decode(req.body.name);
   const urn = decode(req.body.urn);
+  const service = decode(req.body.service);
+  const type = decode(req.body.type);
+  const typeOtherMessage = decode(req.body.typeOtherMessage);
 
-  const validationResult = validate(name, email, orgName, message);
+  const validationResult = validate(name, email, orgName, message, service, type, typeOtherMessage);
   if (!validationResult.isValid) {
     // cancel button will take back to dashboard by default (if going directly to this page)
     let cancelLink = '/dashboard';
     if (req.body.currentReferrer) {
       cancelLink = req.body.currentReferrer;
     }
+    // retrieve list of services
+    const services = await getAndMapExternalServices(req.id);
     return res.render('contactUs/views/contactUs', {
       csrfToken: req.csrfToken(),
       name,
       email,
       orgName,
       urn,
+      service,
+      type,
+      typeOtherMessage,
       message,
       validationMessages: validationResult.validationMessages,
       isHidden: true,
       backLink: true,
       referrer: cancelLink,
+      isHomeTopHidden: true,
+      services,
     });
   }
 
   // send details to notificationClient, which is expecting service, phone and type, so we send them as null
-  await notificationClient.sendSupportRequest(name, email, null, null, null, message, orgName, urn);
-  
+  await notificationClient.sendSupportRequest(name, email, service, type, typeOtherMessage, orgName, urn, message);
+
   if (req.query.redirect_uri) {
     res.redirect(`/contact-us/completed?redirect_uri=${req.query.redirect_uri}`);
   } else {

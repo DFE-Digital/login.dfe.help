@@ -1,5 +1,13 @@
 jest.mock('./../../../src/infrastructure/config', () => require('../../utils').configMockFactory());
 
+jest.mock('./../../../src/infrastructure/applications', () => {
+  return {
+    listAllServices: jest.fn(),
+  };
+});
+
+const { listAllServices } = require('./../../../src/infrastructure/applications');
+
 const { getRequestMock, getResponseMock } = require('../../utils');
 
 const res = getResponseMock();
@@ -10,10 +18,25 @@ describe('when displaying the contact us page', () => {
 
   beforeEach(() => {
     req = getRequestMock({
-      get: jest.fn().mockReturnValue('test_referrer'),
+      get: jest.fn().mockReturnValue('https://test_referrer.com/test_referrer'),
     });
     res.mockResetAll();
     getContactUs = require('../../../src/app/contactUs/getContactUs').get;
+
+    listAllServices.mockReset().mockReturnValue({
+      services: [
+        {
+          id: 'service1',
+          name: 'analyse school performance',
+          isExternalService: true,
+        },
+        {
+          id: 'service2',
+          name: 'COLLECT',
+          isExternalService: true,
+        },
+      ],
+    });
   });
 
   it('should render the contact us form', async () => {
@@ -43,7 +66,7 @@ describe('when displaying the contact us page', () => {
     await getContactUs(req, res);
 
     expect(res.render.mock.calls[0][1]).toMatchObject({
-      referrer: 'test_referrer',
+      referrer: '/test_referrer',
     });
   });
 
