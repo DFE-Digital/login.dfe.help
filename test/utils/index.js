@@ -53,6 +53,7 @@ const getResponseMock = () => {
       this.redirect.mockReturnValue(res);
       this.status.mockReturnValue(res);
       this.contentType.mockReturnValue(res);
+      this.flash.mockReset();
     }
   };
 
