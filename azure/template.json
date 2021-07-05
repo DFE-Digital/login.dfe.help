@@ -71,6 +71,24 @@
             "metadata": {
                 "description": "The name of the Resource Group that contains the Key Vault"
             }
+        },
+        "auditServiceBusConnectionString": {
+            "type": "string",
+            "metadata": {
+                "description": "ASB Connection String"
+            }
+        },
+        "auditServiceBusTopicName": {
+            "type": "string",
+            "metadata": {
+                "description": "ASB Topic Name"
+            }
+        },
+        "auditServiceBusSubscriptionName": {
+            "type": "string",
+            "metadata": {
+                "description": "ASB Subscription Name"
+            }
         }
     },
     "variables": {
@@ -135,7 +153,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/DFE-Digital/login.dfe.infrastructure/master/Shared/app-service.json",
+                    "uri": "https://raw.githubusercontent.com/DFE-Digital/login.dfe.infrastructure/master/Shared/app-service-azure-config.json",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -165,6 +183,13 @@
                     },
                     "certificateThumbprint": {
                         "value": "[reference(concat(parameters('appServiceName'), '-certificate')).outputs.certificateThumbprint.value]"
+                    },
+                    "additionalAppSettings": {
+                        "value": {
+                            "QUEUE_CONNECTION_STRING": "[parameters('auditServiceBusConnectionString')]",
+                            "TOPIC_NAME": "[parameters('auditServiceBusTopicName')]",
+                            "SUBSCRIPTION_NAME": "[parameters('auditServiceBusSubscriptionName')]"
+                        }
                     }
                 }
             },
