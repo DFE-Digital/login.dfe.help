@@ -36,7 +36,7 @@
     "html-entities": "^2.3.2",
     "lodash": "^4.17.20",
     "login.dfe.audit.transporter": "1.1.7",
-    "login.dfe.config.schema.common": "git+https://github.com/DFE-Digital/login.dfe.config.schema.common.git#v1.8.1",
+    "login.dfe.config.schema.common": "git+https://github.com/DFE-Digital/login.dfe.config.schema.common.git#v1.9.2",
     "login.dfe.dao": "^1.0.54",
     "login.dfe.express-error-handling": "git+https://github.com/DFE-Digital/login.dfe.express-error-handling.git#v2.0.0",
     "login.dfe.healthcheck": "git+https://github.com/DFE-Digital/login.dfe.healthcheck.git#v1.8",

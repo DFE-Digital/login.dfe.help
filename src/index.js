@@ -35,12 +35,26 @@ const init = async () => {
   https.globalAgent.maxSockets = http.globalAgent.maxSockets = config.hostingEnvironment.agentKeepAlive.maxSockets || 50;
 
   const app = express();
-  app.use(helmet({
-    noCache: true,
-    frameguard: {
-      action: 'deny',
-    },
-  }));
+
+  if (config.hostingEnvironment.hstsMaxAge) {
+    app.use(helmet({
+      noCache: true,
+      frameguard: {
+        action: 'deny',
+      },
+      hsts: {
+        maxAge: config.hostingEnvironment.hstsMaxAge,
+        preload: true,
+      },
+    }));
+  } else {
+    app.use(helmet({
+      noCache: true,
+      frameguard: {
+        action: 'deny',
+      },
+    }));
+  }
 
   let expiryInMinutes = 30;
   const sessionExpiry = parseInt(config.hostingEnvironment.sessionCookieExpiryInMinutes);
