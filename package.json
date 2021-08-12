@@ -35,7 +35,7 @@
     "helmet": "^3.9.0",
     "html-entities": "^2.3.2",
     "lodash": "^4.17.20",
-    "login.dfe.audit.transporter": "1.1.7",
+    "login.dfe.audit.transporter": "2.0.2",
     "login.dfe.config.schema.common": "git+https://github.com/DFE-Digital/login.dfe.config.schema.common.git#v1.9.2",
     "login.dfe.dao": "^1.0.54",
     "login.dfe.express-error-handling": "git+https://github.com/DFE-Digital/login.dfe.express-error-handling.git#v2.0.0",
