@@ -18,8 +18,8 @@ const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-hand
 const flash = require('express-flash-2');
 
 // imports for authentication
-const passport = require('passport');
-const getPassportStrategy = require('./infrastructure/oidc');
+/*const passport = require('passport');
+const getPassportStrategy = require('./infrastructure/oidc');*/
 const { setUserContext } = require('./infrastructure/utils');
 const appInsights = require('applicationinsights');
 
@@ -84,7 +84,7 @@ const init = async () => {
   }
 
   // setting up authentication middleware
-  passport.use('oidc', await getPassportStrategy());
+ /* passport.use('oidc', await getPassportStrategy());
   passport.serializeUser((user, done) => {
     done(null, user);
   });
@@ -93,7 +93,7 @@ const init = async () => {
   });
   app.use(passport.initialize());
   app.use(passport.session());
-  app.use(setUserContext);
+  app.use(setUserContext);*/
   // finished setting up authentication middleware
 
   app.use(bodyParser.urlencoded({ extended: true }));
