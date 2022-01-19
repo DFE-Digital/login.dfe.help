@@ -32,6 +32,7 @@ const setUserContext = async (req, res, next) => {
       if (res.locals.isApprover) {
         const approverOrgRequests = await getAllRequestsForApprover(req.user.sub, req.id);
         req.organisationRequests = approverOrgRequests;
+        res.locals.approverRequests = approverOrgRequests;
       }
     } catch (e) {
       return e;
