@@ -156,6 +156,7 @@ describe('When handling post of contact form', () => {
       urn: req.body.urn,
       backLink: true,
       isHidden: true,
+      isHomeTopHidden: true,
       validationMessages: {
         name: 'Enter your name',
       },
@@ -184,6 +185,7 @@ describe('When handling post of contact form', () => {
       urn: req.body.urn,
       backLink: true,
       isHidden: true,
+      isHomeTopHidden: true,
       validationMessages: {
         email: 'Enter your email address',
       },
@@ -212,6 +214,7 @@ describe('When handling post of contact form', () => {
       urn: req.body.urn,
       backLink: true,
       isHidden: true,
+      isHomeTopHidden: true,
       validationMessages: {
         email: 'Enter a valid email address',
       },
@@ -240,6 +243,7 @@ describe('When handling post of contact form', () => {
       urn: req.body.urn,
       backLink: true,
       isHidden: true,
+      isHomeTopHidden: true,
       validationMessages: {
         orgName: 'Enter your organisation name',
       },
@@ -268,6 +272,7 @@ describe('When handling post of contact form', () => {
       urn: req.body.urn,
       backLink: true,
       isHidden: true,
+      isHomeTopHidden: true,
       validationMessages: {
         message: 'Enter information about your issue',
       },
@@ -296,6 +301,7 @@ describe('When handling post of contact form', () => {
       urn: req.body.urn,
       backLink: true,
       isHidden: true,
+      isHomeTopHidden: true,
       validationMessages: {
         message: 'Message cannot be longer than 1000 characters',
       },
