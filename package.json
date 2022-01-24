@@ -31,7 +31,7 @@
     "express": "^4.17.2",
     "express-ejs-layouts": "^2.5.1",
     "express-flash-2": "^1.0.1",
-    "helmet": "^3.9.0",
+    "helmet": "^3.21.2",
     "html-entities": "^2.3.2",
     "lodash": "^4.17.21",
     "login.dfe.audit.transporter": "2.0.2",
@@ -48,7 +48,7 @@
     "openid-client": "^5.1.2",
     "passport": "^0.5.2",
     "simpl-schema": "^1.12.0",
-    "tedious": "^8.3.0",
+    "tedious": "^14.1.0",
     "winston": "^3.4.0"
   },
   "devDependencies": {
