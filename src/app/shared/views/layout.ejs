@@ -74,6 +74,13 @@
                                     </a>
                                 </li>
                             <% } %>
+                            <% if (locals.isApprover) { %>
+                                <li class="govuk-header__navigation-item">
+                                    <a class="govuk-header__link" href="<%=locals.urls.services%>/access-requests">
+                                        Requests <% if (locals.approverRequests && locals.approverRequests.length) { %> <span class="govuk-notification-badge"><%= locals.approverRequests.length %></span> <% } %>
+                                    </a>
+                                </li>
+                            <% } %>
                             <li class="govuk-header__navigation-item">
                                 <a class="govuk-header__link" href="<%=locals.urls.profile%>">
                                     Profile
