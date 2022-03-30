@@ -7,8 +7,12 @@
     <% if (locals.isHidden === true) { %>
     <meta name="robots" content="noindex">
     <% } %>
-    <title><%=locals.title || (locals.app ? locals.app.title : null) || 'DfE Sign-in'%></title>
 
+    <title>
+        <%= (locals.validationMessages && Object.keys(locals.validationMessages).length !== 0) ? `Error: ` : '' %>
+        <%= locals.title || (locals.app ? locals.app.title : null) || 'DfE Sign-in'%>
+    </title>
+   
     <link rel="stylesheet" href="<%= locals.urls.assets %>/gds-upgrade/css/screen.css?version=<%= locals.assets.version %>">
 
     <link rel="shortcut icon" href="<%= locals.urls.assets %>/gds-upgrade/images/favicon.ico" type="image/x-icon" />
