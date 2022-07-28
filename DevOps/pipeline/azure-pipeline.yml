@@ -20,8 +20,35 @@ trigger:
 
 variables:
 - group: platform-global
+- group: code-scan-tools
+- name: environmentName
+  - ${{ if eq(parameters.gitVersioning, true) }}:
+    value: 
 
 stages:
+# Code scaning tools 
+- template: ./DevOps/pipeline/scan-tools.yml
+# Build the artifact for deployment
 - stage: build
   jobs:
-  - template: build.yml
+  - template: ./DevOps/pipeline/build.yml
+    parameters:
+      applicationName: "${{parameters.applicationName}}"
+      custRegAuth: $(custRegAuth)
+      artifactName: "${{parameters.applicationName}}-dev-$(Build.BuildId)-release"
+
+      stageName: publishDevInstances
+      variableGroups:
+        - platform-dev
+        - platform-dev-secured
+        - platform-standalone-custom-hosts
+        - "platform-dev-${{parameters.applicationName}}"
+      serviceConnection: "${{parameters.devServiceConnection}}"
+      
+      resourceGroupSuffix: "${{parameters.resourceGroupSuffix}}"
+      environmentName: dev
+      environmentId: d01
+      
+      deploymentDependencyName: deployDev
+      accessRestricted: "${{parameters.restrictToGateway}}"
+      gatewayFrontEndHostName: ""
