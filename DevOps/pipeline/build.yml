@@ -1,0 +1,148 @@
+parameters:
+- name: applicationName
+  type: string
+- name: custRegAuth
+  type: string
+- name:  artifactName
+  type: string
+- name: additionalFoldersForBuild
+  type: object
+- name: agentImage
+  type: string
+  default: ubuntu-latest
+  values:
+  - windows-latest
+  - windows-2019
+  - vs2017-win2016
+  - ubuntu-latest
+  - ubuntu-18.04
+  - ubuntu-16.04
+  - macOS-latest
+  - macOS-10.15
+  - macOS-10.14
+- name: variableGroups
+  type: object
+
+jobs:
+- job: nodeBuild
+  displayName: 'Build ${{parameters.applicationName}}'
+  pool:
+    vmImage: '${{parameters.agentImage}}'
+  variables:
+  - '${{ each variableGroup in parameters.variableGroups }}':
+    - group: ${{variableGroup}}
+
+  steps:
+  - checkout: self
+  - checkout: config
+
+  - task: NodeTool@0
+    displayName: 'Install Node.js'
+    inputs:
+      versionSpec: '14.18.1'
+
+  - task: Npm@1
+    displayName: Npm install
+    inputs:
+      command: custom
+      workingDir: $(Build.Repository.LocalPath)/$(BuildDefinitionName)
+      verbose: true
+      customCommand: install --force --json --no-package-lock
+      customRegistry: useFeed
+      customFeed: ${{parameters.customFeedId}}
+  
+  - task: Npm@1
+    displayName: Npm prune fix
+    inputs:
+      command: custom
+      workingDir: $(Build.Repository.LocalPath)/$(BuildDefinitionName)
+      verbose: false
+      customCommand: install --production --json --force --no-package-lock
+      customRegistry: useFeed
+      customFeed: ${{parameters.customFeedId}}
+
+  - task: CopyFiles@2
+    displayName: Copy files for staging
+    inputs:
+      SourceFolder: $(Build.Repository.LocalPath)/$(BuildDefinitionName)
+      Contents: |
+        app_data/**
+        azure/**
+        config/**
+        node_modules/**
+        src/**
+        package.json
+      TargetFolder: $(System.DefaultWorkingDirectory)/Publish
+      CleanTargetFolder: true
+
+  - task: CopyFiles@2
+    displayName: 'Copy config for ${{parameters.environmentName}}'
+    inputs:
+      SourceFolder: $(System.DefaultWorkingDirectory)
+      Contents: |
+        $(Build.SourcesDirectory)\login.dfe.config\ssp_config\${{parameters.applicationName}}-standalone.json
+      TargetFolder: $(System.DefaultWorkingDirectory)\Publish\config
+      CleanTargetFolder: true
+      flattenFolders: true
+  
+  - task: CopyFiles@2
+    displayName: 'Copy pm2 process file'
+    inputs:
+      SourceFolder: $(System.DefaultWorkingDirectory)
+      Contents: |
+          $(Build.SourcesDirectory)\login.dfe.config\ssp_config\${{parameters.pm2ProcessFileName}}
+      TargetFolder: $(System.DefaultWorkingDirectory)\Publish
+      flattenFolders: true
+      CleanTargetFolder: false
+
+  - task: Tokenization@2
+    displayName: Tokenise config file
+    inputs:
+      SourcePath: '$(System.DefaultWorkingDirectory)\Publish\config'
+      TargetFileNames: '${{parameters.applicationName}}-standalone.json'
+      RequireVariable: true
+      TokenStart: '{{'
+      TokenEnd: '}}'
+  
+  - task: Tokenization@2
+  displayName: Tokenise process file
+  inputs:
+    SourcePath: '$(System.DefaultWorkingDirectory)\Publish'
+    TargetFileNames: ${{parameters.pm2ProcessFileName}}
+    RequireVariable: true
+    TokenStart: '{{'
+    TokenEnd: '}}'
+
+  # - ${{ each folder in parameters.additionalFoldersForBuild }}:
+  #   - task: CopyFiles@2
+  #     displayName: 'Copy $(Build.Repository.LocalPath)/$(BuildDefinitionName)/${{folder}} to build output'
+  #     inputs:
+  #       SourceFolder: '$(System.DefaultWorkingDirectory)'
+  #       Contents: $(Build.Repository.LocalPath)/$(BuildDefinitionName)/${{folder}}
+  #       TargetFolder: '$(System.DefaultWorkingDirectory)/Publish'
+
+  - pwsh: |
+      $fileName = "$(System.DefaultWorkingDirectory)\Publish\config\login.dfe.${{parameters.applicationName}}.${{parameters.environmentName}}.json"
+      if (Test-Path $fileName) {
+          write-host existing config found, deleting
+          Remove-Item $fileName
+      }
+      write-host renaming pre-built config for ${{parameters.applicationName}} [${{parameters.environmentName}}]
+      Rename-Item -path $(System.DefaultWorkingDirectory)\Publish\config\${{parameters.applicationName}}-standalone.json -newname $(System.DefaultWorkingDirectory)\Publish\config\login.dfe.${{parameters.applicationName}}.${{parameters.environmentName}}.json
+    displayName: Rename config file
+
+  - task: ArchiveFiles@1
+    displayName: Build Artifact
+    inputs:
+      rootFolder: $(System.DefaultWorkingDirectory)/Publish
+      includeRootFolder: true
+      archiveType: zip
+      archiveFile: $(Build.ArtifactStagingDirectory)/${{parameters.artifactName}}.zip
+      replaceExistingArchive: true
+
+  - task: PublishPipelineArtifact@1
+    displayName: Publish Pipeline Artifact
+    inputs:
+      targetPath: $(Build.ArtifactStagingDirectory)/${{parameters.artifactName}}.zip
+      artifact: ${{parameters.artifactName}}
+      publishLocation: 'pipeline'
