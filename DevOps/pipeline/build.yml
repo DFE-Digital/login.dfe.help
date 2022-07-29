@@ -7,6 +7,10 @@ parameters:
   type: string
 # - name: additionalFoldersForBuild
 #   type: object
+- name: environmentName
+  type: string
+- name: pm2ProcessFileName
+  type: string
 - name: agentImage
   type: string
   default: ubuntu-latest
@@ -49,7 +53,7 @@ jobs:
       verbose: true
       customCommand: ci --force --json --no-package-lock
       customRegistry: useFeed
-      customFeed: ${{parameters.customFeedId}}
+      customFeed: ${{parameters.custRegAuth}}
   
   - task: Npm@1
     displayName: Npm prune fix
@@ -59,7 +63,7 @@ jobs:
       verbose: false
       customCommand: ci --production --json --force --no-package-lock
       customRegistry: useFeed
-      customFeed: ${{parameters.customFeedId}}
+      customFeed: ${{parameters.custRegAuth}}
 
   - task: CopyFiles@2
     displayName: Copy files for staging
