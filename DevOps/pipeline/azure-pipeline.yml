@@ -21,6 +21,8 @@ trigger:
 variables:
 - group: platform-global
 - group: code-scan-tools
+- name: applicationName
+  value: hlp
 # - name: environmentName
 #   - ${{ if eq(parameters.gitVersioning, true) }}:
 #     value: 
@@ -33,9 +35,9 @@ stages:
   jobs:
   - template: ./build.yml
     parameters:
-      applicationName: hlp
+      applicationName: $(applicationName)
       custRegAuth: $(custRegAuth)
-      artifactName: "${{parameters.applicationName}}-dev-$(Build.BuildId)-release"
+      artifactName: "$(applicationName)-dev-$(Build.BuildId)-release"
       variableGroups:
         - platform-dev
         - platform-dev-secured
