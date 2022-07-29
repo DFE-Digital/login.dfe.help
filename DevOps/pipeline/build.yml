@@ -5,8 +5,8 @@ parameters:
   type: string
 - name:  artifactName
   type: string
-- name: additionalFoldersForBuild
-  type: object
+# - name: additionalFoldersForBuild
+#   type: object
 - name: agentImage
   type: string
   default: ubuntu-latest
