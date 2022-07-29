@@ -101,23 +101,22 @@ jobs:
       flattenFolders: true
       CleanTargetFolder: false
 
-  - task: Tokenization@2
-    displayName: Tokenise config file
+  - task: replacetokens@5
     inputs:
-      SourcePath: '$(System.DefaultWorkingDirectory)\Publish\config'
-      TargetFileNames: '${{parameters.applicationName}}-standalone.json'
-      RequireVariable: true
-      TokenStart: '{{'
-      TokenEnd: '}}'
-  
-  - task: Tokenization@2
-    displayName: Tokenise process file
-    inputs:
-      SourcePath: '$(System.DefaultWorkingDirectory)\Publish'
-      TargetFileNames: ${{parameters.pm2ProcessFileName}}
-      RequireVariable: true
-      TokenStart: '{{'
-      TokenEnd: '}}'
+      rootDirectory: '$(System.DefaultWorkingDirectory)'
+      targetFiles: |
+        **/${{parameters.applicationName}}-standalone.json
+        **/${{parameters.pm2ProcessFileName}}
+      encoding: 'auto'
+      tokenPattern: 'doublebraces'
+      writeBOM: true
+      actionOnMissing: 'fail'
+      keepToken: false
+      actionOnNoFiles: 'fail'
+      enableTransforms: false
+      enableRecursion: false
+      useLegacyPattern: false
+      enableTelemetry: false
 
   # - ${{ each folder in parameters.additionalFoldersForBuild }}:
   #   - task: CopyFiles@2
