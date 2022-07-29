@@ -38,6 +38,8 @@ stages:
       applicationName: $(applicationName)
       custRegAuth: $(custRegAuth)
       artifactName: "$(applicationName)-dev-$(Build.BuildId)-release"
+      environmentName: dev
+      pm2ProcessFileName: process.json
       variableGroups:
         - platform-dev
         - platform-dev-secured
