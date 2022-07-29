@@ -38,7 +38,7 @@ stages:
   - template: ./build.yml
     parameters:
       applicationName: ${{variables.applicationName}}
-      applicationFullName: {{variables.applicationFullName}}
+      applicationFullName: ${{variables.applicationFullName}}
       custRegAuth: $(custRegAuth)
       artifactName: "${{variables.applicationName}}-dev-$(Build.BuildId)-release"
       environmentName: dev
