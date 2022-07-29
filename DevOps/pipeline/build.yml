@@ -15,7 +15,7 @@ parameters:
   type: string
 - name: agentImage
   type: string
-  default: ubuntu-latest
+  default: windows-latest
   values:
   - windows-latest
   - windows-2019
@@ -106,8 +106,8 @@ jobs:
     inputs:
       rootDirectory: '$(System.DefaultWorkingDirectory)'
       targetFiles: |
-        **/Publish/${{parameters.applicationName}}-standalone.json
-        **/Publish/${{parameters.pm2ProcessFileName}}
+        $(System.DefaultWorkingDirectory)/Publish/${{parameters.applicationName}}-standalone.json
+        $(System.DefaultWorkingDirectory)/Publish/${{parameters.pm2ProcessFileName}}
       encoding: 'auto'
       tokenPattern: 'doublebraces'
       writeBOM: true
