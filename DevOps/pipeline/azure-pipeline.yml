@@ -21,9 +21,9 @@ trigger:
 variables:
 - group: platform-global
 - group: code-scan-tools
-- name: environmentName
-  - ${{ if eq(parameters.gitVersioning, true) }}:
-    value: 
+# - name: environmentName
+#   - ${{ if eq(parameters.gitVersioning, true) }}:
+#     value: 
 
 stages:
 # Code scaning tools 
