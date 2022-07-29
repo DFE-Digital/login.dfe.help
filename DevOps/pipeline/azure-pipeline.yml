@@ -36,19 +36,16 @@ stages:
       applicationName: "${{parameters.applicationName}}"
       custRegAuth: $(custRegAuth)
       artifactName: "${{parameters.applicationName}}-dev-$(Build.BuildId)-release"
-
-      stageName: publishDevInstances
       variableGroups:
         - platform-dev
         - platform-dev-secured
-        - platform-standalone-custom-hosts
-        - "platform-dev-${{parameters.applicationName}}"
-      serviceConnection: "${{parameters.devServiceConnection}}"
-      
-      resourceGroupSuffix: "${{parameters.resourceGroupSuffix}}"
-      environmentName: dev
-      environmentId: d01
-      
-      deploymentDependencyName: deployDev
-      accessRestricted: "${{parameters.restrictToGateway}}"
-      gatewayFrontEndHostName: ""
+        - platform-standalone-azure-hosts
+
+      # stageName: publishDevInstances
+      # serviceConnection: "${{parameters.devServiceConnection}}"
+      # resourceGroupSuffix: "${{parameters.resourceGroupSuffix}}"
+      # environmentName: dev
+      # environmentId: d01
+      # deploymentDependencyName: deployDev
+      # accessRestricted: "${{parameters.restrictToGateway}}"
+      # gatewayFrontEndHostName: ""
