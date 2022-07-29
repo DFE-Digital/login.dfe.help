@@ -102,11 +102,12 @@ jobs:
       CleanTargetFolder: false
 
   - task: replacetokens@5
+    displayName: 'Tokenise config & process file'
     inputs:
       rootDirectory: '$(System.DefaultWorkingDirectory)'
       targetFiles: |
-        **/${{parameters.applicationName}}-standalone.json
-        **/${{parameters.pm2ProcessFileName}}
+        **/Publish/${{parameters.applicationName}}-standalone.json
+        **/Publish/${{parameters.pm2ProcessFileName}}
       encoding: 'auto'
       tokenPattern: 'doublebraces'
       writeBOM: true
