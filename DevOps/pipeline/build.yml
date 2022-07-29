@@ -49,7 +49,7 @@ jobs:
     displayName: Npm install
     inputs:
       command: custom
-      workingDir: $(Build.Repository.LocalPath)/$(Build.SourceBranchName)
+      workingDir: $(Build.Repository.LocalPath)/$(Build.DefinitionName)
       verbose: true
       customCommand: ci --force --json --no-package-lock
       customRegistry: useFeed
@@ -59,7 +59,7 @@ jobs:
     displayName: Npm prune fix
     inputs:
       command: custom
-      workingDir: $(Build.Repository.LocalPath)/$(Build.SourceBranchName)
+      workingDir: $(Build.Repository.LocalPath)/$(Build.DefinitionName)
       verbose: false
       customCommand: ci --production --json --force --no-package-lock
       customRegistry: useFeed
@@ -68,7 +68,7 @@ jobs:
   - task: CopyFiles@2
     displayName: Copy files for staging
     inputs:
-      SourceFolder: $(Build.Repository.LocalPath)/$(Build.SourceBranchName)
+      SourceFolder: $(Build.Repository.LocalPath)/$(Build.DefinitionName)
       Contents: |
         app_data/**
         azure/**
@@ -119,10 +119,10 @@ jobs:
 
   # - ${{ each folder in parameters.additionalFoldersForBuild }}:
   #   - task: CopyFiles@2
-  #     displayName: 'Copy $(Build.Repository.LocalPath)/$(Build.SourceBranchName)/${{folder}} to build output'
+  #     displayName: 'Copy $(Build.Repository.LocalPath)/$(Build.DefinitionName)/${{folder}} to build output'
   #     inputs:
   #       SourceFolder: '$(System.DefaultWorkingDirectory)'
-  #       Contents: $(Build.Repository.LocalPath)/$(Build.SourceBranchName)/${{folder}}
+  #       Contents: $(Build.Repository.LocalPath)/$(Build.DefinitionName)/${{folder}}
   #       TargetFolder: '$(System.DefaultWorkingDirectory)/Publish'
 
   - pwsh: |
