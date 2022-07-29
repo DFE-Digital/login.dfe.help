@@ -35,7 +35,7 @@ stages:
   jobs:
   - template: ./build.yml
     parameters:
-      applicationName: $(applicationName)
+      applicationName: "$(applicationName)"
       custRegAuth: $(custRegAuth)
       artifactName: "$(applicationName)-dev-$(Build.BuildId)-release"
       environmentName: dev
