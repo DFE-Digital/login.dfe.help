@@ -29,7 +29,7 @@ variables:
 
 stages:
 # Code scaning tools 
-- template: ./scan-tools.yml
+#- template: ./scan-tools.yml
 # Build the artifact for deployment
 - stage: build
   jobs:
