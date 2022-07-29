@@ -13,7 +13,7 @@ parameters:
   type: string
 - name: agentImage
   type: string
-  default: ubuntu-latest
+  default: windows-latest
   values:
   - windows-latest
   - windows-2019
