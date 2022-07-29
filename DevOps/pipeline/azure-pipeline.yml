@@ -27,11 +27,11 @@ variables:
 
 stages:
 # Code scaning tools 
-- template: ./DevOps/pipeline/scan-tools.yml
+- template: ./scan-tools.yml
 # Build the artifact for deployment
 - stage: build
   jobs:
-  - template: ./DevOps/pipeline/build.yml
+  - template: ./build.yml
     parameters:
       applicationName: "${{parameters.applicationName}}"
       custRegAuth: $(custRegAuth)
