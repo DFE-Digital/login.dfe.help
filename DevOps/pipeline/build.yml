@@ -1,6 +1,8 @@
 parameters:
 - name: applicationName
   type: string
+- name: applicationFullName
+  type: string
 - name: custRegAuth
   type: string
 - name:  artifactName
@@ -84,7 +86,7 @@ jobs:
     inputs:
       SourceFolder: $(System.DefaultWorkingDirectory)
       Contents: |
-        $(Build.SourcesDirectory)\login.dfe.config\ssp_config\${{parameters.applicationName}}-standalone.json
+        $(Build.SourcesDirectory)\login.dfe.config\ssp_config\${{parameters.applicationFullName}}-standalone.json
       TargetFolder: $(System.DefaultWorkingDirectory)\Publish\config
       CleanTargetFolder: true
       flattenFolders: true
@@ -132,7 +134,7 @@ jobs:
           Remove-Item $fileName
       }
       write-host renaming pre-built config for ${{parameters.applicationName}} [${{parameters.environmentName}}]
-      Rename-Item -path $(System.DefaultWorkingDirectory)\Publish\config\${{parameters.applicationName}}-standalone.json -newname $(System.DefaultWorkingDirectory)\Publish\config\login.dfe.${{parameters.applicationName}}.${{parameters.environmentName}}.json
+      Rename-Item -path $(System.DefaultWorkingDirectory)\Publish\config\${{parameters.applicationName}}-standalone.json -newname $fileName
     displayName: Rename config file
 
   - task: ArchiveFiles@1
