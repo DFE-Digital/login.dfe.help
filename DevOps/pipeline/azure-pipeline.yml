@@ -33,7 +33,7 @@ stages:
   jobs:
   - template: ./build.yml
     parameters:
-      applicationName: "${{parameters.applicationName}}"
+      applicationName: hlp
       custRegAuth: $(custRegAuth)
       artifactName: "${{parameters.applicationName}}-dev-$(Build.BuildId)-release"
       variableGroups:
