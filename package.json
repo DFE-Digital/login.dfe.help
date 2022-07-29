@@ -46,7 +46,7 @@
     "login.dfe.winston-appinsights": "git+https://github.com/DFE-Digital/login.dfe.winston-appinsights.git#4.0",
     "morgan": "^1.10.0",
     "openid-client": "^5.1.2",
-    "passport": "^1.0.6",
+    "passport": "^0.5.3",
     "simpl-schema": "^1.5.6",
     "tedious": "^14.7.0",
     "winston": "^3.3.3"
