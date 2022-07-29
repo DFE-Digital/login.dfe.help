@@ -22,7 +22,7 @@ variables:
 - group: platform-global
 - group: code-scan-tools
 - name: applicationName
-  value: hlp
+  value: 'hlp'
 # - name: environmentName
 #   - ${{ if eq(parameters.gitVersioning, true) }}:
 #     value: 
@@ -35,7 +35,7 @@ stages:
   jobs:
   - template: ./build.yml
     parameters:
-      applicationName: "$(applicationName)"
+      applicationName: $(applicationName)
       custRegAuth: $(custRegAuth)
       artifactName: "$(applicationName)-dev-$(Build.BuildId)-release"
       environmentName: dev
