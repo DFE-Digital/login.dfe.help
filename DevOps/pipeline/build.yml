@@ -105,13 +105,13 @@ jobs:
       TokenEnd: '}}'
   
   - task: Tokenization@2
-  displayName: Tokenise process file
-  inputs:
-    SourcePath: '$(System.DefaultWorkingDirectory)\Publish'
-    TargetFileNames: ${{parameters.pm2ProcessFileName}}
-    RequireVariable: true
-    TokenStart: '{{'
-    TokenEnd: '}}'
+    displayName: Tokenise process file
+    inputs:
+      SourcePath: '$(System.DefaultWorkingDirectory)\Publish'
+      TargetFileNames: ${{parameters.pm2ProcessFileName}}
+      RequireVariable: true
+      TokenStart: '{{'
+      TokenEnd: '}}'
 
   # - ${{ each folder in parameters.additionalFoldersForBuild }}:
   #   - task: CopyFiles@2
