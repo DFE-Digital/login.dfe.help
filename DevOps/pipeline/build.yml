@@ -119,13 +119,13 @@ jobs:
       useLegacyPattern: false
       enableTelemetry: false
 
-  - ${{ each folder in parameters.additionalFoldersForBuild }}:
-    - task: CopyFiles@2
-      displayName: 'Copy $(Build.Repository.LocalPath)/$(Build.DefinitionName)/${{folder}} to build output'
-      inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)'
-        Contents: $(Build.Repository.LocalPath)/$(Build.DefinitionName)/${{folder}}
-        TargetFolder: '$(System.DefaultWorkingDirectory)/Publish'
+  # - ${{ each folder in parameters.additionalFoldersForBuild }}:
+  #   - task: CopyFiles@2
+  #     displayName: 'Copy $(Build.Repository.LocalPath)/$(Build.DefinitionName)/${{folder}} to build output'
+  #     inputs:
+  #       SourceFolder: '$(System.DefaultWorkingDirectory)'
+  #       Contents: $(Build.Repository.LocalPath)/$(Build.DefinitionName)/${{folder}}
+  #       TargetFolder: '$(System.DefaultWorkingDirectory)/Publish'
 
   - pwsh: |
       write-host $(Build.SourcesDirectory)\login.dfe.config\ssp_config\${{parameters.applicationFullName}}-standalone.json
