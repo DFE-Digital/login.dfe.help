@@ -128,8 +128,6 @@ jobs:
   #       TargetFolder: '$(System.DefaultWorkingDirectory)/Publish'
 
   - pwsh: |
-      write-host $(Build.SourcesDirectory)\login.dfe.config\ssp_config\${{parameters.applicationFullName}}-standalone.json
-      Get-ChildItem $(Build.SourcesDirectory)\login.dfe.config\ssp_config\
       $fileName = "$(System.DefaultWorkingDirectory)\Publish\config\login.dfe.${{parameters.applicationFullName}}.${{parameters.environmentName}}.json"
       if (Test-Path $fileName) {
           write-host existing config found, deleting
