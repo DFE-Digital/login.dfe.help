@@ -35,6 +35,8 @@ jobs:
   variables:
   - '${{ each variableGroup in parameters.variableGroups }}':
     - group: ${{variableGroup}}
+  - name: applicationName
+    value: ${{parameters.applicationName}}
 
   steps:
   - checkout: self
