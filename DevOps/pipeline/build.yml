@@ -131,7 +131,7 @@ jobs:
     displayName: Rename config file
     inputs:
       filePath: '$(Build.Repository.LocalPath)/$(Build.DefinitionName)/DevOps/scripts/renameFile.ps1'
-      arguments: '-applicationName ${{parameters.applicationName}} -environmentName ${{parameters.environmentName}}'
+      arguments: '-applicationName ${{parameters.applicationName}} -environmentName ${{parameters.environmentName}} -directory $(System.DefaultWorkingDirectory)'
       pwsh: true
       workingDirectory: $(System.DefaultWorkingDirectory)
 
