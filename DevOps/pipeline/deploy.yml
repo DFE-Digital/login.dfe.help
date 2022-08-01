@@ -84,7 +84,7 @@ jobs:
         - task: PowerShell@2
           displayName: 'Healthcheck [$(healthCheckUrl)/healthcheck]'
           inputs:
-            filePath: '$(Build.Repository.LocalPath)/DevOps/scripts/healthCheck.ps1'
+            filePath: 'DevOps/scripts/healthCheck.ps1'
             arguments: '-testUrl $(healthCheckUrl) -healthCheckEndpoint healthcheck'
             pwsh: true
             workingDirectory: $(System.DefaultWorkingDirectory)
