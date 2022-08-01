@@ -130,7 +130,7 @@ jobs:
   - task: PowerShell@2
     displayName: Rename config file
     inputs:
-      filePath: '$(Build.Repository.LocalPath)/$(Build.DefinitionName)/DevOps/scripts/.ps1'
+      filePath: '$(Build.Repository.LocalPath)/$(Build.DefinitionName)/DevOps/scripts/renameFile.ps1'
       arguments: '-applicationName ${{parameters.applicationName}} -environmentName ${{parameters.environmentName}}'
       pwsh: true
       workingDirectory: '$(System.DefaultWorkingDirectory)'
