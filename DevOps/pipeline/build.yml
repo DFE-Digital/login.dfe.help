@@ -106,7 +106,7 @@ jobs:
     inputs:
       rootDirectory: '$(System.DefaultWorkingDirectory)'
       targetFiles: |
-        $(System.DefaultWorkingDirectory)/Publish/config/${{parameters.applicationName}}-standalone.json
+        ./Publish/config/${{parameters.applicationFullName}}-standalone.json
       encoding: 'auto'
       tokenPattern: 'doublebraces'
       writeBOM: true
