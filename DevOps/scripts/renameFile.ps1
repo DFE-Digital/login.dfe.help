@@ -5,4 +5,4 @@ $fileName = ".\Publish\config\login.dfe.$(applicationName).$(environmentName).js
         Remove-Item $fileName
     }
 write-host renaming pre-built config for $(applicationName) [$(environmentName)]
-Rename-Item -path $(System.DefaultWorkingDirectory)\Publish\config\$(applicationName)-standalone.json -newname $fileName
+Rename-Item -path .\Publish\config\$(applicationName)-standalone.json -newname $fileName
