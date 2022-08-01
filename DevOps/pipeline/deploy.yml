@@ -55,7 +55,7 @@ jobs:
   - name: applicationBaseName
     value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalName)-${{parameters.applicationName}}'
   - name: applicationResourceGroupName
-    value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-${{parameters.resourceGroupSuffix}}'
+    value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-${{parameters.applicationName}}'
   - name: healthCheckUrl
     value: 'https://$(applicationBaseName)-${{parameters.slotName}}.azurewebsites.net'
 
