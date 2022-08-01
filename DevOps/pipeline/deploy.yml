@@ -87,7 +87,7 @@ jobs:
             filePath: '$(Build.Repository.LocalPath)/$(Build.DefinitionName)/DevOps/scripts/healthCheck.ps1'
             arguments: '-testUrl $(healthCheckUrl) -healthCheckEndpoint healthcheck'
             pwsh: true
-            workingDirectory: '$(System.DefaultWorkingDirectory)'
+            workingDirectory: $(System.DefaultWorkingDirectory)
 
         - task: AzureAppServiceManage@0
           displayName: Swap Slots
