@@ -63,6 +63,7 @@ jobs:
     runOnce:
       deploy:
         steps:
+        - checkout: self
         # - task: AzureRmWebAppDeployment@4
         #   displayName: Deploy Azure App Service ${{parameters.applicationName}}
         #   inputs:
@@ -82,7 +83,9 @@ jobs:
         #     StartupCommand: '${{parameters.startupCommand}}'
 
         - pwsh: |
-            write-host Get-ChildItem $(Build.SourcesDirectory)
+            Get-ChildItem $(Build.SourcesDirectory)
+            write-host hi
+            Get-ChildItem $(Build.SourcesDirectory)
 
         # - task: PowerShell@2
         #   displayName: 'Healthcheck [$(healthCheckUrl)/healthcheck]'
