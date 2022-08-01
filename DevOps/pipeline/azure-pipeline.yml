@@ -34,7 +34,8 @@ stages:
 # Code scaning tools 
 #- template: ./scan-tools.yml
 # Build the artifact for deployment
-- stage: build
+- stage: buildApp
+  displayName: "Package application"
   jobs:
   - template: ./build.yml
     parameters:
@@ -48,6 +49,10 @@ stages:
         - platform-dev-secured
         - platform-standalone-azure-hosts
 
+- stage: DeployApp
+  dependsOn: buildApp
+  displayName: "Deploy application"
+  jobs:
   - template: ./deploy.yml
     parameters:
       serviceConnection: "$(devServiceConnection)"
