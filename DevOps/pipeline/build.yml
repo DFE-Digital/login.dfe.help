@@ -133,7 +133,7 @@ jobs:
       filePath: '$(Build.Repository.LocalPath)/$(Build.DefinitionName)/DevOps/scripts/renameFile.ps1'
       arguments: '-applicationName ${{parameters.applicationName}} -environmentName ${{parameters.environmentName}}'
       pwsh: true
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      workingDirectory: $(System.DefaultWorkingDirectory)
 
   # - pwsh: |
   #     $fileName = "$(System.DefaultWorkingDirectory)\Publish\config\login.dfe.${{parameters.applicationName}}.${{parameters.environmentName}}.json"
