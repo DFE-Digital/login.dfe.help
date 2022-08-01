@@ -82,7 +82,8 @@ jobs:
         #     StartupCommand: '${{parameters.startupCommand}}'
 
         - pwsh: |
-            Get-ChildItem $(Build.SourcesDirectory)
+            write-host Get-ChildItem $(Build.SourcesDirectory)
+
         # - task: PowerShell@2
         #   displayName: 'Healthcheck [$(healthCheckUrl)/healthcheck]'
         #   inputs:
