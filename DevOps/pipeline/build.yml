@@ -1,11 +1,9 @@
 parameters:
 - name: applicationName
   type: string
-- name: applicationFullName
-  type: string
 - name: custRegAuth
   type: string
-- name:  artifactName
+- name: artifactName
   type: string
 # - name: additionalFoldersForBuild
 #   type: object
@@ -86,7 +84,7 @@ jobs:
     inputs:
       SourceFolder: $(System.DefaultWorkingDirectory)
       Contents: |
-        $(Build.SourcesDirectory)\login.dfe.config\ssp_config\${{parameters.applicationFullName}}-standalone.json
+        $(Build.SourcesDirectory)\login.dfe.config\ssp_config\${{parameters.applicationName}}-standalone.json
       TargetFolder: $(System.DefaultWorkingDirectory)\Publish\config
       CleanTargetFolder: true
       flattenFolders: true
@@ -106,7 +104,7 @@ jobs:
     inputs:
       rootDirectory: '$(System.DefaultWorkingDirectory)'
       targetFiles: |
-        ./Publish/config/${{parameters.applicationFullName}}-standalone.json
+        ./Publish/config/${{parameters.applicationName}}-standalone.json
         ./Publish/${{parameters.pm2ProcessFileName}}
       encoding: 'auto'
       tokenPattern: 'doublebraces'
@@ -127,15 +125,23 @@ jobs:
   #       Contents: $(Build.Repository.LocalPath)/$(Build.DefinitionName)/${{folder}}
   #       TargetFolder: '$(System.DefaultWorkingDirectory)/Publish'
 
-  - pwsh: |
-      $fileName = "$(System.DefaultWorkingDirectory)\Publish\config\login.dfe.${{parameters.applicationFullName}}.${{parameters.environmentName}}.json"
-      if (Test-Path $fileName) {
-          write-host existing config found, deleting
-          Remove-Item $fileName
-      }
-      write-host renaming pre-built config for ${{parameters.applicationFullName}} [${{parameters.environmentName}}]
-      Rename-Item -path $(System.DefaultWorkingDirectory)\Publish\config\${{parameters.applicationFullName}}-standalone.json -newname $fileName
+  - task: PowerShell@2
     displayName: Rename config file
+    inputs:
+      filePath: '$(Build.Repository.LocalPath)/$(Build.DefinitionName)/DevOps/scripts/.ps1'
+      arguments: '-applicationName ${{parameters.applicationName}} -environmentName ${{parameters.environmentName}}'
+      pwsh: true
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+  # - pwsh: |
+  #     $fileName = "$(System.DefaultWorkingDirectory)\Publish\config\login.dfe.${{parameters.applicationName}}.${{parameters.environmentName}}.json"
+  #     if (Test-Path $fileName) {
+  #         write-host existing config found, deleting
+  #         Remove-Item $fileName
+  #     }
+  #     write-host renaming pre-built config for ${{parameters.applicationName}} [${{parameters.environmentName}}]
+  #     Rename-Item -path $(System.DefaultWorkingDirectory)\Publish\config\${{parameters.applicationName}}-standalone.json -newname $fileName
+  #   displayName: Rename config file
 
   - task: ArchiveFiles@1
     displayName: Build Artifact
