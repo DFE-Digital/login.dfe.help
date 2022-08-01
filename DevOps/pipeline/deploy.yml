@@ -82,18 +82,18 @@ jobs:
         #     ExcludeFilesFromAppDataFlag: false
         #     StartupCommand: '${{parameters.startupCommand}}'
 
-        - pwsh: |
-            Get-ChildItem $(Build.SourcesDirectory)
-            write-host hi
-            Get-ChildItem $(Build.SourcesDirectory)
+        # - pwsh: |
+        #     Get-ChildItem $(Build.SourcesDirectory)
+        #     write-host hi
+        #     Get-ChildItem $(Build.SourcesDirectory)
 
-        # - task: PowerShell@2
-        #   displayName: 'Healthcheck [$(healthCheckUrl)/healthcheck]'
-        #   inputs:
-        #     filePath: 'DevOps/scripts/healthCheck.ps1'
-        #     arguments: '-testUrl $(healthCheckUrl) -healthCheckEndpoint healthcheck'
-        #     pwsh: true
-        #     workingDirectory: $(System.DefaultWorkingDirectory)
+        - task: PowerShell@2
+          displayName: 'Healthcheck [$(healthCheckUrl)/healthcheck]'
+          inputs:
+            filePath: 'DevOps/scripts/healthCheck.ps1'
+            arguments: '-testUrl $(healthCheckUrl) -healthCheckEndpoint healthcheck'
+            pwsh: true
+            workingDirectory: $(System.DefaultWorkingDirectory)
 
         # - task: AzureAppServiceManage@0
         #   displayName: Swap Slots
