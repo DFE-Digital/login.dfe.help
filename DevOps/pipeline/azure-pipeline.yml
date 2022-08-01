@@ -36,6 +36,7 @@ stages:
 # Build the artifact for deployment
 - stage: buildApp
   displayName: "Package application"
+  #dependsOn: scanTools
   jobs:
   - template: ./build.yml
     parameters:
