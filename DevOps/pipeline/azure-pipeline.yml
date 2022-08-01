@@ -48,7 +48,7 @@ stages:
         - platform-dev-secured
         - platform-standalone-azure-hosts
 
-  - template: ./build.yml
+  - template: ./deploy.yml
     parameters:
       serviceConnection: "$(devServiceConnection)"
       environmentName: dev
