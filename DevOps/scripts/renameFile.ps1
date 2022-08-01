@@ -1,5 +1,5 @@
 param ($applicationName, $environmentName)
-$fileName = "$(System.DefaultWorkingDirectory)\Publish\config\login.dfe.$(applicationName).$(environmentName).json"
+$fileName = ".\Publish\config\login.dfe.$(applicationName).$(environmentName).json"
     if (Test-Path $fileName) {
         write-host existing config found, deleting
         Remove-Item $fileName
