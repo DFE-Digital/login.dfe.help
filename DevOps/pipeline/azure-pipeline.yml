@@ -33,25 +33,25 @@ variables:
 stages:
 # Code scaning tools 
 #- template: ./scan-tools.yml
-# Build the artifact for deployment
-# - stage: buildApp
-#   displayName: "Package application"
-#   #dependsOn: scanTools
-#   jobs:
-#   - template: ./build.yml
-#     parameters:
-#       applicationName: ${{variables.applicationFullName}}
-#       custRegAuth: $(custRegAuth)
-#       artifactName: "${{variables.applicationName}}-dev-$(Build.BuildId)-release"
-#       environmentName: dev
-#       pm2ProcessFileName: process.json
-#       variableGroups:
-#         - platform-dev
-#         - platform-dev-secured
-#         - platform-standalone-azure-hosts
+#Build the artifact for deployment
+- stage: buildApp
+  displayName: "Package application"
+  #dependsOn: scanTools
+  jobs:
+  - template: ./build.yml
+    parameters:
+      applicationName: ${{variables.applicationFullName}}
+      custRegAuth: $(custRegAuth)
+      artifactName: "${{variables.applicationName}}-dev-$(Build.BuildId)-release"
+      environmentName: dev
+      pm2ProcessFileName: process.json
+      variableGroups:
+        - platform-dev
+        - platform-dev-secured
+        - platform-standalone-azure-hosts
 
 - stage: DeployApp
-  #dependsOn: buildApp
+  dependsOn: buildApp
   displayName: "Deploy application"
   jobs:
   - template: ./deploy.yml
