@@ -42,44 +42,44 @@ jobs:
   - checkout: self
   - checkout: config
 
-  - task: NodeTool@0
-    displayName: 'Install Node.js'
-    inputs:
-      versionSpec: '14.18.1'
+  # - task: NodeTool@0
+  #   displayName: 'Install Node.js'
+  #   inputs:
+  #     versionSpec: '14.18.1'
 
-  - task: Npm@1
-    displayName: Npm install
-    inputs:
-      command: custom
-      workingDir: $(Build.Repository.LocalPath)/$(Build.DefinitionName)
-      verbose: true
-      customCommand: install --force --json --no-package-lock
-      customRegistry: useFeed
-      customFeed: ${{parameters.custRegAuth}}
+  # - task: Npm@1
+  #   displayName: Npm install
+  #   inputs:
+  #     command: custom
+  #     workingDir: $(Build.Repository.LocalPath)/$(Build.DefinitionName)
+  #     verbose: true
+  #     customCommand: install --force --json --no-package-lock
+  #     customRegistry: useFeed
+  #     customFeed: ${{parameters.custRegAuth}}
   
-  - task: Npm@1
-    displayName: Npm prune fix
-    inputs:
-      command: custom
-      workingDir: $(Build.Repository.LocalPath)/$(Build.DefinitionName)
-      verbose: false
-      customCommand: install --production --json --force --no-package-lock
-      customRegistry: useFeed
-      customFeed: ${{parameters.custRegAuth}}
+  # - task: Npm@1
+  #   displayName: Npm prune fix
+  #   inputs:
+  #     command: custom
+  #     workingDir: $(Build.Repository.LocalPath)/$(Build.DefinitionName)
+  #     verbose: false
+  #     customCommand: install --production --json --force --no-package-lock
+  #     customRegistry: useFeed
+  #     customFeed: ${{parameters.custRegAuth}}
 
-  - task: CopyFiles@2
-    displayName: Copy files for staging
-    inputs:
-      SourceFolder: $(Build.Repository.LocalPath)/$(Build.DefinitionName)
-      Contents: |
-        app_data/**
-        azure/**
-        config/**
-        node_modules/**
-        src/**
-        package.json
-      TargetFolder: $(System.DefaultWorkingDirectory)/Publish
-      CleanTargetFolder: true
+  # - task: CopyFiles@2
+  #   displayName: Copy files for staging
+  #   inputs:
+  #     SourceFolder: $(Build.Repository.LocalPath)/$(Build.DefinitionName)
+  #     Contents: |
+  #       app_data/**
+  #       azure/**
+  #       config/**
+  #       node_modules/**
+  #       src/**
+  #       package.json
+  #     TargetFolder: $(System.DefaultWorkingDirectory)/Publish
+  #     CleanTargetFolder: true
 
   - task: CopyFiles@2
     displayName: 'Copy config for ${{parameters.environmentName}}'
@@ -107,7 +107,6 @@ jobs:
       rootDirectory: '$(System.DefaultWorkingDirectory)'
       targetFiles: |
         $(System.DefaultWorkingDirectory)/Publish/config/${{parameters.applicationName}}-standalone.json
-        $(System.DefaultWorkingDirectory)/Publish/${{parameters.pm2ProcessFileName}}
       encoding: 'auto'
       tokenPattern: 'doublebraces'
       writeBOM: true
@@ -119,6 +118,7 @@ jobs:
       useLegacyPattern: false
       enableTelemetry: false
 
+#        $(System.DefaultWorkingDirectory)/Publish/${{parameters.pm2ProcessFileName}}
   # - ${{ each folder in parameters.additionalFoldersForBuild }}:
   #   - task: CopyFiles@2
   #     displayName: 'Copy $(Build.Repository.LocalPath)/$(Build.DefinitionName)/${{folder}} to build output'
@@ -127,30 +127,30 @@ jobs:
   #       Contents: $(Build.Repository.LocalPath)/$(Build.DefinitionName)/${{folder}}
   #       TargetFolder: '$(System.DefaultWorkingDirectory)/Publish'
 
-  - pwsh: |
-      write-host $(Build.SourcesDirectory)\login.dfe.config\ssp_config\${{parameters.applicationFullName}}-standalone.json
-      Get-ChildItem $(Build.SourcesDirectory)\login.dfe.config\ssp_config\
-      $fileName = "$(System.DefaultWorkingDirectory)\Publish\config\login.dfe.${{parameters.applicationFullName}}.${{parameters.environmentName}}.json"
-      if (Test-Path $fileName) {
-          write-host existing config found, deleting
-          Remove-Item $fileName
-      }
-      write-host renaming pre-built config for ${{parameters.applicationFullName}} [${{parameters.environmentName}}]
-      Rename-Item -path $(System.DefaultWorkingDirectory)\Publish\config\${{parameters.applicationFullName}}-standalone.json -newname $fileName
-    displayName: Rename config file
+  # - pwsh: |
+  #     write-host $(Build.SourcesDirectory)\login.dfe.config\ssp_config\${{parameters.applicationFullName}}-standalone.json
+  #     Get-ChildItem $(Build.SourcesDirectory)\login.dfe.config\ssp_config\
+  #     $fileName = "$(System.DefaultWorkingDirectory)\Publish\config\login.dfe.${{parameters.applicationFullName}}.${{parameters.environmentName}}.json"
+  #     if (Test-Path $fileName) {
+  #         write-host existing config found, deleting
+  #         Remove-Item $fileName
+  #     }
+  #     write-host renaming pre-built config for ${{parameters.applicationFullName}} [${{parameters.environmentName}}]
+  #     Rename-Item -path $(System.DefaultWorkingDirectory)\Publish\config\${{parameters.applicationFullName}}-standalone.json -newname $fileName
+  #   displayName: Rename config file
 
-  - task: ArchiveFiles@1
-    displayName: Build Artifact
-    inputs:
-      rootFolder: $(System.DefaultWorkingDirectory)/Publish
-      includeRootFolder: true
-      archiveType: zip
-      archiveFile: $(Build.ArtifactStagingDirectory)/${{parameters.artifactName}}.zip
-      replaceExistingArchive: true
+  # - task: ArchiveFiles@1
+  #   displayName: Build Artifact
+  #   inputs:
+  #     rootFolder: $(System.DefaultWorkingDirectory)/Publish
+  #     includeRootFolder: true
+  #     archiveType: zip
+  #     archiveFile: $(Build.ArtifactStagingDirectory)/${{parameters.artifactName}}.zip
+  #     replaceExistingArchive: true
 
-  - task: PublishPipelineArtifact@1
-    displayName: Publish Pipeline Artifact
-    inputs:
-      targetPath: $(Build.ArtifactStagingDirectory)/${{parameters.artifactName}}.zip
-      artifact: ${{parameters.artifactName}}
-      publishLocation: 'pipeline'
+  # - task: PublishPipelineArtifact@1
+  #   displayName: Publish Pipeline Artifact
+  #   inputs:
+  #     targetPath: $(Build.ArtifactStagingDirectory)/${{parameters.artifactName}}.zip
+  #     artifact: ${{parameters.artifactName}}
+  #     publishLocation: 'pipeline'
