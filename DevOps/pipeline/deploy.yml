@@ -69,19 +69,26 @@ jobs:
       deploy:
         steps:
         - checkout: self
-        - task: AzureResourceManagerTemplateDeployment@3
-          displayName: Create Slot
+        # - task: AzureResourceManagerTemplateDeployment@3
+        #   displayName: Create Slot
+        #   inputs:
+        #     deploymentScope: 'Resource Group'
+        #     azureResourceManagerConnection: ${{parameters.serviceConnection}}
+        #     subscriptionId: ${{parameters.subscriptionId}}
+        #     action: 'Create Or Update Resource Group'
+        #     resourceGroupName: $(applicationResourceGroupName)
+        #     location: ${{parameters.deploymentLocation}}
+        #     csmFile: $(System.DefaultWorkingDirectory)/DevOps/templates/slotTmp.json
+        #     overrideParameters: '-appServiceName ${{parameters.applicationName}}'
+        #     deploymentMode: 'Incremental'
+        #     deploymentOutputs: armOutput
+        - task: AzureCLI@2
           inputs:
-            deploymentScope: 'Resource Group'
-            azureResourceManagerConnection: ${{parameters.serviceConnection}}
-            subscriptionId: ${{parameters.subscriptionId}}
-            action: 'Create Or Update Resource Group'
-            resourceGroupName: $(applicationResourceGroupName)
-            location: ${{parameters.deploymentLocation}}
-            csmFile: $(System.DefaultWorkingDirectory)/DevOps/templates/slotTmp.json
-            overrideParameters: '-appServiceName ${{parameters.applicationName}}'
-            deploymentMode: 'Incremental'
-            deploymentOutputs: armOutput
+            azureSubscription: 'S141D.bsvc.cip.azdo'
+            scriptType: 'pscore'
+            scriptLocation: 'scriptPath'
+            scriptPath: '$(Build.Repository.LocalPath)/$(Build.DefinitionName)/DevOps/scripts/slotCreation.ps1'
+            arguments: '-applicationName ${{parameters.applicationName}} -slotName ''staging'' -rg $(applicationResourceGroupName)'
 
         # - task: AzureRmWebAppDeployment@4
         #   displayName: Deploy Azure App Service ${{parameters.applicationName}}
