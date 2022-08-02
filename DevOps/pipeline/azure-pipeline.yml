@@ -59,6 +59,7 @@ stages:
       serviceConnection: "$(devServiceConnection)"
       environmentName: dev
       environmentId: d01
+      subscriptionId: $(devSubscriptionId)
       applicationName: ${{variables.applicationShortName}}
       releaseArtifactName: ${{variables.applicationName}}-dev-$(Build.BuildId)-release
 
