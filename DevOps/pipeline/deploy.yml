@@ -84,11 +84,12 @@ jobs:
         #     deploymentOutputs: armOutput
         - task: AzureCLI@2
           inputs:
-            azureSubscription: 'S141D.bsvc.cip.azdo'
+            azureSubscription: '${{parameters.serviceConnection}}'
             scriptType: 'pscore'
             scriptLocation: 'scriptPath'
-            scriptPath: '$(Build.Repository.LocalPath)/$(Build.DefinitionName)/DevOps/scripts/slotCreation.ps1'
-            arguments: '-applicationName ${{parameters.applicationName}} -slotName ''staging'' -rg $(applicationResourceGroupName)'
+            scriptPath: 'DevOps/scripts/slotCreation.ps1'
+            arguments: '-applicationName ${{parameters.applicationName}} -slotName 'staging' -rg $(applicationResourceGroupName)'
+            workingDirectory: $(System.DefaultWorkingDirectory)
 
         # - task: AzureRmWebAppDeployment@4
         #   displayName: Deploy Azure App Service ${{parameters.applicationName}}
