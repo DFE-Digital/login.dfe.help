@@ -10,7 +10,7 @@
         }
     },
     "variables": {
-        "sourceWebAppId": "resourceId(Microsoft.Web/sites,parameters('appServiceName'))"
+        "sourceWebAppId": "resourceId('Microsoft.Web/sites',parameters('appServiceName'))"
     },
     "resources": [
         {
