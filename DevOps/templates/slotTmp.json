@@ -12,7 +12,7 @@
     "variables": {
         "appServicePlanName": "[concat(parameters('appServicePlanName'),'-asp')",
         "resourceIds": {
-            "appServicePlanId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]",
+            "appServicePlanId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
             "appServiceId": "[resourceId('Microsoft.Web/sites', parameters('appServiceName'))]"
         }
     },
