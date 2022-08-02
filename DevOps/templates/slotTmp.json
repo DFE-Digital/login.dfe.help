@@ -10,7 +10,11 @@
         }
     },
     "variables": {
-        "sourceWebAppId": "resourceId('Microsoft.Web/sites',parameters('appServiceName'))"
+        "appServicePlanName": "[concat(parameters('appServicePlanName'),'-asp')",
+        "resourceIds": {
+            "appServicePlanId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]",
+            "appServiceId": "[resourceId('Microsoft.Web/sites', parameters('appServiceName'))]"
+        }
     },
     "resources": [
         {
@@ -19,12 +23,14 @@
             "apiVersion": "2021-03-01",
             "location": "[resourceGroup().location]",
             "properties": {
+                "serverFarmId": "[variables('resourceIds').appServicePlanId]",
+                "clientAffinityEnabled": false,
                 "cloningInfo": {
                     "appSettingsOverrides": {},
                     "cloneCustomHostNames": "true",
                     "cloneSourceControl": "true",
                     "configureLoadBalancing": "true",
-                    "sourceWebAppId": "[variables('sourceWebAppId')]"
+                    "sourceWebAppId": "[variables('resourceIds').appServiceId]"
                   }
             }
         }
