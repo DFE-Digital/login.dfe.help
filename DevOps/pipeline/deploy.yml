@@ -83,6 +83,7 @@ jobs:
         #     deploymentMode: 'Incremental'
         #     deploymentOutputs: armOutput
         - task: AzureCLI@2
+          displayName: Slot Creation 
           inputs:
             azureSubscription: '${{parameters.serviceConnection}}'
             scriptType: 'pscore'

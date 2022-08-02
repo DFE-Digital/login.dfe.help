@@ -149,7 +149,7 @@ jobs:
     displayName: Build Artifact
     inputs:
       rootFolder: $(System.DefaultWorkingDirectory)/Publish
-      includeRootFolder: true
+      includeRootFolder: false
       archiveType: zip
       archiveFile: $(Build.ArtifactStagingDirectory)/${{parameters.artifactName}}.zip
       replaceExistingArchive: true
