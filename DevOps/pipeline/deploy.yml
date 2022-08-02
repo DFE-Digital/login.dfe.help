@@ -92,36 +92,36 @@ jobs:
             workingDirectory: $(System.DefaultWorkingDirectory)
 
 
-        # - task: AzureRmWebAppDeployment@4
-        #   displayName: Deploy Azure App Service ${{parameters.applicationName}}
-        #   inputs:
-        #     azureSubscription: '${{parameters.serviceConnection}}'
-        #     appType: webAppLinux
-        #     WebAppName: $(applicationBaseName)
-        #     deployToSlotOrASE: true
-        #     ResourceGroupName: $(applicationResourceGroupName)
-        #     SlotName: '${{parameters.slotName}}'
-        #     packageForLinux: '$(Pipeline.Workspace)/${{parameters.releaseArtifactName}}/${{parameters.releaseArtifactName}}.zip'
-        #     RuntimeStack: '${{parameters.runtimeStack}}'
-        #     WebConfigParameters: '-Handler iisnode -NodeStartFile $(platformGlobalNodeStart) -appType node'
-        #     enableCustomDeployment: true
-        #     TakeAppOfflineFlag: false
-        #     RemoveAdditionalFilesFlag: true
-        #     ExcludeFilesFromAppDataFlag: false
-        #     StartupCommand: '${{parameters.startupCommand}}'
+        - task: AzureRmWebAppDeployment@4
+          displayName: Deploy Azure App Service ${{parameters.applicationName}}
+          inputs:
+            azureSubscription: '${{parameters.serviceConnection}}'
+            appType: webAppLinux
+            WebAppName: $(applicationBaseName)
+            deployToSlotOrASE: true
+            ResourceGroupName: $(applicationResourceGroupName)
+            SlotName: '${{parameters.slotName}}'
+            packageForLinux: '$(Pipeline.Workspace)/${{parameters.releaseArtifactName}}/${{parameters.releaseArtifactName}}.zip'
+            RuntimeStack: '${{parameters.runtimeStack}}'
+            WebConfigParameters: '-Handler iisnode -NodeStartFile $(platformGlobalNodeStart) -appType node'
+            enableCustomDeployment: true
+            TakeAppOfflineFlag: false
+            RemoveAdditionalFilesFlag: true
+            ExcludeFilesFromAppDataFlag: false
+            StartupCommand: '${{parameters.startupCommand}}'
 
-        # # - pwsh: |
-        # #     Get-ChildItem $(Build.SourcesDirectory)
-        # #     write-host hi
-        # #     Get-ChildItem $(Build.SourcesDirectory)
+        # - pwsh: |
+        #     Get-ChildItem $(Build.SourcesDirectory)
+        #     write-host hi
+        #     Get-ChildItem $(Build.SourcesDirectory)
 
-        # - task: PowerShell@2
-        #   displayName: 'Healthcheck [$(healthCheckUrl)/healthcheck]'
-        #   inputs:
-        #     filePath: 'DevOps/scripts/healthCheck.ps1'
-        #     arguments: '-testUrl $(healthCheckUrl) -healthCheckEndpoint healthcheck'
-        #     pwsh: true
-        #     workingDirectory: $(System.DefaultWorkingDirectory)
+        - task: PowerShell@2
+          displayName: 'Healthcheck [$(healthCheckUrl)/healthcheck]'
+          inputs:
+            filePath: 'DevOps/scripts/healthCheck.ps1'
+            arguments: '-testUrl $(healthCheckUrl) -healthCheckEndpoint healthcheck'
+            pwsh: true
+            workingDirectory: $(System.DefaultWorkingDirectory)
 
         # - task: AzureAppServiceManage@0
         #   displayName: Swap Slots
