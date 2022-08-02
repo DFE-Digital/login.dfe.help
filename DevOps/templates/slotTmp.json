@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appServiceName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the App Service"
+            }
+        }
+    },
+    "variables": {
+        "sourceWebAppId": "resourceId(Microsoft.Web/sites,parameters('appServiceName'))"
+    },
+    "resources": [
+        {
+            "name": "staging",
+            "type": "Microsoft.Web/sites/slots",
+            "apiVersion": "2021-03-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "cloningInfo": {
+                    "appSettingsOverrides": {},
+                    "cloneCustomHostNames": "true",
+                    "cloneSourceControl": "true",
+                    "configureLoadBalancing": "true",
+                    "sourceWebAppId": "string"
+                  }
+            }
+        }
+    ]
+}
