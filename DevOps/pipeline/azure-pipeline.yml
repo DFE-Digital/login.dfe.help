@@ -41,7 +41,7 @@ stages:
   - template: ./build.yml
     parameters:
       applicationName: ${{variables.applicationFullName}}
-      custRegAuth: $(custRegAuthSfa)
+      custRegAuth: $(custRegAuth)
       artifactName: "${{variables.applicationShortName}}-dev-$(Build.BuildId)-release"
       environmentName: dev
       pm2ProcessFileName: process.json
