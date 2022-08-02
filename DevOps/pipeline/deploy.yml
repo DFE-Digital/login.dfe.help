@@ -88,8 +88,9 @@ jobs:
             scriptType: 'pscore'
             scriptLocation: 'scriptPath'
             scriptPath: 'DevOps/scripts/slotCreation.ps1'
-            arguments: '-applicationName ${{parameters.applicationName}} -slotName 'staging' -rg $(applicationResourceGroupName)'
+            arguments: '-applicationName ${{parameters.applicationName}} -slotName staging -rg $(applicationResourceGroupName)'
             workingDirectory: $(System.DefaultWorkingDirectory)
+
 
         # - task: AzureRmWebAppDeployment@4
         #   displayName: Deploy Azure App Service ${{parameters.applicationName}}
