@@ -61,7 +61,7 @@ stages:
       environmentId: d01
       subscriptionId: $(devSubscriptionId)
       applicationName: ${{variables.applicationShortName}}
-      releaseArtifactName: ${{variables.applicationName}}-dev-$(Build.BuildId)-release
+      releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
 
 
       # stageName: publishDevInstances
