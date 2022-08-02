@@ -53,7 +53,7 @@ jobs:
       command: custom
       workingDir: $(Build.Repository.LocalPath)/$(Build.DefinitionName)
       verbose: true
-      customCommand: ci --force --json --no-package-lock
+      customCommand: install --force --json --no-package-lock
       customRegistry: useFeed
       customFeed: ${{parameters.custRegAuth}}
   
@@ -63,7 +63,7 @@ jobs:
       command: custom
       workingDir: $(Build.Repository.LocalPath)/$(Build.DefinitionName)
       verbose: false
-      customCommand: ci --production --json --force --no-package-lock
+      customCommand: install --production --json --force --no-package-lock
       customRegistry: useFeed
       customFeed: ${{parameters.custRegAuth}}
 
