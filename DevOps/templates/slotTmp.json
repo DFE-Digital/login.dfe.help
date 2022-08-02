@@ -24,7 +24,7 @@
                     "cloneCustomHostNames": "true",
                     "cloneSourceControl": "true",
                     "configureLoadBalancing": "true",
-                    "sourceWebAppId": "string"
+                    "sourceWebAppId": "[variables('sourceWebAppId')]"
                   }
             }
         }
