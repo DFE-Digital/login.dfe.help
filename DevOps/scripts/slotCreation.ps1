@@ -14,5 +14,5 @@ if($null -eq $slotConfig){
     Write-Host "Slot '$($slotConfig.name)' already exists in app '$($slotConfig.repositorySiteName)'."
 }
 
-## Waiting 90 sec before the deployemnt 
-Start-Sleep -Seconds 90
+## Waiting 150 sec before the deployemnt 
+Start-Sleep -Seconds 150
