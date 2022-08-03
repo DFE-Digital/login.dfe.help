@@ -3,7 +3,7 @@ $uri = "$testUrl/$healthCheckEndpoint"
 Write-Host "Testing $uri"
 
 $Attempt = 0
-$TimeOutSec = 8
+$TimeOutSec = 20
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
