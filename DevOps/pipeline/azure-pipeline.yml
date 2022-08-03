@@ -48,7 +48,7 @@ stages:
       variableGroups:
         - platform-dev
         - platform-dev-secured
-        - platform-standalone-azure-hosts
+        - platform-standalone-custom-hosts
 
 - stage: DeployApp
   dependsOn: buildApp
