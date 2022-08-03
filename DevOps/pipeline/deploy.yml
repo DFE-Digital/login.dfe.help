@@ -57,7 +57,6 @@ jobs:
   variables:
   # - '${{ each variableGroup in parameters.variableGroups }}':
   #   - group: ${{variableGroup}}
-  - name:
   - name: applicationBaseName
     value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalName)-${{parameters.applicationName}}'
   - name: applicationResourceGroupName
@@ -83,6 +82,7 @@ jobs:
         #     overrideParameters: '-appServiceName ${{parameters.applicationName}}'
         #     deploymentMode: 'Incremental'
         #     deploymentOutputs: armOutput
+
         - task: AzureCLI@2
           displayName: Slot Creation 
           inputs:
