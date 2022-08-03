@@ -149,4 +149,6 @@ jobs:
             azureSubscription: '${{parameters.serviceConnection}}'
             Action: Delete Slot
             WebAppName: $(applicationBaseName)
+            ResourceGroupName: $(applicationResourceGroupName)
+            SourceSlot: '${{parameters.slotName}}'
         
