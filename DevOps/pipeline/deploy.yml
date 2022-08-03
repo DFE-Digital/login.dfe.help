@@ -143,12 +143,12 @@ jobs:
             pwsh: true
             workingDirectory: $(System.DefaultWorkingDirectory)
 
-        - task: AzureAppServiceManage@0
-          displayName: Delete staging slot
-          inputs:
-            azureSubscription: '${{parameters.serviceConnection}}'
-            Action: Delete Slot
-            WebAppName: $(applicationBaseName)
-            ResourceGroupName: $(applicationResourceGroupName)
-            SourceSlot: '${{parameters.slotName}}'
+        # - task: AzureAppServiceManage@0
+        #   displayName: Delete staging slot
+        #   inputs:
+        #     azureSubscription: '${{parameters.serviceConnection}}'
+        #     Action: Delete Slot
+        #     WebAppName: $(applicationBaseName)
+        #     ResourceGroupName: $(applicationResourceGroupName)
+        #     SourceSlot: '${{parameters.slotName}}'
         
