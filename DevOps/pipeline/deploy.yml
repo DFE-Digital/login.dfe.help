@@ -63,6 +63,8 @@ jobs:
     value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-${{parameters.applicationName}}'
   - name: healthCheckUrl
     value: 'https://$(applicationBaseName)-${{parameters.slotName}}.azurewebsites.net'
+  - name: healthCheckUrlApp
+    value: 'https://$(applicationBaseName).azurewebsites.net'
 
   strategy:
     runOnce:
@@ -132,6 +134,14 @@ jobs:
             WebAppName: $(applicationBaseName)
             ResourceGroupName: $(applicationResourceGroupName)
             SourceSlot: '${{parameters.slotName}}'
+        
+        - task: PowerShell@2
+          displayName: 'Healthcheck [$(healthCheckUrlApp)/healthcheck]'
+          inputs:
+            filePath: 'DevOps/scripts/healthCheck.ps1'
+            arguments: '-testUrl $(healthCheckUrlApp) -healthCheckEndpoint healthcheck'
+            pwsh: true
+            workingDirectory: $(System.DefaultWorkingDirectory)
 
         - task: AzureAppServiceManage@0
           displayName: Delete staging slot
@@ -139,3 +149,4 @@ jobs:
             azureSubscription: '${{parameters.serviceConnection}}'
             Action: Delete Slot
             WebAppName: $(applicationBaseName)
+        
