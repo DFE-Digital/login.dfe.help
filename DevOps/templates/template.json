@@ -233,6 +233,7 @@
                     },
                     "http20Enabled": {
                         "value": false
+                    }
                 }
             },
             "dependsOn": [
