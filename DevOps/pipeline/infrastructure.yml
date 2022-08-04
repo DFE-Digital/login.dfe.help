@@ -93,7 +93,7 @@ jobs:
       -auditServiceBusSubscriptionName "$(auditServiceBusSubscriptionName)" 
       -virtualNetworkResourceGroupName "$(ShdResourceGroupName)" 
       -virtualNetworkName "$(ShdVirtualNetworkName)" 
-      -enablePrivateEndpoint "$(enablePrivateEndpoint)"'
+      -enablePrivateEndpoint "false"'
 
   strategy:
     runOnce:
