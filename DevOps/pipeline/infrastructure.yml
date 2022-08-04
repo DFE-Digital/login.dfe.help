@@ -108,7 +108,7 @@ jobs:
               action: 'Create Or Update Resource Group'
               resourceGroupName: $(applicationResourceGroupName)
               location: ${{parameters.deploymentLocation}}
-              csmFile: $(System.DefaultWorkingDirectory)/DevOps/templates/slotTmp.json
+              csmFile: $(System.DefaultWorkingDirectory)/DevOps/templates/template.json
               overrideParameters: $(overrideParameters)
               deploymentMode: 'Incremental'
               deploymentOutputs: armOutput
