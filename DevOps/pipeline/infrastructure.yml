@@ -99,71 +99,72 @@ jobs:
     runOnce:
       deploy:
         steps:
-          - task: AzureResourceManagerTemplateDeployment@3
-            displayName: Create infrastructure
-            inputs:
-              deploymentScope: 'Resource Group'
-              azureResourceManagerConnection: ${{parameters.serviceConnection}}
-              subscriptionId: ${{parameters.subscriptionId}}
-              action: 'Create Or Update Resource Group'
-              resourceGroupName: $(applicationResourceGroupName)
-              location: ${{parameters.deploymentLocation}}
-              csmFile: $(System.DefaultWorkingDirectory)/DevOps/templates/template.json
-              overrideParameters: $(overrideParameters)
-              deploymentMode: 'Incremental'
-              deploymentOutputs: armOutput
+        - checkout: self
+        - task: AzureResourceManagerTemplateDeployment@3
+          displayName: Create infrastructure
+          inputs:
+            deploymentScope: 'Resource Group'
+            azureResourceManagerConnection: ${{parameters.serviceConnection}}
+            subscriptionId: ${{parameters.subscriptionId}}
+            action: 'Create Or Update Resource Group'
+            resourceGroupName: $(applicationResourceGroupName)
+            location: ${{parameters.deploymentLocation}}
+            csmFile: $(System.DefaultWorkingDirectory)/DevOps/templates/template.json
+            overrideParameters: $(overrideParameters)
+            deploymentMode: 'Incremental'
+            deploymentOutputs: armOutput
 
-          - task: AzureRmWebAppDeployment@4
-            displayName: Deploy Azure App Service ${{parameters.applicationName}}
-            condition: eq(variables['slot-Deploy'], 'true')
-            inputs:
-              azureSubscription: '${{parameters.serviceConnection}}'
-              appType: webAppLinux
-              WebAppName: $(applicationBaseName)
-              deployToSlotOrASE: true
-              ResourceGroupName: $(applicationResourceGroupName)
-              SlotName: '${{parameters.slotName}}'
-              packageForLinux: '$(Pipeline.Workspace)/${{parameters.releaseArtifactName}}/${{parameters.releaseArtifactName}}.zip'
-              RuntimeStack: '${{parameters.runtimeStack}}'
-              WebConfigParameters: '-Handler iisnode -NodeStartFile $(platformGlobalNodeStart) -appType node'
-              enableCustomDeployment: true
-              TakeAppOfflineFlag: false
-              RemoveAdditionalFilesFlag: true
-              ExcludeFilesFromAppDataFlag: false
-              StartupCommand: '${{parameters.startupCommand}}'
+        - task: AzureRmWebAppDeployment@4
+          displayName: Deploy Azure App Service ${{parameters.applicationName}}
+          condition: eq(variables['slot-Deploy'], 'true')
+          inputs:
+            azureSubscription: '${{parameters.serviceConnection}}'
+            appType: webAppLinux
+            WebAppName: $(applicationBaseName)
+            deployToSlotOrASE: true
+            ResourceGroupName: $(applicationResourceGroupName)
+            SlotName: '${{parameters.slotName}}'
+            packageForLinux: '$(Pipeline.Workspace)/${{parameters.releaseArtifactName}}/${{parameters.releaseArtifactName}}.zip'
+            RuntimeStack: '${{parameters.runtimeStack}}'
+            WebConfigParameters: '-Handler iisnode -NodeStartFile $(platformGlobalNodeStart) -appType node'
+            enableCustomDeployment: true
+            TakeAppOfflineFlag: false
+            RemoveAdditionalFilesFlag: true
+            ExcludeFilesFromAppDataFlag: false
+            StartupCommand: '${{parameters.startupCommand}}'
 
-          - task: PowerShell@2
-            displayName: 'Healthcheck [$(healthCheckUrl)/healthcheck]'
-            condition: eq(variables['slot-Deploy'], 'true')
-            inputs:
-              filePath: 'DevOps/scripts/healthCheck.ps1'
-              arguments: '-testUrl $(healthCheckUrl) -healthCheckEndpoint healthcheck'
-              pwsh: true
-              workingDirectory: $(System.DefaultWorkingDirectory)
+        - task: PowerShell@2
+          displayName: 'Healthcheck [$(healthCheckUrl)/healthcheck]'
+          condition: eq(variables['slot-Deploy'], 'true')
+          inputs:
+            filePath: 'DevOps/scripts/healthCheck.ps1'
+            arguments: '-testUrl $(healthCheckUrl) -healthCheckEndpoint healthcheck'
+            pwsh: true
+            workingDirectory: $(System.DefaultWorkingDirectory)
 
-          - task: AzureAppServiceManage@0
-            displayName: Swap Slots
-            condition: eq(variables['slot-Deploy'], 'true')
-            inputs:
-              azureSubscription: '${{parameters.serviceConnection}}'
-              WebAppName: $(applicationBaseName)
-              ResourceGroupName: $(applicationResourceGroupName)
-              SourceSlot: '${{parameters.slotName}}'
+        - task: AzureAppServiceManage@0
+          displayName: Swap Slots
+          condition: eq(variables['slot-Deploy'], 'true')
+          inputs:
+            azureSubscription: '${{parameters.serviceConnection}}'
+            WebAppName: $(applicationBaseName)
+            ResourceGroupName: $(applicationResourceGroupName)
+            SourceSlot: '${{parameters.slotName}}'
 
-          - task: PowerShell@2
-            displayName: 'Healthcheck [$(healthCheckUrlApp)/healthcheck]'
-            inputs:
-              filePath: 'DevOps/scripts/healthCheck.ps1'
-              arguments: '-testUrl $(healthCheckUrlApp) -healthCheckEndpoint healthcheck'
-              pwsh: true
-              workingDirectory: $(System.DefaultWorkingDirectory)
+        - task: PowerShell@2
+          displayName: 'Healthcheck [$(healthCheckUrlApp)/healthcheck]'
+          inputs:
+            filePath: 'DevOps/scripts/healthCheck.ps1'
+            arguments: '-testUrl $(healthCheckUrlApp) -healthCheckEndpoint healthcheck'
+            pwsh: true
+            workingDirectory: $(System.DefaultWorkingDirectory)
 
-          - task: AzureAppServiceManage@0
-            displayName: Delete staging slot
-            condition: eq(variables['slot-Deploy'], 'true')
-            inputs:
-              azureSubscription: '${{parameters.serviceConnection}}'
-              Action: Delete Slot
-              WebAppName: $(applicationBaseName)
-              ResourceGroupName: $(applicationResourceGroupName)
-              slot: '${{parameters.slotName}}'
+        - task: AzureAppServiceManage@0
+          displayName: Delete staging slot
+          condition: eq(variables['slot-Deploy'], 'true')
+          inputs:
+            azureSubscription: '${{parameters.serviceConnection}}'
+            Action: Delete Slot
+            WebAppName: $(applicationBaseName)
+            ResourceGroupName: $(applicationResourceGroupName)
+            slot: '${{parameters.slotName}}'
