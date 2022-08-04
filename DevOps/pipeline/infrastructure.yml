@@ -18,6 +18,7 @@ parameters:
   type: string
 - name: slotName
   type: string
+  default: staging
 - name: runtimeStack
   type: string
   default: NODE|14-lts
@@ -46,8 +47,8 @@ parameters:
   - macOS-latest
   - macOS-10.15
   - macOS-10.14
-# - name: variableGroups
-#   type: object
+- name: variableGroups
+  type: object
 
 jobs:
 - deployment: 'deploy_${{parameters.environmentName}}'
