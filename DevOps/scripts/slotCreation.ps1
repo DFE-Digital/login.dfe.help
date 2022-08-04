@@ -15,4 +15,4 @@ if($null -eq $slotConfig){
 }
 
 ## Waiting 150 sec before the deployemnt 
-Start-Sleep -Seconds 150
+Start-Sleep -Seconds 240
