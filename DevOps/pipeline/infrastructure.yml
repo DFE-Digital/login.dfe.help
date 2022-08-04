@@ -89,7 +89,7 @@ jobs:
       -auditServiceBusConnectionString "$(sharedServiceBusConnectionString)" 
       -auditServiceBusTopicName "$(auditServiceBusTopicName)" 
       -auditServiceBusSubscriptionName "$(auditServiceBusSubscriptionName)" 
-      -virtualNetworkResourceGroupName "$(ShdResourceGroupName)" 
+      -virtualNetworkResourceGroupName "$(sharedResourceGroupName)" 
       -virtualNetworkName "$(sharedVirtualNetworkName)" 
       -enablePrivateEndpoint "false"'
 
