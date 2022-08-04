@@ -64,7 +64,7 @@ stages:
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
 
 - stage: DeployInfr
-  condition: $(Infr-Deploy)
+  condition: '$(Infr-Deploy)'
   displayName: "Deploy application"
   jobs:
   - template: ./infrastructure.yml
