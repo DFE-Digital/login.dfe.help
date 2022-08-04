@@ -73,8 +73,8 @@ jobs:
     value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalName)-global'
   - name: globalKeyVaultName
     value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalName)-global-kv'
-  - name: environmentId
-    value: '${{parameters.environmentId}}'
+  - name: sharedVirtualNetworkName
+    value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalName)-shd-vnet'
   - name: overrideParameters
     value: '-appServiceName "$(applicationBaseName)" 
       -appServicePlanName "$(applicationBaseName)-asp" 
@@ -90,7 +90,7 @@ jobs:
       -auditServiceBusTopicName "$(auditServiceBusTopicName)" 
       -auditServiceBusSubscriptionName "$(auditServiceBusSubscriptionName)" 
       -virtualNetworkResourceGroupName "$(ShdResourceGroupName)" 
-      -virtualNetworkName "$(ShdVirtualNetworkName)" 
+      -virtualNetworkName "$(sharedVirtualNetworkName)" 
       -enablePrivateEndpoint "false"'
 
   strategy:
