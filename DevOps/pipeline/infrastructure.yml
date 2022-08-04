@@ -75,6 +75,8 @@ jobs:
     value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalName)-global-kv'
   - name: sharedVirtualNetworkName
     value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalName)-shd-vnet'
+  - name: healthCheckUrlApp
+    value: 'https://$(applicationBaseName).azurewebsites.net'
   - name: overrideParameters
     value: '-appServiceName "$(applicationBaseName)" 
       -appServicePlanName "$(applicationBaseName)-asp" 
