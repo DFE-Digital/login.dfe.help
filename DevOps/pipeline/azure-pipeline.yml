@@ -63,6 +63,24 @@ stages:
       applicationName: ${{variables.applicationShortName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
 
+- stage: DeployInfr
+  condition: $(Infr-Deploy)
+  displayName: "Deploy application"
+  jobs:
+  - template: ./infrastructure.yml
+    parameters:
+      serviceConnection: "$(devServiceConnection)"
+      environmentName: dev
+      environmentId: d01
+      subscriptionId: $(devSubscriptionId)
+      applicationName: ${{variables.applicationShortName}}
+      releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+      certificateName: non-prod-gateway
+      variableGroups:
+        - platform-dev
+        - platform-dev-secured
+        - platform-standalone-custom-hosts
+
 
       # stageName: publishDevInstances
       # 
