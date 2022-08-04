@@ -71,8 +71,6 @@ jobs:
     value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalSharedResourceGroupNameIdentifier)'
   - name: globalResourceGroupName
     value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalName)-global'
-  - name: keyVaultName
-    value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalName)-$(platformGlobalSharedResourceGroupNameIdentifier)-kv'
   - name: globalKeyVaultName
     value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalName)-global-kv'
   - name: environmentId
@@ -86,8 +84,8 @@ jobs:
       -certificateName $(CertificateName) 
       -appServicePlanSku $(appServiceSku) 
       -numberOfWorkers $(numberOfWorkers) 
-      -keyVaultName $(keyVaultName) 
-      -keyVaultResourceGroup $(keyVaultResourceGroup) 
+      -keyVaultName $(globalKeyVaultName) 
+      -keyVaultResourceGroup $(globalResourceGroupName) 
       -auditServiceBusConnectionString "$(sharedServiceBusConnectionString)" 
       -auditServiceBusTopicName "$(auditServiceBusTopicName)" 
       -auditServiceBusSubscriptionName "$(auditServiceBusSubscriptionName)" 
