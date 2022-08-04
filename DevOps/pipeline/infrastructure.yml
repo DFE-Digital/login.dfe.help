@@ -81,7 +81,7 @@ jobs:
       -appServiceConfigPath "$(appServiceConfigPath)" 
       -appServicePlanRG "$(applicationResourceGroupName)" 
       -minTlsVersion "$(platformGlobalMinTlsVersion)"
-      -certificateName $(CertificateName) 
+      -certificateName ${{parameters.certificateName}} 
       -appServicePlanSku $(appServiceSku) 
       -numberOfWorkers $(numberOfWorkers) 
       -keyVaultName $(globalKeyVaultName) 
