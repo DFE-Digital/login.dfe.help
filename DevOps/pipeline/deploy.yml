@@ -150,5 +150,5 @@ jobs:
             Action: Delete Slot
             WebAppName: $(applicationBaseName)
             ResourceGroupName: $(applicationResourceGroupName)
-            SourceSlot: '${{parameters.slotName}}'
+            slot: '${{parameters.slotName}}'
         
