@@ -10,7 +10,9 @@ parameters:
 - name: deploymentLocation
   type: string
   default: westeurope
-- name: applicationName
+- name: applicationFullName
+  type: string
+- name: applicationShortName
   type: string
 - name: certificateName
   type: string
@@ -60,11 +62,11 @@ jobs:
   - '${{ each variableGroup in parameters.variableGroups }}':
     - group: ${{variableGroup}}
   - name: applicationBaseName
-    value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalName)-${{parameters.applicationName}}'
+    value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalName)-${{parameters.applicationShortName}}'
   - name: applicationResourceGroupName
-    value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-${{parameters.applicationName}}'
+    value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-${{parameters.applicationShortName}}'
   - name: appServiceConfigPath
-    value: './config/login.dfe.${{parameters.applicationName}}.${{parameters.environmentName}}.json'
+    value: './config/login.dfe.${{parameters.applicationFullName}}.${{parameters.environmentName}}.json'
   - name: healthCheckUrl
     value: 'https://$(applicationBaseName)-${{parameters.slotName}}.azurewebsites.net'
   - name: sharedResourceGroupName
@@ -115,7 +117,7 @@ jobs:
             deploymentOutputs: armOutput
 
         - task: AzureRmWebAppDeployment@4
-          displayName: Deploy Azure App Service ${{parameters.applicationName}}
+          displayName: Deploy Azure App Service ${{parameters.applicationFullName}}
           condition: eq(variables['slot-Deploy'], 'true')
           inputs:
             azureSubscription: '${{parameters.serviceConnection}}'

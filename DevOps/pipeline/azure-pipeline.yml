@@ -75,7 +75,8 @@ stages:
       environmentName: dev
       environmentId: d01
       subscriptionId: $(devSubscriptionId)
-      applicationName: ${{variables.applicationShortName}}
+      applicationShortName: ${{variables.applicationShortName}}
+      applicationFullName: ${{variables.applicationFullName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
       certificateName: non-prod-gateway
       variableGroups:
