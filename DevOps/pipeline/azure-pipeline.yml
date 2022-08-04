@@ -17,7 +17,7 @@ trigger:
     - master
     - develop
     - release/*
-    - feature/*
+    #- feature/*
 
 variables:
 - group: platform-global
