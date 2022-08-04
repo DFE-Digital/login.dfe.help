@@ -36,6 +36,7 @@ stages:
 #Build the artifact for deployment
 - stage: buildApp
   displayName: "Package application"
+  condition: eq(variables['slot-Deploy'], 'true')
   #dependsOn: scanTools
   jobs:
   - template: ./build.yml
@@ -53,6 +54,7 @@ stages:
 - stage: DeployApp
   dependsOn: buildApp
   displayName: "Deploy application"
+  condition: and(eq(variables['slot-Deploy'], 'true'),eq(variables['Infr-Deploy'], 'False'))
   jobs:
   - template: ./deploy.yml
     parameters:
@@ -65,7 +67,7 @@ stages:
 
 - stage: DeployInfr
   condition: eq(variables['Infr-Deploy'], 'true')
-  displayName: "Deploy application"
+  displayName: "Deploy Infrastructure"
   jobs:
   - template: ./infrastructure.yml
     parameters:
