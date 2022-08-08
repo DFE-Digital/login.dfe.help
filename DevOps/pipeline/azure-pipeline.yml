@@ -36,17 +36,10 @@ variables:
 
 stages:
 # Check What Folder/files changes to trigger the correspondent stages
-- stage: Changes
-  displayName: "Automatic Trigger check"
+- stage: FilesChanges
+  displayName: "Files Changes"
   jobs:
-  - job: ChangesJob
-    displayName: 'Automatic Trigger check'
-    steps:
-    - task: PowerShell@2
-      displayName: Folders/Files changes check 
-      inputs:
-        filePath: './scripts/changesChecks.ps1'
-        pwsh: true
+  - template: ./filesChecks.yml
 
 # Code scaning tools 
 #- template: ./scan-tools.yml
