@@ -39,6 +39,9 @@ stages:
 - stage: Changes
   displayName: "Automatic Trigger check"
   jobs:
+  - job: ChangesJob
+    displayName: 'Automatic Trigger check'
+    steps:
     - task: PowerShell@2
       displayName: Folders/Files changes check 
       inputs:
