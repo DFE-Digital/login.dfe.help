@@ -3,10 +3,10 @@ jobs:
     vmImage: windows-latest
 
   - job: ChangesJob
-      displayName: 'Automatic Trigger check'
-      steps:
-      - task: PowerShell@2
-        displayName: Folders/Files changes check 
-        inputs:
-          filePath: '$(System.DefaultWorkingDirectory)/DevOps/scripts/changesChecks.ps1'
-          pwsh: true
+    displayName: 'Automatic Trigger check'
+    steps:
+    - task: PowerShell@2
+      displayName: Folders/Files changes check 
+      inputs:
+        filePath: '$(System.DefaultWorkingDirectory)/DevOps/scripts/changesChecks.ps1'
+        pwsh: true
