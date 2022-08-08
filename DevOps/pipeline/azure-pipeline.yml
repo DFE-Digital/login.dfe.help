@@ -39,7 +39,7 @@ stages:
 - stage: FilesChanges
   displayName: "Files Changes"
   jobs:
-  - template: ./filesChecks.yml
+  - template: ./filesCheck.yml
 
 # Code scaning tools 
 #- template: ./scan-tools.yml
