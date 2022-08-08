@@ -9,8 +9,8 @@ jobs:
       Write-Host "##vso[task.setvariable variable=AppDeploy;]False"
       $editedFiles = git diff HEAD HEAD~ --name-only
 
-      Write-Host "Infr Value: $(InfrDeploy)"
-      Write-Host "App Value: $(AppDeploy)"
+      Write-Host  $(InfrDeploy)
+      Write-Host $(AppDeploy)
       # $editedFiles | ForEach-Object {
       #     Write-Output $_
       #     Switch -Wildcard ($_ ) {
@@ -23,5 +23,7 @@ jobs:
 
       # }
 
-      Write-Host "Infr Value: $(InfrDeploy)"
-      Write-Host "App Value: $(AppDeploy)"
+      Write-Host $(InfrDeploy)
+      Write-Host $(AppDeploy)
+
+      Get-ChildItem -Path Env:\ | Format-List
