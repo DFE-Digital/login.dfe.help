@@ -39,13 +39,12 @@ stages:
 - stage: Changes
   displayName: "Automatic Trigger check"
   jobs:
-    steps:
-      - task: PowerShell@2
-        displayName: Folders/Files changes check 
-        inputs:
-          filePath: '../scripts/changesChecks.ps1'
-          pwsh: true
-          workingDirectory: $(System.DefaultWorkingDirectory)
+    - task: PowerShell@2
+      displayName: Folders/Files changes check 
+      inputs:
+        filePath: '../scripts/changesChecks.ps1'
+        pwsh: true
+        workingDirectory: $(System.DefaultWorkingDirectory)
 
 # Code scaning tools 
 #- template: ./scan-tools.yml
