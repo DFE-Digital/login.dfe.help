@@ -22,5 +22,5 @@ jobs:
 
       }
 
-      Write-Output "Infr Value: $($env:InfrDeploy)"
-      Write-Output "App Value: $($env:AppDeploy)"
+      Write-Output "Infr Value: $($InfrDeploy)"
+      Write-Output "App Value: $($AppDeploy)"
