@@ -26,6 +26,10 @@ variables:
   value: 'hlp'
 - name: applicationFullName
   value: 'help'
+- name: InfrDeploy
+  value: fasle
+- name: AppDeploy
+  value: fasle
 # - name: environmentName
 #   - ${{ if eq(parameters.gitVersioning, true) }}:
 #     value: 
@@ -33,10 +37,19 @@ variables:
 stages:
 # Code scaning tools 
 #- template: ./scan-tools.yml
+
+# Check What Folder/files changes to trigger the correspondent stages
+- task: PowerShell@2
+  displayName: Folders/Files changes check 
+  inputs:
+    filePath: '../scripts/changesChecks.ps1'
+    pwsh: true
+    workingDirectory: $(System.DefaultWorkingDirectory)
+
 #Build the artifact for deployment
 - stage: buildApp
   displayName: "Package application"
-  condition: eq(variables['slot-Deploy'], 'true')
+  condition: eq(variables['AppDeploy'], 'true')
   #dependsOn: scanTools
   jobs:
   - template: ./build.yml
@@ -54,7 +67,7 @@ stages:
 - stage: DeployApp
   dependsOn: buildApp
   displayName: "Deploy application"
-  condition: and(eq(variables['slot-Deploy'], 'true'),eq(variables['Infr-Deploy'], 'False'))
+  condition: and(eq(variables['AppDeploy'], 'true'),eq(variables['InfrDeploy'], 'False'))
   jobs:
   - template: ./deploy.yml
     parameters:
@@ -66,7 +79,7 @@ stages:
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
 
 - stage: DeployInfr
-  condition: eq(variables['Infr-Deploy'], 'true')
+  condition: eq(variables['InfrDeploy'], 'true')
   displayName: "Deploy Infrastructure"
   jobs:
   - template: ./infrastructure.yml
