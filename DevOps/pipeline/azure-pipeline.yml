@@ -26,10 +26,6 @@ variables:
   value: 'hlp'
 - name: applicationFullName
   value: 'help'
-- name: InfrDeploy
-  value: fasle
-- name: AppDeploy
-  value: fasle
 # - name: environmentName
 #   - ${{ if eq(parameters.gitVersioning, true) }}:
 #     value: 
