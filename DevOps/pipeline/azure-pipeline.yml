@@ -35,16 +35,20 @@ variables:
 #     value: 
 
 stages:
+# Check What Folder/files changes to trigger the correspondent stages
+- stage: Changes
+  displayName: "Automatic Trigger check"
+  jobs:
+    steps:
+      - task: PowerShell@2
+        displayName: Folders/Files changes check 
+        inputs:
+          filePath: '../scripts/changesChecks.ps1'
+          pwsh: true
+          workingDirectory: $(System.DefaultWorkingDirectory)
+
 # Code scaning tools 
 #- template: ./scan-tools.yml
-
-# Check What Folder/files changes to trigger the correspondent stages
-- task: PowerShell@2
-  displayName: Folders/Files changes check 
-  inputs:
-    filePath: '../scripts/changesChecks.ps1'
-    pwsh: true
-    workingDirectory: $(System.DefaultWorkingDirectory)
 
 #Build the artifact for deployment
 - stage: buildApp
