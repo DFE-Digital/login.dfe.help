@@ -76,8 +76,8 @@ stages:
 
           Write-Output "ENV:EnvVariable : $($ENV:ENVVARIABLE)"
 
-          Write-Output "ENV:EnvVariable : $($ENV:InfrDeploy)"
-          Write-Output "ENV:EnvVariable : $($env:AppDeploy)"
+          Write-Output "ENV:InfrDeploy : $($ENV:INFRDEPLOY)"
+          Write-Output "ENV:AppDeploy : $($env:APPDEPLOY)"
 
 # Code scaning tools 
 #- template: ./scan-tools.yml
