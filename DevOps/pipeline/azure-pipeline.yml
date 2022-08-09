@@ -50,17 +50,17 @@ stages:
           $editedFiles | ForEach-Object {
               Write-Output $_
               Switch -Wildcard ($_ ) {
-                  'DevOps/*' { Write-Host "##vso[task.setvariable variable=InfrDeploy;isOutput=true]$Check" }
-                  'src/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;isOutput=true]$Check"  }
-                  'test/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;isOutput=true]$Check" }
-                  '*package*' { Write-Host "##vso[task.setvariable variable=AppDeploy;isOutput=true]$Check" }
+                  'DevOps/*' { Write-Host "##vso[task.setvariable variable=InfrDeploy;]$Check" }
+                  'src/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]$Check"  }
+                  'test/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]$Check" }
+                  '*package*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]$Check" }
                   # The rest of your path filters
               }
 
           }
 
-          Write-Host "##vso[task.setvariable variable=EnvVariable;isOutput=true]$Check"
-          Write-Host "##vso[task.setvariable variable=InfrDeploy;isOutput=true]$Check"
+          Write-Host "##vso[task.setvariable variable=EnvVariable;]$Check"
+          Write-Host "##vso[task.setvariable variable=InfrDeploy;]$Check"
 
           Write-Output "##vso[task.setvariable variable=EnvVariable;]$Check"
     - task: PowerShell@2
