@@ -1,11 +1,10 @@
 jobs:
 - job: filesCheck
 
-
   steps:
-  - pwsh: |
-      $value = true
-      Write-Host "##vso[task.setvariable variable=InfrDeploy;]$value"
+  - script: |
+      $value = True
+      Write-Host "##vso[task.setvariable variable=InfrDeploy;isOutput=true]$value"
       Write-Host "##vso[task.setvariable variable=AppDeploy;]test"
       $editedFiles = git diff HEAD HEAD~ --name-only
       Get-ChildItem -Path Env:\ | Format-List
