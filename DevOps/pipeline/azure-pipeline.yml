@@ -39,96 +39,93 @@ stages:
 
     steps:
     - task: PowerShell@2
-      displayName: Create ResourceGroup with tags
+      displayName: File Check
       inputs:
         targetType: 'inline'
         azurePowerShellVersion: 'LatestVersion'
         script: |
-          $value = true
-          Write-Host "##vso[task.setvariable variable=ztest;isOutput=true]$value"
-          Write-Host "##vso[task.setvariable variable=AppDeploy;]test"
-          $editedFiles = git diff HEAD HEAD~ --name-only
-          Get-ChildItem -Path Env:\ | Format-List
-          
-          # Write-Host  $(InfrDeploy)
-          # Write-Host $(AppDeploy)
-          # $editedFiles | ForEach-Object {
-          #     Write-Output $_
-          #     Switch -Wildcard ($_ ) {
-          #         'DevOps/*' { Write-Host "##vso[task.setvariable variable=InfrDeploy;]True" }
-          #         'src/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]True"  }
-          #         'test/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]True"}
-          #         'package*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]True"}
-          #         # The rest of your path filters
-          #     }
+          targetType: 'inline'
+          pwsh: true
+          script: |
+            $EnvVariable= "Value"
 
-          # }
+            Write-Host "##vso[task.setvariable variable=EnvVariable;]$EnvVariable"
 
-          Write-Host $(ztest)
-          Write-Host $(AppDeploy)
+            Write-Output "##vso[task.setvariable variable=EnvVariable;]$EnvVariable"
+    - task: PowerShell@2
+      displayName: Read variables 0
+      inputs:
+        targetType: 'inline'
+        pwsh: true
+        script: |
+          Write-Host "env:EnvVariable : $($env:ENVVARIABLE)"
 
-          Get-ChildItem -Path Env:\ | Format-List
+          Write-Host "ENV:EnvVariable : $($ENV:ENVVARIABLE)"
+
+          Write-Output "env:EnvVariable : $($env:ENVVARIABLE)"
+
+          Write-Output "ENV:EnvVariable : $($ENV:ENVVARIABLE)"
 
 # Code scaning tools 
 #- template: ./scan-tools.yml
 
 #Build the artifact for deployment
-- stage: buildApp
-  displayName: "Package application"
-  condition: eq(variables['AppDeploy'], 'true')
-  #dependsOn: scanTools
-  jobs:
-  - template: ./build.yml
-    parameters:
-      applicationName: ${{variables.applicationFullName}}
-      custRegAuth: $(custRegAuth)
-      artifactName: "${{variables.applicationShortName}}-dev-$(Build.BuildId)-release"
-      environmentName: dev
-      pm2ProcessFileName: process.json
-      variableGroups:
-        - platform-dev
-        - platform-dev-secured
-        - platform-standalone-custom-hosts
+# - stage: buildApp
+#   displayName: "Package application"
+#   condition: eq(variables['AppDeploy'], 'true')
+#   #dependsOn: scanTools
+#   jobs:
+#   - template: ./build.yml
+#     parameters:
+#       applicationName: ${{variables.applicationFullName}}
+#       custRegAuth: $(custRegAuth)
+#       artifactName: "${{variables.applicationShortName}}-dev-$(Build.BuildId)-release"
+#       environmentName: dev
+#       pm2ProcessFileName: process.json
+#       variableGroups:
+#         - platform-dev
+#         - platform-dev-secured
+#         - platform-standalone-custom-hosts
 
-- stage: DeployApp
-  dependsOn: buildApp
-  displayName: "Deploy application"
-  condition: and(eq(variables['AppDeploy'], 'true'),eq(variables['InfrDeploy'], 'False'))
-  jobs:
-  - template: ./deploy.yml
-    parameters:
-      serviceConnection: "$(devServiceConnection)"
-      environmentName: dev
-      environmentId: d01
-      subscriptionId: $(devSubscriptionId)
-      applicationName: ${{variables.applicationShortName}}
-      releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+# - stage: DeployApp
+#   dependsOn: buildApp
+#   displayName: "Deploy application"
+#   condition: and(eq(variables['AppDeploy'], 'true'),eq(variables['InfrDeploy'], 'False'))
+#   jobs:
+#   - template: ./deploy.yml
+#     parameters:
+#       serviceConnection: "$(devServiceConnection)"
+#       environmentName: dev
+#       environmentId: d01
+#       subscriptionId: $(devSubscriptionId)
+#       applicationName: ${{variables.applicationShortName}}
+#       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
 
-- stage: DeployInfr
-  condition: eq(variables['InfrDeploy'], 'true')
-  displayName: "Deploy Infrastructure"
-  jobs:
-  - template: ./infrastructure.yml
-    parameters:
-      serviceConnection: "$(devServiceConnection)"
-      environmentName: dev
-      environmentId: d01
-      subscriptionId: $(devSubscriptionId)
-      applicationShortName: ${{variables.applicationShortName}}
-      applicationFullName: ${{variables.applicationFullName}}
-      releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
-      certificateName: non-prod-gateway
-      variableGroups:
-        - platform-dev
-        - platform-dev-secured
-        - platform-standalone-custom-hosts
+# - stage: DeployInfr
+#   condition: eq(variables['InfrDeploy'], 'true')
+#   displayName: "Deploy Infrastructure"
+#   jobs:
+#   - template: ./infrastructure.yml
+#     parameters:
+#       serviceConnection: "$(devServiceConnection)"
+#       environmentName: dev
+#       environmentId: d01
+#       subscriptionId: $(devSubscriptionId)
+#       applicationShortName: ${{variables.applicationShortName}}
+#       applicationFullName: ${{variables.applicationFullName}}
+#       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+#       certificateName: non-prod-gateway
+#       variableGroups:
+#         - platform-dev
+#         - platform-dev-secured
+#         - platform-standalone-custom-hosts
 
 
-      # stageName: publishDevInstances
-      # 
-      # resourceGroupSuffix: "${{parameters.resourceGroupSuffix}}"
-      # environmentName: dev
-      # environmentId: d01
-      # deploymentDependencyName: deployDev
-      # accessRestricted: "${{parameters.restrictToGateway}}"
-      # gatewayFrontEndHostName: ""
+#       # stageName: publishDevInstances
+#       # 
+#       # resourceGroupSuffix: "${{parameters.resourceGroupSuffix}}"
+#       # environmentName: dev
+#       # environmentId: d01
+#       # deploymentDependencyName: deployDev
+#       # accessRestricted: "${{parameters.restrictToGateway}}"
+#       # gatewayFrontEndHostName: ""
