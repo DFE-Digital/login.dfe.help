@@ -115,7 +115,7 @@ stages:
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
 
 - stage: DeployInfr
-  condition: eq(variables['InfrDeploy'], 'true')
+  condition: eq(variables['INFRDEPLOY'], 'true')
   displayName: "Deploy Infrastructure"
   jobs:
   - template: ./infrastructure.yml
