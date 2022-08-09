@@ -68,6 +68,7 @@ stages:
         targetType: 'inline'
         pwsh: true
         script: |
+          Get-ChildItem -Path Env:\ | Format-List
           Write-Host "env:EnvVariable : $($env:ENVVARIABLE)"
 
           Write-Host "ENV:EnvVariable : $($ENV:ENVVARIABLE)"
@@ -115,7 +116,7 @@ stages:
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
 
 - stage: DeployInfr
-  condition: eq(variables['INFRDEPLOY'], 'true')
+  #condition: eq(variables['InfrDeploy'], 'true')
   displayName: "Deploy Infrastructure"
   jobs:
   - template: ./infrastructure.yml
