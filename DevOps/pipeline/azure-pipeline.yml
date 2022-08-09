@@ -42,16 +42,13 @@ stages:
       displayName: File Check
       inputs:
         targetType: 'inline'
-        azurePowerShellVersion: 'LatestVersion'
+        pwsh: true
         script: |
-          targetType: 'inline'
-          pwsh: true
-          script: |
-            $EnvVariable= "Value"
+          $EnvVariable= "Value"
 
-            Write-Host "##vso[task.setvariable variable=EnvVariable;]$EnvVariable"
+          Write-Host "##vso[task.setvariable variable=EnvVariable;]$EnvVariable"
 
-            Write-Output "##vso[task.setvariable variable=EnvVariable;]$EnvVariable"
+          Write-Output "##vso[task.setvariable variable=EnvVariable;]$EnvVariable"
     - task: PowerShell@2
       displayName: Read variables 0
       inputs:
