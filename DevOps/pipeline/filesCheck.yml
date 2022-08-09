@@ -5,8 +5,8 @@ jobs:
 
   steps:
   - pwsh: |
-      echo  "##vso[task.setvariable variable=InfrDeploy;]test"
-      echo  "##vso[task.setvariable variable=AppDeploy;]test"
+      Write-Host  "##vso[task.setvariable variable=InfrDeploy;]test"
+      Write-Host  "##vso[task.setvariable variable=AppDeploy;]test"
       $editedFiles = git diff HEAD HEAD~ --name-only
       Get-ChildItem -Path Env:\ | Format-List
       
