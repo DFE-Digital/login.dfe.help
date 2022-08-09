@@ -23,7 +23,7 @@ jobs:
 
       # }
 
-      Write-Host $(InfrDeploy)
+      Write-Host $(ztest)
       Write-Host $(AppDeploy)
 
       Get-ChildItem -Path Env:\ | Format-List
