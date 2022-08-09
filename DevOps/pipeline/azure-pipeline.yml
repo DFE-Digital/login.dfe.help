@@ -118,7 +118,7 @@ stages:
 - stage: DeployInfr
   displayName: "Deploy Infrastructure"
   variables: 
-    InfrDeploy: $[ dependencies.filesCheck.outputs['filesCheckStatus.filesCheck.InfrDeploy'] ]
+    InfrDeploy: $[ dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'] ]
   jobs:
   - template: ./infrastructure.yml
     parameters:
