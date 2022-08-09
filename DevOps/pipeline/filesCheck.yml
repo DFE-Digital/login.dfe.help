@@ -2,7 +2,7 @@ jobs:
 - job: filesCheck
 
   steps:
-  - pwsh: |
+  - powershell: |
       $value = true
       Write-Host '##vso[task.setvariable variable='ztest';isOutput=true]$value'
       Write-Host "##vso[task.setvariable variable=AppDeploy;]test"
