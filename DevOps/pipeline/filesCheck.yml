@@ -1,7 +1,5 @@
 jobs:
 - job: filesCheck
-  pool:
-    vmImage: windows-latest
 
   steps:
   - pwsh: |
