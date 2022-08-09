@@ -107,6 +107,7 @@ jobs:
             targetType: 'inline'
             pwsh: true
             script: |
+              Get-ChildItem -Path Env:\ | Format-List
               Write-Host "env:EnvVariable : $($env:ENVVARIABLE)"
 
               Write-Host "ENV:EnvVariable : $($ENV:ENVVARIABLE)"
