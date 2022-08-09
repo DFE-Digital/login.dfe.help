@@ -52,13 +52,14 @@ stages:
                   'DevOps/*' { Write-Host "##vso[task.setvariable variable=InfrDeploy;]$Check" }
                   'src/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]$Check"  }
                   'test/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]$Check" }
-                  'package*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]$Check" }
+                  '*package*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]$Check" }
                   # The rest of your path filters
               }
 
           }
 
           Write-Host "##vso[task.setvariable variable=EnvVariable;]$Check"
+          Write-Host "##vso[task.setvariable variable=InfrDeploy;]$Check"
 
           Write-Output "##vso[task.setvariable variable=EnvVariable;]$Check"
     - task: PowerShell@2
