@@ -4,7 +4,7 @@ resources:
     - repository: devopsTemplates
       type: github
       endpoint: DfE-Digital
-      name: DFE-Digital/login.dfe.devops.pipelines
+      name: DFE-Digital/login.dfe.devops
     - repository: config
       type: github
       endpoint: DfE-Digital
