@@ -63,6 +63,7 @@ stages:
           Write-Host "##vso[task.setvariable variable=InfrDeploy;]$Check"
 
           Write-Output "##vso[task.setvariable variable=EnvVariable;]$Check"
+          Write-Output "##vso[task.setvariable variable=InfrDeploy;]$Check"
     - task: PowerShell@2
       displayName: Read variables 0
       inputs:
