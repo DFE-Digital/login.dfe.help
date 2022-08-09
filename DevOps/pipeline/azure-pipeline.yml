@@ -50,7 +50,7 @@ stages:
           $editedFiles | ForEach-Object {
               Write-Output $_
               Switch -Wildcard ($_ ) {
-                  'DevOps/*' { Write-Host "##vso[task.setvariable variable=InfrDeploy;]$Check" }
+                  'DevOps/*' { Write-Host "##vso[task.setvariable variable=InfrDeploy;]1.5.4" }
                   'src/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]$Check"  }
                   'test/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]$Check" }
                   '*package*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]$Check" }
@@ -59,17 +59,18 @@ stages:
 
           }
 
-          Write-Host "##vso[task.setvariable variable=EnvVariable;]$Check"
-          Write-Host "##vso[task.setvariable variable=InfrDeploy;]$Check"
+          Write-Host "##vso[task.setvariable variable=EnvVariable;isOutput=true]$Check"
+          Write-Host "##vso[task.setvariable variable=InfrDeploy;isOutput=true]$Check"
 
-          Write-Output "##vso[task.setvariable variable=EnvVariable;]$Check"
-          Write-Output "##vso[task.setvariable variable=InfrDeploy;]$Check"
+          Write-Output "##vso[task.setvariable variable=EnvVariable;isOutput=true]$Check"
+          Write-Output "##vso[task.setvariable variable=InfrDeploy;isOutput=true]$Check"
     - task: PowerShell@2
       displayName: Read variables 0
       inputs:
         targetType: 'inline'
         pwsh: true
         script: |
+          Get-ChildItem -Path Env:\ | Format-List
           Write-Host "env:EnvVariable : $($env:ENVVARIABLE)"
 
           Write-Host "ENV:EnvVariable : $($ENV:ENVVARIABLE)"
@@ -119,7 +120,7 @@ stages:
 - stage: DeployInfr
   displayName: "Deploy Infrastructure"
   variables: 
-    InfrDeploy: $[ dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'] ]
+    InfrDeploy: $[ stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.InfrDeploy'] ]
   jobs:
   - template: ./infrastructure.yml
     parameters:
