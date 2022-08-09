@@ -59,7 +59,7 @@ stages:
 
           }
 
-          Write-Host "##vso[task.setvariable variable=EnvVariable;]$Check"
+          Write-Host "##vso[task.setvariable variable=EnvVariable;isOutput=true]$Check"
           Write-Host "##vso[task.setvariable variable=InfrDeploy;isOutput=true]$Check"
 
           Write-Output "##vso[task.setvariable variable=EnvVariable;]$Check"
