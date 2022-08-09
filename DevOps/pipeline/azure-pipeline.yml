@@ -120,7 +120,7 @@ stages:
 - stage: DeployInfr
   displayName: "Deploy Infrastructure"
   variables: 
-    InfrDeploy: $[ stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.InfrDeploy'] ]
+    InfrDeploy: $[ stageDependencies.FilesChanges.filesCheckStatus.outputs['InfrDeploy'] ]
   jobs:
   - template: ./infrastructure.yml
     parameters:
