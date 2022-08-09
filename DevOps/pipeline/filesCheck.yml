@@ -5,9 +5,9 @@ jobs:
   - task: PowerShell@2
     displayName: Create ResourceGroup with tags
     inputs:
-      ScriptType: 'InlineScript'
+      targetType: 'InlineScript'
       azurePowerShellVersion: 'LatestVersion'
-      Inline: |
+      script: |
         $value = true
         Write-Host '##vso[task.setvariable variable='ztest';isOutput=true]$value'
         Write-Host "##vso[task.setvariable variable=AppDeploy;]test"
