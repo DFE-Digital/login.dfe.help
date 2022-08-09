@@ -83,55 +83,55 @@ stages:
 #- template: ./scan-tools.yml
 
 #Build the artifact for deployment
-# - stage: buildApp
-#   displayName: "Package application"
-#   condition: eq(variables['AppDeploy'], 'true')
-#   #dependsOn: scanTools
-#   jobs:
-#   - template: ./build.yml
-#     parameters:
-#       applicationName: ${{variables.applicationFullName}}
-#       custRegAuth: $(custRegAuth)
-#       artifactName: "${{variables.applicationShortName}}-dev-$(Build.BuildId)-release"
-#       environmentName: dev
-#       pm2ProcessFileName: process.json
-#       variableGroups:
-#         - platform-dev
-#         - platform-dev-secured
-#         - platform-standalone-custom-hosts
+- stage: buildApp
+  displayName: "Package application"
+  condition: eq(variables['AppDeploy'], 'true')
+  #dependsOn: scanTools
+  jobs:
+  - template: ./build.yml
+    parameters:
+      applicationName: ${{variables.applicationFullName}}
+      custRegAuth: $(custRegAuth)
+      artifactName: "${{variables.applicationShortName}}-dev-$(Build.BuildId)-release"
+      environmentName: dev
+      pm2ProcessFileName: process.json
+      variableGroups:
+        - platform-dev
+        - platform-dev-secured
+        - platform-standalone-custom-hosts
 
-# - stage: DeployApp
-#   dependsOn: buildApp
-#   displayName: "Deploy application"
-#   condition: and(eq(variables['AppDeploy'], 'true'),eq(variables['InfrDeploy'], 'False'))
-#   jobs:
-#   - template: ./deploy.yml
-#     parameters:
-#       serviceConnection: "$(devServiceConnection)"
-#       environmentName: dev
-#       environmentId: d01
-#       subscriptionId: $(devSubscriptionId)
-#       applicationName: ${{variables.applicationShortName}}
-#       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+- stage: DeployApp
+  dependsOn: buildApp
+  displayName: "Deploy application"
+  condition: and(eq(variables['AppDeploy'], 'true'),eq(variables['InfrDeploy'], 'False'))
+  jobs:
+  - template: ./deploy.yml
+    parameters:
+      serviceConnection: "$(devServiceConnection)"
+      environmentName: dev
+      environmentId: d01
+      subscriptionId: $(devSubscriptionId)
+      applicationName: ${{variables.applicationShortName}}
+      releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
 
-# - stage: DeployInfr
-#   condition: eq(variables['InfrDeploy'], 'true')
-#   displayName: "Deploy Infrastructure"
-#   jobs:
-#   - template: ./infrastructure.yml
-#     parameters:
-#       serviceConnection: "$(devServiceConnection)"
-#       environmentName: dev
-#       environmentId: d01
-#       subscriptionId: $(devSubscriptionId)
-#       applicationShortName: ${{variables.applicationShortName}}
-#       applicationFullName: ${{variables.applicationFullName}}
-#       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
-#       certificateName: non-prod-gateway
-#       variableGroups:
-#         - platform-dev
-#         - platform-dev-secured
-#         - platform-standalone-custom-hosts
+- stage: DeployInfr
+  condition: eq(variables['InfrDeploy'], 'true')
+  displayName: "Deploy Infrastructure"
+  jobs:
+  - template: ./infrastructure.yml
+    parameters:
+      serviceConnection: "$(devServiceConnection)"
+      environmentName: dev
+      environmentId: d01
+      subscriptionId: $(devSubscriptionId)
+      applicationShortName: ${{variables.applicationShortName}}
+      applicationFullName: ${{variables.applicationFullName}}
+      releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+      certificateName: non-prod-gateway
+      variableGroups:
+        - platform-dev
+        - platform-dev-secured
+        - platform-standalone-custom-hosts
 
 
 #       # stageName: publishDevInstances
