@@ -5,7 +5,7 @@ jobs:
   - task: PowerShell@2
     displayName: Create ResourceGroup with tags
     inputs:
-      targetType: 'InlineScript'
+      targetType: 'inline'
       azurePowerShellVersion: 'LatestVersion'
       script: |
         $value = true
