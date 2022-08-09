@@ -116,8 +116,10 @@ stages:
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
 
 - stage: DeployInfr
-  condition: eq(dependencies.filesCheck.outputs['filesCheckStatus.filesCheck.InfrDeploy'], 'true')
+  #condition: eq(dependencies.filesCheck.outputs['filesCheckStatus.filesCheck.InfrDeploy'], 'true')
   displayName: "Deploy Infrastructure"
+  variables: 
+    InfrDeploy: $[ dependencies.filesCheck.outputs['filesCheckStatus.filesCheck.InfrDeploy'] ]
   jobs:
   - template: ./infrastructure.yml
     parameters:
