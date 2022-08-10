@@ -89,7 +89,7 @@ stages:
 - stage: DeployInfr
   displayName: "Deploy Infrastructure"
   dependsOn: 
-  - ${{ if eq($[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.InfrDeploy'] ], 'true') }}:
+  - ${{ if eq(stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.InfrDeploy'] , 'true') }}:
     - buildApp
   - FilesChanges
   condition: and(succeeded(), eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true'))
