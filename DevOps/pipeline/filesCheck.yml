@@ -1,9 +1,9 @@
 jobs:
-- job: filesCheck
-
+- job: filesChanges
   steps:
   - task: PowerShell@2
-    displayName: Rename config file
+    displayName: File Changes checks
+    name: filesChangesChecks
     inputs:
       filePath: '$(Build.Repository.LocalPath)/DevOps/scripts/changesChecks.ps1'
       arguments: '-applicationName ${{parameters.applicationName}} -environmentName ${{parameters.environmentName}} -directory $(System.DefaultWorkingDirectory)'
