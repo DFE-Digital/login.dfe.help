@@ -36,7 +36,6 @@ stages:
   displayName: "Files Changes"
   jobs:
   - job: filesCheckStatus
-
     steps:
     - task: PowerShell@2
       displayName: Files Check
@@ -46,39 +45,18 @@ stages:
         pwsh: true
         script: |
           $Check= "true"
-          # $editedFiles = git diff HEAD HEAD~ --name-only
-          # $editedFiles | ForEach-Object {
-          #     Write-Output $_
-          #     Switch -Wildcard ($_ ) {
-          #         'DevOps/*' { Write-Host "##vso[task.setvariable variable=InfrDeploy;]1.5.4" }
-          #         'src/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]$Check"  }
-          #         'test/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]$Check" }
-          #         '*package*' { Write-Host "##vso[task.setvariable variable=AppDeploy;]$Check" }
-          #         # The rest of your path filters
-          #     }
+          $editedFiles = git diff HEAD HEAD~ --name-only
+          $editedFiles | ForEach-Object {
+              Write-Output $_
+              Switch -Wildcard ($_ ) {
+                  'DevOps/*' { Write-Host "##vso[task.setvariable variable=InfrDeploy;isOutput=true]$Check" }
+                  'src/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;isOutput=true]$Check"  }
+                  'test/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;isOutput=true]$Check" }
+                  '*package*' { Write-Host "##vso[task.setvariable variable=AppDeploy;isOutput=true]$Check" }
+                  # The rest of your path filters
+              }
 
-          # }
-
-          Write-Host "##vso[task.setvariable variable=EnvVariable;isOutput=true]$Check"
-          Write-Host "##vso[task.setvariable variable=InfrDeploy;isOutput=true]$Check"
-
-    - task: PowerShell@2
-      displayName: Read variables 0
-      inputs:
-        targetType: 'inline'
-        pwsh: true
-        script: |
-          Get-ChildItem -Path Env:\ | Format-List
-          Write-Host "env:EnvVariable : $($env:ENVVARIABLE)"
-
-          Write-Host "ENV:EnvVariable : $($ENV:ENVVARIABLE)"
-
-          Write-Output "env:EnvVariable : $($env:ENVVARIABLE)"
-
-          Write-Output "ENV:EnvVariable : $($ENV:ENVVARIABLE)"
-
-          Write-Output "ENV:InfrDeploy : $($ENV:INFRDEPLOY)"
-          Write-Output "ENV:AppDeploy : $($env:APPDEPLOY)"
+          }
 
 # Code scaning tools 
 #- template: ./scan-tools.yml
@@ -86,7 +64,7 @@ stages:
 #Build the artifact for deployment
 - stage: buildApp
   displayName: "Package application"
-  condition: eq(variables['AppDeploy'], 'true')
+  condition: eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.AppDeploy'], 'true')
   #dependsOn: scanTools
   jobs:
   - template: ./build.yml
@@ -104,7 +82,7 @@ stages:
 - stage: DeployApp
   dependsOn: buildApp
   displayName: "Deploy application"
-  condition: and(eq(variables['AppDeploy'], 'true'),eq(variables['InfrDeploy'], 'False'))
+  condition: and(eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.AppDeploy'], 'true'),eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], ''))
   jobs:
   - template: ./deploy.yml
     parameters:
@@ -118,8 +96,6 @@ stages:
 - stage: DeployInfr
   displayName: "Deploy Infrastructure"
   condition: eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], 'true')
-  variables: 
-    InfrDeploy: $[dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy']]
   jobs:
   - template: ./infrastructure.yml
     parameters:
@@ -131,17 +107,8 @@ stages:
       applicationFullName: ${{variables.applicationFullName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
       certificateName: non-prod-gateway
+      InfrDeploy: $[stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.InfrDeploy']]
       variableGroups:
         - platform-dev
         - platform-dev-secured
         - platform-standalone-custom-hosts
-
-
-#       # stageName: publishDevInstances
-#       # 
-#       # resourceGroupSuffix: "${{parameters.resourceGroupSuffix}}"
-#       # environmentName: dev
-#       # environmentId: d01
-#       # deploymentDependencyName: deployDev
-#       # accessRestricted: "${{parameters.restrictToGateway}}"
-#       # gatewayFrontEndHostName: ""
