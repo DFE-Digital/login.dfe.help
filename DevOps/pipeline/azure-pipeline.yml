@@ -107,7 +107,7 @@ stages:
       applicationFullName: ${{variables.applicationFullName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
       certificateName: non-prod-gateway
-      InfrDeploy: $(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'])
+      InfrDeploy: ${{dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy']}}
       variableGroups:
         - platform-dev
         - platform-dev-secured
