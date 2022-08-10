@@ -51,6 +51,8 @@ parameters:
   - macOS-10.14
 - name: variableGroups
   type: object
+- name: AAAAtest
+  type: object
 
 
 jobs:
@@ -97,6 +99,10 @@ jobs:
       -virtualNetworkResourceGroupName "$(sharedResourceGroupName)" 
       -virtualNetworkName "$(sharedVirtualNetworkName)" 
       -enablePrivateEndpoint "false"'
+  - name: AAAtest
+    value:  $[ dependencies.FilesChanges ]
+  - name: AAAAtest
+    value: ${{parameters.AAAAtest}}
 
 
   strategy:
@@ -113,6 +119,8 @@ jobs:
               Write-Output "ENV:InfrDeploy : $($env:InfrDeploy)"
 
               Write-Output "ENV:AAtest : $($ENV:AATEST)"
+              Write-Output "ENV:AAtest : $($ENV:AAATEST)"
+              Write-Output "ENV:AAtest : $($ENV:AAAATEST)"
               Write-Output "ENV:AAtest : $($env:AAtest)"
 
               Get-ChildItem -Path Env:\ | Format-List
