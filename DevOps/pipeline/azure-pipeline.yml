@@ -43,13 +43,13 @@ stages:
 #Build the artifact for deployment
 - stage: buildApp
   displayName: "Package application"
-  condition: eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.AppDeploy'], 'true')
+  condition: eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.AppDeploy'], 'true')
   dependsOn: 
   #- scanTools
   - FilesChanges
   variables: 
     - name: AppDeploy
-      value: $[ stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.AppDeploy'] ]
+      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
   jobs:
   - template: ./build.yml
     parameters:
@@ -68,10 +68,10 @@ stages:
   - buildApp
   - FilesChanges
   displayName: "Deploy application"
-  condition: and(eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.AppDeploy'], 'true'),eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], ''))
+  condition: and(eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.AppDeploy'], 'true'),eq(dependencies.FilesChanges.outputs['filesChanges.filesCheck.InfrDeploy'], ''))
   variables: 
     - name: AppDeploy
-      value: $[ stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.AppDeploy'] ]
+      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
   jobs:
   - template: ./deploy.yml
     parameters:
@@ -85,12 +85,12 @@ stages:
 - stage: DeployInfr
   displayName: "Deploy Infrastructure"
   dependsOn: FilesChanges
-  condition: eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], 'true')
+  condition: eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true')
   variables: 
     - name: InfrDeploy
-      value: $[ stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.InfrDeploy'] ]
+      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.InfrDeploy'] ]
     - name: AppDeploy
-      value: $[ stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.AppDeploy'] ]
+      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
   jobs:
   - template: ./infrastructure.yml
     parameters:
