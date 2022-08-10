@@ -49,10 +49,12 @@ parameters:
   - macOS-10.14
 # - name: variableGroups
 #   type: object
+- name: stage
+  type: string
 
 jobs:
-- deployment: 'deploy_${{parameters.environmentName}}'
-  displayName: 'Deploy [${{parameters.environmentName}}]'
+- deployment: 'deploy_${{parameters.environmentName}}_${{parameters.stage}}'
+  displayName: 'Deploy [${{parameters.environmentName}}_${{parameters.stage}}]'
   environment: '${{parameters.environmentName}}'
   pool:
     vmImage: ubuntu-latest
