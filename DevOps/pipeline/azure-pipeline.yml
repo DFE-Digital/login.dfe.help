@@ -112,7 +112,7 @@ stages:
           pwsh: true
           script: |
             Get-ChildItem -Path Env:\ | Format-List
-            Write-Output $(AAInfrDeploy)
+            Write-Output "$(AAInfrDeploy)"
             Get-ChildItem -Path Env:\ | Format-List
   # - template: ./infrastructure.yml
   #   parameters:
