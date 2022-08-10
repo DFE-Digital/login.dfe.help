@@ -98,7 +98,7 @@ jobs:
       -virtualNetworkName "$(sharedVirtualNetworkName)" 
       -enablePrivateEndpoint "false"'
   - name: InfrDeploy
-    value: $[ stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.InfrDeploy'] ]
+    value: $[ dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'] ]
 
   strategy:
     runOnce:
