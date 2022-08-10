@@ -117,7 +117,7 @@ jobs:
             deploymentOutputs: armOutput
             nodeVersion: '${{parameters.runtimeStack}}'
 
-        - template: $(System.DefaultWorkingDirectory)/DevOps/pipeline/deploy.yml
+        - template: ./deploy.yml
           parameters:
             serviceConnection: "${{parameters.serviceConnection}}"
             environmentName: dev
