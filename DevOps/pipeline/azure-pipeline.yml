@@ -97,7 +97,7 @@ stages:
   displayName: "Deploy Infrastructure"
   condition: eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], 'true')
   variables: 
-    - name: AAInfrDeploy
+    - name: InfrDeploy
       value: $[ dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'] ]
   jobs:
     - job: test
@@ -111,6 +111,7 @@ stages:
           targetType: 'inline'
           pwsh: true
           script: |
+            Get-ChildItem -Path Env:\ | Format-List
             Write-Output $(AAInfrDeploy)
             Get-ChildItem -Path Env:\ | Format-List
   # - template: ./infrastructure.yml
