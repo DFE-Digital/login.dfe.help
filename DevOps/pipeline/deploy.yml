@@ -90,7 +90,7 @@ jobs:
 
         - task: AzureRmWebAppDeployment@4
           displayName: Deploy Azure App Service ${{parameters.applicationFullName}}
-          condition: eq(variables['AppDeploy'], 'true')
+          condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
           inputs:
             azureSubscription: '${{parameters.serviceConnection}}'
             appType: webAppLinux
@@ -109,7 +109,7 @@ jobs:
 
         - task: PowerShell@2
           displayName: 'Healthcheck [$(healthCheckUrl)/healthcheck]'
-          condition: eq(variables['AppDeploy'], 'true')
+          condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
           inputs:
             filePath: 'DevOps/scripts/healthCheck.ps1'
             arguments: '-testUrl $(healthCheckUrl) -healthCheckEndpoint healthcheck'
@@ -118,7 +118,7 @@ jobs:
 
         - task: AzureAppServiceManage@0
           displayName: Swap Slots
-          condition: eq(variables['AppDeploy'], 'true')
+          condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
           inputs:
             azureSubscription: '${{parameters.serviceConnection}}'
             WebAppName: $(applicationBaseName)
@@ -135,7 +135,7 @@ jobs:
 
         - task: AzureAppServiceManage@0
           displayName: Delete staging slot
-          condition: eq(variables['AppDeploy'], 'true')
+          condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
           inputs:
             azureSubscription: '${{parameters.serviceConnection}}'
             Action: Delete Slot
