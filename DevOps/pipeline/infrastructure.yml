@@ -123,5 +123,6 @@ jobs:
             environmentName: dev
             environmentId: d01
             subscriptionId: ${{parameters.subscriptionId}}
-            applicationName: ${{parameters.applicationShortName}}
+            applicationFullName: ${{parameters.applicationFullName}}
+            applicationShortName: ${{parameters.applicationShortName}}
             releaseArtifactName: ${{parameters.applicationShortName}}-dev-$(Build.BuildId)-release
