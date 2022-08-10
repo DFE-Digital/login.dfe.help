@@ -110,7 +110,7 @@ stages:
       applicationFullName: ${{variables.applicationFullName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
       certificateName: non-prod-gateway
-      AAAAtest: $[ dependencies.FilesChanges ]
+      AAAAtest: $[ dependencies.FilesChanges.outputs ]
       variableGroups:
         - platform-dev
         - platform-dev-secured
