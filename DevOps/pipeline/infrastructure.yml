@@ -119,6 +119,7 @@ jobs:
 
 
 - template: ./deploy.yml
+  condition: succeeded()
   parameters:
     serviceConnection: "${{parameters.serviceConnection}}"
     environmentName: dev
