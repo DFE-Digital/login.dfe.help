@@ -100,6 +100,19 @@ stages:
     - name: AAInfrDeploy
       value: $[ dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'] ]
   jobs:
+    - job: test
+      variables: 
+      - name: AAInfrDeploy
+        value: $[ dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'] ]
+      steps:
+      - task: PowerShell@2
+        displayName: Files Check
+        inputs:
+          targetType: 'inline'
+          pwsh: true
+          script: |
+            Write-Output $(AAInfrDeploy)
+            Get-ChildItem -Path Env:\ | Format-List
   - template: ./infrastructure.yml
     parameters:
       serviceConnection: "$(devServiceConnection)"
