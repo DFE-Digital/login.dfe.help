@@ -117,13 +117,13 @@ jobs:
             deploymentOutputs: armOutput
             nodeVersion: '${{parameters.runtimeStack}}'
 
-  - job: DeployAPPInfr
-    - template: ./deploy.yml
-      parameters:
-        serviceConnection: "${{parameters.serviceConnection}}"
-        environmentName: dev
-        environmentId: d01
-        subscriptionId: ${{parameters.subscriptionId}}
-        applicationFullName: ${{parameters.applicationFullName}}
-        applicationShortName: ${{parameters.applicationShortName}}
-        releaseArtifactName: ${{parameters.applicationShortName}}-dev-$(Build.BuildId)-release
+
+  - template: ./deploy.yml
+    parameters:
+      serviceConnection: "${{parameters.serviceConnection}}"
+      environmentName: dev
+      environmentId: d01
+      subscriptionId: ${{parameters.subscriptionId}}
+      applicationFullName: ${{parameters.applicationFullName}}
+      applicationShortName: ${{parameters.applicationShortName}}
+      releaseArtifactName: ${{parameters.applicationShortName}}-dev-$(Build.BuildId)-release
