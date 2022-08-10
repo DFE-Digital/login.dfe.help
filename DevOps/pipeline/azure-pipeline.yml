@@ -35,28 +35,7 @@ stages:
 - stage: FilesChanges
   displayName: "Files Changes"
   jobs:
-  - job: filesCheckStatus
-    steps:
-    - task: PowerShell@2
-      displayName: Files Check
-      name: filesCheck
-      inputs:
-        targetType: 'inline'
-        pwsh: true
-        script: |
-          $Check= "true"
-          $editedFiles = git diff HEAD HEAD~ --name-only
-          $editedFiles | ForEach-Object {
-              Write-Output $_
-              Switch -Wildcard ($_ ) {
-                  'DevOps/*' { Write-Output "##vso[task.setvariable variable=InfrDeploy;isOutput=true]$Check" }
-                  'src/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;isOutput=true]$Check"  }
-                  'test/*' { Write-Host "##vso[task.setvariable variable=AppDeploy;isOutput=true]$Check" }
-                  '*package*' { Write-Host "##vso[task.setvariable variable=AppDeploy;isOutput=true]$Check" }
-                  # The rest of your path filters
-              }
-
-          }
+  - template: ./filesCheck.yml
 
 # Code scaning tools 
 #- template: ./scan-tools.yml
@@ -65,7 +44,12 @@ stages:
 - stage: buildApp
   displayName: "Package application"
   condition: eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.AppDeploy'], 'true')
-  #dependsOn: scanTools
+  dependsOn: 
+  - scanTools
+  - FilesChanges
+  variables: 
+    - name: AppDeploy
+      value: $[ stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.AppDeploy'] ]
   jobs:
   - template: ./build.yml
     parameters:
@@ -80,9 +64,14 @@ stages:
         - platform-standalone-custom-hosts
 
 - stage: DeployApp
-  dependsOn: buildApp
+  dependsOn: 
+  - buildApp
+  - FilesChanges
   displayName: "Deploy application"
   condition: and(eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.AppDeploy'], 'true'),eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], ''))
+  variables: 
+    - name: AppDeploy
+      value: $[ stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.AppDeploy'] ]
   jobs:
   - template: ./deploy.yml
     parameters:
@@ -98,31 +87,22 @@ stages:
   dependsOn: FilesChanges
   condition: eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], 'true')
   variables: 
-    - name: AAInfrDeploy
+    - name: InfrDeploy
       value: $[ stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.InfrDeploy'] ]
+    - name: AppDeploy
+      value: $[ stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.AppDeploy'] ]
   jobs:
-    - job: test
-      steps:
-      - task: PowerShell@2
-        displayName: Files Check
-        inputs:
-          targetType: 'inline'
-          pwsh: true
-          script: |
-            Write-Output "$(AAInfrDeploy)"
-            Get-ChildItem -Path Env:\ | Format-List
-  # - template: ./infrastructure.yml
-  #   parameters:
-  #     serviceConnection: "$(devServiceConnection)"
-  #     environmentName: dev
-  #     environmentId: d01
-  #     subscriptionId: $(devSubscriptionId)
-  #     applicationShortName: ${{variables.applicationShortName}}
-  #     applicationFullName: ${{variables.applicationFullName}}
-  #     releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
-  #     certificateName: non-prod-gateway
-  #     AAAAtest: $[ eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], 'true') ]
-  #     variableGroups:
-  #       - platform-dev
-  #       - platform-dev-secured
-  #       - platform-standalone-custom-hosts
+  - template: ./infrastructure.yml
+    parameters:
+      serviceConnection: "$(devServiceConnection)"
+      environmentName: dev
+      environmentId: d01
+      subscriptionId: $(devSubscriptionId)
+      applicationShortName: ${{variables.applicationShortName}}
+      applicationFullName: ${{variables.applicationFullName}}
+      releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+      certificateName: non-prod-gateway
+      variableGroups:
+        - platform-dev
+        - platform-dev-secured
+        - platform-standalone-custom-hosts
