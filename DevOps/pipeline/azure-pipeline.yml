@@ -72,6 +72,8 @@ stages:
   variables: 
     - name: AppDeploy
       value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
+    - name: InfrDeploy
+      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.InfrDeploy'] ]
   jobs:
   - template: ./deploy.yml
     parameters:
