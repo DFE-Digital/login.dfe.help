@@ -97,7 +97,7 @@ stages:
   displayName: "Deploy Infrastructure"
   condition: eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], 'true')
   variables: 
-    InfrDeploy: $[ eq(stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheckStatus.filesCheck.InfrDeploy'], '') ]
+    InfrDeploy: $[ eq(stagedependencies.FilesChanges.filesCheckStatus.outputs['filesCheckStatus.filesCheck.InfrDeploy'], '') ]
     AAtest: test
   jobs:
   - template: ./infrastructure.yml
@@ -110,7 +110,7 @@ stages:
       applicationFullName: ${{variables.applicationFullName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
       certificateName: non-prod-gateway
-      AAAAtest: $[ stageDependencies.FilesChanges.outputs ]
+      AAAAtest: $[ stagedependencies.FilesChanges.filesCheckStatus.outputs['filesCheckStatus.filesCheck.InfrDeploy'] ]
       variableGroups:
         - platform-dev
         - platform-dev-secured
