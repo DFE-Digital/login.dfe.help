@@ -113,6 +113,9 @@ jobs:
               Write-Output "ENV:InfrDeploy : $($ENV:INFRDEPLOY)"
               Write-Output "ENV:InfrDeploy : $($env:InfrDeploy)"
 
+              Write-Output "ENV:AAtest : $($ENV:AATEST)"
+              Write-Output "ENV:AAtest : $($env:AAtest)"
+
               Get-ChildItem -Path Env:\ | Format-List
               
         - checkout: self
