@@ -117,7 +117,7 @@ stages:
 
 - stage: DeployInfr
   displayName: "Deploy Infrastructure"
-  condition: eq(stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.InfrDeploy'], '')
+  condition: eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], '')
   variables: 
     InfrDeploy: $[stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.InfrDeploy']]
   jobs:
