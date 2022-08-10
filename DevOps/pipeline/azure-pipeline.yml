@@ -98,13 +98,10 @@ stages:
   dependsOn: FilesChanges
   condition: eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], 'true')
   variables: 
-    - name: InfrDeploy
-      value: $[ dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'] ]
+    - name: AAInfrDeploy
+      value: $[ stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheckStatu.filesCheck.InfrDeploy'] ]
   jobs:
     - job: test
-      variables: 
-      - name: AAInfrDeploy
-        value: $[ dependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.InfrDeploy'] ]
       steps:
       - task: PowerShell@2
         displayName: Files Check
