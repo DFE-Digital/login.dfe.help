@@ -43,7 +43,7 @@ stages:
 #Build the artifact for deployment
 - stage: buildApp
   displayName: "Package application"
-  condition: eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.AppDeploy'], 'true')
+  condition: and(succeeded(), eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.AppDeploy'], 'true'))
   dependsOn: 
   #- scanTools
   - FilesChanges
@@ -68,7 +68,7 @@ stages:
   - buildApp
   - FilesChanges
   displayName: "Deploy application"
-  condition: and(eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.AppDeploy'], 'true'),eq(dependencies.FilesChanges.outputs['filesChanges.filesCheck.InfrDeploy'], ''))
+  condition: and(succeeded(), eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.AppDeploy'], 'true'), eq(dependencies.FilesChanges.outputs['filesChanges.filesCheck.InfrDeploy'], ''))
   variables: 
     - name: AppDeploy
       value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
@@ -88,8 +88,11 @@ stages:
 
 - stage: DeployInfr
   displayName: "Deploy Infrastructure"
-  dependsOn: FilesChanges
-  condition: eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true')
+  dependsOn: 
+  - ${{ if eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.AppDeploy'], 'true') }}:
+    - buildApp
+  - FilesChanges
+  condition: and(succeeded(), eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true'))
   variables: 
     - name: InfrDeploy
       value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.InfrDeploy'] ]
