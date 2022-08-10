@@ -45,7 +45,7 @@ stages:
   displayName: "Package application"
   condition: eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.AppDeploy'], 'true')
   dependsOn: 
-  - scanTools
+  #- scanTools
   - FilesChanges
   variables: 
     - name: AppDeploy
