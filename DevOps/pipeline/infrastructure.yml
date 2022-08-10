@@ -116,7 +116,10 @@ jobs:
             deploymentMode: 'Incremental'
             deploymentOutputs: armOutput
             nodeVersion: '${{parameters.runtimeStack}}'
-
+  strategy:
+    runOnce:
+      deploy:
+        steps:
         - template: ./deploy.yml
           parameters:
             serviceConnection: "${{parameters.serviceConnection}}"
