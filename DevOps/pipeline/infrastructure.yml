@@ -51,6 +51,8 @@ parameters:
   - macOS-10.14
 - name: variableGroups
   type: object
+- name: InfrDeploy
+  type: string
 
 jobs:
 - deployment: 'deploy_${{parameters.environmentName}}'
@@ -96,6 +98,8 @@ jobs:
       -virtualNetworkResourceGroupName "$(sharedResourceGroupName)" 
       -virtualNetworkName "$(sharedVirtualNetworkName)" 
       -enablePrivateEndpoint "false"'
+  - name: InfrDeploy
+    value: ${{parameters.InfrDeploy}}
 
   strategy:
     runOnce:
@@ -107,17 +111,10 @@ jobs:
             targetType: 'inline'
             pwsh: true
             script: |
-              Get-ChildItem -Path Env:\ | Format-List
-              Write-Host "env:EnvVariable : $($env:ENVVARIABLE)"
-
-              Write-Host "ENV:EnvVariable : $($ENV:ENVVARIABLE)"
-
-              Write-Output "env:EnvVariable : $($env:ENVVARIABLE)"
-
-              Write-Output "ENV:EnvVariable : $($ENV:ENVVARIABLE)"
-
               Write-Output "ENV:InfrDeploy : $($ENV:INFRDEPLOY)"
               Write-Output "ENV:InfrDeploy : $($env:InfrDeploy)"
+
+              Get-ChildItem -Path Env:\ | Format-List
               
         - checkout: self
         # - task: AzureResourceManagerTemplateDeployment@3
