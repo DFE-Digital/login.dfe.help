@@ -10,7 +10,9 @@ parameters:
 - name: deploymentLocation
   type: string
   default: westeurope
-- name: applicationName
+- name: applicationFullName
+  type: string
+- name: applicationShortName
   type: string
 - name: releaseArtifactName
   type: string
@@ -58,9 +60,9 @@ jobs:
   # - '${{ each variableGroup in parameters.variableGroups }}':
   #   - group: ${{variableGroup}}
   - name: applicationBaseName
-    value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalName)-${{parameters.applicationName}}'
+    value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-$(platformGlobalName)-${{parameters.applicationShortName}}'
   - name: applicationResourceGroupName
-    value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-${{parameters.applicationName}}'
+    value: '$(platformGlobalIdentifier)${{parameters.environmentId}}-${{parameters.applicationShortName}}'
   - name: healthCheckUrl
     value: 'https://$(applicationBaseName)-${{parameters.slotName}}.azurewebsites.net'
   - name: healthCheckUrlApp

@@ -81,7 +81,8 @@ stages:
       environmentName: dev
       environmentId: d01
       subscriptionId: $(devSubscriptionId)
-      applicationName: ${{variables.applicationShortName}}
+      applicationFullName: ${{variables.applicationFullName}}
+      applicationShortName: ${{variables.applicationShortName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
 
 - stage: DeployInfr
