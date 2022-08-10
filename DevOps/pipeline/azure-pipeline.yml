@@ -80,6 +80,7 @@ stages:
       serviceConnection: "$(devServiceConnection)"
       environmentName: dev
       environmentId: d01
+      stage: appDeployDirect
       subscriptionId: $(devSubscriptionId)
       applicationFullName: ${{variables.applicationFullName}}
       applicationShortName: ${{variables.applicationShortName}}

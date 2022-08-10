@@ -123,6 +123,7 @@ jobs:
     serviceConnection: "${{parameters.serviceConnection}}"
     environmentName: dev
     environmentId: d01
+    stage: appDeployInfr
     subscriptionId: ${{parameters.subscriptionId}}
     applicationFullName: ${{parameters.applicationFullName}}
     applicationShortName: ${{parameters.applicationShortName}}
