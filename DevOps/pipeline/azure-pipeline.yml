@@ -97,8 +97,8 @@ stages:
   displayName: "Deploy Infrastructure"
   condition: eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], 'true')
   variables: 
-    InfrDeploy: $[ eq(stageDependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], '') ]
-    AAtest: $[ eq(dependencies.FilesChanges.filesCheckStatus.outputs['filesCheckStatus.filesCheck.InfrDeploy'], 'true') ]
+    InfrDeploy: $[ eq(stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheckStatus.filesCheck.InfrDeploy'], '') ]
+    AAtest: $[ dependencies.FilesChanges.outputs ]
   jobs:
   - template: ./infrastructure.yml
     parameters:
