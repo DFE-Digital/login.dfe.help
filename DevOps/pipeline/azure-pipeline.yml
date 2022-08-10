@@ -61,7 +61,7 @@ stages:
 
           Write-Host "##vso[task.setvariable variable=EnvVariable;isOutput=true]$Check"
           Write-Host "##vso[task.setvariable variable=InfrDeploy;isOutput=true]$Check"
-          
+
     - task: PowerShell@2
       displayName: Read variables 0
       inputs:
@@ -117,7 +117,7 @@ stages:
 
 - stage: DeployInfr
   displayName: "Deploy Infrastructure"
-  condition: eq(stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.InfrDeploy'], 'true')
+  condition: eq(stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.InfrDeploy'], '')
   variables: 
     InfrDeploy: $[stageDependencies.FilesChanges.filesCheckStatus.outputs['filesCheck.InfrDeploy']]
   jobs:
