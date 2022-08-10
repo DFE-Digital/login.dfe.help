@@ -113,18 +113,18 @@ stages:
           script: |
             Write-Output $(AAInfrDeploy)
             Get-ChildItem -Path Env:\ | Format-List
-  - template: ./infrastructure.yml
-    parameters:
-      serviceConnection: "$(devServiceConnection)"
-      environmentName: dev
-      environmentId: d01
-      subscriptionId: $(devSubscriptionId)
-      applicationShortName: ${{variables.applicationShortName}}
-      applicationFullName: ${{variables.applicationFullName}}
-      releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
-      certificateName: non-prod-gateway
-      AAAAtest: $[ eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], 'true') ]
-      variableGroups:
-        - platform-dev
-        - platform-dev-secured
-        - platform-standalone-custom-hosts
+  # - template: ./infrastructure.yml
+  #   parameters:
+  #     serviceConnection: "$(devServiceConnection)"
+  #     environmentName: dev
+  #     environmentId: d01
+  #     subscriptionId: $(devSubscriptionId)
+  #     applicationShortName: ${{variables.applicationShortName}}
+  #     applicationFullName: ${{variables.applicationFullName}}
+  #     releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+  #     certificateName: non-prod-gateway
+  #     AAAAtest: $[ eq(dependencies.FilesChanges.outputs['filesCheckStatus.filesCheck.InfrDeploy'], 'true') ]
+  #     variableGroups:
+  #       - platform-dev
+  #       - platform-dev-secured
+  #       - platform-standalone-custom-hosts
