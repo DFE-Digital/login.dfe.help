@@ -56,8 +56,9 @@ jobs:
 - deployment: 'deploy_${{parameters.environmentName}}_${{parameters.stage}}'
   displayName: 'Deploy [${{parameters.environmentName}}_${{parameters.stage}}]'
   environment: '${{parameters.environmentName}}'
-  dependsOn: 
-  - deploy_${{parameters.environmentName}}
+  dependsOn:
+  - ${{ if eq(variables['InfrDeploy'], 'true') }}:
+    - deploy_${{parameters.environmentName}}
   pool:
     vmImage: ubuntu-latest
   variables:
@@ -146,14 +147,3 @@ jobs:
               ResourceGroupName: $(applicationResourceGroupName)
               slot: '${{parameters.slotName}}'
               
-        - ${{ else }}:
-          - task: PowerShell@2
-            displayName: 'Healthcheck [$(healthCheckUrlApp)/healthcheck]'
-            inputs:
-              filePath: 'DevOps/scripts/healthCheck.ps1'
-              arguments: '-testUrl $(healthCheckUrlApp) -healthCheckEndpoint healthcheck'
-              pwsh: true
-              workingDirectory: $(System.DefaultWorkingDirectory)
-
-      
-      
