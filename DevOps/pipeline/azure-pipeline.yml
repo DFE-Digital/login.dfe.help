@@ -107,7 +107,7 @@ stages:
     - name: AppDeploy
       value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
   jobs:
-  - template: ./infrastructure.yml
+  - template: DevOps/pipeline/infrastructure.yml@devopsTemplates
     parameters:
       serviceConnection: "$(devServiceConnection)"
       environmentName: dev
