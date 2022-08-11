@@ -117,6 +117,14 @@ jobs:
             deploymentOutputs: armOutput
             nodeVersion: '${{parameters.runtimeStack}}'
 
+        - task: PowerShell@2
+          displayName: 'Healthcheck [$(healthCheckUrlApp)/healthcheck]'
+          inputs:
+            filePath: 'DevOps/scripts/healthCheck.ps1'
+            arguments: '-testUrl $(healthCheckUrlApp) -healthCheckEndpoint healthcheck'
+            pwsh: true
+            workingDirectory: $(System.DefaultWorkingDirectory)
+
 
 - template: ./deploy.yml
   parameters:
