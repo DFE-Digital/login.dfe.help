@@ -68,10 +68,10 @@ stages:
   - buildApp
   - FilesChanges
   displayName: "Deploy application"
-  condition:  ne(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.AppDeploy'], dependencies.FilesChanges.outputs['filesChanges.filesCheck.InfrDeploy'])
+  condition:  ne(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true')
   variables: 
-    - name: InfrDeploy
-      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.InfrDeploy'] ]
+    - name: AppDeploy
+      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
   jobs:
   - template: ./deploy.yml
     parameters:
