@@ -10,9 +10,9 @@ if($null -eq $slotConfig){
     az webapp deployment slot create --name $applicationName --resource-group $rg --slot $slotName --configuration-source $applicationName
 
     Write-Host "Slot '$slotName' created. Waiting 240 sec before the deployemnt"
+
+    Start-Sleep -Seconds 240
 }else{
     Write-Host "Slot '$($slotConfig.name)' already exists in app '$($slotConfig.repositorySiteName)'."
 }
 
-## Waiting 150 sec before the deployemnt 
-Start-Sleep -Seconds 240
