@@ -57,8 +57,7 @@ jobs:
   displayName: 'Deploy [${{parameters.environmentName}}_${{parameters.stage}}]'
   environment: '${{parameters.environmentName}}'
   dependsOn: 
-  - ${{ if eq(variables['InfrDeploy'], 'true') }}:
-    - deploy_${{parameters.environmentName}}
+  - deploy_${{parameters.environmentName}}
   pool:
     vmImage: ubuntu-latest
   variables:
