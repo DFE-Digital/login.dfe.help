@@ -79,7 +79,7 @@ stages:
   - buildApp
   - FilesChanges
   displayName: "Deploy application"
-  condition:  ne(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true')
+  condition:  and(in(dependencies.buildApp.result, 'Succeeded'), ne(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true'))
   variables: 
     - name: AppDeploy
       value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
