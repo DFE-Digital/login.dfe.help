@@ -80,6 +80,7 @@ jobs:
           displayName: Slot Creation
           inputs:
             azureSubscription: '${{parameters.serviceConnection}}'
+            condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
             scriptType: 'pscore'
             scriptLocation: 'scriptPath'
             scriptPath: 'DevOps/scripts/slotCreation.ps1'
