@@ -64,13 +64,6 @@ stages:
       nodeVersionSpec: '14.18.1'
       npmInstCmd: 'install --force --json --no-package-lock'
       npmPruneFixCmd: 'install --production --json --force --no-package-lock'
-      copyFiles: '
-          app_data/**
-          azure/**
-          config/**
-          node_modules/**
-          src/**
-          package.json'
       variableGroups:
         - platform-dev
         - platform-dev-secured
