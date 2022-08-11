@@ -35,10 +35,10 @@ stages:
 - stage: FilesChanges
   displayName: "Files Changes"
   jobs:
-  - template: ./filesCheck.yml
+  - template: DevOps/pipeline/filesCheck.yml@devopsTemplates
 
 # Code scaning tools 
-#- template: ./scan-tools.yml
+#- template:  DevOps/pipeline/scan-tools.yml@devopsTemplates
 
 #Build the artifact for deployment
 - stage: buildApp
@@ -51,13 +51,23 @@ stages:
     - name: AppDeploy
       value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
   jobs:
-  - template: ./build.yml
+  - template: DevOps/pipeline/build.yml@devopsTemplates
     parameters:
       applicationName: ${{variables.applicationFullName}}
       custRegAuth: $(custRegAuth)
       artifactName: "${{variables.applicationShortName}}-dev-$(Build.BuildId)-release"
       environmentName: dev
       pm2ProcessFileName: process.json
+      nodeVersionSpec: '14.18.1'
+      npmInstCmd: 'install --force --json --no-package-lock'
+      npmPruneFixCmd: 'install --production --json --force --no-package-lock'
+      copyFiles: '
+          app_data/**
+          azure/**
+          config/**
+          node_modules/**
+          src/**
+          package.json'
       variableGroups:
         - platform-dev
         - platform-dev-secured
@@ -73,7 +83,7 @@ stages:
     - name: AppDeploy
       value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
   jobs:
-  - template: ./deploy.yml
+  - template: DevOps/pipeline/deploy.yml@devopsTemplates
     parameters:
       serviceConnection: "$(devServiceConnection)"
       environmentName: dev
