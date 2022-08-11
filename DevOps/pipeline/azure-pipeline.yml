@@ -37,6 +37,8 @@ stages:
   displayName: "Files Changes"
   jobs:
   - template: DevOps/pipeline/filesCheck.yml@devopsTemplates
+    parameters:
+      applicationName: ${{variables.applicationFullName}}
 
 # Code scaning tools 
 #- template:  DevOps/pipeline/scan-tools.yml@devopsTemplates
