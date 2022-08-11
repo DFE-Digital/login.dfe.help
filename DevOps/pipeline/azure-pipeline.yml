@@ -68,10 +68,8 @@ stages:
   - buildApp
   - FilesChanges
   displayName: "Deploy application"
-  condition: and(in(dependencies.buildApp.result, 'Succeeded'), and(eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.AppDeploy'], 'true'), eq(dependencies.FilesChanges.outputs['filesChanges.filesCheck.InfrDeploy'], '')))
+  condition:  ne(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.AppDeploy'], dependencies.FilesChanges.outputs['filesChanges.filesCheck.InfrDeploy'])
   variables: 
-    - name: AppDeploy
-      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
     - name: InfrDeploy
       value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.InfrDeploy'] ]
   jobs:
