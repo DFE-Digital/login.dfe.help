@@ -44,76 +44,75 @@ stages:
 #- template:  DevOps/pipeline/scan-tools.yml@devopsTemplates
 
 #Build the artifact for deployment
-- stage: buildApp
-  displayName: "Package application"
-  condition: and(succeeded(), eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.AppDeploy'], 'true'))
-  dependsOn: 
-  #- scanTools
-  - FilesChanges
-  variables: 
-    - name: AppDeploy
-      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
-  jobs:
-  - template: DevOps/pipeline/build.yml@devopsTemplates
-    parameters:
-      applicationName: ${{variables.applicationFullName}}
-      custRegAuth: $(custRegAuth)
-      artifactName: "${{variables.applicationShortName}}-dev-$(Build.BuildId)-release"
-      environmentName: dev
-      pm2ProcessFileName: process.json
-      nodeVersionSpec: '14.18.1'
-      npmInstCmd: 'install --force --json --no-package-lock'
-      npmPruneFixCmd: 'install --production --json --force --no-package-lock'
-      variableGroups:
-        - platform-dev
-        - platform-dev-secured
-        - platform-standalone-custom-hosts
+# - stage: buildApp
+#   displayName: "Package application"
+#   condition: and(succeeded(), eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.AppDeploy'], 'true'))
+#   dependsOn: 
+#   #- scanTools
+#   - FilesChanges
+#   variables: 
+#     - name: AppDeploy
+#       value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
+#   jobs:
+#   - template: DevOps/pipeline/build.yml@devopsTemplates
+#     parameters:
+#       applicationName: ${{variables.applicationFullName}}
+#       custRegAuth: $(custRegAuth)
+#       artifactName: "${{variables.applicationShortName}}-dev-$(Build.BuildId)-release"
+#       environmentName: dev
+#       pm2ProcessFileName: process.json
+#       nodeVersionSpec: '14.18.1'
+#       npmInstCmd: 'install --force --json --no-package-lock'
+#       npmPruneFixCmd: 'install --production --json --force --no-package-lock'
+#       variableGroups:
+#         - platform-dev
+#         - platform-dev-secured
+#         - platform-standalone-custom-hosts
 
-- stage: DeployApp
-  dependsOn: 
-  - buildApp
-  - FilesChanges
-  displayName: "Deploy application"
-  condition:  and(in(dependencies.buildApp.result, 'Succeeded'), ne(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true'))
-  variables: 
-    - name: AppDeploy
-      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
-  jobs:
-  - template: DevOps/pipeline/deploy.yml@devopsTemplates
-    parameters:
-      serviceConnection: "$(devServiceConnection)"
-      environmentName: dev
-      environmentId: d01
-      stage: appDeployDirect
-      subscriptionId: $(devSubscriptionId)
-      applicationFullName: ${{variables.applicationFullName}}
-      applicationShortName: ${{variables.applicationShortName}}
-      releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+# - stage: DeployApp
+#   dependsOn: 
+#   - buildApp
+#   - FilesChanges
+#   displayName: "Deploy application"
+#   condition:  and(in(dependencies.buildApp.result, 'Succeeded'), ne(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true'))
+#   variables: 
+#     - name: AppDeploy
+#       value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
+#   jobs:
+#   - template: DevOps/pipeline/deploy.yml@devopsTemplates
+#     parameters:
+#       serviceConnection: "$(devServiceConnection)"
+#       environmentName: dev
+#       environmentId: d01
+#       subscriptionId: $(devSubscriptionId)
+#       applicationFullName: ${{variables.applicationFullName}}
+#       applicationShortName: ${{variables.applicationShortName}}
+#       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
 
-- stage: DeployInfr
-  displayName: "Deploy Infrastructure"
-  dependsOn: 
-  - buildApp
-  - FilesChanges
-  condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true'))
-  variables: 
-    - name: InfrDeploy
-      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.InfrDeploy'] ]
-    - name: AppDeploy
-      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
-  jobs:
-  - template: DevOps/pipeline/infrastructure.yml@devopsTemplates
-    parameters:
-      serviceConnection: "$(devServiceConnection)"
-      environmentName: dev
-      environmentId: d01
-      subscriptionId: $(devSubscriptionId)
-      applicationShortName: ${{variables.applicationShortName}}
-      applicationFullName: ${{variables.applicationFullName}}
-      releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
-      certificateName: non-prod-gateway
-      variableGroups:
-        - platform-dev
-        - platform-dev-secured
-        - platform-standalone-custom-hosts
+# - stage: DeployInfr
+#   displayName: "Deploy Infrastructure"
+#   dependsOn: 
+#   - buildApp
+#   - FilesChanges
+#   condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true'))
+#   variables: 
+#     - name: InfrDeploy
+#       value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.InfrDeploy'] ]
+#     - name: AppDeploy
+#       value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
+#   jobs:
+#   - template: DevOps/pipeline/infrastructure.yml@devopsTemplates
+#     parameters:
+#       serviceConnection: "$(devServiceConnection)"
+#       environmentName: dev
+#       environmentId: d01
+#       subscriptionId: $(devSubscriptionId)
+#       applicationShortName: ${{variables.applicationShortName}}
+#       applicationFullName: ${{variables.applicationFullName}}
+#       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+#       certificateName: non-prod-gateway
+#       variableGroups:
+#         - platform-dev
+#         - platform-dev-secured
+#         - platform-standalone-custom-hosts
  
