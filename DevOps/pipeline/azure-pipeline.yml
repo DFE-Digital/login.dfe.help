@@ -32,7 +32,7 @@ variables:
 #     value: 
 
 stages:
-# Check What Folder/files changes to trigger the correspondent stages
+# Check What Folder/files changes to trigger the correspondent stages test
 - stage: FilesChanges
   displayName: "Files Changes"
   jobs:
