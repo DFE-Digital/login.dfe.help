@@ -35,7 +35,7 @@ variables:
 stages:
 
 # Code scaning tools 
-- template:  DevOps/pipeline/scan-tools.yml@devopsTemplates
+- template:  pipeline/scan-tools.yml@devopsTemplates
 
 #Build the artifact for deployment
 - stage: buildApp
@@ -44,7 +44,7 @@ stages:
   dependsOn: 
   - scanTools
   jobs:
-  - template: DevOps/pipeline/build.yml@devopsTemplates
+  - template: pipeline/build.yml@devopsTemplates
     parameters:
       applicationName: ${{variables.applicationFullName}}
       custRegAuth: $(custRegAuth)
@@ -65,7 +65,7 @@ stages:
   displayName: "Deploy application"
   condition:  and(in(dependencies.buildApp.result, 'Succeeded'), ne(variables['InfrDeploy'], 'true'))
   jobs:
-  - template: DevOps/pipeline/deploy.yml@devopsTemplates
+  - template: pipeline/deploy.yml@devopsTemplates
     parameters:
       serviceConnection: "$(devServiceConnection)"
       environmentName: dev
@@ -81,7 +81,7 @@ stages:
   - buildApp
   condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), eq(variables['AppDeploy'], 'true'))
   jobs:
-  - template: DevOps/pipeline/infrastructure.yml@devopsTemplates
+  - template: pipeline/infrastructure.yml@devopsTemplates
     parameters:
       serviceConnection: "$(devServiceConnection)"
       environmentName: dev
