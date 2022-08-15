@@ -40,7 +40,7 @@ stages:
   - template: DevOps/pipeline/filesCheck.yml@devopsTemplates
     parameters:
       applicationName: ${{variables.applicationFullName}}
-      appDeploy: $(appDeploy)
+      appDeploy: $(AppDeploy)
       InfrDeploy: $(InfrDeploy)
 
 # Code scaning tools 
