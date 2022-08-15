@@ -33,29 +33,16 @@ variables:
 #     value: 
 
 stages:
-# Check What Folder/files changes to trigger the correspondent stages test
-- stage: FilesChanges
-  displayName: "Files Changes"
-  jobs:
-  - template: DevOps/pipeline/filesCheck.yml@devopsTemplates
-    parameters:
-      applicationName: ${{variables.applicationFullName}}
-      appDeploy: $(AppDeploy)
-      InfrDeploy: $(InfrDeploy)
 
 # Code scaning tools 
-#- template:  DevOps/pipeline/scan-tools.yml@devopsTemplates
+- template:  DevOps/pipeline/scan-tools.yml@devopsTemplates
 
 #Build the artifact for deployment
 - stage: buildApp
   displayName: "Package application"
-  condition: and(succeeded(), eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.AppDeploy'], 'true'))
+  condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
   dependsOn: 
-  #- scanTools
-  - FilesChanges
-  variables: 
-    - name: AppDeploy
-      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
+  - scanTools
   jobs:
   - template: DevOps/pipeline/build.yml@devopsTemplates
     parameters:
@@ -77,10 +64,7 @@ stages:
   - buildApp
   - FilesChanges
   displayName: "Deploy application"
-  condition:  and(in(dependencies.buildApp.result, 'Succeeded'), ne(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true'))
-  variables: 
-    - name: AppDeploy
-      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
+  condition:  and(in(dependencies.buildApp.result, 'Succeeded'), ne(variables['InfrDeploy'], 'true'))
   jobs:
   - template: DevOps/pipeline/deploy.yml@devopsTemplates
     parameters:
@@ -97,12 +81,7 @@ stages:
   dependsOn: 
   - buildApp
   - FilesChanges
-  condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true'))
-  variables: 
-    - name: InfrDeploy
-      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.InfrDeploy'] ]
-    - name: AppDeploy
-      value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
+  condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), eq(variables['AppDeploy'], 'true'))
   jobs:
   - template: DevOps/pipeline/infrastructure.yml@devopsTemplates
     parameters:
