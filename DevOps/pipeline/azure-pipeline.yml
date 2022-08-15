@@ -62,7 +62,6 @@ stages:
 - stage: DeployApp
   dependsOn: 
   - buildApp
-  - FilesChanges
   displayName: "Deploy application"
   condition:  and(in(dependencies.buildApp.result, 'Succeeded'), ne(variables['InfrDeploy'], 'true'))
   jobs:
@@ -80,7 +79,6 @@ stages:
   displayName: "Deploy Infrastructure"
   dependsOn: 
   - buildApp
-  - FilesChanges
   condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), eq(variables['AppDeploy'], 'true'))
   jobs:
   - template: DevOps/pipeline/infrastructure.yml@devopsTemplates
