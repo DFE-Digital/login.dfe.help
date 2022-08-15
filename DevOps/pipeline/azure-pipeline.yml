@@ -33,10 +33,18 @@ variables:
 #     value: 
 
 stages:
+
+# Code scaning tools 
+- template:  pipeline/scan-tools.yml@devopsTemplates
+  parameters:
+    serviceName: ${{variables.applicationFullName}}
+
 #Build the artifact for deployment
 - stage: buildApp
   displayName: "Package application"
   condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
+  dependsOn: 
+  - scanTools
   jobs:
   - template: pipeline/build.yml@devopsTemplates
     parameters:
@@ -52,11 +60,6 @@ stages:
         - platform-dev
         - platform-dev-secured
         - platform-standalone-custom-hosts
-
-# Code scaning tools 
-- template:  pipeline/scan-tools.yml@devopsTemplates
-  parameters:
-    serviceName: ${{variables.applicationFullName}}
 
 - stage: DeployApp
   dependsOn: 
