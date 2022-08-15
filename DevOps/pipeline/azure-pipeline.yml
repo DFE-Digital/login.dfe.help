@@ -1,11 +1,12 @@
 name: $(BuildDefinitionName)_tag-$(BuildID)_at-$(Date:yyyyMMdd)$(Rev:.r)
 resources:
   repositories:
+  # Defult branch is master
     - repository: devopsTemplates
       type: github
       endpoint: DfE-Digital
       name: DFE-Digital/login.dfe.devops
-      ref: feature/DSI-5540
+      ref: $(DevOpsBranch)
     - repository: config
       type: github
       endpoint: DfE-Digital
@@ -39,6 +40,8 @@ stages:
   - template: DevOps/pipeline/filesCheck.yml@devopsTemplates
     parameters:
       applicationName: ${{variables.applicationFullName}}
+      DevOpsBranch: $(DevOpsBranch)
+      AccessToken: $(System.AccessToken)
 
 # Code scaning tools 
 #- template:  DevOps/pipeline/scan-tools.yml@devopsTemplates
