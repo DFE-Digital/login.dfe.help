@@ -38,7 +38,7 @@ stages:
   - template: ./filesCheck.yml
 
 # Code scaning tools 
-#- template: ./scan-tools.yml
+- template: ./scan-tools.yml
 
 #Build the artifact for deployment
 - stage: buildApp
@@ -46,7 +46,7 @@ stages:
   condition: and(succeeded(), eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.AppDeploy'], 'true'))
   dependsOn: 
   #- scanTools
-  - FilesChanges
+#  - FilesChanges
   variables: 
     - name: AppDeploy
       value: $[ stageDependencies.FilesChanges.filesChanges.outputs['filesChangesChecks.AppDeploy'] ]
@@ -66,7 +66,7 @@ stages:
 - stage: DeployApp
   dependsOn: 
   - buildApp
-  - FilesChanges
+ # - FilesChanges
   displayName: "Deploy application"
   condition:  ne(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true')
   variables: 
@@ -88,7 +88,7 @@ stages:
   displayName: "Deploy Infrastructure"
   dependsOn: 
   - buildApp
-  - FilesChanges
+  #- FilesChanges
   condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), eq(dependencies.FilesChanges.outputs['filesChanges.filesChangesChecks.InfrDeploy'], 'true'))
   variables: 
     - name: InfrDeploy
