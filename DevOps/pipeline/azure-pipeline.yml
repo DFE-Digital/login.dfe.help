@@ -35,8 +35,6 @@ variables:
 stages:
 
 # Code scaning tools
-stages:
-
 - stage: scanTools
   displayName: Code scaning tools
   jobs:
