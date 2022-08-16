@@ -34,11 +34,18 @@ variables:
 
 stages:
 
-# Code scaning tools 
-- template:  pipeline/scan-tools.yml@devopsTemplates
-  parameters:
-    nodeVersionSpec: '14.18.1'
-    npmInstCmd: 'install --force --json --no-package-lock'
+# Code scaning tools
+stages:
+
+- stage: scanTools
+  displayName: Code scaning tools
+  jobs:
+  - template:  pipeline/Checkov-ESlint.yml@devopsTemplates
+
+  - template:  pipeline/DependencyCheck.yml@devopsTemplates
+    parameters:
+      nodeVersionSpec: '14.x'
+      npmInstCmd: 'install --force --json --no-package-lock'
 
 #Build the artifact for deployment
 - stage: buildApp
