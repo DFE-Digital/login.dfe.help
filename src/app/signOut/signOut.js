@@ -28,8 +28,12 @@ const signUserOut = async (req, res) => {
     });
 
     const idToken = req.user.id_token;
-    const returnUrl = `${config.hostingEnvironment.profileUrl}/signout`;
+    let returnUrl = `${config.hostingEnvironment.profileUrl}/signout`;
 
+    if (req.query.timeout === '1') {
+      logger.info('session timeout signout');
+      returnUrl = `${config.hostingEnvironment.protocol}://${config.hostingEnvironment.host}:${config.hostingEnvironment.port}/signout/session-timeout`;
+    }
     logger.info('service signout :: there is no redirect_uri and redirected');
     logout(req, res);
     const issuer = passport._strategies.oidc._issuer;
