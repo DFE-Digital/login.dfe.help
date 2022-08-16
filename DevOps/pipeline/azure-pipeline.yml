@@ -42,7 +42,6 @@ stages:
 
   - template:  pipeline/DependencyCheck.yml@devopsTemplates
     parameters:
-      nodeVersionSpec: '14.x'
       npmInstCmd: 'install --force --json --no-package-lock'
 
 #Build the artifact for deployment
