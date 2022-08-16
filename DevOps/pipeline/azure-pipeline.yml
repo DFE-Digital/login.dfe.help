@@ -37,7 +37,7 @@ stages:
 # Code scaning tools 
 - template:  pipeline/scan-tools.yml@devopsTemplates
   parameters:
-    serviceName: ${{variables.applicationFullName}}
+    nodeVersionSpec: '14.18.1'
 
 #Build the artifact for deployment
 - stage: buildApp
