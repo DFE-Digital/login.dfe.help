@@ -22,8 +22,7 @@ trigger:
     #- feature/*
 
 variables:
-- group: platform-global
-- group: code-scan-tools
+- group: s141d01-signin-DevOps
 - name: applicationShortName
   value: 'hlp'
 - name: applicationFullName
@@ -61,10 +60,6 @@ stages:
       nodeVersionSpec: '14.18.1'
       npmInstCmd: 'install --force --json --no-package-lock'
       npmPruneFixCmd: 'install --production --json --force --no-package-lock'
-      variableGroups:
-        - platform-dev
-        - platform-dev-secured
-        - platform-standalone-custom-hosts
 
 - stage: DeployApp
   dependsOn: 
@@ -99,8 +94,4 @@ stages:
       applicationFullName: ${{variables.applicationFullName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
       certificateName: non-prod-gateway
-      variableGroups:
-        - platform-dev
-        - platform-dev-secured
-        - platform-standalone-custom-hosts
  
