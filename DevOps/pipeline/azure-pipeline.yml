@@ -69,7 +69,7 @@ stages:
   jobs:
   - template: pipeline/deploy.yml@devopsTemplates
     parameters:
-      serviceConnection: "$(devServiceConnection)"
+      serviceConnection: $(devServiceConnection)
       environmentName: dev
       environmentId: d01
       subscriptionId: $(devSubscriptionId)
