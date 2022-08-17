@@ -22,7 +22,7 @@ trigger:
     #- feature/*
 
 variables:
-- group: s141d01-signin-DevOps
+- group: s141d01SigninDevOps
 - name: applicationShortName
   value: 'hlp'
 - name: applicationFullName
