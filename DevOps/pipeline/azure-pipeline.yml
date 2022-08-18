@@ -83,7 +83,7 @@ stages:
   dependsOn: 
   # - buildApp
   # - scanTools
-  condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), eq(variables['InfrDeploy'], 'true'))
+  #condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), eq(variables['InfrDeploy'], 'true'))
   jobs:
   - template: pipeline/infrastructure.yml@devopsTemplates
     parameters:
