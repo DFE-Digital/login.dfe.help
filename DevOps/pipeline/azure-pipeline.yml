@@ -62,21 +62,21 @@ stages:
       npmInstCmd: 'install --force --json --no-package-lock'
       npmPruneFixCmd: 'install --production --json --force --no-package-lock'
 
-- stage: DeployApp
-  dependsOn: 
-  - buildApp
-  displayName: "Deploy application"
-  condition:  and(in(dependencies.buildApp.result, 'Succeeded'), ne(variables['InfrDeploy'], 'true'))
-  jobs:
-  - template: pipeline/deploy.yml@devopsTemplates
-    parameters:
-      serviceConnection: ${{variables.devServiceConnection}}
-      environmentName: dev
-      environmentId: d01
-      subscriptionId: ${{variables.devSubscriptionId}}
-      applicationFullName: ${{variables.applicationFullName}}
-      applicationShortName: ${{variables.applicationShortName}}
-      releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+# - stage: DeployApp
+#   dependsOn: 
+#   - buildApp
+#   displayName: "Deploy application"
+#   condition:  and(in(dependencies.buildApp.result, 'Succeeded'), ne(variables['InfrDeploy'], 'true'))
+#   jobs:
+#   - template: pipeline/deploy.yml@devopsTemplates
+#     parameters:
+#       serviceConnection: $(devServiceConnection)
+#       environmentName: dev
+#       environmentId: d01
+#       subscriptionId: $(devSubscriptionId)
+#       applicationFullName: ${{variables.applicationFullName}}
+#       applicationShortName: ${{variables.applicationShortName}}
+#       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
 
 - stage: DeployInfr
   displayName: "Deploy Infrastructure"
@@ -87,10 +87,10 @@ stages:
   jobs:
   - template: pipeline/infrastructure.yml@devopsTemplates
     parameters:
-      serviceConnection: ${{variables.devServiceConnection}}
+      serviceConnection: "$(devServiceConnection)"
       environmentName: dev
       environmentId: d01
-      subscriptionId: ${{variables.devSubscriptionId}}
+      subscriptionId: $(devSubscriptionId)
       applicationShortName: ${{variables.applicationShortName}}
       applicationFullName: ${{variables.applicationFullName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
