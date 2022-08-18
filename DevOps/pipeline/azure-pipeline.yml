@@ -87,7 +87,7 @@ stages:
   jobs:
   - template: pipeline/infrastructure.yml@devopsTemplates
     parameters:
-      serviceConnection: "$(devServiceConnection)"
+      serviceConnection: $(devServiceConnection)
       environmentName: dev
       environmentId: d01
       subscriptionId: $(devSubscriptionId)
