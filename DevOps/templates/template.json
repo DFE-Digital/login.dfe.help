@@ -45,8 +45,8 @@
             }
         },
         "numberOfWorkers": {
-            "type": "int",
-            "defaultValue": 1,
+            "type": "string",
+            "defaultValue": "1",
             "metadata": {
                 "description": "The number of workers to assign to the app service within the app service plan"
             }
@@ -204,7 +204,7 @@
                         "value": "[parameters('nodeVersion')]"
                     },
                     "numberOfWorkers": {
-                        "value": "[parameters('numberOfWorkers')]"
+                        "value": "[int(parameters('numberOfWorkers'))]"
                     },
                     "appServiceConfigPath": {
                         "value": "[parameters('appServiceConfigPath')]"
