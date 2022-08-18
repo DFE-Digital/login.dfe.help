@@ -81,8 +81,8 @@ stages:
 - stage: DeployInfr
   displayName: "Deploy Infrastructure"
   dependsOn: 
-  - buildApp
-  - scanTools
+  # - buildApp
+  # - scanTools
   condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), eq(variables['InfrDeploy'], 'true'))
   jobs:
   - template: pipeline/infrastructure.yml@devopsTemplates
