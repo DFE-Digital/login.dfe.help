@@ -87,7 +87,7 @@ stages:
   jobs:
   - template: pipeline/infrastructure.yml@devopsTemplates
     parameters:
-      #serviceConnection: $(devServiceConnection)
+      serviceConnection: S141D.bsvc.cip.azdo
       environmentName: dev
       environmentId: d01
       subscriptionId: $(devSubscriptionId)
