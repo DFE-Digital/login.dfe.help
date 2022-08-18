@@ -44,39 +44,39 @@ stages:
   #     npmInstCmd: 'install --force --json --no-package-lock'
 
 #Build the artifact for deployment
-- stage: buildApp
-  displayName: "Package application"
-  condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
-  dependsOn: 
-  - scanTools
-  jobs:
-  - template: pipeline/build.yml@devopsTemplates
-    parameters:
-      applicationName: ${{variables.applicationFullName}}
-      custRegAuth: $(custRegAuth)
-      artifactName: "${{variables.applicationShortName}}-dev-$(Build.BuildId)-release"
-      environmentName: dev
-      environmentId: d01
-      pm2ProcessFileName: process.json
-      nodeVersionSpec: '14.18.1'
-      npmInstCmd: 'install --force --json --no-package-lock'
-      npmPruneFixCmd: 'install --production --json --force --no-package-lock'
+# - stage: buildApp
+#   displayName: "Package application"
+#   condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
+#   dependsOn: 
+#   - scanTools
+#   jobs:
+#   - template: pipeline/build.yml@devopsTemplates
+#     parameters:
+#       applicationName: ${{variables.applicationFullName}}
+#       custRegAuth: $(custRegAuth)
+#       artifactName: "${{variables.applicationShortName}}-dev-$(Build.BuildId)-release"
+#       environmentName: dev
+#       environmentId: d01
+#       pm2ProcessFileName: process.json
+#       nodeVersionSpec: '14.18.1'
+#       npmInstCmd: 'install --force --json --no-package-lock'
+#       npmPruneFixCmd: 'install --production --json --force --no-package-lock'
 
-- stage: DeployApp
-  dependsOn: 
-  - buildApp
-  displayName: "Deploy application"
-  condition:  and(in(dependencies.buildApp.result, 'Succeeded'), ne(variables['InfrDeploy'], 'true'))
-  jobs:
-  - template: pipeline/deploy.yml@devopsTemplates
-    parameters:
-      serviceConnection: $(devServiceConnection)
-      environmentName: dev
-      environmentId: d01
-      subscriptionId: $(devSubscriptionId)
-      applicationFullName: ${{variables.applicationFullName}}
-      applicationShortName: ${{variables.applicationShortName}}
-      releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+# - stage: DeployApp
+#   dependsOn: 
+#   - buildApp
+#   displayName: "Deploy application"
+#   condition:  and(in(dependencies.buildApp.result, 'Succeeded'), ne(variables['InfrDeploy'], 'true'))
+#   jobs:
+#   - template: pipeline/deploy.yml@devopsTemplates
+#     parameters:
+#       serviceConnection: $(devServiceConnection)
+#       environmentName: dev
+#       environmentId: d01
+#       subscriptionId: $(devSubscriptionId)
+#       applicationFullName: ${{variables.applicationFullName}}
+#       applicationShortName: ${{variables.applicationShortName}}
+#       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
 
 # - stage: DeployInfr
 #   displayName: "Deploy Infrastructure"
