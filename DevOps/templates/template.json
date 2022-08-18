@@ -19,7 +19,7 @@
             }
         },
         "appServicePlanSku": {
-            "type": "string",
+            "type": "object",
             "metadata": {
                 "description": "The sku of the App Service Plan"
             }
@@ -45,8 +45,8 @@
             }
         },
         "numberOfWorkers": {
-            "type": "string",
-            "defaultValue": "1",
+            "type": "int",
+            "defaultValue": 1,
             "metadata": {
                 "description": "The number of workers to assign to the app service within the app service plan"
             }
