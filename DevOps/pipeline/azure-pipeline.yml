@@ -56,6 +56,7 @@ stages:
       custRegAuth: $(custRegAuth)
       artifactName: "${{variables.applicationShortName}}-dev-$(Build.BuildId)-release"
       environmentName: dev
+      environmentId: d01
       pm2ProcessFileName: process.json
       nodeVersionSpec: '14.18.1'
       npmInstCmd: 'install --force --json --no-package-lock'
