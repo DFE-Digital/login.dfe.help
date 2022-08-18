@@ -22,7 +22,8 @@ trigger:
     #- feature/*
 
 variables:
-- group: s141d01SigninDevOps
+- group: dsi-dev-kv
+- group: dsi-dev
 - name: applicationShortName
   value: 'hlp'
 - name: applicationFullName
@@ -87,7 +88,7 @@ stages:
   jobs:
   - template: pipeline/infrastructure.yml@devopsTemplates
     parameters:
-      serviceConnection: S141D.bsvc.cip.azdo
+      serviceConnection: $(devServiceConnection)
       environmentName: dev
       environmentId: d01
       subscriptionId: $(devSubscriptionId)
