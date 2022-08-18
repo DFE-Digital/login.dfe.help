@@ -34,33 +34,33 @@ variables:
 stages:
 
 # Code scaning tools
-- stage: scanTools
-  displayName: Code scaning tools
-  jobs:
-  - template:  pipeline/Checkov-ESlint.yml@devopsTemplates
+# - stage: scanTools
+#   displayName: Code scaning tools
+#   jobs:
+#   - template:  pipeline/Checkov-ESlint.yml@devopsTemplates
 
-  # - template:  pipeline/DependencyCheck.yml@devopsTemplates
-  #   parameters:
-  #     npmInstCmd: 'install --force --json --no-package-lock'
+#   - template:  pipeline/DependencyCheck.yml@devopsTemplates
+#     parameters:
+#       npmInstCmd: 'install --force --json --no-package-lock'
 
 #Build the artifact for deployment
-# - stage: buildApp
-#   displayName: "Package application"
-#   condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
-#   dependsOn: 
-#   - scanTools
-#   jobs:
-#   - template: pipeline/build.yml@devopsTemplates
-#     parameters:
-#       applicationName: ${{variables.applicationFullName}}
-#       custRegAuth: $(custRegAuth)
-#       artifactName: "${{variables.applicationShortName}}-dev-$(Build.BuildId)-release"
-#       environmentName: dev
-#       environmentId: d01
-#       pm2ProcessFileName: process.json
-#       nodeVersionSpec: '14.18.1'
-#       npmInstCmd: 'install --force --json --no-package-lock'
-#       npmPruneFixCmd: 'install --production --json --force --no-package-lock'
+- stage: buildApp
+  displayName: "Package application"
+  condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
+  dependsOn: 
+  #- scanTools
+  jobs:
+  - template: pipeline/build.yml@devopsTemplates
+    parameters:
+      applicationName: ${{variables.applicationFullName}}
+      custRegAuth: $(custRegAuth)
+      artifactName: "${{variables.applicationShortName}}-dev-$(Build.BuildId)-release"
+      environmentName: dev
+      environmentId: d01
+      pm2ProcessFileName: process.json
+      nodeVersionSpec: '14.18.1'
+      npmInstCmd: 'install --force --json --no-package-lock'
+      npmPruneFixCmd: 'install --production --json --force --no-package-lock'
 
 # - stage: DeployApp
 #   dependsOn: 
@@ -87,7 +87,7 @@ stages:
 #   jobs:
 #   - template: pipeline/infrastructure.yml@devopsTemplates
 #     parameters:
-#       serviceConnection: $(devServiceConnection)
+#       serviceConnection: "$(devServiceConnection)"
 #       environmentName: dev
 #       environmentId: d01
 #       subscriptionId: $(devSubscriptionId)
