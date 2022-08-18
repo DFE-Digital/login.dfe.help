@@ -19,7 +19,7 @@
             }
         },
         "appServicePlanSku": {
-            "type": "object",
+            "type": "string",
             "metadata": {
                 "description": "The sku of the App Service Plan"
             }
@@ -143,7 +143,7 @@
                         "value": "[parameters('appServicePlanName')]"
                     },
                     "appServicePlanSku": {
-                        "value": "[parameters('appServicePlanSku')]"
+                        "value": "[json(parameters('appServicePlanSku'))]"
                     },
                     "appServicePlanOS": {
                         "value": "Linux"
