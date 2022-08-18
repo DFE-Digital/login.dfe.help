@@ -70,10 +70,10 @@ stages:
   jobs:
   - template: pipeline/deploy.yml@devopsTemplates
     parameters:
-      serviceConnection: $(devServiceConnection)
+      serviceConnection: ${{variables.devServiceConnection}}
       environmentName: dev
       environmentId: d01
-      subscriptionId: $(devSubscriptionId)
+      subscriptionId: ${{variables.devSubscriptionId}}
       applicationFullName: ${{variables.applicationFullName}}
       applicationShortName: ${{variables.applicationShortName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
@@ -87,10 +87,10 @@ stages:
   jobs:
   - template: pipeline/infrastructure.yml@devopsTemplates
     parameters:
-      serviceConnection: "$(devServiceConnection)"
+      serviceConnection: ${{variables.devServiceConnection}}
       environmentName: dev
       environmentId: d01
-      subscriptionId: $(devSubscriptionId)
+      subscriptionId: ${{variables.devSubscriptionId}}
       applicationShortName: ${{variables.applicationShortName}}
       applicationFullName: ${{variables.applicationFullName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
