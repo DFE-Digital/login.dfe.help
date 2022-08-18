@@ -39,9 +39,9 @@ stages:
   jobs:
   - template:  pipeline/Checkov-ESlint.yml@devopsTemplates
 
-  - template:  pipeline/DependencyCheck.yml@devopsTemplates
-    parameters:
-      npmInstCmd: 'install --force --json --no-package-lock'
+  # - template:  pipeline/DependencyCheck.yml@devopsTemplates
+  #   parameters:
+  #     npmInstCmd: 'install --force --json --no-package-lock'
 
 #Build the artifact for deployment
 - stage: buildApp
