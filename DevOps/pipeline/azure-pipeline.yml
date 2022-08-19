@@ -28,6 +28,8 @@ variables:
   value: 'hlp'
 - name: applicationFullName
   value: 'help'
+- name: numberOfWorkers
+  value: 1
 # - name: environmentName
 #   - ${{ if eq(parameters.gitVersioning, true) }}:
 #     value: 
