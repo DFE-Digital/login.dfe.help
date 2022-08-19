@@ -63,7 +63,7 @@ stages:
       npmPruneFixCmd: 'install --production --json --force --no-package-lock'
 
 - stage: Deployment_${{variables.environmentName}}
-  displayName: "Deploy Infrastructure"
+  displayName: "Deployment [${{variables.environmentName}}]"
   dependsOn: 
   - buildApp
   condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), eq(variables['InfrDeploy'], 'true'))
