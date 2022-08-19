@@ -23,7 +23,7 @@ trigger:
 
 variables:
 - group: dsi-dev-kv
-- group: dsi-dev
+- group: dsi-global
 - name: applicationShortName
   value: 'hlp'
 - name: applicationFullName
