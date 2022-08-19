@@ -30,6 +30,8 @@ variables:
   value: 'help'
 - name: numberOfWorkers
   value: 1
+- name: environmentName
+  value: dev
 # - name: environmentName
 #   - ${{ if eq(parameters.gitVersioning, true) }}:
 #     value: 
@@ -60,24 +62,7 @@ stages:
       npmInstCmd: 'install --force --json --no-package-lock'
       npmPruneFixCmd: 'install --production --json --force --no-package-lock'
 
-- ${{ if ne(variables['InfrDeploy'], 'true') }}:
-  - stage: DeployApp
-    dependsOn: 
-    - buildApp
-    displayName: "Deploy application"
-    condition:  and(in(dependencies.buildApp.result, 'Succeeded'), ne(variables['InfrDeploy'], 'true'))
-    jobs:
-    - template: pipeline/deploy.yml@devopsTemplates
-      parameters:
-        serviceConnection: $(devServiceConnection)
-        environmentName: dev
-        environmentId: d01
-        subscriptionId: $(devSubscriptionId)
-        applicationFullName: ${{variables.applicationFullName}}
-        applicationShortName: ${{variables.applicationShortName}}
-        releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
-
-- stage: DeployInfr
+- stage: Deployment [${{variables.environmentName}}]
   displayName: "Deploy Infrastructure"
   dependsOn: 
   - buildApp
@@ -93,4 +78,16 @@ stages:
       applicationFullName: ${{variables.applicationFullName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
       certificateName: non-prod-gateway
+  
+  - ${{ if ne(variables['InfrDeploy'], 'true') }}:
+
+    - template: pipeline/deploy.yml@devopsTemplates
+      parameters:
+        serviceConnection: $(devServiceConnection)
+        environmentName: dev
+        environmentId: d01
+        subscriptionId: $(devSubscriptionId)
+        applicationFullName: ${{variables.applicationFullName}}
+        applicationShortName: ${{variables.applicationShortName}}
+        releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
  
