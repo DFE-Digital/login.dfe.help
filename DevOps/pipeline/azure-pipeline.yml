@@ -36,23 +36,20 @@ variables:
 
 stages:
 
-# Code scaning tools
-# - stage: scanTools
-#   displayName: Code scaning tools
-#   jobs:
-#   - template:  pipeline/Checkov-ESlint.yml@devopsTemplates
-
-#   - template:  pipeline/DependencyCheck.yml@devopsTemplates
-#     parameters:
-#       npmInstCmd: 'install --force --json --no-package-lock'
-
-#Build the artifact for deployment
+# Code Scans & Build the artifact for deployment
 # - stage: buildApp
 #   displayName: "Package application"
 #   condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
 #   dependsOn: 
 #   - scanTools
 #   jobs:
+    ## Code scaning tools
+#   - template:  pipeline/Checkov-ESlint.yml@devopsTemplates
+
+#   - template:  pipeline/DependencyCheck.yml@devopsTemplates
+#     parameters:
+#       npmInstCmd: 'install --force --json --no-package-lock'
+
 #   - template: pipeline/build.yml@devopsTemplates
 #     parameters:
 #       applicationName: ${{variables.applicationFullName}}
