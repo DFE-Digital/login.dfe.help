@@ -40,8 +40,6 @@ stages:
 - stage: buildApp
   displayName: "Package application"
   condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
-  dependsOn: 
-  - scanTools
   jobs:
     # Code scaning tools
   - template:  pipeline/Checkov-ESlint.yml@devopsTemplates
