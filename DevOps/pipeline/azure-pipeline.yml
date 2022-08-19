@@ -62,7 +62,7 @@ stages:
       npmInstCmd: 'install --force --json --no-package-lock'
       npmPruneFixCmd: 'install --production --json --force --no-package-lock'
 
-- stage: Deployment_[${{variables.environmentName}}]
+- stage: Deployment[${{variables.environmentName}}]
   displayName: "Deploy Infrastructure"
   dependsOn: 
   - buildApp
