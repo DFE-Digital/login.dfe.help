@@ -89,5 +89,5 @@ stages:
       applicationFullName: ${{variables.applicationFullName}}
       applicationShortName: ${{variables.applicationShortName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
-      InfrDeploy: $(InfrDeploy)
+      InfrDeploy: ${{ eq(variables['InfrDeploy'], 'true') }}
  
