@@ -68,16 +68,17 @@ stages:
   - buildApp
   condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), eq(variables['InfrDeploy'], 'true'))
   jobs:
-  - template: pipeline/infrastructure.yml@devopsTemplates
-    parameters:
-      serviceConnection: $(devServiceConnection)
-      environmentName: dev
-      environmentId: d01
-      subscriptionId: $(devSubscriptionId)
-      applicationShortName: ${{variables.applicationShortName}}
-      applicationFullName: ${{variables.applicationFullName}}
-      releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
-      certificateName: non-prod-gateway
+  - ${{ if eq(variables.InfrDeploy, 'true') }}:
+    - template: pipeline/infrastructure.yml@devopsTemplates
+      parameters:
+        serviceConnection: $(devServiceConnection)
+        environmentName: dev
+        environmentId: d01
+        subscriptionId: $(devSubscriptionId)
+        applicationShortName: ${{variables.applicationShortName}}
+        applicationFullName: ${{variables.applicationFullName}}
+        releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+        certificateName: non-prod-gateway
 
 
   - template: pipeline/deploy.yml@devopsTemplates
