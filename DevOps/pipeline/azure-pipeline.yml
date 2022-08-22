@@ -90,7 +90,7 @@ stages:
       applicationShortName: ${{variables.applicationShortName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
       ${{ if eq(variables['AppDeploy'], '') }}:
-        AppDeploy: eq('${{ variables['AppDeploy'] }}', 'true'))
+        AppDeploy: eq('${{ variables.AppDeploy }}', 'true'))
       ${{else}}:
         AppDeploy: False
   
