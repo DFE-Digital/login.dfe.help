@@ -79,7 +79,9 @@ stages:
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
       certificateName: non-prod-gateway
 
+
   - template: pipeline/deploy.yml@devopsTemplates
+    condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
     parameters:
       serviceConnection: $(devServiceConnection)
       environmentName: dev
