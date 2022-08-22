@@ -81,7 +81,6 @@ stages:
 
 
   - template: pipeline/deploy.yml@devopsTemplates
-    condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
     parameters:
       serviceConnection: $(devServiceConnection)
       environmentName: dev
