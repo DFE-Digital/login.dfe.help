@@ -79,13 +79,13 @@ stages:
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
       certificateName: non-prod-gateway
 
-    - template: pipeline/deploy.yml@devopsTemplates
-      parameters:
-        serviceConnection: $(devServiceConnection)
-        environmentName: dev
-        environmentId: d01
-        subscriptionId: $(devSubscriptionId)
-        applicationFullName: ${{variables.applicationFullName}}
-        applicationShortName: ${{variables.applicationShortName}}
-        releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+  - template: pipeline/deploy.yml@devopsTemplates
+    parameters:
+      serviceConnection: $(devServiceConnection)
+      environmentName: dev
+      environmentId: d01
+      subscriptionId: $(devSubscriptionId)
+      applicationFullName: ${{variables.applicationFullName}}
+      applicationShortName: ${{variables.applicationShortName}}
+      releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
  
