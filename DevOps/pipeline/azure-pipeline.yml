@@ -40,7 +40,7 @@ stages:
 
 # Code Scans & Build the artifact for deployment
 - stage: buildApp
-  displayName: "Package application"
+  displayName: "Build"
   condition: and(succeeded(), eq(variables['AppDeploy'], 'true'))
   jobs:
     # Code scaning tools
@@ -78,8 +78,6 @@ stages:
       applicationFullName: ${{variables.applicationFullName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
       certificateName: non-prod-gateway
-  
-  - ${{ if ne(variables['InfrDeploy'], 'true') }}:
 
     - template: pipeline/deploy.yml@devopsTemplates
       parameters:
