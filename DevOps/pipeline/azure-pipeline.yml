@@ -49,7 +49,7 @@ stages:
 # Code Scans & Build the artifact for deployment
 - stage: buildApp
   displayName: "Build"
-  condition: and(succeeded(), parameters.AppDeploy)
+  condition: and(succeeded(), ${{ parameters.AppDeploy }})
   jobs:
     # Code scaning tools
   - template:  pipeline/Checkov-ESlint.yml@devopsTemplates
@@ -74,7 +74,7 @@ stages:
   displayName: "Deployment [${{variables.environmentName}}]"
   dependsOn: 
   - buildApp
-  condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), parameters.InfrDeploy)
+  condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), ${{ parameters.InfrDeploy }})
   jobs:
   - ${{ if parameters.InfrDeploy }}:
     - template: pipeline/infrastructure.yml@devopsTemplates
