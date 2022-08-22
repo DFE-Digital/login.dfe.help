@@ -21,6 +21,12 @@ trigger:
     - release/*
     #- feature/*
 
+parameters:
+- name: AppDeploy
+  type: boolean
+- name: InfrDeploy
+  type: boolean
+
 variables:
 - group: dsi-dev-kv
 - group: dsi-global
