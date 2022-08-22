@@ -125,7 +125,7 @@
         "AccessToken": {
             "type": "string",
             "metadata": {
-                "description": "Toekn that will acces the private repo from the logic app"
+                "description": "Token that will acces the private repo from the logic app"
             }
         }
     },
