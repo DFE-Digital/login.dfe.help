@@ -89,8 +89,4 @@ stages:
       applicationFullName: ${{variables.applicationFullName}}
       applicationShortName: ${{variables.applicationShortName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
-      ${{ if eq(variables['AppDeploy'], '') }}:
-        AppDeploy: True
-      ${{else}}:
-        AppDeploy: False
   
