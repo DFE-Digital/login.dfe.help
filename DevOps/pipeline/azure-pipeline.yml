@@ -81,7 +81,7 @@ stages:
 
 
   - template: pipeline/deploy.yml@devopsTemplates
-    parameters:
+    parameters: 
       serviceConnection: $(devServiceConnection)
       environmentName: dev
       environmentId: d01
@@ -89,6 +89,6 @@ stages:
       applicationFullName: ${{variables.applicationFullName}}
       applicationShortName: ${{variables.applicationShortName}}
       releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
-      - ${{ if eq(variables['InfrDeploy'], 'true') }}:
+      ${{ if eq(variables['InfrDeploy'], 'true') }}:
         InfrDeploy: true
   
