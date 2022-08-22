@@ -76,7 +76,7 @@ stages:
   - buildApp
   condition: and(in(dependencies.buildApp.result, 'Succeeded', 'Skipped'), eq(variables['InfrDeploy'], 'true'))
   jobs:
-  - ${{ if eq(variables.InfrDeploy, 'true') }}:
+  - ${{ if eq(parameters.InfrDeploy, 'true') }}:
     - template: pipeline/infrastructure.yml@devopsTemplates
       parameters:
         serviceConnection: $(devServiceConnection)
@@ -88,7 +88,7 @@ stages:
         releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
         certificateName: non-prod-gateway
 
-  - ${{elseif eq(variables.AppDeploy, 'true') }}:
+  - ${{elseif eq(parameters.AppDeploy, 'true') }}:
     - template: pipeline/deploy.yml@devopsTemplates
       parameters: 
         serviceConnection: $(devServiceConnection)
