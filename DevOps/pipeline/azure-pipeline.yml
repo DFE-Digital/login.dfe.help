@@ -88,7 +88,7 @@ stages:
         releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
         certificateName: non-prod-gateway
 
-  - ${{elseif parameters.AppDeploy }}:
+  - ${{ if parameters.AppDeploy }}:
     - template: pipeline/deploy.yml@devopsTemplates
       parameters: 
         serviceConnection: $(devServiceConnection)
