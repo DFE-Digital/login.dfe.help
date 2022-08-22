@@ -24,8 +24,10 @@ trigger:
 parameters:
 - name: AppDeploy
   type: boolean
+  default: true
 - name: InfrDeploy
   type: boolean
+  default: true
 
 variables:
 - group: dsi-dev-kv
