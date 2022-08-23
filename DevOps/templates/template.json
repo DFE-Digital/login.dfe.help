@@ -141,7 +141,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat((parameters('templatesBaseUri'), 'app-service-plan.json&token=', parameters('AccessToken'))]",
+                    "uri": "[concat(parameters('templatesBaseUri'), 'app-service-plan.json&token=', parameters('AccessToken'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
