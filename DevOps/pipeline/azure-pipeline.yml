@@ -48,7 +48,7 @@ stages:
 
 # Code Scans & Build the artifact for deployment
 - stage: buildApp
-  displayName: "Build"
+  displayName: "Scan tools & Build"
   condition: and(succeeded(), ${{ parameters.AppDeploy }})
   jobs:
     # Code scaning tools
