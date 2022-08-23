@@ -52,7 +52,9 @@ stages:
   condition: and(succeeded(), ${{ parameters.AppDeploy }})
   jobs:
     # Code scaning tools
-  - template:  pipeline/Checkov-ESlint.yml@devopsTemplates
+  - template:  pipeline/Checkov.yml@devopsTemplates
+
+  - template:  pipeline/ESlint.yml@devopsTemplates
 
   - template:  pipeline/DependencyCheck.yml@devopsTemplates
     parameters:
