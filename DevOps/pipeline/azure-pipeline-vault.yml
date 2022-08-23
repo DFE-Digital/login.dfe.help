@@ -42,4 +42,4 @@ stages:
 - stage: KeyVault
   displayName: Load Secrets in KeyVault 
   jobs:
-  - template:  pipeline/SecretsLoadsInVault.yml@devopsTemplates
+  - template:  pipeline/secretsLoadsInVault.yml@devopsTemplates

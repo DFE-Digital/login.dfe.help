@@ -52,11 +52,11 @@ stages:
   condition: and(succeeded(), ${{ parameters.AppDeploy }})
   jobs:
     # Code scaning tools
-  - template:  pipeline/Checkov.yml@devopsTemplates
+  - template:  pipeline/checkov.yml@devopsTemplates
 
-  - template:  pipeline/ESlint.yml@devopsTemplates
+  - template:  pipeline/eslint.yml@devopsTemplates
 
-  - template:  pipeline/DependencyCheck.yml@devopsTemplates
+  - template:  pipeline/dependencyCheck.yml@devopsTemplates
     parameters:
       npmInstCmd: 'install --force --json --no-package-lock'
 
