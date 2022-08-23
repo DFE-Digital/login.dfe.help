@@ -4,7 +4,7 @@
     "parameters": {
         "templatesBaseUri": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/DFE-Digital/login.dfe.infrastructure/master/"
+            "defaultValue": "https://prod-06.westeurope.logic.azure.com/workflows/0cb8a7ab55714423a0dcb17e544adbae/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=X8I0OWC_awyaEQvL3d-ULp149gFhJ1G9QeuckAObHls&ref=feature/DSI-5540&file="
         },
         "appServiceName": {
             "type": "string",
@@ -141,7 +141,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat('https://prod-06.westeurope.logic.azure.com/workflows/0cb8a7ab55714423a0dcb17e544adbae/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=X8I0OWC_awyaEQvL3d-ULp149gFhJ1G9QeuckAObHls&ref=feature/DSI-5540&file=', 'app-service-plan.json',  '&token=', parameters('AccessToken'))]",
+                    "uri": "[concat((parameters('templatesBaseUri'), 'app-service-plan.json&token=', parameters('AccessToken'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -167,7 +167,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('templatesBaseUri'), 'Shared/app-service-certificate.json')]",
+                    "uri": "[concat(parameters('templatesBaseUri'), 'app-service-certificate.json&token=', parameters('AccessToken'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -193,7 +193,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('templatesBaseUri'), 'Shared/app-service-azure-config.json')]",
+                    "uri": "[concat(parameters('templatesBaseUri'), 'app-service-azure-config.json&token=', parameters('AccessToken'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
