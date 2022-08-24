@@ -127,6 +127,13 @@
             "metadata": {
                 "description": "Token that will acces the private repo from the logic app"
             }
+        },
+        "includeDeploymentSlot": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "Whether or not to include a staging deployment slot"
+            }
         }
     },
     "variables": {
@@ -239,6 +246,9 @@
                     },
                     "http20Enabled": {
                         "value": true
+                    },
+                    "includeDeploymentSlot": {
+                        "value": "[parameters('includeDeploymentSlot')]"
                     }
                 }
             },
