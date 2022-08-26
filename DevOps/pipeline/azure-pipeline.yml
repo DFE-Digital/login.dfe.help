@@ -64,7 +64,6 @@ stages:
     parameters:
       applicationName: ${{variables.applicationFullName}}
       custRegAuth: $(custRegAuth)
-      artifactName: "${{variables.applicationShortName}}-dev-$(Build.BuildId)-release"
       environmentName: dev
       environmentId: d01
       pm2ProcessFileName: process.json
