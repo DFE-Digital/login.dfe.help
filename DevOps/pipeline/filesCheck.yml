@@ -1,23 +1,12 @@
 jobs:
 - job: filesChanges
   steps:
-  # - task: PowerShell@2
-  #   displayName: File Changes checks
-  #   name: filesChangesChecks
-  #   inputs:
-  #     filePath: '$(Build.Repository.LocalPath)/DevOps/scripts/changesChecks.ps1'
-  #     arguments: '-applicationName ${{parameters.applicationName}} -environmentName ${{parameters.environmentName}} -directory $(System.DefaultWorkingDirectory)'
-  #     pwsh: true
-  #     workingDirectory: $(System.DefaultWorkingDirectory)
-
-  - task:  Bash@3
-    displayName: 'Scan with Checkov'
+  - task: PowerShell@2
+    displayName: File Changes checks
+    name: filesChangesChecks
     inputs:
-      targetType: 'inline'
-      script: |
-        echo "You can use macro syntax for variables: $(server)"
-        env | sort -f
-        echo "##vso[task.setvariable variable=server;]foo"
-  
-  - bash: |
-      echo "You can use macro syntax for variables: $(server)"
+      filePath: '$(Build.Repository.LocalPath)/DevOps/scripts/changesChecks.ps1'
+      arguments: '-applicationName ${{parameters.applicationName}} -environmentName ${{parameters.environmentName}} -directory $(System.DefaultWorkingDirectory)'
+      pwsh: true
+      workingDirectory: $(System.DefaultWorkingDirectory)
+      
