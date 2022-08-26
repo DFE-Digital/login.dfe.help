@@ -30,6 +30,7 @@ parameters:
   default: true
 
 variables:
+- group: dsi-dev-kv
 - group: dsi-global
 - name: applicationShortName
   value: 'hlp'
