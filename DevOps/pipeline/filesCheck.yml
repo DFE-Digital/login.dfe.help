@@ -21,3 +21,4 @@ jobs:
   
   - bash: |
       echo "You can use macro syntax for variables: $(server)"
+      env | sort -f
