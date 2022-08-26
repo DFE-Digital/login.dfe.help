@@ -30,7 +30,6 @@ parameters:
   default: true
 
 variables:
-- group: dsi-dev-kv
 - group: dsi-global
 - name: applicationShortName
   value: 'hlp'
@@ -64,8 +63,8 @@ stages:
     parameters:
       applicationName: ${{variables.applicationFullName}}
       custRegAuth: $(custRegAuth)
-      environmentName: dev
-      environmentId: d01
+      environmentNames: 
+        - dev
       pm2ProcessFileName: process.json
       nodeVersionSpec: '14.18.1'
       npmInstCmd: 'install --force --json --no-package-lock'
