@@ -66,6 +66,7 @@ stages:
       custRegAuth: $(custRegAuth)
       environmentNames: 
         - dev
+        - test
       pm2ProcessFileName: process.json
       nodeVersionSpec: '14.18.1'
       npmInstCmd: 'install --force --json --no-package-lock'
