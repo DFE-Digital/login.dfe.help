@@ -28,8 +28,8 @@ variables:
   value: 'hlp'
 - name: applicationFullName
   value: 'help'
-- group: platform-dev
-- group: platform-dev-secured
+- group: platform-test
+- group: platform-test-secured
 - group: platform-standalone-custom-hosts
 
 # - name: environmentName
