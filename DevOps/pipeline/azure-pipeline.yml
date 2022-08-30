@@ -86,7 +86,7 @@ stages:
         subscriptionId: $(devSubscriptionId)
         applicationShortName: ${{variables.applicationShortName}}
         applicationFullName: ${{variables.applicationFullName}}
-        releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+        releaseArtifactName: ${{variables.applicationFullName}}-dev-$(Build.BuildId)-release
         certificateName: non-prod-gateway
         AppDeploy: ${{parameters.AppDeploy}}
 
@@ -99,6 +99,6 @@ stages:
         subscriptionId: $(devSubscriptionId)
         applicationFullName: ${{variables.applicationFullName}}
         applicationShortName: ${{variables.applicationShortName}}
-        releaseArtifactName: ${{variables.applicationShortName}}-dev-$(Build.BuildId)-release
+        releaseArtifactName: ${{variables.applicationFullName}}-dev-$(Build.BuildId)-release
         InfrDeploy: ${{parameters.InfrDeploy}}
   
