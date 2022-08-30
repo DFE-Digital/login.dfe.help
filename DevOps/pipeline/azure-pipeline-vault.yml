@@ -29,6 +29,7 @@ variables:
 - name: applicationFullName
   value: 'help'
 - group: platform-test
+- group: platform-test-help
 - group: platform-test-secured
 - group: platform-standalone-custom-hosts
 
