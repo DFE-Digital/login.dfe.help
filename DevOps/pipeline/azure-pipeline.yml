@@ -55,64 +55,62 @@ variables:
 
 stages:
 
-# # Code Scans & Build the artifact for deployment
-# - stage: buildApp
-#   displayName: "Scan tools & Build"
-#   condition: and(succeeded(), ${{ parameters.AppDeploy }})
-#   jobs:
-#     # Code scaning tools
-#   - template:  pipeline/checkov.yml@devopsTemplates
+# Code Scans & Build the artifact for deployment
+- stage: buildApp
+  displayName: "Scan tools & Build"
+  condition: and(succeeded(), ${{ parameters.AppDeploy }})
+  jobs:
+    # Code scaning tools
+  - template:  pipeline/checkov.yml@devopsTemplates
 
-#   - template:  pipeline/eslint.yml@devopsTemplates
+  - template:  pipeline/eslint.yml@devopsTemplates
 
-#   - template:  pipeline/dependencyCheck.yml@devopsTemplates
-#     parameters:
-#       npmInstCmd: 'install --force --json --no-package-lock'
+  - template:  pipeline/dependencyCheck.yml@devopsTemplates
+    parameters:
+      npmInstCmd: 'install --force --json --no-package-lock'
 
-#   - template: pipeline/build.yml@devopsTemplates
-#     parameters:
-#       applicationName: ${{variables.applicationFullName}}
-#       custRegAuth: $(custRegAuth)
-#       environmentNames: 
-#         - dev
-#         - test
-#       pm2ProcessFileName: process.json
-#       nodeVersionSpec: '14.18.1'
-#       npmInstCmd: 'install --force --json --no-package-lock'
-#       npmPruneFixCmd: 'install --production --json --force --no-package-lock'
+  - template: pipeline/build.yml@devopsTemplates
+    parameters:
+      applicationName: ${{variables.applicationFullName}}
+      custRegAuth: $(custRegAuth)
+      environmentNames: 
+        - dev
+        - test
+      pm2ProcessFileName: process.json
+      nodeVersionSpec: '14.18.1'
+      npmInstCmd: 'install --force --json --no-package-lock'
+      npmPruneFixCmd: 'install --production --json --force --no-package-lock'
 
 
 - ${{ each parameter in parameters }}:
   - ${{ if not(in(parameter.Key, 'AppDeploy', 'InfrDeploy')) }}:
     - ${{ if parameter.value }}:
-      - script: echo ${{ parameter.Key }} # Outputs 'test_parameter'
-      - script: echo ${{ parameter.Value }} # Outputs 'test_value'
-      # - stage: Deployment_${{variables.environmentName}}
-      #   displayName: "Deployment [${{variables.environmentName}}]"
-      #   dependsOn: 
-      #   - buildApp
-      #   condition: in(dependencies.buildApp.result, 'Succeeded', 'Skipped')
-      #   jobs:
-      #   - ${{ if parameters.InfrDeploy }}:
-      #     - template: pipeline/infrastructure.yml@devopsTemplates
-      #       parameters:
-      #         serviceConnection: $(${{parameter.key}}ServiceConnection)
-      #         environmentName: ${{parameter.key}}
-      #         applicationShortName: ${{variables.applicationShortName}}
-      #         applicationFullName: ${{variables.applicationFullName}}
-      #         releaseArtifactName: ${{variables.applicationFullName}}-${{parameter.key}}-$(Build.BuildId)-release
-      #         certificateName: non-prod-gateway
-      #         AppDeploy: ${{parameters.AppDeploy}}
-      #         variableGroup: dsi-${{parameter.key}}-kv
+      - stage: Deployment_${{parameter.Key}}
+        displayName: "Deployment [${{parameter.Key}}]"
+        dependsOn: 
+        - buildApp
+        condition: in(dependencies.buildApp.result, 'Succeeded', 'Skipped')
+        jobs:
+        - ${{ if parameters.InfrDeploy }}:
+          - template: pipeline/infrastructure.yml@devopsTemplates
+            parameters:
+              serviceConnection: $(${{parameter.key}}ServiceConnection)
+              environmentName: ${{parameter.key}}
+              applicationShortName: ${{variables.applicationShortName}}
+              applicationFullName: ${{variables.applicationFullName}}
+              releaseArtifactName: ${{variables.applicationFullName}}-${{parameter.key}}-$(Build.BuildId)-release
+              certificateName: non-prod-gateway
+              AppDeploy: ${{parameters.AppDeploy}}
+              variableGroup: dsi-${{parameter.key}}-kv
 
-      #   - ${{ if parameters.AppDeploy }}:
-      #     - template: pipeline/deploy.yml@devopsTemplates
-      #       parameters: 
-      #         serviceConnection: $(${{parameter.key}}ServiceConnection)
-      #         environmentName: ${{parameter.key}}
-      #         applicationFullName: ${{variables.applicationFullName}}
-      #         applicationShortName: ${{variables.applicationShortName}}
-      #         releaseArtifactName: ${{variables.applicationFullName}}-${{parameter.key}}-$(Build.BuildId)-release
-      #         InfrDeploy: ${{parameters.InfrDeploy}}
-      #         variableGroup: dsi-${{parameter.key}}-kv
+        - ${{ if parameters.AppDeploy }}:
+          - template: pipeline/deploy.yml@devopsTemplates
+            parameters: 
+              serviceConnection: $(${{parameter.key}}ServiceConnection)
+              environmentName: ${{parameter.key}}
+              applicationFullName: ${{variables.applicationFullName}}
+              applicationShortName: ${{variables.applicationShortName}}
+              releaseArtifactName: ${{variables.applicationFullName}}-${{parameter.key}}-$(Build.BuildId)-release
+              InfrDeploy: ${{parameters.InfrDeploy}}
+              variableGroup: dsi-${{parameter.key}}-kv
     
