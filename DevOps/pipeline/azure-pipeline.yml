@@ -55,31 +55,31 @@ variables:
 
 stages:
 
-# Code Scans & Build the artifact for deployment
-- stage: buildApp
-  displayName: "Scan tools & Build"
-  condition: and(succeeded(), ${{ parameters.AppDeploy }})
-  jobs:
-    # Code scaning tools
-  - template:  pipeline/checkov.yml@devopsTemplates
+# # Code Scans & Build the artifact for deployment
+# - stage: buildApp
+#   displayName: "Scan tools & Build"
+#   condition: and(succeeded(), ${{ parameters.AppDeploy }})
+#   jobs:
+#     # Code scaning tools
+#   - template:  pipeline/checkov.yml@devopsTemplates
 
-  - template:  pipeline/eslint.yml@devopsTemplates
+#   - template:  pipeline/eslint.yml@devopsTemplates
 
-  - template:  pipeline/dependencyCheck.yml@devopsTemplates
-    parameters:
-      npmInstCmd: 'install --force --json --no-package-lock'
+#   - template:  pipeline/dependencyCheck.yml@devopsTemplates
+#     parameters:
+#       npmInstCmd: 'install --force --json --no-package-lock'
 
-  - template: pipeline/build.yml@devopsTemplates
-    parameters:
-      applicationName: ${{variables.applicationFullName}}
-      custRegAuth: $(custRegAuth)
-      environmentNames: 
-        - dev
-        - test
-      pm2ProcessFileName: process.json
-      nodeVersionSpec: '14.18.1'
-      npmInstCmd: 'install --force --json --no-package-lock'
-      npmPruneFixCmd: 'install --production --json --force --no-package-lock'
+#   - template: pipeline/build.yml@devopsTemplates
+#     parameters:
+#       applicationName: ${{variables.applicationFullName}}
+#       custRegAuth: $(custRegAuth)
+#       environmentNames: 
+#         - dev
+#         - test
+#       pm2ProcessFileName: process.json
+#       nodeVersionSpec: '14.18.1'
+#       npmInstCmd: 'install --force --json --no-package-lock'
+#       npmPruneFixCmd: 'install --production --json --force --no-package-lock'
 
 
 - ${{ each parameter in parameters }}:
