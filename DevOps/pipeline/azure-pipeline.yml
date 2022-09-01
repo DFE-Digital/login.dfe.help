@@ -45,7 +45,6 @@ parameters:
   default: false
 
 variables:
-- group: dsi-dev-kv
 - group: dsi-global
 - name: applicationShortName
   value: 'hlp'
@@ -91,20 +90,19 @@ stages:
         dependsOn: 
         - buildApp
         condition: in(dependencies.buildApp.result, 'Succeeded', 'Skipped')
-        # variables:
-        # - group: dsi-${{parameter.key}}-kv
+        variables:
+        - group: dsi-${{parameter.key}}-kv
         jobs:
         - ${{ if parameters.InfrDeploy }}:
           - template: pipeline/infrastructure.yml@devopsTemplates
             parameters:
-              serviceConnection: $(${{parameter.key}}ServiceConnection)
+              serviceConnection: $(devServiceConnection)
               environmentName: ${{parameter.key}}
               applicationShortName: ${{variables.applicationShortName}}
               applicationFullName: ${{variables.applicationFullName}}
               releaseArtifactName: ${{variables.applicationFullName}}-${{parameter.key}}-$(Build.BuildId)-release
               certificateName: non-prod-gateway
               AppDeploy: ${{parameters.AppDeploy}}
-              applicationResourceGroupName: '$(platformGlobalIdentifier)$(environmentId)-${{variables.applicationShortName}}'
 
         - ${{ if parameters.AppDeploy }}:
           - template: pipeline/deploy.yml@devopsTemplates
