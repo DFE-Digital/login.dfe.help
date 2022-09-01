@@ -84,7 +84,7 @@ stages:
 
 - ${{ each parameter in parameters }}:
   - ${{ if not(in(parameter.Key, 'AppDeploy', 'InfrDeploy')) }}:
-    - ${{ if parameter.value }}:
+    - ${{ if eq(parameter.value, 'true') }}:
       - stage: Deployment_${{parameter.Key}}
         displayName: "Deployment [${{parameter.Key}}]"
         dependsOn: 
