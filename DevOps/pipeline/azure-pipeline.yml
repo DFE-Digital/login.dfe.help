@@ -96,7 +96,12 @@ stages:
         - ${{ if parameters.InfrDeploy }}:
           - template: pipeline/infrastructure.yml@devopsTemplates
             parameters:
-              serviceConnection: $(devServiceConnection)
+              ${{ if eq(parameter.key, 'dev') }}:
+                serviceConnection: $(devServiceConnection)
+              ${{ elseif eq(parameter.key, 'pr') }}:
+                serviceConnection: $(prodServiceConnection)
+              ${{ else }}:
+                serviceConnection: $(testServiceConnection)
               environmentName: ${{parameter.key}}
               applicationShortName: ${{variables.applicationShortName}}
               applicationFullName: ${{variables.applicationFullName}}
@@ -107,7 +112,12 @@ stages:
         - ${{ if parameters.AppDeploy }}:
           - template: pipeline/deploy.yml@devopsTemplates
             parameters: 
-              serviceConnection: $(${{parameter.key}}ServiceConnection)
+              ${{ if eq(parameter.key, 'dev') }}:
+                serviceConnection: $(devServiceConnection)
+              ${{ elseif eq(parameter.key, 'pr') }}:
+                serviceConnection: $(prodServiceConnection)
+              ${{ else }}:
+                serviceConnection: $(testServiceConnection)
               environmentName: ${{parameter.key}}
               applicationFullName: ${{variables.applicationFullName}}
               applicationShortName: ${{variables.applicationShortName}}
