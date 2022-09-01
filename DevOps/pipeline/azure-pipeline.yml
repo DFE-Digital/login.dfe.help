@@ -85,32 +85,34 @@ stages:
 - ${{ each parameter in parameters }}:
   - ${{ if not(in(parameter.Key, 'AppDeploy', 'InfrDeploy')) }}:
     - ${{ if parameter.value }}:
-      - stage: Deployment_${{variables.environmentName}}
-        displayName: "Deployment [${{variables.environmentName}}]"
-        dependsOn: 
-        - buildApp
-        condition: in(dependencies.buildApp.result, 'Succeeded', 'Skipped')
-        jobs:
-        - ${{ if parameters.InfrDeploy }}:
-          - template: pipeline/infrastructure.yml@devopsTemplates
-            parameters:
-              serviceConnection: $(${{parameter.key}}ServiceConnection)
-              environmentName: ${{parameter.key}}
-              applicationShortName: ${{variables.applicationShortName}}
-              applicationFullName: ${{variables.applicationFullName}}
-              releaseArtifactName: ${{variables.applicationFullName}}-${{parameter.key}}-$(Build.BuildId)-release
-              certificateName: non-prod-gateway
-              AppDeploy: ${{parameters.AppDeploy}}
-              variableGroup: dsi-${{parameter.key}}-kv
+      - script: echo ${{ parameter.Key }} # Outputs 'test_parameter'
+      - script: echo ${{ parameter.Value }} # Outputs 'test_value'
+      # - stage: Deployment_${{variables.environmentName}}
+      #   displayName: "Deployment [${{variables.environmentName}}]"
+      #   dependsOn: 
+      #   - buildApp
+      #   condition: in(dependencies.buildApp.result, 'Succeeded', 'Skipped')
+      #   jobs:
+      #   - ${{ if parameters.InfrDeploy }}:
+      #     - template: pipeline/infrastructure.yml@devopsTemplates
+      #       parameters:
+      #         serviceConnection: $(${{parameter.key}}ServiceConnection)
+      #         environmentName: ${{parameter.key}}
+      #         applicationShortName: ${{variables.applicationShortName}}
+      #         applicationFullName: ${{variables.applicationFullName}}
+      #         releaseArtifactName: ${{variables.applicationFullName}}-${{parameter.key}}-$(Build.BuildId)-release
+      #         certificateName: non-prod-gateway
+      #         AppDeploy: ${{parameters.AppDeploy}}
+      #         variableGroup: dsi-${{parameter.key}}-kv
 
-        - ${{ if parameters.AppDeploy }}:
-          - template: pipeline/deploy.yml@devopsTemplates
-            parameters: 
-              serviceConnection: $(${{parameter.key}}ServiceConnection)
-              environmentName: ${{parameter.key}}
-              applicationFullName: ${{variables.applicationFullName}}
-              applicationShortName: ${{variables.applicationShortName}}
-              releaseArtifactName: ${{variables.applicationFullName}}-${{parameter.key}}-$(Build.BuildId)-release
-              InfrDeploy: ${{parameters.InfrDeploy}}
-              variableGroup: dsi-${{parameter.key}}-kv
+      #   - ${{ if parameters.AppDeploy }}:
+      #     - template: pipeline/deploy.yml@devopsTemplates
+      #       parameters: 
+      #         serviceConnection: $(${{parameter.key}}ServiceConnection)
+      #         environmentName: ${{parameter.key}}
+      #         applicationFullName: ${{variables.applicationFullName}}
+      #         applicationShortName: ${{variables.applicationShortName}}
+      #         releaseArtifactName: ${{variables.applicationFullName}}-${{parameter.key}}-$(Build.BuildId)-release
+      #         InfrDeploy: ${{parameters.InfrDeploy}}
+      #         variableGroup: dsi-${{parameter.key}}-kv
     
