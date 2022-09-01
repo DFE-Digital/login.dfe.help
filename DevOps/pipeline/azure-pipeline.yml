@@ -28,21 +28,21 @@ parameters:
 - name: InfrDeploy
   type: boolean
   default: true
-- name: DEV
+- name: dev
   type: boolean
   default: true
-- name: TEST
+- name: test
   type: boolean
-  default: true
-- name: INT
+  default: false
+- name: int
   type: boolean
-  default: true
-- name: PP
+  default: false
+- name: pp
   type: boolean
-  default: true
-  - name: PR
+  default: false
+- name: pr
   type: boolean
-  default: true
+  default: false
 
 variables:
 - group: dsi-global
@@ -81,34 +81,37 @@ stages:
       npmInstCmd: 'install --force --json --no-package-lock'
       npmPruneFixCmd: 'install --production --json --force --no-package-lock'
 
-- stage: Deployment_${{variables.environmentName}}
-  displayName: "Deployment [${{variables.environmentName}}]"
-  dependsOn: 
-  - buildApp
-  condition: in(dependencies.buildApp.result, 'Succeeded', 'Skipped')
-  jobs:
-  - ${{ if parameters.InfrDeploy }}:
-    - template: pipeline/infrastructure.yml@devopsTemplates
-      parameters:
-        serviceConnection: $(devServiceConnection)
-        environmentName: dev
-        environmentId: d01
-        subscriptionId: $(devSubscriptionId)
-        applicationShortName: ${{variables.applicationShortName}}
-        applicationFullName: ${{variables.applicationFullName}}
-        releaseArtifactName: ${{variables.applicationFullName}}-dev-$(Build.BuildId)-release
-        certificateName: non-prod-gateway
-        AppDeploy: ${{parameters.AppDeploy}}
 
-  - ${{ if parameters.AppDeploy }}:
-    - template: pipeline/deploy.yml@devopsTemplates
-      parameters: 
-        serviceConnection: $(devServiceConnection)
-        environmentName: dev
-        environmentId: d01
-        subscriptionId: $(devSubscriptionId)
-        applicationFullName: ${{variables.applicationFullName}}
-        applicationShortName: ${{variables.applicationShortName}}
-        releaseArtifactName: ${{variables.applicationFullName}}-dev-$(Build.BuildId)-release
-        InfrDeploy: ${{parameters.InfrDeploy}}
-  
+- ${{ each parameter in parameters }}:
+  - ${{ if not(in(parameter.Key, 'AppDeploy', 'InfrDeploy')) }}:
+    - stage: Deployment_${{variables.environmentName}}
+      displayName: "Deployment [${{variables.environmentName}}]"
+      dependsOn: 
+      - buildApp
+      condition: in(dependencies.buildApp.result, 'Succeeded', 'Skipped')
+      jobs:
+      - ${{ if parameters.InfrDeploy }}:
+        - template: pipeline/infrastructure.yml@devopsTemplates
+          parameters:
+            serviceConnection: $(${{parameter}}ServiceConnection)
+            environmentName: dev
+            environmentId: d01
+            subscriptionId: $(devSubscriptionId)
+            applicationShortName: ${{variables.applicationShortName}}
+            applicationFullName: ${{variables.applicationFullName}}
+            releaseArtifactName: ${{variables.applicationFullName}}-${{parameter}}-$(Build.BuildId)-release
+            certificateName: non-prod-gateway
+            AppDeploy: ${{parameters.AppDeploy}}
+
+      - ${{ if parameters.AppDeploy }}:
+        - template: pipeline/deploy.yml@devopsTemplates
+          parameters: 
+            serviceConnection: $(${{parameter}}ServiceConnection)
+            environmentName: dev
+            environmentId: d01
+            subscriptionId: $(devSubscriptionId)
+            applicationFullName: ${{variables.applicationFullName}}
+            applicationShortName: ${{variables.applicationShortName}}
+            releaseArtifactName: ${{variables.applicationFullName}}-${{parameter}}-$(Build.BuildId)-release
+            InfrDeploy: ${{parameters.InfrDeploy}}
+    
