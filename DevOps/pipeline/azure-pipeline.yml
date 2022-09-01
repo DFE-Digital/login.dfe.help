@@ -101,8 +101,7 @@ stages:
               releaseArtifactName: ${{variables.applicationFullName}}-${{parameter.key}}-$(Build.BuildId)-release
               certificateName: non-prod-gateway
               AppDeploy: ${{parameters.AppDeploy}}
-              variableGroup:
-                - dsi-${{parameter.key}}-kv
+              variableGroup: dsi-${{parameter.key}}-kv
 
         - ${{ if parameters.AppDeploy }}:
           - template: pipeline/deploy.yml@devopsTemplates
@@ -113,6 +112,5 @@ stages:
               applicationShortName: ${{variables.applicationShortName}}
               releaseArtifactName: ${{variables.applicationFullName}}-${{parameter.key}}-$(Build.BuildId)-release
               InfrDeploy: ${{parameters.InfrDeploy}}
-              variableGroup:
-                - dsi-${{parameter.key}}-kv
+              variableGroup: dsi-${{parameter.key}}-kv
     
