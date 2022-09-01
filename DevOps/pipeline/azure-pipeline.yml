@@ -28,21 +28,30 @@ parameters:
 - name: InfrDeploy
   type: boolean
   default: true
+- name: DEV
+  type: boolean
+  default: true
+- name: TEST
+  type: boolean
+  default: true
+- name: INT
+  type: boolean
+  default: true
+- name: PP
+  type: boolean
+  default: true
+  - name: PR
+  type: boolean
+  default: true
 
 variables:
-- group: dsi-dev-kv
 - group: dsi-global
 - name: applicationShortName
   value: 'hlp'
 - name: applicationFullName
   value: 'help'
 - name: numberOfWorkers
-  value: 1
-- name: environmentName
-  value: dev
-# - name: environmentName
-#   - ${{ if eq(parameters.gitVersioning, true) }}:
-#     value: 
+  value: 1 
 
 stages:
 
