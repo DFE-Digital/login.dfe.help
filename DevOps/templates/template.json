@@ -180,7 +180,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('templatesBaseUri'), 'templates/app-service-certificate.json&token=', parameters('AccessToken'))]",
+                    "uri": "[concat(parameters('templatesBaseUri'),'sig=',parameters('sas'),'&repo=DFE-Digital/login.dfe.devops&ref=feature/DSI-5540&file=templates/app-service-certificate.json&token=', parameters('AccessToken'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -206,7 +206,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('templatesBaseUri'), 'templates/app-service-azure-config.json&token=', parameters('AccessToken'))]",
+                    "uri": "[concat(parameters('templatesBaseUri'),'sig=',parameters('sas'),'&repo=DFE-Digital/login.dfe.devops&ref=feature/DSI-5540&file=templates/app-service-azure-config.json&token=', parameters('AccessToken'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
