@@ -154,7 +154,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('templatesBaseUri'),'sig=',X8I0OWC_awyaEQvL3d-ULp149gFhJ1G9QeuckAObHls,'&repo=DFE-Digital/login.dfe.devops&ref=feature/DSI-5540&file=templates/app-service-plan.json&token=', parameters('AccessToken'))]",
+                    "uri": "[concat(parameters('templatesBaseUri'),'sig=',parameters('sas'),'&repo=DFE-Digital/login.dfe.devops&ref=feature/DSI-5540&file=templates/app-service-plan.json&token=', parameters('AccessToken'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
