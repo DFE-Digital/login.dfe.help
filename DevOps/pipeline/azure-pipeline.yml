@@ -77,15 +77,15 @@ stages:
         applicationName: ${{variables.applicationFullName}}
         custRegAuth: $(custRegAuth)
         environmentNames:
-          ${{ if eq(parameters.dev, 'true') }}:
+          - ${{ if eq(parameters.dev, 'true') }}:
             - dev
-          ${{ if eq(parameters.test, 'true') }}:
+          - ${{ if eq(parameters.test, 'true') }}:
             - test
-          ${{ if eq(parameters.int, 'true') }}:
+          - ${{ if eq(parameters.int, 'true') }}:
             - int
-          ${{ if eq(parameters.pp, 'true') }}:
+          - ${{ if eq(parameters.pp, 'true') }}:
             - pp
-          ${{ if eq(parameters.pr, 'true') }}:
+          - ${{ if eq(parameters.pr, 'true') }}:
             - pr
         pm2ProcessFileName: process.json
         nodeVersionSpec: '14.18.1'
