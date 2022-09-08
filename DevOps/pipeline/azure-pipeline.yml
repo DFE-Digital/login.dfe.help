@@ -76,11 +76,12 @@ stages:
       parameters:
         applicationName: ${{variables.applicationFullName}}
         custRegAuth: $(custRegAuth)
-        ${{ each parameter in parameters }}:
-          ${{ if not(in(parameter.Key, 'AppDeploy', 'InfrDeploy')) }}:
-            ${{ if eq(parameter.value, 'true') }}:
-              environmentNames: 
-                - ${{parameter.Key}}
+        environmentNames: 
+          - dev
+          - test
+          - int
+          - pp
+          - pr
         pm2ProcessFileName: process.json
         nodeVersionSpec: '14.18.1'
         npmInstCmd: 'install --force --json --no-package-lock'
