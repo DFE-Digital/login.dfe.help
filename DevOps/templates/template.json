@@ -6,6 +6,13 @@
             "type": "string",
             "defaultValue": "https://prod-06.westeurope.logic.azure.com/workflows/0cb8a7ab55714423a0dcb17e544adbae/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&"
         },
+        "branch": {
+            "type": "string",
+            "defaultValue": "feature/DSI-5540",
+            "metadata": {
+                "description": "Branch that use for the ARM templateLinks"
+            }
+        },
         "appServiceName": {
             "type": "string",
             "metadata": {
@@ -154,7 +161,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('templatesBaseUri'),'sig=',parameters('sas'),'&repo=DFE-Digital/login.dfe.devops&ref=feature/DSI-5540&file=templates/app-service-plan.json&token=', parameters('AccessToken'))]",
+                    "uri": "[concat(parameters('templatesBaseUri'),'sig=',parameters('sas'),'&repo=DFE-Digital/login.dfe.devops&ref=',parameters('branch'),'&file=templates/app-service-plan.json&token=', parameters('AccessToken'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -180,7 +187,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('templatesBaseUri'),'sig=',parameters('sas'),'&repo=DFE-Digital/login.dfe.devops&ref=feature/DSI-5540&file=templates/app-service-certificate.json&token=', parameters('AccessToken'))]",
+                    "uri": "[concat(parameters('templatesBaseUri'),'sig=',parameters('sas'),'&repo=DFE-Digital/login.dfe.devops&ref=',parameters('branch'),'&file=templates/app-service-certificate.json&token=', parameters('AccessToken'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -206,7 +213,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('templatesBaseUri'),'sig=',parameters('sas'),'&repo=DFE-Digital/login.dfe.devops&ref=feature/DSI-5540&file=templates/app-service-azure-config.json&token=', parameters('AccessToken'))]",
+                    "uri": "[concat(parameters('templatesBaseUri'),'sig=',parameters('sas'),'&repo=DFE-Digital/login.dfe.devops&ref=',parameters('branch'),'&file=templates/app-service-azure-config.json&token=', parameters('AccessToken'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
