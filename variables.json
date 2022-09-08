@@ -42,7 +42,7 @@
     "regServer":"{{server}}",
     "regUsername":"{{username}}",
     "custRegAuth":"{{custRegAuth}}",
-    "devServiceConnection":"{{devServiceConnection}}",
+    "testServiceConnection":"{{devServiceConnection}}",
     "devSubscriptionId":"{{devSubscriptionId}}",
     "platformGlobalCdnAssetsVersion":"{{platformGlobalCdnAssetsVersion}}",
     "platformGlobalMinTlsVersion":"{{platformGlobalMinTlsVersion}}",
