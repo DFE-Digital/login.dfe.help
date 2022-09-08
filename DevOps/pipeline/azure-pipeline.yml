@@ -77,16 +77,16 @@ stages:
         applicationName: ${{variables.applicationFullName}}
         custRegAuth: $(custRegAuth)
         environmentNames: 
-          ${{ if parameters.dev }}:
-            - dev
-          ${{ if parameters.test }}:
-            - test
-          ${{ if parameters.int }}:
-            - int
-          ${{ if parameters.pp }}:
-            - pp
-          ${{ if parameters.pr }}:
-            - pr
+        ${{ if parameters.dev }}:
+          - dev
+        ${{ if parameters.test }}:
+          - test
+        ${{ if parameters.int }}:
+          - int
+        ${{ if parameters.pp }}:
+          - pp
+        ${{ if parameters.pr }}:
+          - pr
         pm2ProcessFileName: process.json
         nodeVersionSpec: '14.18.1'
         npmInstCmd: 'install --force --json --no-package-lock'
