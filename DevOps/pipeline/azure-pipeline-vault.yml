@@ -28,9 +28,9 @@ variables:
   value: 'hlp'
 - name: applicationFullName
   value: 'help'
-- group: platform-test
-- group: platform-test-help
-- group: platform-test-secured
+- group: platform-int
+- group: platform-int-help
+- group: platform-int-secured
 - group: platform-standalone-custom-hosts
 
 # - name: environmentName
