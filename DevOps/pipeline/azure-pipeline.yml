@@ -64,7 +64,6 @@ stages:
     - template:  pipeline/checkov.yml@devopsTemplates
 
   - ${{ if eq(parameters.AppDeploy, 'true') }}:
-    - template:  pipeline/checkov.yml@devopsTemplates
 
     - template:  pipeline/eslint.yml@devopsTemplates
 
