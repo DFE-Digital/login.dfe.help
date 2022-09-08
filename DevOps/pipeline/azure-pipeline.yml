@@ -56,38 +56,41 @@ variables:
 stages:
 
 # Code Scans & Build the artifact for deployment
-- stage: buildApp
+- stage: scanBuildApp
   displayName: "Scan tools & Build"
-  condition: and(succeeded(), ${{ parameters.AppDeploy }})
   jobs:
     # Code scaning tools
-  - template:  pipeline/checkov.yml@devopsTemplates
+  - ${{ if eq(parameters.InfrDeploy, 'true') }}:
+    - template:  pipeline/checkov.yml@devopsTemplates
 
-  - template:  pipeline/eslint.yml@devopsTemplates
+  - ${{ if eq(parameters.AppDeploy, 'true') }}:
+    - template:  pipeline/checkov.yml@devopsTemplates
 
-  - template:  pipeline/dependencyCheck.yml@devopsTemplates
-    parameters:
-      npmInstCmd: 'install --force --json --no-package-lock'
+    - template:  pipeline/eslint.yml@devopsTemplates
 
-  - template: pipeline/build.yml@devopsTemplates
-    parameters:
-      applicationName: ${{variables.applicationFullName}}
-      custRegAuth: $(custRegAuth)
-      environmentNames: 
-        ${{ if parameters.dev }}:
-          - dev
-        ${{ if parameters.test }}:
-          - test
-        ${{ if parameters.int }}:
-          - int
-        ${{ if parameters.pp }}:
-          - pp
-        ${{ if parameters.pr }}:
-          - pr
-      pm2ProcessFileName: process.json
-      nodeVersionSpec: '14.18.1'
-      npmInstCmd: 'install --force --json --no-package-lock'
-      npmPruneFixCmd: 'install --production --json --force --no-package-lock'
+    - template:  pipeline/dependencyCheck.yml@devopsTemplates
+      parameters:
+        npmInstCmd: 'install --force --json --no-package-lock'
+
+    - template: pipeline/build.yml@devopsTemplates
+      parameters:
+        applicationName: ${{variables.applicationFullName}}
+        custRegAuth: $(custRegAuth)
+        environmentNames: 
+          ${{ if parameters.dev }}:
+            - dev
+          ${{ if parameters.test }}:
+            - test
+          ${{ if parameters.int }}:
+            - int
+          ${{ if parameters.pp }}:
+            - pp
+          ${{ if parameters.pr }}:
+            - pr
+        pm2ProcessFileName: process.json
+        nodeVersionSpec: '14.18.1'
+        npmInstCmd: 'install --force --json --no-package-lock'
+        npmPruneFixCmd: 'install --production --json --force --no-package-lock'
 
 
 - ${{ each parameter in parameters }}:
@@ -96,8 +99,8 @@ stages:
       - stage: Deployment_${{parameter.Key}}
         displayName: "Deployment [${{parameter.Key}}]"
         dependsOn: 
-        - buildApp
-        condition: in(dependencies.buildApp.result, 'Succeeded', 'Skipped')
+        - scanBuildApp
+        condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
         variables:
         - group: dsi-${{parameter.key}}-kv
         jobs:
