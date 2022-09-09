@@ -24,24 +24,31 @@ trigger:
 parameters:
 - name: AppDeploy
   type: boolean
+  displayName: 'App Deployment only'
   default: true
 - name: InfrDeploy
   type: boolean
+  displayName: 'Infrastrucure Deployment only'
   default: true
 - name: dev
   type: boolean
+  displayName: 'Dev Deployment'
   default: true
 - name: test
   type: boolean
+  displayName: 'Test Deployment'
   default: false
 - name: int
   type: boolean
+  displayName: 'INT Deployment'
   default: false
 - name: pp
   type: boolean
+  displayName: 'Pre-Prod Deployment'
   default: false
 - name: pr
   type: boolean
+  displayName: 'Prod Deployment'
   default: false
 
 variables:
