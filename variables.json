@@ -19,7 +19,6 @@
     "cdnHostName":"{{cdnHostName}}",
     "cdnAssetsVersion":"{{cdnAssetsVersion}}",
     "standaloneOidcHostName":"{{standaloneOidcHostName}}",
-    "helpClientSecret":"{{helpClientSecret}}",
     "standaloneOrganisationsHostName":"{{standaloneOrganisationsHostName}}",
     "platformGlobalIdentifier":"{{platformGlobalIdentifier}}",
     "platformGlobalName":"{{platformGlobalName}}",
