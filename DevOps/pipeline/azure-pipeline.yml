@@ -123,7 +123,10 @@ stages:
               applicationShortName: ${{variables.applicationShortName}}
               applicationFullName: ${{variables.applicationFullName}}
               releaseArtifactName: ${{variables.applicationFullName}}-${{parameter.key}}-$(Build.BuildId)-release
-              certificateName: non-prod-gateway
+              ${{ if eq(parameter.key, 'pr') }}:
+                certificateName: signin-generic
+              ${{ else }}:
+                certificateName: non-prod-gateway
               AppDeploy: ${{parameters.AppDeploy}}
 
         - ${{ if parameters.AppDeploy }}:
