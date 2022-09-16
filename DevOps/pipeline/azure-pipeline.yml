@@ -66,7 +66,7 @@ stages:
   - job: TestVars
     steps:
     - ${{ each var in variables }}:
-      - ${{ if le(length(var), 4) }}:
+      - ${{ if le(length(var.key), 4) }}:
         - script: |
             echo ${{ var.key }}
             echo ${{ var.value }}
