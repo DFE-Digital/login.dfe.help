@@ -108,85 +108,85 @@ stages:
               echo ${{ var.value }}
             displayName: ${{ var.key }}
 
-# # Code Scans & Build the artifact for deployment
-# - stage: scanBuildApp
-#   displayName: "Scan tools & Build"
-#   jobs:
-#     # Code scaning tools
-#   - ${{ if eq(parameters.InfrDeploy, 'true') }}:
-#     - template:  pipeline/checkov.yml@devopsTemplates
+# Code Scans & Build the artifact for deployment
+- stage: scanBuildApp
+  displayName: "Scan tools & Build"
+  jobs:
+    # Code scaning tools
+  - ${{ if eq(parameters.InfrDeploy, 'true') }}:
+    - template:  pipeline/checkov.yml@devopsTemplates
 
-#   - ${{ if eq(parameters.AppDeploy, 'true') }}:
+  - ${{ if eq(parameters.AppDeploy, 'true') }}:
 
-#     - template:  pipeline/eslint.yml@devopsTemplates
+    - template:  pipeline/eslint.yml@devopsTemplates
 
-#     - template:  pipeline/dependencyCheck.yml@devopsTemplates
-#       parameters:
-#         npmInstCmd: 'install --force --json --no-package-lock'
+    - template:  pipeline/dependencyCheck.yml@devopsTemplates
+      parameters:
+        npmInstCmd: 'install --force --json --no-package-lock'
 
-#     - template: pipeline/build.yml@devopsTemplates
-#       parameters:
-#         applicationName: ${{variables.applicationFullName}}
-#         custRegAuth: $(custRegAuth)
-#         environmentNames:
-#           - ${{ if eq(parameters.dev, 'true') }}:
-#             - dev
-#           - ${{ if eq(parameters.test, 'true') }}:
-#             - test
-#           - ${{ if eq(parameters.int, 'true') }}:
-#             - int
-#           - ${{ if eq(parameters.pp, 'true') }}:
-#             - pp
-#           - ${{ if eq(parameters.pr, 'true') }}:
-#             - pr
-#         pm2ProcessFileName: process.json
-#         nodeVersionSpec: '14.18.1'
-#         npmInstCmd: 'install --force --json --no-package-lock'
-#         npmPruneFixCmd: 'install --production --json --force --no-package-lock'
+    - template: pipeline/build.yml@devopsTemplates
+      parameters:
+        applicationName: ${{variables.applicationFullName}}
+        custRegAuth: $(custRegAuth)
+        environmentNames:
+          - ${{ if eq(variables.dev, 'true') }}:
+            - dev
+          - ${{ if eq(variables.test, 'true') }}:
+            - test
+          - ${{ if eq(variables.int, 'true') }}:
+            - int
+          - ${{ if eq(variables.pp, 'true') }}:
+            - pp
+          - ${{ if eq(variables.pr, 'true') }}:
+            - pr
+        pm2ProcessFileName: process.json
+        nodeVersionSpec: '14.18.1'
+        npmInstCmd: 'install --force --json --no-package-lock'
+        npmPruneFixCmd: 'install --production --json --force --no-package-lock'
 
 
-# - ${{ each parameter in parameters }}:
-#   - ${{ if not(in(parameter.Key, 'AppDeploy', 'InfrDeploy')) }}:
-#     - ${{ if eq(parameter.value, 'true') }}:
-#       - stage: Deployment_${{parameter.Key}}
-#         displayName: "Deployment [${{parameter.Key}}]"
-#         dependsOn: 
-#         - scanBuildApp
-#         condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
-#         variables:
-#         - group: dsi-${{parameter.key}}-kv
-#         jobs:
-#         - ${{ if parameters.InfrDeploy }}:
-#           - template: pipeline/infrastructure.yml@devopsTemplates
-#             parameters:
-#               ${{ if eq(parameter.key, 'dev') }}:
-#                 serviceConnection: $(devServiceConnection)
-#               ${{ elseif eq(parameter.key, 'pr') }}:
-#                 serviceConnection: $(prodServiceConnection)
-#               ${{ else }}:
-#                 serviceConnection: $(testServiceConnection)
-#               environmentName: ${{parameter.key}}
-#               applicationShortName: ${{variables.applicationShortName}}
-#               applicationFullName: ${{variables.applicationFullName}}
-#               releaseArtifactName: ${{variables.applicationFullName}}-${{parameter.key}}-$(Build.BuildId)-release
-#               ${{ if eq(parameter.key, 'pr') }}:
-#                 certificateName: signin-generic
-#               ${{ else }}:
-#                 certificateName: non-prod-gateway
-#               AppDeploy: ${{parameters.AppDeploy}}
+- ${{ each var in variables }}:
+  - ${{ if le(length(var.key), 4) }}:
+    - ${{ if eq(var.value, 'true') }}:
+      - stage: Deployment_${{var.Key}}
+        displayName: "Deployment [${{var.Key}}]"
+        dependsOn: 
+        - scanBuildApp
+        condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
+        variables:
+        - group: dsi-${{var.key}}-kv
+        jobs:
+        - ${{ if parameters.InfrDeploy }}:
+          - template: pipeline/infrastructure.yml@devopsTemplates
+            parameters:
+              ${{ if eq(var.key, 'dev') }}:
+                serviceConnection: $(devServiceConnection)
+              ${{ elseif eq(var.key, 'pr') }}:
+                serviceConnection: $(prodServiceConnection)
+              ${{ else }}:
+                serviceConnection: $(testServiceConnection)
+              environmentName: ${{var.key}}
+              applicationShortName: ${{variables.applicationShortName}}
+              applicationFullName: ${{variables.applicationFullName}}
+              releaseArtifactName: ${{variables.applicationFullName}}-${{var.key}}-$(Build.BuildId)-release
+              ${{ if eq(var.key, 'pr') }}:
+                certificateName: signin-generic
+              ${{ else }}:
+                certificateName: non-prod-gateway
+              AppDeploy: ${{parameters.AppDeploy}}
 
-#         - ${{ if parameters.AppDeploy }}:
-#           - template: pipeline/deploy.yml@devopsTemplates
-#             parameters: 
-#               ${{ if eq(parameter.key, 'dev') }}:
-#                 serviceConnection: $(devServiceConnection)
-#               ${{ elseif eq(parameter.key, 'pr') }}:
-#                 serviceConnection: $(prodServiceConnection)
-#               ${{ else }}:
-#                 serviceConnection: $(testServiceConnection)
-#               environmentName: ${{parameter.key}}
-#               applicationFullName: ${{variables.applicationFullName}}
-#               applicationShortName: ${{variables.applicationShortName}}
-#               releaseArtifactName: ${{variables.applicationFullName}}-${{parameter.key}}-$(Build.BuildId)-release
-#               InfrDeploy: ${{parameters.InfrDeploy}}
+        - ${{ if parameters.AppDeploy }}:
+          - template: pipeline/deploy.yml@devopsTemplates
+            parameters: 
+              ${{ if eq(var.key, 'dev') }}:
+                serviceConnection: $(devServiceConnection)
+              ${{ elseif eq(var.key, 'pr') }}:
+                serviceConnection: $(prodServiceConnection)
+              ${{ else }}:
+                serviceConnection: $(testServiceConnection)
+              environmentName: ${{var.key}}
+              applicationFullName: ${{variables.applicationFullName}}
+              applicationShortName: ${{variables.applicationShortName}}
+              releaseArtifactName: ${{variables.applicationFullName}}-${{var.key}}-$(Build.BuildId)-release
+              InfrDeploy: ${{parameters.InfrDeploy}}
     
