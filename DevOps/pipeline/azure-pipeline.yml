@@ -97,6 +97,8 @@ stages:
   jobs:
   - job: TestVars
     steps:
+    - script: |
+        echo ${{ variables.brch }}
     - ${{ each var in variables }}:
       - ${{ if le(length(var.key), 4) }}:
         - ${{ if eq(var.value, 'true') }}:
