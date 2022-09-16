@@ -32,9 +32,9 @@ parameters:
 - name: dev
   type: boolean
   displayName: 'Dev Deployment'
-  - ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
+- ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
       default: false
-  - ${{ else }}:
+- ${{ else }}:
       default: true
 - name: test
   type: boolean
