@@ -64,7 +64,7 @@ variables:
 - name: numberOfWorkers
   value: 1
 - name: dev
-  ${{ if or(eq(parameters.dev, 'true'), in(Build.SourceBranch,'dsi')) }}:
+  ${{ if or(eq(parameters.dev, 'true'), in(variables['Build.SourceBranch'],'dsi')) }}:
     value: true
   ${{ else }}:
     value: false
