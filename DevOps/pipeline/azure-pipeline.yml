@@ -64,27 +64,27 @@ variables:
 - name: numberOfWorkers
   value: 1
 - name: dev
-  ${{ if or(eq(parameters.dev, 'true'), in(variables['Build.SourceBranch'],'DSI')) }}:
+  ${{ if or(eq(parameters.dev, 'true'), in(Build.SourceBranch,'DSI')) }}:
     value: true
   ${{ else }}:
     value: false
 - name: test
-  ${{ if or(eq(parameters.test, 'true'), in(variables['Build.SourceBranch'],'DSI')) }}:
+  ${{ if or(eq(parameters.test, 'true'), in(Build.SourceBranch,'DSI')) }}:
     value: true
   ${{ else }}:
     value: false
 - name: int
-  ${{ if or(eq(parameters.int, 'true'), in(variables['Build.SourceBranch'],'release')) }}:
+  ${{ if or(eq(parameters.int, 'true'), in(Build.SourceBranch,'release')) }}:
     value: true
   ${{ else }}:
     value: false
 - name: pp
-  ${{ if or(eq(parameters.pp, 'true'), in(variables['Build.SourceBranch'],'release')) }}:
+  ${{ if or(eq(parameters.pp, 'true'), in(Build.SourceBranch,'release')) }}:
     value: true
   ${{ else }}:
     value: false
 - name: pr
-  ${{ if or(eq(parameters.pr, 'true'), in(variables['Build.SourceBranch'],'release')) }}:
+  ${{ if or(eq(parameters.pr, 'true'), in(Build.SourceBranch,'release')) }}:
     value: true
   ${{ else }}:
     value: false
