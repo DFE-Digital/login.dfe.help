@@ -66,10 +66,11 @@ stages:
   - job: TestVars
     steps:
     - ${{ each var in variables }}:
-      - script: |
-          echo ${{ var.key }}
-          echo ${{ var.value }}
-        displayName: ${{ var.key }}
+      - ${{ if le(length(var), 4) }}:
+        - script: |
+            echo ${{ var.key }}
+            echo ${{ var.value }}
+          displayName: ${{ var.key }}
 
 # # Code Scans & Build the artifact for deployment
 # - stage: scanBuildApp
