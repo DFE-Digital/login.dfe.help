@@ -68,6 +68,8 @@ variables:
   value: ${{parameters.pp}}
 - name: pr
   value: ${{parameters.pr}}
+- name: brch
+  value: $(Build.SourceBranchName)
 
 stages:
 
