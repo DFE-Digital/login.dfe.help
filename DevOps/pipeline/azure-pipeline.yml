@@ -57,7 +57,17 @@ variables:
 - name: applicationFullName
   value: 'help'
 - name: numberOfWorkers
-  value: 1 
+  value: 1
+- name: dev
+  value: ${{parameters.dev}}
+- name: test
+  value: ${{parameters.test}}
+- name: int
+  value: ${{parameters.int}}
+- name: pp
+  value: ${{parameters.pp}}
+- name: pr
+  value: ${{parameters.pr}}
 
 stages:
 
@@ -67,10 +77,12 @@ stages:
     steps:
     - ${{ each var in variables }}:
       - ${{ if le(length(var.key), 4) }}:
-        - script: |
-            echo ${{ var.key }}
-            echo ${{ var.value }}
-          displayName: ${{ var.key }}
+        - ${{ if eq(var.value, 'true') }}:
+
+          - script: |
+              echo ${{ var.key }}
+              echo ${{ var.value }}
+            displayName: ${{ var.key }}
 
 # # Code Scans & Build the artifact for deployment
 # - stage: scanBuildApp
