@@ -16,9 +16,14 @@ resources:
 trigger:
   branches:
     include:
-    - main
     - release/*
-    #- feature/*
+    - feature/*
+
+pr:
+  branches:
+    include:
+    - main
+    - develop
 
 parameters:
 - name: AppDeploy
@@ -32,7 +37,7 @@ parameters:
 - name: dev
   type: boolean
   displayName: 'Dev Deployment'
-  default: true
+  default: false
 - name: test
   type: boolean
   displayName: 'Test Deployment'
@@ -59,15 +64,30 @@ variables:
 - name: numberOfWorkers
   value: 1
 - name: dev
-  value: ${{parameters.dev}}
+  ${{ if or(eq(parameters.dev, 'true'), containsValue(variables['Build.SourceBranch'],'feature/') }}:
+    value: true
+  ${{ else }}:
+    value: false
 - name: test
-  value: ${{parameters.test}}
+  ${{ if or(eq(parameters.test, 'true'), containsValue(variables['Build.SourceBranch'],'feature/') }}:
+    value: true
+  ${{ else }}:
+    value: false
 - name: int
-  value: ${{parameters.int}}
+  ${{ if or(eq(parameters.int, 'true'), containsValue(variables['Build.SourceBranch'],'release/') }}:
+    value: true
+  ${{ else }}:
+    value: false
 - name: pp
-  value: ${{parameters.pp}}
+  ${{ if or(eq(parameters.pp, 'true'), containsValue(variables['Build.SourceBranch'],'release/') }}:
+    value: true
+  ${{ else }}:
+    value: false
 - name: pr
-  value: ${{parameters.pr}}
+  ${{ if or(eq(parameters.pr, 'true'), containsValue(variables['Build.SourceBranch'],'release/') }}:
+    value: true
+  ${{ else }}:
+    value: false
 - name: brch
   value: $(Build.SourceBranchName)
 
@@ -79,12 +99,12 @@ stages:
     steps:
     - ${{ each var in variables }}:
       - ${{ if le(length(var.key), 4) }}:
-        #- ${{ if eq(var.value, 'true') }}:
+        - ${{ if eq(var.value, 'true') }}:
 
-        - script: |
-            echo ${{ var.key }}
-            echo ${{ var.value }}
-          displayName: ${{ var.key }}
+          - script: |
+              echo ${{ var.key }}
+              echo ${{ var.value }}
+            displayName: ${{ var.key }}
 
 # # Code Scans & Build the artifact for deployment
 # - stage: scanBuildApp
