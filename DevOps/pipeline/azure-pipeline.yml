@@ -93,21 +93,6 @@ variables:
 
 stages:
 
-- stage:
-  jobs:
-  - job: TestVars
-    steps:
-    - script: |
-        echo ${{ variables.brch }}
-    - ${{ each var in variables }}:
-      - ${{ if le(length(var.key), 4) }}:
-        - ${{ if eq(var.value, 'true') }}:
-
-          - script: |
-              echo ${{ var.key }}
-              echo ${{ var.value }}
-            displayName: ${{ var.key }}
-
 # Code Scans & Build the artifact for deployment
 - stage: scanBuildApp
   displayName: "Scan tools & Build"
