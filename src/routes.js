@@ -9,6 +9,7 @@ const profile = require('./app/profile');
 const approvers = require('./app/approvers');
 const endUsers = require('./app/endUsers');
 const contactUs = require('./app/contactUs');
+const migration = require('./app/migration');
 
 const passport = require('passport');
 const signOut = require('./app/signOut');
@@ -82,6 +83,7 @@ const mountRoutes = (app, csrf) => {
   app.use('/profile', profile(csrf));
   app.use('/approvers', approvers(csrf));
   app.use('/end-users', endUsers(csrf));
+  app.use('/moving-to-DfE-Sign-in', migration(csrf));
 
   app.get('*', (req, res) => {
     res.redirect('/dashboard');
