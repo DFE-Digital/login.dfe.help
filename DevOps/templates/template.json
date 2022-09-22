@@ -147,6 +147,18 @@
             "metadata": {
                 "description": "Whether or not to include a staging deployment slot"
             }
+        },
+        "gatewayVnetRg": {
+            "type": "string",
+            "metadata": {
+                "description": "Gateway virtual network resource group"
+            }
+        },
+        "gatewayVnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "Gateway virtual network name"
+            }
         }
     },
     "variables": {
@@ -262,6 +274,12 @@
                     },
                     "includeDeploymentSlot": {
                         "value": "[parameters('includeDeploymentSlot')]"
+                    },
+                    "gatewayVnetRg": {
+                        "value": "[parameters('gatewayVnetRg')]"
+                    },
+                    "gatewayVnetName": {
+                        "value": "[parameters('gatewayVnetName')]"
                     }
                 }
             },
