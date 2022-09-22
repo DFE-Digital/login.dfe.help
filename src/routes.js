@@ -66,6 +66,7 @@ const mountRoutes = (app, csrf) => {
   app.use(isLoggedIn);
 
   app.use('/contact-us', contactUs(csrf));
+  app.use('/moving-to-DfE-Sign-in', migration(csrf));
 
   // add authentication for the routes below
   app.use(authenticate);
