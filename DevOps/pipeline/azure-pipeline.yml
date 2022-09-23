@@ -6,7 +6,7 @@ resources:
       type: github
       endpoint: DfE-Digital
       name: DFE-Digital/login.dfe.devops
-      ref: main
+      ref: feature/DSI-5154
     - repository: config
       type: github
       endpoint: DfE-Digital
@@ -29,7 +29,7 @@ parameters:
 - name: AppDeploy
   type: boolean
   displayName: 'App Deployment only'
-  default: true
+  default: false
 - name: InfrDeploy
   type: boolean
   displayName: 'Infrastrucure Deployment only'
