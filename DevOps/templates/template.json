@@ -5,6 +5,12 @@
         "templatesBaseUri": {
             "type": "string"
         },
+        "AccessToken": {
+            "type": "string",
+            "metadata": {
+                "description": "Token that will acces the private repo from the logic app"
+            }
+        },
         "branch": {
             "type": "string",
             "defaultValue": "main",
@@ -126,18 +132,6 @@
             "defaultValue": false,
             "metadata": {
                 "description": "Add app settings to support virtual network private endpoints"
-            }
-        },
-        "AccessToken": {
-            "type": "string",
-            "metadata": {
-                "description": "Token that will acces the private repo from the logic app"
-            }
-        },
-        "sas": {
-            "type": "string",
-            "metadata": {
-                "description": "Token that will acces the logic app"
             }
         },
         "includeDeploymentSlot": {
