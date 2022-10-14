@@ -3,8 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "templatesBaseUri": {
-            "type": "string",
-            "defaultValue": "https://prod-06.westeurope.logic.azure.com/workflows/0cb8a7ab55714423a0dcb17e544adbae/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&"
+            "type": "string"
         },
         "branch": {
             "type": "string",
@@ -163,7 +162,8 @@
     },
     "variables": {
         "enableVirtualNetworkIntegration": "[and(not(empty(parameters('virtualNetworkResourceGroupName'))), not(empty(parameters('virtualNetworkName'))))]",
-        "serviceSubnetResourceId": "[if(variables('enableVirtualNetworkIntegration'), resourceId(parameters('virtualNetworkResourceGroupName'),'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), concat(parameters('subnetPrefix'))), '')]"
+        "serviceSubnetResourceId": "[if(variables('enableVirtualNetworkIntegration'), resourceId(parameters('virtualNetworkResourceGroupName'),'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), concat(parameters('subnetPrefix'))), '')]",
+        "gatewaySubnetId": "[resourceId(parameters('gatewayVnetRg'),'Microsoft.Network/virtualNetworks/subnets',parameters('gatewayVnetName'), 'gateway')]"
     },
     "resources": [
         {
@@ -173,7 +173,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('templatesBaseUri'),'sig=',parameters('sas'),'&repo=DFE-Digital/login.dfe.devops&ref=',parameters('branch'),'&file=templates/app-service-plan.json&token=', parameters('AccessToken'))]",
+                    "uri": "[concat(parameters('templatesBaseUri'),'&repo=DFE-Digital/login.dfe.devops&ref=',parameters('branch'),'&token=', parameters('AccessToken'),'&file=templates/app-service-plan.json)]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -199,7 +199,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('templatesBaseUri'),'sig=',parameters('sas'),'&repo=DFE-Digital/login.dfe.devops&ref=',parameters('branch'),'&file=templates/app-service-certificate.json&token=', parameters('AccessToken'))]",
+                    "uri": "[concat(parameters('templatesBaseUri'),'&repo=DFE-Digital/login.dfe.devops&ref=',parameters('branch'),'&token=', parameters('AccessToken'),'&file=templates/app-service-certificate.json)]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -225,7 +225,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('templatesBaseUri'),'sig=',parameters('sas'),'&repo=DFE-Digital/login.dfe.devops&ref=',parameters('branch'),'&file=templates/app-service-azure-config.json&token=', parameters('AccessToken'))]",
+                    "uri": "[concat(parameters('templatesBaseUri'),'&repo=DFE-Digital/login.dfe.devops&ref=',parameters('branch'),'&token=', parameters('AccessToken'),'&file=templates/app-service-azure-config.json)]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -275,11 +275,16 @@
                     "includeDeploymentSlot": {
                         "value": "[parameters('includeDeploymentSlot')]"
                     },
-                    "gatewayVnetRg": {
-                        "value": "[parameters('gatewayVnetRg')]"
-                    },
-                    "gatewayVnetName": {
-                        "value": "[parameters('gatewayVnetName')]"
+                    "ipSecurityRestrictions": {
+                        "value": [
+                            {
+                                "vnetSubnetResourceId": "[variables('gatewaySubnetId')]",
+                                "action": "Allow",
+                                "tag": "Default",
+                                "name": "Gateway",
+                                "priority": 200
+                            }
+                        ]
                     }
                 }
             },
