@@ -34,6 +34,10 @@ parameters:
   type: boolean
   displayName: 'Infrastrucure Deployment only'
   default: true
+- name: tran 
+  type: boolean
+  displayName: 'Transformation Deployment'
+  default: false
 - name: dev
   type: boolean
   displayName: 'Dev Deployment'
@@ -147,7 +151,7 @@ stages:
         - group: dsi-${{var.key}}-kv
         jobs:
         - ${{ if parameters.InfrDeploy }}:
-          - template: pipeline/infrastructure.yml@devopsTemplates
+          - template: pipeline/appInfrastructure.yml@devopsTemplates
             parameters:
               ${{ if or(eq(var.key, 'dev'), eq(var.key, 'tran')) }}:
                 serviceConnection: $(devServiceConnection)
