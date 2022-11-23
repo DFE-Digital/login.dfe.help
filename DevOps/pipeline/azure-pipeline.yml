@@ -63,8 +63,13 @@ variables:
   value: 'help'
 - name: numberOfWorkers
   value: 1
+- name: tran
+  ${{ if eq(parameters.tran, 'true') }}: 
+    value: true
+  ${{ else }}:
+    value: false
 - name: dev
-  ${{ if or(eq(parameters.dev, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}:
+  ${{ if or(eq(parameters.dev, 'true')) }}:
     value: true
   ${{ else }}:
     value: false
@@ -88,8 +93,6 @@ variables:
     value: true
   ${{ else }}:
     value: false
-- name: brch
-  value: $(Build.SourceBranchName)
 
 stages:
 
@@ -114,6 +117,8 @@ stages:
         applicationName: ${{variables.applicationFullName}}
         custRegAuth: $(custRegAuth)
         environmentNames:
+          - ${{ if eq(variables.tran, 'true') }}: 
+            - tran
           - ${{ if eq(variables.dev, 'true') }}:
             - dev
           - ${{ if eq(variables.test, 'true') }}:
@@ -144,7 +149,7 @@ stages:
         - ${{ if parameters.InfrDeploy }}:
           - template: pipeline/infrastructure.yml@devopsTemplates
             parameters:
-              ${{ if eq(var.key, 'dev') }}:
+              ${{ if or(eq(var.key, 'dev'), eq(var.key, 'tran')) }}:
                 serviceConnection: $(devServiceConnection)
               ${{ elseif eq(var.key, 'pr') }}:
                 serviceConnection: $(prodServiceConnection)
@@ -163,7 +168,7 @@ stages:
         - ${{ if parameters.AppDeploy }}:
           - template: pipeline/deploy.yml@devopsTemplates
             parameters: 
-              ${{ if eq(var.key, 'dev') }}:
+              ${{ if or(eq(var.key, 'dev'), eq(var.key, 'tran')) }}:
                 serviceConnection: $(devServiceConnection)
               ${{ elseif eq(var.key, 'pr') }}:
                 serviceConnection: $(prodServiceConnection)
