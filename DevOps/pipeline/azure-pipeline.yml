@@ -6,12 +6,12 @@ resources:
       type: github
       endpoint: DfE-Digital
       name: DFE-Digital/login.dfe.devops
-      ref: main
+      ref: feature/DSI-5680
     - repository: config
       type: github
       endpoint: DfE-Digital
       name: DFE-Digital/login.dfe.config
-      ref: master
+      ref: feature/DSI-5680
 
 trigger:
   branches:
