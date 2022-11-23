@@ -73,7 +73,7 @@ variables:
   ${{ else }}:
     value: false
 - name: dev
-  ${{ if or(eq(parameters.dev, 'true')) }}:
+  ${{ if eq(parameters.dev, 'true') }}:
     value: true
   ${{ else }}:
     value: false
