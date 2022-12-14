@@ -63,10 +63,6 @@
                 "description": "JSON string containing app config"
             }
         },
-        "customHostName": {
-            "type": "string",
-            "defaultValue": ""
-        },
         "auditServiceBusConnectionString": {
             "type": "string",
             "metadata": {
@@ -170,9 +166,6 @@
                     },
                     "minTlsVersion": {
                         "value": "[parameters('minTlsVersion')]"
-                    },
-                    "customHostName": {
-                        "value": "[parameters('customHostName')]"
                     },
                     "additionalAppSettings": {
                         "value": {
