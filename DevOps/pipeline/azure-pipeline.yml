@@ -64,7 +64,7 @@ variables:
 - name: numberOfWorkers
   value: 1
 - name: dev
-    value: false
+  value: false
 - name: test
   ${{ if or(eq(parameters.test, 'true'), contains(variables['Build.SourceBranch'],'develop')) }}:
     value: true
