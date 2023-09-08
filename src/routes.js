@@ -1,6 +1,7 @@
 const config = require('./infrastructure/config');
 const healthCheck = require('login.dfe.healthcheck');
 const dashboard = require('./app/dashboard');
+const errors = require('./app/errors');
 const services = require('./app/services');
 const organisations = require('./app/organisations');
 const manageUsers = require('./app/manageUsers');
@@ -77,6 +78,7 @@ const mountRoutes = (app, csrf) => {
   app.use('/dashboard', dashboard(csrf));
 
   // additional routes for services, approvers, etc
+  app.use('/error', errors(csrf));
   app.use('/services', services(csrf));
   app.use('/organisations', organisations(csrf));
   app.use('/manage-users', manageUsers(csrf));
@@ -85,7 +87,7 @@ const mountRoutes = (app, csrf) => {
   app.use('/approvers', approvers(csrf));
   app.use('/end-users', endUsers(csrf));
   app.use('/moving-to-DfE-Sign-in', migration(csrf));
-  app.use('/manageconsole', manageConsole(csrf));
+  app.use('/manageconsole/:sid', manageConsole(csrf));
 
   app.get('*', (req, res) => {
     res.redirect('/dashboard');

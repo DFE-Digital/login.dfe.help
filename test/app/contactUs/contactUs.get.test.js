@@ -58,7 +58,7 @@ describe('when displaying the contact us page', () => {
     await getContactUs(req, res);
 
     expect(res.render.mock.calls[0][1]).toMatchObject({
-      title: 'DfE Sign-in help',
+      title: 'DfE Sign-in',
     });
   });
 

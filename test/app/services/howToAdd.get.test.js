@@ -33,7 +33,7 @@ describe('when displaying the help page for services/howToAdd', () => {
     await getDashboard(req, res);
 
     expect(res.render.mock.calls[0][1]).toMatchObject({
-      title: 'DfE Sign-in help',
+      title: 'DfE Sign-in',
     });
   });
 
