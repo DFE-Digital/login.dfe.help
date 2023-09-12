@@ -8,7 +8,7 @@ const get = async (req, res) => {
       subTitle: 'DfE Manage console',
       serviceId: req.params.sid,
       userRoles: manageRolesForService,
-      backLink: false,
+      backLink: true,
     };
     return res.render('manageConsole/views/howtoEditServiceConfig', model);
   }

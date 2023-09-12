@@ -6,14 +6,14 @@
     aria-label="Navigation menu">
 
         <li class="govuk-header__navigation-item <%= locals.currentNavigation === 'dashboard' ? 'govuk-header__navigation-item--active' : '' %>">
-            <a id="nav-dashboard" class="govuk-header__link" href="/services/<%=locals.serviceId%>">
+            <a id="nav-dashboard" class="govuk-header__link" href="<%=locals.urls.manageConsole%>/services/<%=locals.serviceId%>">
                 Dashboard
             </a>
         </li>
         
         <% if (locals.userRoles && locals.userRoles.includes('serviceconfig')) { %>
         <li class="govuk-header__navigation-item <%= locals.currentNavigation === 'configuration' ? 'govuk-header__navigation-item--active' : '' %>">
-            <a id="nav-service-configuration" class="govuk-header__link" href="/services/<%=locals.serviceId%>/service-configuration">
+            <a id="nav-service-configuration" class="govuk-header__link" href="<%=locals.urls.manageConsole%>/services/<%=locals.serviceId%>/service-configuration">
                 Configuration
             </a>
         </li>
@@ -21,7 +21,7 @@
 
         <% if (locals.userRoles && locals.userRoles.includes('accessManage' )) { %>
         <li class="govuk-header__navigation-item <%= locals.currentNavigation === 'policies' ? 'govuk-header__navigation-item--active' : '' %>">
-            <a id="nav-manage-policies" class="govuk-header__link" href="/services/<%= locals.serviceId %>/policies">
+            <a id="nav-manage-policies" class="govuk-header__link" href="<%=locals.urls.manageConsole%>/services/<%= locals.serviceId %>/policies">
                 Policies
             </a>
         </li>
@@ -29,7 +29,7 @@
 
         <% if (locals.userRoles && locals.userRoles.includes('serviceSup')) { %>
             <li class="govuk-header__navigation-item <%= locals.currentNavigation === 'users' ? 'govuk-header__navigation-item--active' : '' %>">
-            <a id="nav-user-management" class="govuk-header__link" href="/services/<%=locals.serviceId %>/users">
+            <a id="nav-user-management" class="govuk-header__link" href="<%=locals.urls.manageConsole%>/services/<%=locals.serviceId %>/users">
                 Users
             </a>
         </li>
@@ -44,7 +44,7 @@
 
         <% if (locals.userRoles && locals.userRoles.includes('onboardSvc')) { %>
         <li class="govuk-header__navigation-item <%= locals.currentNavigation === 'onboarding' ? 'govuk-header__navigation-item--active' : '' %>">
-            <a id="nav-onboard-service" class="govuk-header__link" href="/onboarding/<%= locals.serviceId %>/service">
+            <a id="nav-onboard-service" class="govuk-header__link" href="<%=locals.urls.manageConsole%>/onboarding/<%= locals.serviceId %>/service">
                 Service Onboarding
             </a>
         </li>
