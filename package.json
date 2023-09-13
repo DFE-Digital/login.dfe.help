@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "test",
   "engines": {
-    "node": "14.x.x"
+    "node": "18.x.x"
   },
   "scripts": {
     "dev": "settings='./config/login.dfe.help.dev.json' node src/index.js",
     "test": "./node_modules/.bin/jest",
     "start": "node --debug=9230 --inspect=0.0.0.0 /app/src/index.js"
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DFE-Digital/login.dfe.help.git"
