@@ -11,12 +11,6 @@
                 Organisations
             </a>
         </li>
-        <li class="govuk-header__navigation-item">
-            <!--naivigation should go back to manage console-->
-            <a class="govuk-header__link" href="<%=locals.urls.services%>/manageConsole">
-                Manage Console
-            </a>
-        </li>
         <% if (locals.isApprover) { %>
             <li class="govuk-header__navigation-item">
                 <a class="govuk-header__link" href="<%=locals.urls.services%>/approvals/users">
