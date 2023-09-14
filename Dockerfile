@@ -1,47 +1,19 @@
-FROM mcr.microsoft.com/devcontainers/javascript-node:14
+FROM node:10
 
-ENV PORT 8080
-ENV settings /home/site/wwwroot/config/login.dfe.help.tran.json
-ENV PATH ${PATH}:/home/site/wwwroot
+EXPOSE 80
 
-WORKDIR /home/site/wwwroot
+ARG NODE_ENV
+ENV NODE_ENV $NODE_ENV
 
-COPY process.json /home/site/wwwroot
-#ADD app_data ./home/site/wwwroot_data
-COPY node_modules /home/site/wwwroot/node_modules
-ADD config /home/site/wwwroot/config
-COPY src /home/site/wwwroot/src
-COPY package.json /home/site/wwwroot/
+RUN mkdir /app
+WORKDIR /app
 
-RUN npm install pm2 -g
-ENV PM2HOME /pm2home
+RUN npm install -g nodemon
 
-# enable SSH
-ENV SSH_PASSWD "root:Docker!"
-RUN mkdir -p /home/LogFiles 
-RUN apt-get install -y --no-install-recommends dialog 
-RUN apt-get update 
-RUN apt-get install -y --no-install-recommends openssh-server 
-RUN echo "$SSH_PASSWD" | chpasswd 
+COPY package*.json ./
 
-# Install powershell related system components
-# Import the public repository GPG keys
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+RUN npm install
 
-RUN sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-stretch-prod stretch main" > /etc/apt/sources.list.d/microsoft.list'
+COPY . .
 
-# Install PowerShell
-RUN apt-get update \
-    && apt-get install -y \
-    powershell
-
-COPY Docker/sshd_config /etc/ssh/sshd_config
-COPY Docker/init.sh init.sh
-COPY Docker/tokenization.ps1 tokenization.ps1
-
-RUN chmod 755 init.sh
-RUN chmod 755 tokenization.ps1
-
-EXPOSE 8080 2221
-
-ENTRYPOINT ["/home/site/wwwroot/init.sh"]
+CMD node src/index.js
