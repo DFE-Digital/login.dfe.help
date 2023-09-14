@@ -1,5 +1,5 @@
 const { getSingleUserService } = require('../../infrastructure/access');
-const config = require('../../../config/login.dfe.help.local.json');
+const config = require('../../infrastructure/config');
 
 const getUserServiceRoles = async (req) => {
   const allUserRoles = req.userServices.roles.map((role) => ({
