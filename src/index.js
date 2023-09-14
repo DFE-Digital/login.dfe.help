@@ -3,26 +3,25 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('cookie-session');
 const expressLayouts = require('express-ejs-layouts');
-const noCache = require('nocache')
 const morgan = require('morgan');
-const logger = require('./infrastructure/logger');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-const config = require('./infrastructure/config');
 const helmet = require('helmet');
 const sanitization = require('login.dfe.sanitization');
 const csurf = require('csurf');
-const mountRoutes = require('./routes');
 const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-handling');
 const flash = require('express-flash-2');
 
 // imports for authentication
 const passport = require('passport');
+const appInsights = require('applicationinsights');
 const getPassportStrategy = require('./infrastructure/oidc');
 const { setUserContext } = require('./infrastructure/utils');
-const appInsights = require('applicationinsights');
+const mountRoutes = require('./routes');
+const config = require('./infrastructure/config');
+const logger = require('./infrastructure/logger');
 
 const configSchema = require('./infrastructure/config/schema');
 
@@ -39,7 +38,7 @@ const init = async () => {
 
   if (config.hostingEnvironment.hstsMaxAge) {
     app.use(helmet({
-     // noCache: true,
+      noCache: true,
       frameguard: {
         action: 'deny',
       },
@@ -48,15 +47,37 @@ const init = async () => {
         preload: true,
       },
     }));
-  } else {
-    app.use(helmet({
-     // noCache: true,
-      frameguard: {
-        action: 'deny',
-      },
-    }));
   }
-  app.use(noCache());
+
+  logger.info('set helmet policy defaults');
+
+  // Setting helmet Content Security Policy
+  const scriptSources = ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'localhost', '*.signin.education.gov.uk'];
+
+  app.use(helmet.contentSecurityPolicy({
+    browserSniff: false,
+    setAllHeaders: false,
+    directives: {
+      defaultSrc: ["'self'"],
+      childSrc: ["'none'"],
+      objectSrc: ["'none'"],
+      scriptSrc: scriptSources,
+      styleSrc: ["'self'", "'unsafe-inline'", 'localhost', '*.signin.education.gov.uk'],
+      imgSrc: ["'self'", 'data:', 'blob:', 'localhost', '*.signin.education.gov.uk'],
+      fontSrc: ["'self'", 'data:', '*.signin.education.gov.uk'],
+      connectSrc: ["'self'"],
+      formAction: ["'self'", '*'],
+    },
+  }));
+
+  logger.info('Set helmet filters');
+
+  app.use(helmet.xssFilter());
+  app.use(helmet.frameguard('false'));
+  app.use(helmet.ieNoOpen());
+
+  logger.info('helmet setup complete');
+
   let expiryInMinutes = 30;
   const sessionExpiry = parseInt(config.hostingEnvironment.sessionCookieExpiryInMinutes);
   if (!isNaN(sessionExpiry)) {
@@ -108,6 +129,25 @@ const init = async () => {
   app.set('views', path.resolve(__dirname, 'app'));
   app.set('layout', 'shared/views/layout');
   app.use(flash());
+
+  /*
+    Addressing issue with latest version of passport dependency packge
+    TypeError: req.session.regenerate is not a function
+    Reference: https://github.com/jaredhanson/passport/issues/907#issuecomment-1697590189
+  */
+  app.use((request, response, next) => {
+    if (request.session && !request.session.regenerate) {
+      request.session.regenerate = (cb) => {
+        cb();
+      };
+    }
+    if (request.session && !request.session.save) {
+      request.session.save = (cb) => {
+        cb();
+      };
+    }
+    next();
+  });
 
   mountRoutes(app, csrf);
 

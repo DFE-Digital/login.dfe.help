@@ -4,17 +4,18 @@
 
 const url = require('url');
 const passport = require('passport');
-const config = require('./../../infrastructure/config');
-const logger = require('./../../infrastructure/logger');
+const config = require('../../infrastructure/config');
+const logger = require('../../infrastructure/logger');
 
 const logout = (req, res) => {
-  req.logout();
+  req.logout(() => {
+    logger.info('user logged out.');
+  });
   req.session = null; // Needed to clear session and completely logout
 };
 
 const signUserOut = async (req, res) => {
   if (req.user && req.user.id_token) {
-
     logger.audit({
       type: 'Sign-out',
       userId: req.user.sub,
