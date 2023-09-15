@@ -1,4 +1,5 @@
-const { getSingleUserService } = require('../../infrastructure/access');
+const { getOrganisationAndServiceForUserV2 } = require('../../infrastructure/organisations');
+const { getServiceById } = require('../../infrastructure/applications');
 const config = require('../../infrastructure/config');
 
 const getUserServiceRoles = async (req) => {
@@ -11,7 +12,7 @@ const getUserServiceRoles = async (req) => {
 };
 
 const getSingleUserServiceAndRoles = async (req) => {
-  req.userServices = await getSingleUserService(req.user.sub, config.access.identifiers.service, config.access.identifiers.organisation, req.id);
+  req.userServices = await getOrganisationAndServiceForUserV2(req.user.sub, req.id);
   const manageRolesForService = await getUserServiceRoles(req);
   return manageRolesForService;
 };
