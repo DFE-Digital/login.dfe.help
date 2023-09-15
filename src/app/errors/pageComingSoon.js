@@ -1,4 +1,4 @@
-const { getSingleUserServiceAndRoles } = require('./utils');
+const { getSingleUserServiceAndRoles } = require('../manageConsole/utils');
 const get = async (req, res) => {
   if (req.params.sid !== undefined && req.isAuthenticated()) {
     const manageRolesForService = await getSingleUserServiceAndRoles(req);
@@ -10,7 +10,7 @@ const get = async (req, res) => {
       userRoles: manageRolesForService,
       backLink: true,
     };
-    return res.render('manageConsole/views/howtoEditServiceConfig', model);
+    return res.render('errors/views/pageComingSoon', model);
   }
 };
 
