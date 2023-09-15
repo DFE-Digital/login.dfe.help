@@ -1,4 +1,5 @@
-const { getSingleUserServiceAndRoles } = require('./utils');
+const { getSingleUserServiceAndRoles } = require('../manageConsole/utils');
+
 const get = async (req, res) => {
   if (req.params.sid !== undefined && req.isAuthenticated()) {
     const manageRolesForService = await getSingleUserServiceAndRoles(req);
@@ -8,9 +9,9 @@ const get = async (req, res) => {
       subTitle: 'DfE Manage console',
       serviceId: req.params.sid,
       userRoles: manageRolesForService,
-      backLink: true,
+      backLink: false,
     };
-    return res.render('manageConsole/views/howtoEditServiceConfig', model);
+    return res.render('dashboard/views/manageDashboard', model);
   }
 };
 
