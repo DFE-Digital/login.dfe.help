@@ -14,17 +14,6 @@ const identifyingPartySchema = new SimpleSchema({
   clockTolerance: SimpleSchema.Integer,
 });
 
-
-const accessIdentifiers = new SimpleSchema({
-  identifiers: {
-    type: Object,
-  },
-  'identifiers.service': patterns.uuid,
-  'identifiers.organisation': patterns.uuid,
-});
-
-accessIdentifiers.extend(schemas.apiClient);
-
 const adapterSchema = new SimpleSchema({
   type: {
     type: String,
@@ -44,7 +33,7 @@ const schema = new SimpleSchema({
   loggerSettings: schemas.loggerSettings,
   hostingEnvironment: schemas.hostingEnvironment,
   applications: schemas.apiClient,
-  access: accessIdentifiers,
+  access: schemas.apiClient,
   notifications: notificationsSchema,
   assets: schemas.assets,
   identifyingParty: identifyingPartySchema,
