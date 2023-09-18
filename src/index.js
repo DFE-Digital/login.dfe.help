@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('cookie-session');
 const expressLayouts = require('express-ejs-layouts');
-const noCache = require('nocache');
 const morgan = require('morgan');
 const logger = require('./infrastructure/logger');
 const http = require('http');
@@ -39,7 +38,7 @@ const init = async () => {
 
   if (config.hostingEnvironment.hstsMaxAge) {
     app.use(helmet({
-     // noCache: true,
+      noCache: true,
       frameguard: {
         action: 'deny',
       },
@@ -50,13 +49,13 @@ const init = async () => {
     }));
   } else {
     app.use(helmet({
-     // noCache: true,
+      noCache: true,
       frameguard: {
         action: 'deny',
       },
     }));
   }
-  app.use(noCache());
+  //app.use(noCache());
   let expiryInMinutes = 30;
   const sessionExpiry = parseInt(config.hostingEnvironment.sessionCookieExpiryInMinutes);
   if (!isNaN(sessionExpiry)) {
