@@ -12,7 +12,7 @@ const get = async (req, res) => {
   // render the view
   res.render('contactUs/views/contactUs', {
     csrfToken: req.csrfToken(),
-    title: 'DfE Sign-in help',
+    title: 'DfE Sign-in',
     name: '',
     email: '',
     orgName: '',

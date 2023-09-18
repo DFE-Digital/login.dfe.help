@@ -8,8 +8,8 @@ const { get: gethowtoEditServiceConfig } = require('./howtoEditServiceConfig');
 const router = express.Router({ mergeParams: true });
 
 const routes = (csrf) => {
-  router.get('/', csrf, asyncWrapper(getManageDashboard));
-  router.get('/how-to-edit-service-config', csrf, asyncWrapper(gethowtoEditServiceConfig));
+  router.get('/:sid', csrf, asyncWrapper(getManageDashboard));
+  router.get('/:sid/how-to-edit-service-config', csrf, asyncWrapper(gethowtoEditServiceConfig));
 
   return router;
 };
