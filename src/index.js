@@ -4,24 +4,24 @@ const cookieParser = require('cookie-parser');
 const session = require('cookie-session');
 const expressLayouts = require('express-ejs-layouts');
 const morgan = require('morgan');
-const logger = require('./infrastructure/logger');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-const config = require('./infrastructure/config');
 const helmet = require('helmet');
 const sanitization = require('login.dfe.sanitization');
 const csurf = require('csurf');
-const mountRoutes = require('./routes');
 const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-handling');
 const flash = require('express-flash-2');
 
 // imports for authentication
 const passport = require('passport');
+const appInsights = require('applicationinsights');
 const getPassportStrategy = require('./infrastructure/oidc');
 const { setUserContext } = require('./infrastructure/utils');
-const appInsights = require('applicationinsights');
+const mountRoutes = require('./routes');
+const config = require('./infrastructure/config');
+const logger = require('./infrastructure/logger');
 
 const configSchema = require('./infrastructure/config/schema');
 
@@ -55,7 +55,7 @@ const init = async () => {
       },
     }));
   }
-  //app.use(noCache());
+  // app.use(noCache());
   let expiryInMinutes = 30;
   const sessionExpiry = parseInt(config.hostingEnvironment.sessionCookieExpiryInMinutes);
   if (!isNaN(sessionExpiry)) {
