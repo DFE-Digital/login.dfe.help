@@ -1,44 +1,61 @@
-const loggerMockFactory = () => {
-  return {
-    info: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    audit: jest.fn(),
+const loggerMockFactory = () => ({
+  info: jest.fn(),
+  warn: jest.fn(),
+  error: jest.fn(),
+  audit: jest.fn(),
+});
+
+const expressAuthenticationStub = (authenticated, extras) => {
+  return (req, res, next) => {
+    req.isAuthenticated = () => {
+      return authenticated;
+    };
+    req.user = {};
+    Object.assign(req, extras);
+
+    if (!res.locals) {
+      res.locals = {};
+    }
+    res.locals.flash = {};
+    res.locals.profilesUrl = '';
+
+    next();
   };
 };
+const configMockFactory = (customConfig) => ({
+  hostingEnvironment: {
+    agentKeepAlive: {},
+    env: 'test-run',
+  },
+  applications: {
+    type: 'static',
+  },
+  access: {
+    type: 'static',
+  },
+  notifications: {
+    connectionString: 'test',
+  },
+  loggerSettings: {},
+  ...customConfig,
+});
 
-const configMockFactory = (customConfig) => {
-  return Object.assign({
-    hostingEnvironment: {
-      agentKeepAlive: {},
-      env: 'test-run',
-    },
-    applications: {
-      type: 'static',
-    },
-    notifications:{
-      connectionString: 'test',
-    },
-    loggerSettings: {},
-  }, customConfig);
-};
-
-const getRequestMock = (customRequest = {}) => {
-  return Object.assign({
-    id: 'correlationId',
-    csrfToken: jest.fn().mockReturnValue('token'),
-    accepts: jest.fn().mockReturnValue(['text/html']),
-    params: {},
-    body: {},
-    query: {},
-    user: {
-      sub: 'suser1',
-      email: 'super.user@unit.test',
-    },
-    app: { locals: { urls: { profile: 'profileurl' } } },
-    session: {},
-  }, customRequest);
-};
+const getRequestMock = (customRequest = {}) => ({
+  id: 'correlationId',
+  accepts: jest.fn().mockReturnValue(['text/html']),
+  params: {},
+  csrfToken: jest.fn().mockReturnValue('token'),
+  isAuthenticated: jest.fn().mockReturnValue(true),
+  body: {},
+  query: {},
+  user: {
+    sub: 'suser1',
+    email: 'super.user@unit.test',
+  },
+  app: { locals: { urls: { profile: 'profileurl' }, isLoggedIn: true } },
+  session: {},
+  ...customRequest,
+});
 
 const getResponseMock = () => {
   const res = {
@@ -48,13 +65,15 @@ const getResponseMock = () => {
     contentType: jest.fn(),
     send: jest.fn(),
     flash: jest.fn(),
-    mockResetAll: function () {
+    isAuthenticated: jest.fn(),
+    mockResetAll() {
       this.render.mockReturnValue(res);
       this.redirect.mockReturnValue(res);
       this.status.mockReturnValue(res);
       this.contentType.mockReturnValue(res);
       this.flash.mockReset();
-    }
+      this.isAuthenticated.mockReturnValue(res);
+    },
   };
 
   res.mockResetAll();
@@ -66,4 +85,5 @@ module.exports = {
   configMockFactory,
   getRequestMock,
   getResponseMock,
+  expressAuthenticationStub,
 };
