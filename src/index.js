@@ -118,7 +118,7 @@ const init = async () => {
       interactions: config.hostingEnvironment.interactionsUrl,
       services: config.hostingEnvironment.servicesUrl,
       profile: config.hostingEnvironment.profileUrl,
-      manageConsole: 'https://localhost:41015',
+      manageConsole: config.hostingEnvironment.manageConsoleUrl,
       assets: assetsUrl,
       survey: config.hostingEnvironment.surveyUrl,
     },
