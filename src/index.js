@@ -17,12 +17,8 @@ const flash = require('express-flash-2');
 // imports for authentication
 const passport = require('passport');
 const appInsights = require('applicationinsights');
-const appInsights = require('applicationinsights');
 const getPassportStrategy = require('./infrastructure/oidc');
 const { setUserContext } = require('./infrastructure/utils');
-const mountRoutes = require('./routes');
-const config = require('./infrastructure/config');
-const logger = require('./infrastructure/logger');
 const mountRoutes = require('./routes');
 const config = require('./infrastructure/config');
 const logger = require('./infrastructure/logger');
