@@ -2,6 +2,7 @@ const config = require('./infrastructure/config');
 const healthCheck = require('login.dfe.healthcheck');
 const dashboard = require('./app/dashboard');
 const services = require('./app/services');
+const errors = require('./app/errors');
 const organisations = require('./app/organisations');
 const manageUsers = require('./app/manageUsers');
 const requests = require('./app/requests');
@@ -77,6 +78,7 @@ const mountRoutes = (app, csrf) => {
   app.use('/dashboard', dashboard(csrf));
 
   // additional routes for services, approvers, etc
+  app.use('/error', errors(csrf));
   app.use('/services', services(csrf));
   app.use('/organisations', organisations(csrf));
   app.use('/manage-users', manageUsers(csrf));
