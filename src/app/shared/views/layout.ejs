@@ -55,54 +55,22 @@
                 </a>
             </div>
             <div class="govuk-header__content">
-                <a href="<%=locals.urls.services%>/my-services" class="govuk-header__link govuk-header__link--service-name">
-                    DfE Sign-In
-                </a>
+                <% if (locals.title != undefined && locals.title !== 'DfE Sign-in') { %>
+                    <a href="<%=locals.urls.manageConsole%>/services/500DF403-4643-4CDE-9F30-3C6D8AD27AD7" class="govuk-header__link govuk-header__link--service-name">
+                        <%= locals.title || (locals.app ? locals.app.title : null) || 'DfE Sign-in'%>
+                    </a>
+                <% } else { %>
+                    <a href="<%=locals.urls.services%>/my-services" class="govuk-header__link govuk-header__link--service-name">
+                        <%= locals.title || (locals.app ? locals.app.title : null) || 'DfE Sign-in'%>
+                    </a>
+                <%}%>
+               
                 <% if (locals.isLoggedIn) { %>
-                    <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide navigation menu">Menu</button>
-                    <nav>
-                        <ul id="navigation" class="govuk-header__navigation " aria-label="Navigation menu">
-                            <li class="govuk-header__navigation-item">
-                                <a class="govuk-header__link" href="<%=locals.urls.services%>/my-services">
-                                    Services
-                                </a>
-                            </li>
-                            <li class="govuk-header__navigation-item">
-                                <a class="govuk-header__link" href="<%=locals.urls.services%>/organisations">
-                                    Organisations
-                                </a>
-                            </li>
-                            <% if (locals.isApprover) { %>
-                                <li class="govuk-header__navigation-item">
-                                    <a class="govuk-header__link" href="<%=locals.urls.services%>/approvals/users">
-                                        Manage users
-                                    </a>
-                                </li>
-                            <% } %>
-                            <% if (locals.isApprover) { %>
-                                <li class="govuk-header__navigation-item">
-                                    <a class="govuk-header__link" href="<%=locals.urls.services%>/access-requests">
-                                        Requests <% if (locals.approverRequests && locals.approverRequests.length) { %> <span class="govuk-notification-badge"><%= locals.approverRequests.length %></span> <% } %>
-                                    </a>
-                                </li>
-                            <% } %>
-                            <li class="govuk-header__navigation-item">
-                                <a class="govuk-header__link" href="<%=locals.urls.profile%>">
-                                    Profile
-                                </a>
-                            </li>
-                            <li class="govuk-header__navigation-item govuk-header__navigation-item--active">
-                                <a class="govuk-header__link" href="/dashboard">
-                                    Help
-                                </a>
-                            </li>
-                            <li class="govuk-header__navigation-item">
-                                <a class="govuk-header__link" href="/signout">
-                                    Sign out
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <% if (locals.title !== 'DfE Sign-in') { %>
+                        <%- include('../../../app/menus/views/manageConMenu'); %>
+                    <% } else { %>
+                    <%- include('../../../app/menus/views/serviceMenu'); %>
+                    <%}%>
                 <% } %>
             </div>
         </div>
@@ -130,10 +98,10 @@
             <div class="govuk-width-container home-top__inner">
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-two-thirds">
-                        <h1 class="govuk-heading-xl govuk-!-margin-top-5 govuk-!-margin-bottom-5">Help using DfE Sign-in</h1>
+                        <h1 class="govuk-heading-xl govuk-!-margin-top-5 govuk-!-margin-bottom-5">Help using <%= locals.title || (locals.app ? locals.app.title : null) || 'DfE Sign-in'%></h1>
                     </div>
                     <div class="govuk-grid-column-two-thirds">
-                        <h3 class="govuk-heading-m">Guidance, tips and articles to help you use Dfe Sign-in.</h3>
+                        <h3 class="govuk-heading-m">Guidance, tips and articles to help you use <%= locals.subTitle %>.</h3>
                     </div>
                 </div>
             </div>
@@ -207,9 +175,15 @@
                         </a>
                     </li>
                     <li class="govuk-footer__inline-list-item">
-                        <a class="govuk-footer__link" href="/contact-us">
-                        Contact us
-                        </a>
+                        <% if (locals.title !== 'DfE Sign-in'){ %>
+                            <a class="govuk-footer__link" href="https://dfe.service-now.com/serviceportal?id=sc_cat_item&sys_id=0c00c1afdb6bc8109402e1aa4b961937&sysparm_category=2f6e34afdb6bc8109402e1aa4b9619aa">
+                                Contact us
+                                </a>
+                            <%} else {%>
+                            <a class="govuk-footer__link" href="/contact-us">
+                            Contact us
+                            </a>
+                        <%}%>
                     </li>
                 </ul>
 

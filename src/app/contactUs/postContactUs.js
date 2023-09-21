@@ -91,7 +91,7 @@ const post = async (req, res) => {
     const services = await getAndMapExternalServices(req.id);
     return res.render('contactUs/views/contactUs', {
       csrfToken: req.csrfToken(),
-      title: 'DfE Sign-in help',
+      title: 'DfE Sign-in',
       name,
       email,
       orgName,

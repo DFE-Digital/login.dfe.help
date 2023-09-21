@@ -3,7 +3,7 @@ const get = async (req, res) => {
   const redirectUri = req.query.redirect_uri;
   res.render('contactUs/views/contactUsCompleted', {
     csrfToken: req.csrfToken(),
-    title: 'DfE Sign-in help',
+    title: 'DfE Sign-in',
     isHidden: true,
     isHomeTopHidden: true,
     redirectUri,
