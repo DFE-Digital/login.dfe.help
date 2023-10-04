@@ -11,7 +11,7 @@ COPY process.json /home/site/wwwroot
 COPY node_modules /home/site/wwwroot/node_modules
 ADD config /home/site/wwwroot/config
 COPY src /home/site/wwwroot/src
-COPY package.json /home/site/wwwroot/
+COPY package.json /home/site/wwwroot
 
 RUN npm install pm2 -g
 ENV PM2HOME /pm2home
@@ -36,12 +36,13 @@ RUN apt-get update \
     powershell
 
 COPY Docker/sshd_config /etc/ssh/sshd_config
-COPY Docker/init.sh init.sh
-COPY Docker/tokenization.ps1 tokenization.ps1
+COPY Docker/init.sh /home/site/wwwroot/init.sh
+##NOT ON MAC UnCoMMENT###
+##COPY Docker/tokenization.ps1 tokenization.ps1
 
 RUN chmod 755 init.sh
 RUN chmod 755 tokenization.ps1
 
 EXPOSE 8080 2221
 
-ENTRYPOINT ["init.sh"]
+CMD ["init.sh"]
