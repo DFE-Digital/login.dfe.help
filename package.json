@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "settings='./config/login.dfe.help.dev.json' node src/index.js",
     "test": "./node_modules/.bin/jest",
-    "start": "node --debug=9230 --inspect=0.0.0.0 /app/src/index.js"
+    "start": "node --debug=9230 --inspect=0.0.0.0 src/index.js"
   },
   "repository": {
     "type": "git",
