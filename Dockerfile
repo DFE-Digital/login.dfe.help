@@ -37,7 +37,8 @@ RUN apt-get update \
 
 COPY Docker/sshd_config /etc/ssh/sshd_config
 COPY Docker/init.sh /home/site/wwwroot/init.sh
-COPY Docker/tokenization.ps1 tokenization.ps1
+##NOT ON MAC UnCoMMENT###
+##COPY Docker/tokenization.ps1 tokenization.ps1
 
 RUN chmod 755 init.sh
 RUN chmod 755 tokenization.ps1

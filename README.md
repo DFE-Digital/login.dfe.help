@@ -4,11 +4,14 @@
 
 #Running Compose and docker
  make sure you have docker desktop runnning
- select the compose file you want to run 
- right click the file select compose up
- or alternately run default compose command in the terminal window
+ select the compose file docker-compose.debug.yml or docker-compose.yml depending on what mode you want to run 
+ right click the file selected a context menu will appear in the list select compose up
+ or alternately run default docker-compose.yml compose command in the terminal window
+
  docker compose up
- and to remove completely right click the file you composed up and select
- compose down
- or alternatively in the ternimal window
+
+ and to remove completely right click the file you composed up docker-compose.debug.yml or docker-compose.yml 
+ right click the file selected a context menu will appear in the list select  compose down
+ or alternatively run the default docker-compose.yml in the ternimal window with
+ 
  docker compose down
