@@ -71,3 +71,4 @@ access.log
 \.idea/markdown-navigator\.xml
 
 .vscode
+.npmrc
