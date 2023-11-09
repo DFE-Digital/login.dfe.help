@@ -69,7 +69,7 @@
          <p class="govuk-body">
             If you do not provide a post password-reset URL, the DfE Sign-in system will automatically use one of the redirect URLs provided.
          </p>
-        <h3 id="openid-connect" class="govuk-heading-s ">OpenID Connect</h3>
+        <h3 id="openid-connect" class="govuk-heading-m ">OpenID Connect</h3>
         <p class="govuk-body">
             DfE Sign-in is an <a  class="govuk-link" href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect (OIDC) provider</a>. OIDC is a simple user identity and authentication layer on top of the <a  class="govuk-link" href="https://www.oauth.com/">OAuth 2.0 framework</a>.
         </p>
@@ -168,7 +168,7 @@
         <p class="govuk-body">
             Users will only be redirected back to a URL if it exists in this whitelist. If you do not provide a logout redirect URL, users will be redirected to the DfE Sign-in page.
         </p>
-        <h2 id="response-type-id" class="govuk-heading-s ">Response Type</h2>
+        <h2 id="response-type-id" class="govuk-heading-s ">Response types</h2>
         <p class="govuk-body">
             A response type is a value that determines the authentication flow. It is sent as part of an authentication request. 
         </p>       
@@ -201,7 +201,7 @@
             <body class="govuk-table__body">
                 <tr class="govuk-table__row">
                     <td class="govuk-table__cell"><span style="background-color: rgb(235, 232, 232); color:#d4351c;">code</span></td>
-                    <td class="govuk-table__cell">Authorizatiuon flow</td>
+                    <td class="govuk-table__cell">Authorization flow</td>
                 </tr>
                 <tr class="govuk-table__row">
                     <td class="govuk-table__cell"><span style="background-color: rgb(235, 232, 232); color:#d4351c;">id_token</span></td>
@@ -234,7 +234,7 @@
                 For further details on response types go to ‘3. Authentication’ on <a  class="govuk-link" href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect Core 1.0</a>.
             </p>
         </table>
-        <h2 id="refresh-token-id" class="govuk-heading-s ">Refresh Token</h2>
+        <h3 id="refresh-token-id" class="govuk-heading-m ">Refresh token</h3>
         <p class="govuk-body">
             The <span style="background-color: rgb(235, 232, 232); color:#d4351c;">refresh_token</span> is a grant type. 
         </p>
@@ -250,12 +250,9 @@
         <p class="govuk-body ">
             Find out more about <a  class="govuk-link" href="https://oauth.net/2/grant-types/refresh-token/">refresh tokens on OAuth</a>.
         </p>  
-        <h2 id="client-secret-id" class="govuk-heading-s ">Client Secret</h2>
+        <h3 id="client-secret-id" class="govuk-heading-m ">Client secret</h3>
         <p class="govuk-body">
-            The client secret is a value that acts as a password for the service. DfE manage console
-        </p>
-        <p class="govuk-body ">
-            automatically creates the client secret when configuring a service. It:
+            The client secret is a value that acts as a password for the service. DfE manage console automatically creates the client secret when configuring a service. It:
         </p>
         <ol class="govuk-list govuk-list--bullet ">
             <li>is usually 25 characters long</li>
@@ -268,7 +265,7 @@
             You can view or change the client secret on the ‘Edit service configuration’ page by clicking ‘Show’ or ‘Regenerate’ next to the client secret field.
         </p> 
         <p class="govuk-body ">
-            The client secret is needed when your service authenticates itself to the DfE Sign-in token endpoint. Therefore, it is only required when you have selected response type <span style="background-color: rgb(235, 232, 232); color:#d4351c;">code</span> which automatically choses authorisation flow as your flow.
+            The client secret is needed when your service authenticates itself to the DfE Sign-in token endpoint. Therefore, it is only required when you have selected response type <span style="background-color: rgb(235, 232, 232); color:#d4351c;">code</span> which automatically choses authorization flow as your flow.
         </p>
         <p class="govuk-body ">
             Find out more about <a  class="govuk-link" href="https://www.oauth.com/oauth2-servers/client-registration/client-id-secret/">client secret on OAuth</a>.
@@ -292,14 +289,14 @@
         <p class="govuk-body">
             You must select 1 method that applies to your service when configuring a service.
         </p>
-        <h2 id="api-id" class="govuk-heading-s ">API</h2>
+        <h3 id="api-id" class="govuk-heading-m ">API</h3>
         <p class="govuk-body">
             The DfE Sign-in public API is for external consumers to interact with DfE Sign-in. It is specific to DfE Sign-in, not OAuth.
         </p>
         <p class="govuk-body">
             For any requests on DfE manage console, you will need to provide a JSON Web Token. The token must be signed using the HS256 algorithm with your API secret.
         </p>
-        <h2 id="api-secret-id" class="govuk-heading-s ">API Secret</h2>
+        <h3 id="api-secret-id" class="govuk-heading-m ">API secret</h3>
         <p class="govuk-body">
             The API secret is a value that acts as a password for accessing the DfE Sign-in public API.
         </p>
@@ -333,7 +330,6 @@
                 <li><a class="govuk-link-bold" href="/error/<%= locals.serviceId%>/page-coming-soon">Manage Users</a></li>
                 <li><a class="govuk-link-bold" href="/error/<%= locals.serviceId%>/page-coming-soon">Manage Organisations</a></li>
                 <li><a class="govuk-link-bold" href="/manageConsole/<%= locals.serviceId%>/how-to-edit-service-config">Edit Service Configuration</a></li>
-                <li><a class="govuk-link-bold" href="/error/<%= locals.serviceId%>/page-coming-soon">Create New Service</a></li>
             </ul>
         </div>
 
