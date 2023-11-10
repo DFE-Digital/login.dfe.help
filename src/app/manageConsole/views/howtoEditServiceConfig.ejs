@@ -3,14 +3,14 @@
     <div class="govuk-grid-column-two-thirds">
 
         <!-- help page title and main content -->
-        <div id="edit-service-config" class="help-section-title ">
+        <div id="edit-service-config" class="help-section-title govuk-!-margin-bottom-2 ">
             <h2 class="govuk-heading-l">
                 Edit service configuration
             </h2>
-            <p class="govuk-body ">
+            <p class="govuk-body">
                 To edit a service’s configuration on DfE manage console, you need to:
             </p>
-            <ol class="govuk-list govuk-list--number ">
+            <ol class="govuk-list govuk-list--number">
                 <li>Sign into your DfE Sign-in account.</li>
                 <li>Once signed in, select ‘DfE Sign-in manage’ from your list of services.</li>
                 <li>On the DfE manage console dashboard, click ‘Edit service configuration’.</li>
@@ -176,7 +176,7 @@
             The OAuth framework has several response types. When configuring a service, you can select 1 or combinations of the following response types:
         </p>
         <ol class="govuk-list govuk-list--bullet ">
-            <li>code</li>
+            <li>span</li>
             <li>id_token</li>
             <li>token</li>
         </ol>
@@ -188,9 +188,6 @@
             <li>hybrid flow</li>
             <li>implicit flow</li>
         </ol>
-        <p class="govuk-body">
-            The response type and flow combinations are illustrated in the following table. 
-        </p>  
         <table class="govuk-table">
             <head class="govuk-table__head">
                 <tr class="govuk-table__row">
@@ -216,33 +213,36 @@
                     <td class="govuk-table__cell">Hybrid flow</td>
                 </tr>
                 <tr class="govuk-table__row">
-                    <td class="govuk-table__cell"><code style="background-color: rgb(235, 232, 232); color:#d4351c;">code</code> and <span style="background-color: rgb(235, 232, 232); color:#d4351c;">token</span></td>
+                    <td class="govuk-table__cell"><span style="background-color: rgb(235, 232, 232); color:#d4351c;">code</span> and <span style="background-color: rgb(235, 232, 232); color:#d4351c;">token</span></td>
                     <td class="govuk-table__cell">Hybrid flow</td>
                 </tr>
                 <tr class="govuk-table__row">
-                    <td class="govuk-table__cell"><code style="background-color: rgb(235, 232, 232); color:#d4351c;">code</code>, <code style="background-color: rgb(235, 232, 232); color:#d4351c;">id_token</code> and <code style="background-color: rgb(235, 232, 232); color:#d4351c;">token</code></td>
+                    <td class="govuk-table__cell"><span style="background-color: rgb(235, 232, 232); color:#d4351c;">code</span>, <span style="background-color: rgb(235, 232, 232); color:#d4351c;">id_token</span> and <span style="background-color: rgb(235, 232, 232); color:#d4351c;">token</span></td>
                     <td class="govuk-table__cell">Hybrid flow</td>
                 </tr>
             </body>
+            <p class="govuk-body">
+                The response type and flow combinations are illustrated in the following table. 
+            </p>  
             <p class="govuk-body ">
-                For example, if you select <span style="background-color: rgb(235, 232, 232); color:#d4351c;">code</span> as your response type, this means authorization flow will automatically be chosen as your flow.
+                For example, if you select <span  style=" background-color: rgb(235, 232, 232); color:#d4351c;">code</span> as your response type, this means authorization flow will automatically be chosen as your flow.
             </p>
             <p class="govuk-body ">
-                If you select <span style="background-color: rgb(235, 232, 232); color:#d4351c;">id_token</span> and <span style="background-color: rgb(235, 232, 232); color:#d4351c;">token</span> as your response type, this means implicit flow will automatically be chosen as your flow.
+                If you select <span  style="background-color: rgb(235, 232, 232); color:#d4351c;">id_token</span> and <span style="background-color: rgb(235, 232, 232); color:#d4351c;">token</span> as your response type, this means implicit flow will automatically be chosen as your flow.
             </p>
             <p class="govuk-body ">
                 For further details on response types go to ‘3. Authentication’ on <a  class="govuk-link" href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect Core 1.0</a>.
             </p>
         </table>
-        <h3 id="refresh-token-id" class="govuk-heading-m ">Refresh token</h3>
+        <h2 id="refresh-token-id" class="govuk-heading-s ">Refresh token</h2>
         <p class="govuk-body">
-            The <span style="background-color: rgb(235, 232, 232); color:#d4351c;">refresh_token</span> is a grant type. 
+            The <span class="govuk-!-font-size-19" style="background-color: rgb(235, 232, 232); color:#d4351c;">refresh_token</span> is a grant type. 
         </p>
         <p class="govuk-body ">
             Grant types are the way that a service can get OAuth access tokens.
         </p>
         <p class="govuk-body">
-            A <code style="background-color: rgb(235, 232, 232); color:#d4351c;">refresh_token</code> is used to exchange a refresh token for an access token when the access token has expired. This means you’ll be able to get a new access token without interaction with the user. 
+            A <span class="govuk-!-font-size-19" style="background-color: rgb(235, 232, 232); color:#d4351c;">refresh_token</span> is used to exchange a refresh token for an access token when the access token has expired. This means you’ll be able to get a new access token without interaction with the user. 
         </p>
         <p class="govuk-body">
             When configuring a service and the system has chosen either authorization flow or hybrid flow, you can choose to select <span style="background-color: rgb(235, 232, 232); color:#d4351c;">refresh_token</span>. This is optional.
@@ -250,7 +250,7 @@
         <p class="govuk-body ">
             Find out more about <a  class="govuk-link" href="https://oauth.net/2/grant-types/refresh-token/">refresh tokens on OAuth</a>.
         </p>  
-        <h3 id="client-secret-id" class="govuk-heading-m ">Client secret</h3>
+        <h2 id="client-secret-id" class="govuk-heading-s ">Client secret</h2>
         <p class="govuk-body">
             The client secret is a value that acts as a password for the service. DfE manage console automatically creates the client secret when configuring a service. It:
         </p>
@@ -296,7 +296,7 @@
         <p class="govuk-body">
             For any requests on DfE manage console, you will need to provide a JSON Web Token. The token must be signed using the HS256 algorithm with your API secret.
         </p>
-        <h3 id="api-secret-id" class="govuk-heading-m ">API secret</h3>
+        <h2 id="api-secret-id" class="govuk-heading-s ">API secret</h2>
         <p class="govuk-body">
             The API secret is a value that acts as a password for accessing the DfE Sign-in public API.
         </p>
