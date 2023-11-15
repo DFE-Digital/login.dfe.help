@@ -72,12 +72,12 @@ variables:
   value: 1
 - name: tran
   ${{ if eq(parameters.tran, 'true') }}: 
-    value: false
+    value: true
   ${{ else }}:
     value: false
 - name: dev
   ${{ if or(eq(parameters.dev, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}:
-    value: true
+    value: false
   ${{ else }}:
     value: false
 - name: test
