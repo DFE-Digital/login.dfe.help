@@ -72,7 +72,7 @@ variables:
   value: 1
 - name: tran
   ${{ if eq(parameters.tran, 'true') }}: 
-    value: true
+    value: false
   ${{ else }}:
     value: false
 - name: dev
