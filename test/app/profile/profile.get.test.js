@@ -10,6 +10,7 @@ describe('when displaying the help page for profile', () => {
 
   beforeEach(() => {
     req = getRequestMock();
+    req.headers.referer = undefined;
     res.mockResetAll();
     getDashboard = require('../../../src/app/profile/profile').get;
   });

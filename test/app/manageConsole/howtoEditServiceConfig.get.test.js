@@ -22,6 +22,7 @@ describe('when displaying the help page for manageConsole/howtoEditServiceConfig
     req = mockRequest({
       user: { sub: 'user1' },
       params: { sid: 'service1' },
+      headers: {referer: undefined},
       userServices: {
         serviceId: 'service1',
         userId: 'user1',

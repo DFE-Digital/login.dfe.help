@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "settings='./config/login.dfe.help.dev.json' node src/index.js",
-    "test": "./node_modules/.bin/jest",
+    "test": "jest --coverage",
     "start": "node --debug=9230 --inspect=0.0.0.0 src/index.js"
   },
   "repository": {
