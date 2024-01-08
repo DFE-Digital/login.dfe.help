@@ -48,6 +48,7 @@ const getRequestMock = (customRequest = {}) => ({
   isAuthenticated: jest.fn().mockReturnValue(true),
   body: {},
   query: {},
+  headers:{},
   user: {
     sub: 'suser1',
     email: 'super.user@unit.test',
