@@ -12,7 +12,7 @@ const helmet = require('helmet');
 const sanitization = require('login.dfe.sanitization');
 const csurf = require('csurf');
 const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-handling');
-const flash = require('express-flash-2');
+const flash = require('login.dfe.express-flash-2');
 
 // imports for authentication
 const passport = require('passport');
