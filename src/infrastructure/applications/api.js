@@ -1,21 +1,18 @@
 const config = require('./../config');
-const rp = require('login.dfe.request-promise-retry');
+const { fetchApi } = require('login.dfe.async-retry');
 const jwtStrategy = require('login.dfe.jwt-strategies');
 
 const callApi = async (endpoint, method, body, correlationId) => {
   const token = await jwtStrategy(config.applications.service).getBearerToken();
 
   try {
-    return await rp({
+    return await fetchApi(`${config.applications.service.url}/${endpoint}`, {
       method: method,
-      uri: `${config.applications.service.url}/${endpoint}`,
       headers: {
         authorization: `bearer ${token}`,
         'x-correlation-id': correlationId,
       },
       body: body,
-      json: true,
-      strictSSL: config.hostingEnvironment.env.toLowerCase() !== 'dev',
     });
   } catch (e) {
     const status = e.statusCode ? e.statusCode : 500;
@@ -33,13 +30,11 @@ const callApi = async (endpoint, method, body, correlationId) => {
 const getPageOfService = async (pageNumber, pageSize) => {
   const token = await jwtStrategy(config.applications.service).getBearerToken();
   try {
-    const client = await rp({
+    const client = await fetchApi(`${config.applications.service.url}/services?page=${pageNumber}&pageSize=${pageSize}`, {
       method: 'GET',
-      uri: `${config.applications.service.url}/services?page=${pageNumber}&pageSize=${pageSize}`,
       headers: {
         authorization: `bearer ${token}`,
       },
-      json: true,
     });
     return client;
   } catch (e) {
