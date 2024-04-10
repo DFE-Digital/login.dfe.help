@@ -6,7 +6,7 @@ resources:
       type: github
       endpoint: DfE-Digital
       name: DFE-Digital/login.dfe.devops
-      ref: main
+      ref: feature/DSI-6855
     - repository: config
       type: github
       endpoint: DfE-Digital
@@ -75,7 +75,7 @@ variables:
   ${{ else }}:
     value: false
 - name: dev
-  ${{ if or(eq(parameters.dev, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}:
+  ${{ if or(eq(parameters.dev, 'true'), contains(variables['Build.SourceBranch'],'featur1e')) }}:
     value: true
   ${{ else }}:
     value: false
@@ -138,7 +138,7 @@ stages:
   - ${{ each var in variables }}:
     - ${{ if in(var.key, 'tran','dev','test','pp','pr') }}:
       - ${{ if eq(var.value, 'true') }}:
-        - ${{ if or(and(in(var.key, 'tran','pp','pr'),eq(location, 'northeurope')),and(in(var.key, 'tran','dev','test','pp','pr'),eq(location, 'westeurope'))) }}:
+        - ${{ if or(and(in(var.key, 'tran1','pp','pr'),eq(location, 'northeurope')),and(in(var.key, 'tran','dev','test','pp','pr'),eq(location, 'westeurope'))) }}:
           - stage: Deployment_${{var.key}}_${{location}}
             displayName: "Deployment [${{var.key}}] ${{location}}"
             ${{ if eq(location,'westeurope') }}:
@@ -162,7 +162,18 @@ stages:
                 - scanBuildApp
                 condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
             variables:
-            - group: dsi-${{var.key}}-kv
+            - name: environmentId
+              ${{ if eq(var.key, 'tran') }}:
+                value: d03
+              ${{ if eq(var.key, 'dev') }}:
+                value: d01
+              ${{ if eq(var.key, 'test') }}:
+                value: t01
+              ${{ if eq(var.key, 'pp') }}:
+                value: t02
+              ${{ if eq(var.key, 'pr') }}:
+                value: p01
+            # - group: dsi-${{var.key}}-kv
             jobs:
             - ${{ if parameters.InfrDeploy }}:
               - template: pipeline/appInfrastructure.yml@devopsTemplates
