@@ -74,7 +74,7 @@
                             <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.type %>
                         </span>
                     <% } %>
-                    <select id="type" name="type" class="govuk-select govuk-!-width-three-quarters" onchange="showHideOtherMessageInput()">
+                    <select id="type" name="type" class="govuk-select govuk-!-width-three-quarters">
                         <option disabled selected value>Tell us what you need help with</option>
                         <option value="create-account" <%= locals.type === 'create-account' ? 'selected' : '' %>>Setting up a DfE Sign-in account</option>
                         <option value="service-access" <%= locals.type === 'service-access' ? 'selected' : '' %>>Using a DfE service</option>
@@ -140,15 +140,20 @@
 </div>
 
 <script>
-    function showHideOtherMessageInput(){
-        var elemWrapper = document.getElementById("typeOtherMessageGroup");
-        var elem = document.getElementById("typeOtherMessage");
-        if (document.getElementById("type").value === 'other') {
-            elemWrapper.style.display = 'block';
-            elem.focus();
+    const typeSelect = document.getElementById("type");
+    typeSelect.addEventListener("change", showHideOtherMessageInput);
+
+    function showHideOtherMessageInput(event) {
+        const targetId = event.target.id;
+        const inputGroup = document.getElementById(`${targetId}OtherMessageGroup`);
+        const input = document.getElementById(`${targetId}OtherMessage`);
+
+        if (event.target.value === 'other') {
+            inputGroup.style.display = 'block';
+            input.focus();
         } else {
-            elemWrapper.style.display = 'none';
-            elem.value = '';
+            inputGroup.style.display = 'none';
+            input.value = '';
         }
     }
 </script>
