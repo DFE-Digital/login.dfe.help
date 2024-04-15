@@ -29,12 +29,21 @@ const mockServicesInput = [
     name: 'analyse school performance',
     isExternalService: true,
   },
+  {
+    id: 'service2',
+    name: 'test service',
+    isExternalService: true,
+  },
 ];
 
 const mockServicesOutput = [
   {
     id: 'service1',
     name: 'analyse school performance',
+  },
+  {
+    id: 'service2',
+    name: 'test service',
   },
 ];
 
@@ -280,6 +289,62 @@ describe('When handling post of contact form', () => {
 
   it('should send the support request and redirect if urn is set and is in UKPRN format', async () => {
     req.body.urn = '10012345';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(1);
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed');
+  });
+
+  it('should render error view if service is not specified', async () => {
+    req.body.service = undefined;
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
+    expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
+      service: 'Select the service you are trying to use',
+    });
+  });
+
+  it('should render error view if service is specified but is not in the services list', async () => {
+    req.body.service = 'does not exist';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
+    expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
+      service: 'Select the service you are trying to use',
+    });
+  });
+
+  it('should send the support request and redirect if the service is specified and in the services list', async () => {
+    req.body.service = 'test service';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(1);
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed');
+  });
+
+  it('should send the support request and redirect if the service is specified and is "Other"', async () => {
+    req.body.service = 'Other';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(1);
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed');
+  });
+
+  it('should send the support request and redirect if the service is specified and is "None"', async () => {
+    req.body.service = 'None';
 
     await postContactForm(req, res);
 
