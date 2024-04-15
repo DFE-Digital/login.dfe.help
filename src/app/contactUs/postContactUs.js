@@ -26,8 +26,12 @@ const isValidStringValue = (value) => {
   return false;
 };
 
-const validate = (name, email, orgName, urn, message, service, type, typeOtherMessage) => {
+const validate = (fieldsObj, services) => {
   const validationMessages = {};
+
+  const {
+    name, email, orgName, urn, message, service, type, typeOtherMessage,
+  } = fieldsObj;
 
   if (!name || !isValidStringValue(name)) {
     validationMessages.name = 'Enter your name';
@@ -46,15 +50,16 @@ const validate = (name, email, orgName, urn, message, service, type, typeOtherMe
     validationMessages.urn = 'Enter a valid URN or UKPRN, if known';
   }
 
-  if (!service) {
-    validationMessages.service = 'Enter information about the service you are trying to use';
-  }
   if (!type) {
     validationMessages.type = 'Enter information about what you need help with';
   }
 
   if (type === 'other' && (!typeOtherMessage || !isValidStringValue(typeOtherMessage))) {
     validationMessages.typeOtherMessage = 'Enter information about your issue';
+  }
+
+  if (!service || (service && ![...services.map((x) => x.name), 'Other', 'None'].includes(service))) {
+    validationMessages.service = 'Select the service you are trying to use';
   }
 
   if (!message || !isValidStringValue(message)) {
@@ -83,15 +88,19 @@ const post = async (req, res) => {
   const type = decode(req.body.type);
   const typeOtherMessage = decode(req.body.typeOtherMessage);
 
-  const validationResult = validate(name, email, orgName, urn, message, service, type, typeOtherMessage);
+  // Retrieve list of services for validation and rendering contact form.
+  const services = await getAndMapExternalServices(req.id);
+
+  const validationResult = validate({
+    name, email, orgName, urn, message, service, type, typeOtherMessage,
+  }, services);
+
   if (!validationResult.isValid) {
     // cancel button will take back to dashboard by default (if going directly to this page)
     let cancelLink = '/dashboard';
     if (req.body.currentReferrer) {
       cancelLink = req.body.currentReferrer;
     }
-    // retrieve list of services
-    const services = await getAndMapExternalServices(req.id);
     return res.render('contactUs/views/contactUs', {
       csrfToken: req.csrfToken(),
       title: 'DfE Sign-in',
