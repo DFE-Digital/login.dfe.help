@@ -1,12 +1,8 @@
-const config = require('../../infrastructure/config');
 const { decode } = require('html-entities');
 const NotificationClient = require('login.dfe.notifications.client');
 const emailValidator = require('email-validator');
+const config = require('../../infrastructure/config');
 const { getAndMapExternalServices } = require('../shared/utils');
-
-const notificationClient = new NotificationClient({
-  connectionString: config.notifications.connectionString,
-});
 
 const validateEmail = (email) => {
   const emailValidationMessage = 'Enter your email address';
@@ -69,8 +65,11 @@ const validate = (name, email, orgName, message, service, type, typeOtherMessage
   };
 };
 
-
 const post = async (req, res) => {
+  const notificationClient = new NotificationClient({
+    connectionString: config.notifications.connectionString,
+  });
+
   const message = decode(req.body.message);
   const email = decode(req.body.email);
   const orgName = decode(req.body.orgName);
@@ -113,10 +112,9 @@ const post = async (req, res) => {
   await notificationClient.sendSupportRequest(name, email, service, type, typeOtherMessage, orgName, urn, message);
 
   if (req.query.redirect_uri) {
-    res.redirect(`/contact-us/completed?redirect_uri=${req.query.redirect_uri}`);
-  } else {
-    res.redirect('/contact-us/completed');
+    return res.redirect(`/contact-us/completed?redirect_uri=${req.query.redirect_uri}`);
   }
+  return res.redirect('/contact-us/completed');
 };
 
 module.exports = {

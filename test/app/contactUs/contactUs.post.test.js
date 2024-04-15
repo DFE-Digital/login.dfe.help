@@ -1,30 +1,24 @@
+// Disabled global require for config Mock to ensure the mock factory can be used.
+// eslint-disable-next-line global-require
 jest.mock('./../../../src/infrastructure/config', () => require('../../utils').configMockFactory());
-
-jest.mock('./../../../src/infrastructure/applications', () => {
-  return {
-    listAllServices: jest.fn(),
-  };
-});
-
-const { listAllServices } = require('./../../../src/infrastructure/applications');
-
+jest.mock('./../../../src/infrastructure/applications', () => ({
+  listAllServices: jest.fn(),
+}));
 jest.mock('login.dfe.notifications.client');
 
 const NotificationClient = require('login.dfe.notifications.client');
+const { post: postContactForm } = require('../../../src/app/contactUs/postContactUs');
+const { listAllServices } = require('../../../src/infrastructure/applications');
+const { getRequestMock, getResponseMock } = require('../../utils');
+
 const sendSupportRequest = jest.fn();
 const sendSupportRequestConfirmation = jest.fn();
-NotificationClient.mockImplementation(() => {
-  return {
-    sendSupportRequest,
-    sendSupportRequestConfirmation,
-  };
-});
 
 const createString = (length) => {
   const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
   let str = '';
   for (let i = 0; i < length; i += 1) {
-    str = str + charset[Math.random() * charset.length];
+    str += charset[Math.random() * charset.length];
   }
   return str;
 };
@@ -46,11 +40,10 @@ const mockServicesOutput = [
 
 describe('When handling post of contact form', () => {
   let req;
-  let res;
-  let postContactForm;
+  const res = getResponseMock();
 
   beforeEach(() => {
-    req = {
+    req = getRequestMock({
       csrfToken: () => 'csrf-token',
       body: {
         name: 'User One',
@@ -64,35 +57,20 @@ describe('When handling post of contact form', () => {
       },
       session: {},
       query: {},
-    };
-
-    res = {
-      redirect: jest.fn(),
-      render: jest.fn(),
-    };
+    });
+    res.mockResetAll();
 
     sendSupportRequest.mockReset();
     sendSupportRequestConfirmation.mockReset();
-    NotificationClient.mockImplementation(() => {
-      return {
-        sendSupportRequest,
-        sendSupportRequestConfirmation,
-      };
-    });
-
     NotificationClient.mockReset();
-    NotificationClient.mockImplementation(() => {
-      return {
-        sendSupportRequest,
-        sendSupportRequestConfirmation,
-      };
-    });
+    NotificationClient.mockImplementation(() => ({
+      sendSupportRequest,
+      sendSupportRequestConfirmation,
+    }));
 
     listAllServices.mockReset().mockReturnValue({
       services: mockServicesInput,
     });
-
-    postContactForm = require('./../../../src/app/contactUs/postContactUs').post;
   });
 
   it('should create NotificationClient with config connection string', async () => {
@@ -313,5 +291,4 @@ describe('When handling post of contact form', () => {
       },
     });
   });
-
 });
