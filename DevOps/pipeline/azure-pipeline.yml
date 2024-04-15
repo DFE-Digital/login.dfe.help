@@ -173,7 +173,6 @@ stages:
                 value: t02
               ${{ if eq(var.key, 'pr') }}:
                 value: p01
-            # - group: dsi-${{var.key}}-kv
             jobs:
             - ${{ if parameters.InfrDeploy }}:
               - template: pipeline/appInfrastructure.yml@devopsTemplates
