@@ -5,23 +5,20 @@ const loggerMockFactory = () => ({
   audit: jest.fn(),
 });
 
-const expressAuthenticationStub = (authenticated, extras) => {
-  return (req, res, next) => {
-    req.isAuthenticated = () => {
-      return authenticated;
-    };
-    req.user = {};
-    Object.assign(req, extras);
+const expressAuthenticationStub = (authenticated, extras) => (req, res, next) => {
+  req.isAuthenticated = () => authenticated;
+  req.user = {};
+  Object.assign(req, extras);
 
-    if (!res.locals) {
-      res.locals = {};
-    }
-    res.locals.flash = {};
-    res.locals.profilesUrl = '';
+  if (!res.locals) {
+    res.locals = {};
+  }
+  res.locals.flash = {};
+  res.locals.profilesUrl = '';
 
-    next();
-  };
+  next();
 };
+
 const configMockFactory = (customConfig) => ({
   hostingEnvironment: {
     agentKeepAlive: {},
@@ -48,7 +45,7 @@ const getRequestMock = (customRequest = {}) => ({
   isAuthenticated: jest.fn().mockReturnValue(true),
   body: {},
   query: {},
-  headers:{},
+  headers: {},
   user: {
     sub: 'suser1',
     email: 'super.user@unit.test',
