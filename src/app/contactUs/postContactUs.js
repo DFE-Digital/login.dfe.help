@@ -26,7 +26,7 @@ const isValidStringValue = (value) => {
   return false;
 };
 
-const validate = (name, email, orgName, message, service, type, typeOtherMessage) => {
+const validate = (name, email, orgName, urn, message, service, type, typeOtherMessage) => {
   const validationMessages = {};
 
   if (!name || !isValidStringValue(name)) {
@@ -40,6 +40,10 @@ const validate = (name, email, orgName, message, service, type, typeOtherMessage
 
   if (!orgName || !isValidStringValue(orgName)) {
     validationMessages.orgName = 'Enter your organisation name';
+  }
+
+  if (urn && (typeof urn !== 'string' || !/^[0-9]{6,8}$/.test(urn))) {
+    validationMessages.urn = 'Enter a valid URN or UKPRN, if known';
   }
 
   if (!service) {
@@ -79,7 +83,7 @@ const post = async (req, res) => {
   const type = decode(req.body.type);
   const typeOtherMessage = decode(req.body.typeOtherMessage);
 
-  const validationResult = validate(name, email, orgName, message, service, type, typeOtherMessage);
+  const validationResult = validate(name, email, orgName, urn, message, service, type, typeOtherMessage);
   if (!validationResult.isValid) {
     // cancel button will take back to dashboard by default (if going directly to this page)
     let cancelLink = '/dashboard';

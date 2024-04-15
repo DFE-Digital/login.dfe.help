@@ -50,7 +50,7 @@ describe('When handling post of contact form', () => {
         email: 'user.one@unit.test',
         message: 'Please help me',
         orgName: 'Organisation name',
-        urn: '1234',
+        urn: '123456',
         service: 'test service',
         type: 'test type',
         typeOtherMessage: '',
@@ -230,6 +230,62 @@ describe('When handling post of contact form', () => {
         orgName: 'Enter your organisation name',
       },
     });
+  });
+
+  it('should render error view if urn is set and not a string', async () => {
+    req.body.urn = ['test', '123'];
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
+    expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
+      urn: 'Enter a valid URN or UKPRN, if known',
+    });
+  });
+
+  it('should render error view if urn is set and not in the URN/UKPRN format', async () => {
+    req.body.urn = 'abcd';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
+    expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
+      urn: 'Enter a valid URN or UKPRN, if known',
+    });
+  });
+
+  it('should send the support request and redirect if urn is not set', async () => {
+    req.body.urn = undefined;
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(1);
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed');
+  });
+
+  it('should send the support request and redirect if urn is set and is in URN format', async () => {
+    req.body.urn = '123456';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(1);
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed');
+  });
+
+  it('should send the support request and redirect if urn is set and is in UKPRN format', async () => {
+    req.body.urn = '10012345';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(1);
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed');
   });
 
   it('should render error view if message is missing', async () => {
