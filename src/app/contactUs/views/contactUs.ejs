@@ -132,15 +132,19 @@
                     </select>
                 </div>
 
-                <div class="govuk-form-group <%= (locals.validationMessages.message !== undefined) ? 'govuk-form-group--error' : '' %>">
+                <div class="govuk-form-group govuk-character-count <%= (locals.validationMessages.message !== undefined) ? 'govuk-form-group--error' : '' %>"
+                    data-module="govuk-character-count" data-maxlength="1000">
                     <label class="govuk-label govuk-label--s" for="message">Tell us about your problem</label>
                     <% if (locals.validationMessages.message !== undefined) { %>
                         <span id="validation-message" class="govuk-error-message">
                             <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.message %>
                         </span>
                     <% } %>
-                    <textarea class="govuk-textarea govuk-!-width-three-quarters" <% if (locals.validationMessages.message !== undefined) { %> aria-invalid="true" aria-describedby="validation-message" <% } %>
+                    <textarea class="govuk-textarea govuk-!-width-three-quarters govuk-js-character-count" aria-describedby="message-info<%- (locals.validationMessages.message !== undefined) ? ' validation-message" aria-invalid="true"' : '"' %>
                         id="message" name="message" rows="6" maxlength="1000" ><%=message%></textarea>
+                    <div id="message-info" class="govuk-hint govuk-character-count__message">
+                        You can enter up to 1000 characters
+                    </div>
                 </div>
 
             </fieldset>
