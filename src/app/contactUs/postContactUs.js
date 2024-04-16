@@ -73,6 +73,22 @@ const validate = (fieldsObj, services) => {
     validationMessages.message = 'Message cannot be longer than 1000 characters';
   }
 
+  if (
+    (!validationMessages.name && !validationMessages.orgName)
+    && (name.toUpperCase() === orgName.toUpperCase())
+  ) {
+    validationMessages.name = 'Your name and your organisation\'s name must not match';
+    validationMessages.orgName = 'Your name and your organisation\'s name must not match';
+  }
+
+  if (
+    (!validationMessages.typeOtherMessage && !validationMessages.message)
+    && (typeOtherMessage.toUpperCase() === message.toUpperCase())
+  ) {
+    validationMessages.typeOtherMessage = 'Issue summary and further details must not match';
+    validationMessages.message = 'Issue summary and further details must not match';
+  }
+
   return {
     isValid: Object.keys(validationMessages).length === 0,
     validationMessages,

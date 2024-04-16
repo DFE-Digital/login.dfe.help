@@ -489,6 +489,66 @@ describe('When handling post of contact form', () => {
     });
   });
 
+  it('should render error view if the name and orgName fields are both valid and equal', async () => {
+    req.body.name = 'test value';
+    req.body.orgName = 'test value';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
+    expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
+      name: 'Your name and your organisation\'s name must not match',
+      orgName: 'Your name and your organisation\'s name must not match',
+    });
+  });
+
+  it('should render error view if the name and orgName fields are both valid and equal (case-insensitive)', async () => {
+    req.body.name = 'test value';
+    req.body.orgName = 'TeSt VaLue';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
+    expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
+      name: 'Your name and your organisation\'s name must not match',
+      orgName: 'Your name and your organisation\'s name must not match',
+    });
+  });
+
+  it('should render error view if the typeOtherMessage and message fields are both valid and equal', async () => {
+    req.body.typeOtherMessage = 'test value';
+    req.body.message = 'test value';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
+    expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
+      typeOtherMessage: 'Issue summary and further details must not match',
+      message: 'Issue summary and further details must not match',
+    });
+  });
+
+  it('should render error view if the typeOtherMessage and message fields are both valid and equal (case-insensitive)', async () => {
+    req.body.typeOtherMessage = 'tEsT vAlUe';
+    req.body.message = 'test value';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
+    expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
+      typeOtherMessage: 'Issue summary and further details must not match',
+      message: 'Issue summary and further details must not match',
+    });
+  });
+
   it('should log the request and redirect if one of the honeypot fields is filled in', async () => {
     req.body.phoneNumber = '';
     req.body.password = 'foo';
