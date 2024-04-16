@@ -3,6 +3,12 @@ const loggerMockFactory = () => ({
   warn: jest.fn(),
   error: jest.fn(),
   audit: jest.fn(),
+  mockResetAll() {
+    this.info.mockReset();
+    this.warn.mockReset();
+    this.error.mockReset();
+    this.audit.mockReset();
+  },
 });
 
 const expressAuthenticationStub = (authenticated, extras) => (req, res, next) => {

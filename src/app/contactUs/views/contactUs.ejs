@@ -15,13 +15,24 @@
             </p>
         </div>
 
-        <form method="post" id="form-contact-servicedesk">
+        <form method="post" id="form-contact-servicedesk" autocomplete="off">
             <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
             <input type="hidden" name="currentReferrer" value="<%=locals.referrer%>" />
 
             <fieldset class="govuk-fieldset">
 
                 <legend class="govuk-fieldset__legend govuk-visually-hidden">Contact DfE Sign-in service desk</legend>
+
+                <div class="govuk-form-group" style="display: none !important; visibility: hidden !important">
+                    <label class="govuk-label govuk-label--s" for="phoneNumber">Phone Number</label>
+                    <div id="phone-hint" class="govuk-hint">This field is used for spam detection, please do not fill this in, your response will not be sent to the service desk.</div>
+                    <input class="govuk-input govuk-!-width-three-quarters" id="phoneNumber" name="phoneNumber" type="tel" aria-describedby="phone-hint">
+                </div>
+                <div class="govuk-form-group" style="display: none !important; visibility: hidden !important">
+                    <label class="govuk-label govuk-label--s" for="password">Password</label>
+                    <div id="password-hint" class="govuk-hint">This field is used for spam detection, please do not fill this in, your response will not be sent to the service desk.</div>
+                    <input class="govuk-input govuk-!-width-three-quarters" id="password" name="password" type="password" aria-describedby="password-hint">
+                </div>
 
                 <div class="govuk-form-group <%= (locals.validationMessages.name !== undefined) ? 'govuk-form-group--error' : '' %>">
                     <label class="govuk-label govuk-label--s" for="name">Full name</label>
