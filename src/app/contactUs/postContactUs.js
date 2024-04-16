@@ -83,7 +83,7 @@ const validate = (fieldsObj, services) => {
 
   if (
     (!validationMessages.typeOtherMessage && !validationMessages.message)
-    && (typeOtherMessage.toUpperCase() === message.toUpperCase())
+    && (typeOtherMessage.toUpperCase() === message.toUpperCase().substring(0, 200))
   ) {
     validationMessages.typeOtherMessage = 'Issue summary and further details must not match';
     validationMessages.message = 'Issue summary and further details must not match';

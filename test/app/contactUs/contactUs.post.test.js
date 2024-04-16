@@ -549,6 +549,36 @@ describe('When handling post of contact form', () => {
     });
   });
 
+  it('should render error view if the typeOtherMessage and message (first 200 characters) fields are both valid and equal', async () => {
+    req.body.typeOtherMessage = 'test value'.repeat(20);
+    req.body.message = `${'test value'.repeat(20)}${createString(800)}`;
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
+    expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
+      typeOtherMessage: 'Issue summary and further details must not match',
+      message: 'Issue summary and further details must not match',
+    });
+  });
+
+  it('should render error view if the typeOtherMessage and message (first 200 characters) fields are both valid and equal (case-insensitive)', async () => {
+    req.body.typeOtherMessage = 'tEsT vAlUe'.repeat(20);
+    req.body.message = `${'test value'.repeat(20)}${createString(800)}`;
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
+    expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
+      typeOtherMessage: 'Issue summary and further details must not match',
+      message: 'Issue summary and further details must not match',
+    });
+  });
+
   it('should log the request and redirect if one of the honeypot fields is filled in', async () => {
     req.body.phoneNumber = '';
     req.body.password = 'foo';
