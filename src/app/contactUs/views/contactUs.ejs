@@ -87,7 +87,8 @@
 
                 <!-- Forces the additional information box to display if JavaScript is disabled. -->
                 <noscript><style>#typeOtherMessageGroup { display: block !important; }</style></noscript>
-                <div id="typeOtherMessageGroup" class="govuk-form-group <%= (locals.validationMessages.typeOtherMessage !== undefined) ? 'govuk-form-group--error' : '' %>"
+                <div id="typeOtherMessageGroup" class="govuk-form-group govuk-character-count <%= (locals.validationMessages.typeOtherMessage !== undefined) ? 'govuk-form-group--error' : '' %>"
+                    data-module="govuk-character-count" data-maxlength="200"
                     style="<%= locals.type !== 'other' ? 'display: none' : '' %>">
                     <label class="govuk-label govuk-label--s" for="typeOtherMessage">Give us a short summary of your issue</label>
                     <% if (locals.validationMessages.typeOtherMessage !== undefined) { %>
@@ -95,8 +96,11 @@
                             <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.typeOtherMessage %>
                         </span>
                     <% } %>
-                    <textarea class="govuk-textarea govuk-!-width-three-quarters" <% if (locals.validationMessages.typeOtherMessage !== undefined) { %> aria-invalid="true" aria-describedby="validation-typeOtherMessage" <% } %>
+                    <textarea class="govuk-textarea govuk-!-width-three-quarters govuk-js-character-count" aria-describedby="typeOtherMessage-info<%- (locals.validationMessages.typeOtherMessage !== undefined) ? ' validation-typeOtherMessage" aria-invalid="true"' : '"' %>
                         id="typeOtherMessage" name="typeOtherMessage" rows="3" maxlength="200" ><%=typeOtherMessage%></textarea>
+                    <div id="typeOtherMessage-info" class="govuk-hint govuk-character-count__message">
+                        You can enter up to 200 characters
+                    </div>
                 </div>
 
                 <div class="govuk-form-group <%= (locals.validationMessages.service !== undefined) ? 'govuk-form-group--error' : '' %>">
