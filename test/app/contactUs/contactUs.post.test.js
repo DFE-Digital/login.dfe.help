@@ -18,7 +18,7 @@ const createString = (length) => {
   const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
   let str = '';
   for (let i = 0; i < length; i += 1) {
-    str += charset[Math.random() * charset.length];
+    str += charset[Math.floor(Math.random() * charset.length)];
   }
   return str;
 };
@@ -289,6 +289,68 @@ describe('When handling post of contact form', () => {
 
   it('should send the support request and redirect if urn is set and is in UKPRN format', async () => {
     req.body.urn = '10012345';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(1);
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed');
+  });
+
+  it('should render error view if the request type is not specified', async () => {
+    req.body.type = undefined;
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
+    expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
+      type: 'Select the type of issue you need help with',
+    });
+  });
+
+  it('should render error view if the request type is "other" and the typeOtherMessage field is empty', async () => {
+    req.body.type = 'other';
+    req.body.typeOtherMessage = '';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
+    expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
+      typeOtherMessage: 'Enter a summary of your issue',
+    });
+  });
+
+  it('should render error view if the typeOtherMessage field has more than 200 characters', async () => {
+    req.body.typeOtherMessage = createString(201);
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.render.mock.calls).toHaveLength(1);
+    expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
+    expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
+      typeOtherMessage: 'Issue summary must be 200 characters or less',
+    });
+  });
+
+  it('should send the support request and redirect if the request type is not "other" and the typeOtherMessage field is empty', async () => {
+    req.body.type = 'test type';
+    req.body.typeOtherMessage = '';
+
+    await postContactForm(req, res);
+
+    expect(sendSupportRequest.mock.calls).toHaveLength(1);
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed');
+  });
+
+  it('should send the support request and redirect if the request type is "other" and the typeOtherMessage field is between 1 and 200 characters', async () => {
+    req.body.type = 'other';
+    req.body.typeOtherMessage = createString(199);
 
     await postContactForm(req, res);
 

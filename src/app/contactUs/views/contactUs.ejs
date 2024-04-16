@@ -7,14 +7,14 @@
                 Contact us for further help
             </h2>
             <p class="govuk-body govuk-!-margin-right-6">
-                Need a helping hand? Fill in your details and include any information you think would be helpful 
+                Need a helping hand? Fill in your details and include any information you think would be helpful
                 for our service desk team.
             </p>
             <p class="govuk-body govuk-!-margin-right-6">
                 We will attempt to respond within the next 5 working days.
             </p>
         </div>
-        
+
         <form method="post" id="form-contact-servicedesk">
             <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
             <input type="hidden" name="currentReferrer" value="<%=locals.referrer%>" />
@@ -89,14 +89,14 @@
                 <noscript><style>#typeOtherMessageGroup { display: block !important; }</style></noscript>
                 <div id="typeOtherMessageGroup" class="govuk-form-group <%= (locals.validationMessages.typeOtherMessage !== undefined) ? 'govuk-form-group--error' : '' %>"
                     style="<%= locals.type !== 'other' ? 'display: none' : '' %>">
-                    <label class="govuk-label govuk-label--s" for="typeOtherMessage">Tell us what you need help with</label>
+                    <label class="govuk-label govuk-label--s" for="typeOtherMessage">Give us a short summary of your issue</label>
                     <% if (locals.validationMessages.typeOtherMessage !== undefined) { %>
                         <span id="validation-typeOtherMessage" class="govuk-error-message">
                             <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.typeOtherMessage %>
                         </span>
                     <% } %>
                     <textarea class="govuk-textarea govuk-!-width-three-quarters" <% if (locals.validationMessages.typeOtherMessage !== undefined) { %> aria-invalid="true" aria-describedby="validation-typeOtherMessage" <% } %>
-                        id="typeOtherMessage" name="typeOtherMessage" rows="3" maxlength="500" ><%=typeOtherMessage%></textarea>
+                        id="typeOtherMessage" name="typeOtherMessage" rows="3" maxlength="200" ><%=typeOtherMessage%></textarea>
                 </div>
 
                 <div class="govuk-form-group <%= (locals.validationMessages.service !== undefined) ? 'govuk-form-group--error' : '' %>">

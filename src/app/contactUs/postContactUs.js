@@ -51,11 +51,15 @@ const validate = (fieldsObj, services) => {
   }
 
   if (!type) {
-    validationMessages.type = 'Enter information about what you need help with';
+    validationMessages.type = 'Select the type of issue you need help with';
   }
 
   if (type === 'other' && (!typeOtherMessage || !isValidStringValue(typeOtherMessage))) {
-    validationMessages.typeOtherMessage = 'Enter information about your issue';
+    validationMessages.typeOtherMessage = 'Enter a summary of your issue';
+  }
+
+  if (typeof typeOtherMessage === 'string' && typeOtherMessage.length > 200) {
+    validationMessages.typeOtherMessage = 'Issue summary must be 200 characters or less';
   }
 
   if (!service || (service && ![...services.map((x) => x.name), 'Other', 'None'].includes(service))) {
