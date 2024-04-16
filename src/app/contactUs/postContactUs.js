@@ -2,6 +2,7 @@ const { decode } = require('html-entities');
 const NotificationClient = require('login.dfe.notifications.client');
 const emailValidator = require('email-validator');
 const config = require('../../infrastructure/config');
+const logger = require('../../infrastructure/logger');
 const { getAndMapExternalServices } = require('../shared/utils');
 
 const validateEmail = (email) => {
@@ -125,8 +126,23 @@ const post = async (req, res) => {
     });
   }
 
-  // send details to notificationClient, which is expecting service, phone and type, so we send them as null
-  await notificationClient.sendSupportRequest(name, email, service, type, typeOtherMessage, orgName, urn, message);
+  // If either or both the honeypot fields are not blank, log the request, otherwise send it to the service desk.
+  if ([req.body.phoneNumber, req.body.password].some((x) => typeof x !== 'string' || x !== '')) {
+    logger.audit({
+      type: 'contact-form',
+      subType: 'spam-detection',
+      application: config.loggerSettings.applicationName,
+      env: config.hostingEnvironment.env,
+      message: 'Spam detected in contact form (honeypot field(s) filled)',
+      meta: {
+        body: JSON.stringify({
+          name, email, orgName, urn, type, typeOtherMessage, service, message,
+        }),
+      },
+    });
+  } else {
+    await notificationClient.sendSupportRequest(name, email, service, type, typeOtherMessage, orgName, urn, message);
+  }
 
   if (req.query.redirect_uri) {
     return res.redirect(`/contact-us/completed?redirect_uri=${req.query.redirect_uri}`);

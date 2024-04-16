@@ -1,6 +1,15 @@
-// Disabled global require for config Mock to ensure the mock factory can be used.
-// eslint-disable-next-line global-require
-jest.mock('./../../../src/infrastructure/config', () => require('../../utils').configMockFactory());
+// Disabled global require for config/logger mocks to ensure the mock factory can be used.
+/* eslint-disable global-require */
+jest.mock('./../../../src/infrastructure/config', () => require('../../utils').configMockFactory({
+  loggerSettings: {
+    applicationName: 'help',
+  },
+  hostingEnvironment: {
+    env: 'dev',
+  },
+}));
+jest.mock('./../../../src/infrastructure/logger', () => require('../../utils').loggerMockFactory());
+/* eslint-enable global-require */
 jest.mock('./../../../src/infrastructure/applications', () => ({
   listAllServices: jest.fn(),
 }));
@@ -8,6 +17,7 @@ jest.mock('login.dfe.notifications.client');
 
 const NotificationClient = require('login.dfe.notifications.client');
 const { post: postContactForm } = require('../../../src/app/contactUs/postContactUs');
+const logger = require('../../../src/infrastructure/logger');
 const { listAllServices } = require('../../../src/infrastructure/applications');
 const { getRequestMock, getResponseMock } = require('../../utils');
 
@@ -63,6 +73,8 @@ describe('When handling post of contact form', () => {
         service: 'test service',
         type: 'test type',
         typeOtherMessage: '',
+        phoneNumber: '',
+        password: '',
       },
       session: {},
       query: {},
@@ -76,6 +88,8 @@ describe('When handling post of contact form', () => {
       sendSupportRequest,
       sendSupportRequestConfirmation,
     }));
+
+    logger.mockResetAll();
 
     listAllServices.mockReset().mockReturnValue({
       services: mockServicesInput,
@@ -473,5 +487,91 @@ describe('When handling post of contact form', () => {
         message: 'Message cannot be longer than 1000 characters',
       },
     });
+  });
+
+  it('should log the request and redirect if one of the honeypot fields is filled in', async () => {
+    req.body.phoneNumber = '';
+    req.body.password = 'foo';
+
+    await postContactForm(req, res);
+
+    expect(logger.audit.mock.calls).toHaveLength(1);
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed');
+  });
+
+  it('should log the request and redirect if both of the honeypot fields are filled in', async () => {
+    req.body.phoneNumber = 'foo';
+    req.body.password = 'foo';
+
+    await postContactForm(req, res);
+
+    expect(logger.audit.mock.calls).toHaveLength(1);
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed');
+  });
+
+  it('should log the request and redirect if one of the honeypot fields is not a string', async () => {
+    req.body.phoneNumber = [];
+    req.body.password = '';
+
+    await postContactForm(req, res);
+
+    expect(logger.audit.mock.calls).toHaveLength(1);
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed');
+  });
+
+  it('should log the request and redirect if both of the honeypot fields are not strings', async () => {
+    req.body.phoneNumber = [];
+    req.body.password = undefined;
+
+    await postContactForm(req, res);
+
+    expect(logger.audit.mock.calls).toHaveLength(1);
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed');
+  });
+
+  it('should log the correct details if the honeypot fields are filled in or a different type', async () => {
+    req.body.phoneNumber = 'foo';
+    req.body.password = [];
+
+    const {
+      name, email, orgName, urn, type, typeOtherMessage, service, message,
+    } = req.body;
+
+    await postContactForm(req, res);
+
+    expect(logger.audit.mock.calls).toHaveLength(1);
+    expect(sendSupportRequest.mock.calls).toHaveLength(0);
+    expect(logger.audit.mock.calls[0][0]).toEqual({
+      type: 'contact-form',
+      subType: 'spam-detection',
+      application: 'help',
+      env: 'dev',
+      message: 'Spam detected in contact form (honeypot field(s) filled)',
+      meta: {
+        body: JSON.stringify({
+          name, email, orgName, urn, type, typeOtherMessage, service, message,
+        }),
+      },
+    });
+  });
+
+  it('should send the support request and redirect if both of the honeypot fields are empty strings', async () => {
+    req.body.phoneNumber = '';
+    req.body.password = '';
+
+    await postContactForm(req, res);
+
+    expect(logger.audit.mock.calls).toHaveLength(0);
+    expect(sendSupportRequest.mock.calls).toHaveLength(1);
+    expect(res.redirect.mock.calls.length).toBe(1);
+    expect(res.redirect.mock.calls[0][0]).toBe('/contact-us/completed');
   });
 });
