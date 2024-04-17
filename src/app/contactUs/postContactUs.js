@@ -150,6 +150,7 @@ const post = async (req, res) => {
       application: config.loggerSettings.applicationName,
       env: config.hostingEnvironment.env,
       message: 'Spam detected in contact form (honeypot field(s) filled)',
+      requestIp: req.headers?.['x-forwarded-for']?.split(':')[0] || req.socket?.remoteAddress,
       meta: {
         body: {
           name, email, orgName, urn, type, typeOtherMessage, service, message,

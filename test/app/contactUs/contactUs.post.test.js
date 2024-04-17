@@ -78,6 +78,9 @@ describe('When handling post of contact form', () => {
       },
       session: {},
       query: {},
+      headers: {
+        'x-forwarded-for': '127.0.0.1, 192.168.1.1',
+      },
     });
     res.mockResetAll();
 
@@ -630,6 +633,7 @@ describe('When handling post of contact form', () => {
   it('should log the correct details if the honeypot fields are filled in or a different type', async () => {
     req.body.phoneNumber = 'foo';
     req.body.password = [];
+    req.headers['x-forwarded-for'] = '127.0.0.1, 192.168.1.1';
 
     const {
       name, email, orgName, urn, type, typeOtherMessage, service, message,
@@ -645,6 +649,7 @@ describe('When handling post of contact form', () => {
       application: 'help',
       env: 'dev',
       message: 'Spam detected in contact form (honeypot field(s) filled)',
+      requestIp: '127.0.0.1, 192.168.1.1',
       meta: {
         body: {
           name, email, orgName, urn, type, typeOtherMessage, service, message,

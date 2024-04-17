@@ -9,6 +9,10 @@
     "max-len": 0
   },
   "env": {
-    "jest": true
+    "jest": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest"
   }
 }
