@@ -646,9 +646,9 @@ describe('When handling post of contact form', () => {
       env: 'dev',
       message: 'Spam detected in contact form (honeypot field(s) filled)',
       meta: {
-        body: JSON.stringify({
+        body: {
           name, email, orgName, urn, type, typeOtherMessage, service, message,
-        }),
+        },
       },
     });
   });
