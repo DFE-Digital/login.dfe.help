@@ -151,9 +151,9 @@ const post = async (req, res) => {
       env: config.hostingEnvironment.env,
       message: 'Spam detected in contact form (honeypot field(s) filled)',
       meta: {
-        body: JSON.stringify({
+        body: {
           name, email, orgName, urn, type, typeOtherMessage, service, message,
-        }),
+        },
       },
     });
   } else {
