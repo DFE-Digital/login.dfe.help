@@ -70,15 +70,15 @@ const validate = (fieldsObj, services) => {
   if (!message || !isValidStringValue(message)) {
     validationMessages.message = 'Enter information about your issue';
   } else if (message.length > 1000) {
-    validationMessages.message = 'Message cannot be longer than 1000 characters';
+    validationMessages.message = 'Issue details cannot be longer than 1000 characters';
   }
 
   if (
     (!validationMessages.name && !validationMessages.orgName)
     && (name.toUpperCase() === orgName.toUpperCase())
   ) {
-    validationMessages.name = 'Your name and your organisation\'s name must not match';
-    validationMessages.orgName = 'Your name and your organisation\'s name must not match';
+    validationMessages.name = 'Full name and organisation name must not match';
+    validationMessages.orgName = 'Full name and organisation name must not match';
   }
 
   if (

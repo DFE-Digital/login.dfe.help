@@ -487,7 +487,7 @@ describe('When handling post of contact form', () => {
       isHidden: true,
       isHomeTopHidden: true,
       validationMessages: {
-        message: 'Message cannot be longer than 1000 characters',
+        message: 'Issue details cannot be longer than 1000 characters',
       },
     });
   });
@@ -502,8 +502,8 @@ describe('When handling post of contact form', () => {
     expect(res.render.mock.calls).toHaveLength(1);
     expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
     expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
-      name: 'Your name and your organisation\'s name must not match',
-      orgName: 'Your name and your organisation\'s name must not match',
+      name: 'Full name and organisation name must not match',
+      orgName: 'Full name and organisation name must not match',
     });
   });
 
@@ -517,8 +517,8 @@ describe('When handling post of contact form', () => {
     expect(res.render.mock.calls).toHaveLength(1);
     expect(res.render.mock.calls[0][0]).toBe('contactUs/views/contactUs');
     expect(res.render.mock.calls[0][1]).toHaveProperty('validationMessages', {
-      name: 'Your name and your organisation\'s name must not match',
-      orgName: 'Your name and your organisation\'s name must not match',
+      name: 'Full name and organisation name must not match',
+      orgName: 'Full name and organisation name must not match',
     });
   });
 
