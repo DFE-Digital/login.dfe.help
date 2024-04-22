@@ -1,27 +1,23 @@
+// Disabled global require for config Mock to ensure the mock factory can be used.
+// eslint-disable-next-line global-require
 jest.mock('./../../../src/infrastructure/config', () => require('../../utils').configMockFactory());
+jest.mock('./../../../src/infrastructure/applications', () => ({
+  listAllServices: jest.fn(),
+}));
 
-jest.mock('./../../../src/infrastructure/applications', () => {
-  return {
-    listAllServices: jest.fn(),
-  };
-});
-
-const { listAllServices } = require('./../../../src/infrastructure/applications');
-
+const { get: getContactUs } = require('../../../src/app/contactUs/getContactUs');
+const { listAllServices } = require('../../../src/infrastructure/applications');
 const { getRequestMock, getResponseMock } = require('../../utils');
-
-const res = getResponseMock();
 
 describe('when displaying the contact us page', () => {
   let req;
-  let getContactUs;
+  const res = getResponseMock();
 
   beforeEach(() => {
     req = getRequestMock({
       get: jest.fn().mockReturnValue('https://test_referrer.com/test_referrer'),
     });
     res.mockResetAll();
-    getContactUs = require('../../../src/app/contactUs/getContactUs').get;
 
     listAllServices.mockReset().mockReturnValue({
       services: [
@@ -69,5 +65,4 @@ describe('when displaying the contact us page', () => {
       referrer: '/test_referrer',
     });
   });
-
 });
