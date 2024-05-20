@@ -73,8 +73,8 @@ describe('When handling post of contact form', () => {
         service: 'test service',
         type: 'test type',
         typeOtherMessage: '',
-        phoneNumber: '',
-        password: '',
+        dsiFax: '',
+        dsiWebsite: '',
       },
       session: {},
       query: {},
@@ -583,8 +583,8 @@ describe('When handling post of contact form', () => {
   });
 
   it('should log the request and redirect if one of the honeypot fields is filled in', async () => {
-    req.body.phoneNumber = '';
-    req.body.password = 'foo';
+    req.body.dsiFax = '';
+    req.body.dsiWebsite = 'foo';
 
     await postContactForm(req, res);
 
@@ -595,8 +595,8 @@ describe('When handling post of contact form', () => {
   });
 
   it('should log the request and redirect if both of the honeypot fields are filled in', async () => {
-    req.body.phoneNumber = 'foo';
-    req.body.password = 'foo';
+    req.body.dsiFax = 'foo';
+    req.body.dsiWebsite = 'foo';
 
     await postContactForm(req, res);
 
@@ -607,8 +607,8 @@ describe('When handling post of contact form', () => {
   });
 
   it('should log the request and redirect if one of the honeypot fields is not a string', async () => {
-    req.body.phoneNumber = [];
-    req.body.password = '';
+    req.body.dsiFax = [];
+    req.body.dsiWebsite = '';
 
     await postContactForm(req, res);
 
@@ -619,8 +619,8 @@ describe('When handling post of contact form', () => {
   });
 
   it('should log the request and redirect if both of the honeypot fields are not strings', async () => {
-    req.body.phoneNumber = [];
-    req.body.password = undefined;
+    req.body.dsiFax = [];
+    req.body.dsiWebsite = undefined;
 
     await postContactForm(req, res);
 
@@ -631,8 +631,8 @@ describe('When handling post of contact form', () => {
   });
 
   it('should log the correct details if the honeypot fields are filled in or a different type', async () => {
-    req.body.phoneNumber = 'foo';
-    req.body.password = [];
+    req.body.dsiFax = 'foo';
+    req.body.dsiWebsite = [];
     req.headers['x-forwarded-for'] = '127.0.0.1, 192.168.1.1';
 
     const {
@@ -659,8 +659,8 @@ describe('When handling post of contact form', () => {
   });
 
   it('should send the support request and redirect if both of the honeypot fields are empty strings', async () => {
-    req.body.phoneNumber = '';
-    req.body.password = '';
+    req.body.dsiFax = '';
+    req.body.dsiWebsite = '';
 
     await postContactForm(req, res);
 
