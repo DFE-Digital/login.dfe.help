@@ -143,7 +143,7 @@ const post = async (req, res) => {
   }
 
   // If either or both the honeypot fields are not blank, log the request, otherwise send it to the service desk.
-  if ([req.body.phoneNumber, req.body.password].some((x) => typeof x !== 'string' || x !== '')) {
+  if ([req.body.dsiFax, req.body.dsiWebsite].some((x) => typeof x !== 'string' || x !== '')) {
     logger.audit({
       type: 'contact-form',
       subType: 'spam-detection',
