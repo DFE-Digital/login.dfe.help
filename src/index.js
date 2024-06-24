@@ -38,35 +38,36 @@ const init = async () => {
 
   if (config.hostingEnvironment.hstsMaxAge) {
     app.use(helmet({
-      noCache: true,
-      frameguard: {
-        action: 'deny',
-      },
-      hsts: {
+      strictTransportSecurity: {
         maxAge: config.hostingEnvironment.hstsMaxAge,
         preload: true,
-      },
+        includeSubDomains: true,
+      }
     }));
   }
 
   logger.info('set helmet policy defaults');
 
   // Setting helmet Content Security Policy
-  const scriptSources = ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'localhost', '*.signin.education.gov.uk'];
+  const scriptSources = [self, "'unsafe-inline'", "'unsafe-eval'", allowedOrigin];
+  const styleSources = [self, allowedOrigin];
+  const imgSources = [self, allowedOrigin];
+
+  if (config.hostingEnvironment.env === 'dev') {
+    scriptSources.push('localhost');
+    styleSources.push('localhost');
+    imgSources.push('localhost');
+  }
 
   app.use(helmet.contentSecurityPolicy({
-    browserSniff: false,
-    setAllHeaders: false,
     directives: {
-      defaultSrc: ["'self'"],
-      childSrc: ["'none'"],
-      objectSrc: ["'none'"],
+      defaultSrc: [self],
       scriptSrc: scriptSources,
-      styleSrc: ["'self'", "'unsafe-inline'", 'localhost', '*.signin.education.gov.uk'],
-      imgSrc: ["'self'", 'data:', 'blob:', 'localhost', '*.signin.education.gov.uk'],
-      fontSrc: ["'self'", 'data:', '*.signin.education.gov.uk'],
-      connectSrc: ["'self'"],
-      formAction: ["'self'", '*'],
+      styleSrc: styleSources,
+      imgSrc: imgSources,
+      fontSrc: [self, 'data:', allowedOrigin],
+      connectSrc: [self],
+      formAction: [self, '*'],
     },
   }));
 
