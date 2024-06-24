@@ -36,6 +36,11 @@ const init = async () => {
 
   const app = express();
 
+  logger.info('set helmet policy defaults');
+
+  const self = "'self'";
+  const allowedOrigin = '*.signin.education.gov.uk';
+
   if (config.hostingEnvironment.hstsMaxAge) {
     app.use(helmet({
       strictTransportSecurity: {
@@ -45,8 +50,6 @@ const init = async () => {
       }
     }));
   }
-
-  logger.info('set helmet policy defaults');
 
   // Setting helmet Content Security Policy
   const scriptSources = [self, "'unsafe-inline'", "'unsafe-eval'", allowedOrigin];
