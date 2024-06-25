@@ -6,7 +6,7 @@ resources:
       type: github
       endpoint: DfE-Digital
       name: DFE-Digital/login.dfe.devops
-      ref: main
+      ref: feature/DSI-7026
     - repository: config
       type: github
       endpoint: DfE-Digital
@@ -81,12 +81,12 @@ variables:
   ${{ else }}:
     value: false
 - name: test
-  ${{ if or(eq(parameters.test, 'true'), contains(variables['Build.SourceBranch'],'main')) }}:
+  ${{ if or(eq(parameters.test, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}:
     value: true
   ${{ else }}:
     value: false
 - name: pp
-  ${{ if or(eq(parameters.pp, 'true'), contains(variables['Build.SourceBranch'],'release')) }}:
+  ${{ if or(eq(parameters.pp, 'true'), contains(variables['Build.SourceBranch'],'main')) }}:
     value: true
   ${{ else }}:
     value: false
@@ -113,6 +113,8 @@ stages:
     - template:  pipeline/dependencyCheck.yml@devopsTemplates
       parameters:
         npmInstCmd: 'install --force --json --no-package-lock'
+        ${{ if contains(variables['Build.SourceBranch'],'feature') }}:
+          branchCheck: true
 
     - template: pipeline/build.yml@devopsTemplates
       parameters:
