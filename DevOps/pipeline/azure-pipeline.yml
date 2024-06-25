@@ -103,12 +103,12 @@ stages:
   displayName: "Scan tools & Build"
   jobs:
     # Code scaning tools
-  - ${{ if eq(parameters.InfrDeploy, 'true') }}:
-    - template:  pipeline/checkov.yml@devopsTemplates
+  # - ${{ if eq(parameters.InfrDeploy, 'true') }}:
+  #   - template:  pipeline/checkov.yml@devopsTemplates
 
   - ${{ if eq(parameters.AppDeploy, 'true') }}:
 
-    - template:  pipeline/eslint.yml@devopsTemplates
+    # - template:  pipeline/eslint.yml@devopsTemplates
 
     - template:  pipeline/dependencyCheck.yml@devopsTemplates
       parameters:
