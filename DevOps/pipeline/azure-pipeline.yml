@@ -1,17 +1,4 @@
 name: $(BuildDefinitionName)_tag-$(BuildID)_at-$(Date:yyyyMMdd)$(Rev:.r)
-resources:
-  repositories:
-  # Defult branch is master
-    - repository: devopsTemplates
-      type: github
-      endpoint: DfE-Digital
-      name: DFE-Digital/login.dfe.devops
-      ref: feature/DSI-7026
-    - repository: config
-      type: github
-      endpoint: DfE-Digital
-      name: DFE-Digital/login.dfe.dsi-config
-      ref: main
 
 trigger:
   branches:
@@ -19,7 +6,6 @@ trigger:
     - release/*
     - main
     - feature/*
-    - main
 
 pr:
   branches:
@@ -27,6 +13,10 @@ pr:
     - main
 
 parameters:
+- name: confBnch
+  type: string
+  displayName: 'Configuration Branch'
+  default: main
 - name: location
   type: object
   displayName: 'Deployment locations (- westeurope & - northeurope)'
@@ -61,6 +51,20 @@ parameters:
   type: boolean
   displayName: 'Prod Deployment'
   default: false
+
+resources:
+  repositories:
+  # Defult branch is master
+    - repository: devopsTemplates
+      type: github
+      endpoint: DfE-Digital
+      name: DFE-Digital/login.dfe.devops
+      ref: feature/DSI-7026
+    - repository: config
+      type: github
+      endpoint: DfE-Digital
+      name: DFE-Digital/login.dfe.dsi-config
+      ref:  ${{ parameters.confBnch }}
 
 variables:
 - group: dsi-global
