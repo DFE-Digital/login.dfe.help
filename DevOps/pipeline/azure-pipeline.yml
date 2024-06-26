@@ -189,20 +189,19 @@ stages:
               ${{ if eq(var.key, 'pr') }}:
                 value: p01
             jobs:
-            - ${{ if parameters.InfrDeploy }}:
-              - template: pipeline/deployment.yml@devopsTemplates
-                parameters:
-                  ${{ if or(eq(var.key, 'dev'), eq(var.key, 'tran')) }}:
-                    serviceConnection: $(devServiceConnection)
-                  ${{ elseif eq(var.key, 'pr') }}:
-                    serviceConnection: $(prodServiceConnection)
-                  ${{ else }}:
-                    serviceConnection: $(testServiceConnection)
-                  environmentName: ${{var.key}}
-                  applicationShortName: ${{variables.applicationShortName}}
-                  applicationFullName: ${{variables.applicationFullName}}
-                  releaseArtifactName: ${{variables.applicationShortName}}-${{var.key}}-$(Build.BuildId)-release
-                  InfrDeploy: ${{parameters.InfrDeploy}}
-                  deploymentLocation: ${{location}}
-                  runtimeStack: NODE|18-lts
-                  pm2ProcessFileName: process.json
+            - template: pipeline/deployment.yml@devopsTemplates
+              parameters:
+                ${{ if or(eq(var.key, 'dev'), eq(var.key, 'tran')) }}:
+                  serviceConnection: $(devServiceConnection)
+                ${{ elseif eq(var.key, 'pr') }}:
+                  serviceConnection: $(prodServiceConnection)
+                ${{ else }}:
+                  serviceConnection: $(testServiceConnection)
+                environmentName: ${{var.key}}
+                applicationShortName: ${{variables.applicationShortName}}
+                applicationFullName: ${{variables.applicationFullName}}
+                releaseArtifactName: ${{variables.applicationShortName}}-${{var.key}}-$(Build.BuildId)-release
+                InfrDeploy: ${{parameters.InfrDeploy}}
+                deploymentLocation: ${{location}}
+                runtimeStack: NODE|18-lts
+                pm2ProcessFileName: process.json
