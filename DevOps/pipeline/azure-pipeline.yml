@@ -33,14 +33,10 @@ parameters:
   default:
     - westeurope
     - northeurope
-- name: AppDeploy
-  type: boolean
-  displayName: 'App Deployment only'
-  default: true
 - name: InfrDeploy
   type: boolean
   displayName: 'Infrastrucure Deployment only'
-  default: true
+  default: false
 - name: tran 
   type: boolean
   displayName: 'Transformation Deployment'
@@ -106,15 +102,31 @@ stages:
   # - ${{ if eq(parameters.InfrDeploy, 'true') }}:
   #   - template:  pipeline/checkov.yml@devopsTemplates
 
-  - ${{ if eq(parameters.AppDeploy, 'true') }}:
+  #- ${{ if eq(parameters.AppDeploy, 'true') }}:
 
     # - template:  pipeline/eslint.yml@devopsTemplates
 
-    - template:  pipeline/dependencyCheck.yml@devopsTemplates
-      parameters:
-        npmInstCmd: 'install --force --json --no-package-lock'
-        ${{ if contains(variables['Build.SourceBranch'],'feature') }}:
-          branchCheck: true
+    # - template:  pipeline/dependencyCheck.yml@devopsTemplates
+    #   parameters:
+    #     npmInstCmd: 'install --force --json --no-package-lock'
+    #     ${{ if contains(variables['Build.SourceBranch'],'feature') }}:
+    #       branchCheck: true
+
+  - template:  pipeline/scanTools.yml@devopsTemplates
+    parameters:
+      npmInstCmd: 'install --force --json --no-package-lock'
+      AppDeploy: ${{ not(parameters.InfrDeploy) }}
+      environmentNames:
+        - ${{ if eq(variables.tran, 'true') }}: 
+          - tran
+        - ${{ if eq(variables.dev, 'true') }}:
+          - dev
+        - ${{ if eq(variables.test, 'true') }}:
+          - test
+        - ${{ if eq(variables.pp, 'true') }}:
+          - pp
+        - ${{ if eq(variables.pr, 'true') }}:
+          - pr
 
     - template: pipeline/build.yml@devopsTemplates
       parameters:
@@ -178,7 +190,7 @@ stages:
                 value: p01
             jobs:
             - ${{ if parameters.InfrDeploy }}:
-              - template: pipeline/appInfrastructure.yml@devopsTemplates
+              - template: pipeline/deployment.yml@devopsTemplates
                 parameters:
                   ${{ if or(eq(var.key, 'dev'), eq(var.key, 'tran')) }}:
                     serviceConnection: $(devServiceConnection)
@@ -189,23 +201,6 @@ stages:
                   environmentName: ${{var.key}}
                   applicationShortName: ${{variables.applicationShortName}}
                   applicationFullName: ${{variables.applicationFullName}}
-                  AppDeploy: ${{parameters.AppDeploy}}
-                  deploymentLocation: ${{location}}
-                  runtimeStack: NODE|18-lts
-
-
-            - ${{ if parameters.AppDeploy }}:
-              - template: pipeline/deploy.yml@devopsTemplates
-                parameters: 
-                  ${{ if or(eq(var.key, 'dev'), eq(var.key, 'tran')) }}:
-                    serviceConnection: $(devServiceConnection)
-                  ${{ elseif eq(var.key, 'pr') }}:
-                    serviceConnection: $(prodServiceConnection)
-                  ${{ else }}:
-                    serviceConnection: $(testServiceConnection)
-                  environmentName: ${{var.key}}
-                  applicationFullName: ${{variables.applicationFullName}}
-                  applicationShortName: ${{variables.applicationShortName}}
                   releaseArtifactName: ${{variables.applicationShortName}}-${{var.key}}-$(Build.BuildId)-release
                   InfrDeploy: ${{parameters.InfrDeploy}}
                   deploymentLocation: ${{location}}
