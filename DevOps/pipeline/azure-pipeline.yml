@@ -13,13 +13,15 @@ resources:
       name: DFE-Digital/login.dfe.dsi-config
       ref: main
 
+
 trigger:
   branches:
     include:
-    - release/*
+    - ${{ if not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version')) }}:
+      - release/*
+      - feature/*
     - main
-    - feature/*
-    - main
+    
 
 pr:
   branches:
@@ -72,12 +74,12 @@ variables:
   ${{ else }}:
     value: false
 - name: dev
-  ${{ if and(or(eq(parameters.dev, 'true'), contains(variables['Build.SourceBranch'],'feature')), contains(variables['Build.SourceVersionMessage'],'Upgrade to version')) }}:
+  ${{ if or(eq(parameters.dev, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}:
     value: true
   ${{ else }}:
     value: false
 - name: test
-  ${{ if and(or(eq(parameters.test, 'true'), contains(variables['Build.SourceBranch'],'feature')), contains(variables['Build.SourceVersionMessage'],'Upgrade to version')) }}:
+  ${{ if or(eq(parameters.test, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}:
     value: true
   ${{ else }}:
     value: false
