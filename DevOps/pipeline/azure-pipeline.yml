@@ -184,7 +184,7 @@ stages:
                 pm2ProcessFileName: process.json
 
 
-          - ${{ if eq(variables.dev, 'true') }}:
+          - ${{ if eq(var.key, 'dev') }}:
             - stage: mergeBranch
               dependsOn: 
               - Deployment_${{var.key}}_${{location}}
