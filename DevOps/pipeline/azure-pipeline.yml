@@ -184,7 +184,7 @@ stages:
                 pm2ProcessFileName: process.json
 
 
-          - ${{ if or(contains(variables['Build.SourceBranch'],'release'),contains(variables['Build.SourceBranch'],'feature')) }}:
+          - ${{ if eq(variables.dev, 'true') }}:
             - stage: mergeBranch
               dependsOn: 
               - Deployment_${{var.key}}_${{location}}
