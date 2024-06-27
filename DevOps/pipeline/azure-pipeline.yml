@@ -16,11 +16,14 @@ resources:
 
 trigger:
   branches:
-    include:
     ${{ if not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version')) }}:
+      include:    
+      - main
+    ${{ else }}:
+      include:    
       - release/*
       - feature/*
-    - main
+      - main
     
 
 pr:
