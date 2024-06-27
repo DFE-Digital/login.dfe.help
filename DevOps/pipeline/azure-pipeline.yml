@@ -103,18 +103,6 @@ stages:
     parameters:
       npmInstCmd: 'install --force --json --no-package-lock'
       AppDeploy: ${{ not(parameters.InfrDeploy) }}
-      applicationName: $(applicationFullName)
-      environmentNames:
-        - ${{ if eq(variables.tran, 'true') }}: 
-          - tran
-        - ${{ if eq(variables.dev, 'true') }}:
-          - dev
-        - ${{ if eq(variables.test, 'true') }}:
-          - test
-        - ${{ if eq(variables.pp, 'true') }}:
-          - pp
-        - ${{ if eq(variables.pr, 'true') }}:
-          - pr
 
   - ${{ if not(eq(parameters.InfrDeploy, 'true')) }}:
     - template: pipeline/build.yml@devopsTemplates
