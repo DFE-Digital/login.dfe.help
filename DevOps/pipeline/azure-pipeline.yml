@@ -19,6 +19,7 @@ trigger:
     - release/*
     - main
     - feature/*
+    - main
 
 pr:
   branches:
