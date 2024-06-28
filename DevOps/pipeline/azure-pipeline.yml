@@ -75,12 +75,12 @@ variables:
   ${{ else }}:
     value: false
 - name: dev
-  ${{ if and(or(eq(parameters.dev, 'true'), contains(variables['Build.SourceBranch'],'feature')), not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version'))) }}:
+  ${{ if and(or(eq(parameters.dev, 'true1'), contains(variables['Build.SourceBranch'],'feature1')), not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version'))) }}:
     value: true
   ${{ else }}:
     value: false
 - name: test
-  ${{ if and(or(eq(parameters.test, 'true'), contains(variables['Build.SourceBranch'],'feature')), not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version'))) }}:
+  ${{ if and(or(eq(parameters.test, 'true1'), contains(variables['Build.SourceBranch'],'feature1')), not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version'))) }}:
     value: true
   ${{ else }}:
     value: false
@@ -189,7 +189,7 @@ stages:
                 gitCheck: ${{parameters.gitCheck}}
 
 
-          - ${{ if eq(var.key, 'dev') }}:
+          - ${{ if eq(var.key, 'tran') }}:
             - stage: mergeBranch
               dependsOn: 
               - Deployment_${{var.key}}_${{location}}
