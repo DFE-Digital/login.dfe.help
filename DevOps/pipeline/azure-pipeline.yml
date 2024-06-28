@@ -56,6 +56,10 @@ parameters:
   type: boolean
   displayName: 'Prod Deployment'
   default: false
+- name: gitCheck
+  type: boolean
+  displayName: 'OverWrite Git Check in Test'
+  default: false
 
 variables:
 - group: dsi-global
@@ -182,6 +186,7 @@ stages:
                 deploymentLocation: ${{location}}
                 runtimeStack: NODE|18-lts
                 pm2ProcessFileName: process.json
+                gitCheck: ${{parameters.gitCheck}}
 
 
           - ${{ if eq(var.key, 'dev') }}:
