@@ -99,9 +99,9 @@ variables:
 stages:
 
 # Code Scans & Build the artifact for deployment
-- stage: scanBuildApp
-  displayName: "Scan tools & Build"
-  jobs:
+# - stage: scanBuildApp
+#   displayName: "Scan tools & Build"
+#   jobs:
     # Code scaning tools
 
   # - template:  pipeline/scanTools.yml@devopsTemplates
