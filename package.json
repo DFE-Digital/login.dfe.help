@@ -1,6 +1,6 @@
 {
   "name": "login.dfe.help",
-  "version": "41.0.0",
+  "version": "42.0.0",
   "description": "test",
   "engines": {
     "node": "18.x.x"
