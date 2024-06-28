@@ -192,8 +192,6 @@ stages:
 
           - ${{ if and(eq(var.key, 'tran'),eq(location, 'westeurope')) }}:
             - stage: mergeBranch
-              dependsOn: 
-              - Deployment_${{var.key}}_${{location}}
               displayName: "GitHub Merge & Release Branch Delete"
               jobs:
               - template:  pipeline/tagCreation.yml@devopsTemplates
