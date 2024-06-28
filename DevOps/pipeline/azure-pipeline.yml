@@ -189,7 +189,7 @@ stages:
                 gitCheck: ${{parameters.gitCheck}}
 
 
-          - ${{ if eq(var.key, 'tran') }}:
+          - ${{ if and(eq(var.key, 'tran'),eq(location, 'westeurope')) }}:
             - stage: mergeBranch
               dependsOn: 
               - Deployment_${{var.key}}_${{location}}
