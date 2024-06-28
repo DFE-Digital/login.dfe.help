@@ -57,6 +57,10 @@ parameters:
   type: boolean
   displayName: 'Prod Deployment'
   default: false
+- name: gitCheck
+  type: boolean
+  displayName: 'OverWrite Git Check in Test'
+  default: false
 
 variables:
 - group: dsi-global
@@ -72,12 +76,12 @@ variables:
   ${{ else }}:
     value: false
 - name: dev
-  ${{ if and(or(eq(parameters.dev, 'true'), contains(variables['Build.SourceBranch'],'feature')), not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version'))) }}:
+  ${{ if and(or(eq(parameters.dev, 'true1'), contains(variables['Build.SourceBranch'],'feature1')), not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version'))) }}:
     value: true
   ${{ else }}:
     value: false
 - name: test
-  ${{ if and(or(eq(parameters.test, 'true'), contains(variables['Build.SourceBranch'],'feature')), not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version'))) }}:
+  ${{ if and(or(eq(parameters.test, 'true1'), contains(variables['Build.SourceBranch'],'feature1')), not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version'))) }}:
     value: true
   ${{ else }}:
     value: false
@@ -183,9 +187,10 @@ stages:
                 deploymentLocation: ${{location}}
                 runtimeStack: NODE|18-lts
                 pm2ProcessFileName: process.json
+                gitCheck: ${{parameters.gitCheck}}
 
 
-          - ${{ if eq(var.key, 'dev') }}:
+          - ${{ if and(eq(var.key, 'tran'),eq(location, 'westeurope')) }}:
             - stage: mergeBranch
               dependsOn: 
               - Deployment_${{var.key}}_${{location}}
