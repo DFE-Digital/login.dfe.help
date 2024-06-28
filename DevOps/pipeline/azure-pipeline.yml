@@ -198,4 +198,4 @@ stages:
               jobs:
               - template:  pipeline/tagCreation.yml@devopsTemplates
                 parameters:
-                  applicationName: $(applicationFullName)
+                  applicationName: ${{variables.applicationFullName}}
