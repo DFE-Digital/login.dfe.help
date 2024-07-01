@@ -139,8 +139,8 @@ stages:
             displayName: "Deployment [${{var.key}}] ${{location}}"
             ${{ if eq(location,'westeurope') }}:
               dependsOn: 
-               - scanBuildApp
-               condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
+              - scanBuildApp
+              condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
             ${{ if eq(location,'northeurope') }}:
               ${{ if eq(length(parameters.location), 2) }}:
                 dependsOn: 
