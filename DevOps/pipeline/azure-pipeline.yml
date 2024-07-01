@@ -102,7 +102,6 @@ stages:
 - stage: scanBuildApp
   displayName: "Scan tools & Build"
   jobs:
-    Code scaning tools
 
   - template:  pipeline/scanTools.yml@devopsTemplates
     parameters:
