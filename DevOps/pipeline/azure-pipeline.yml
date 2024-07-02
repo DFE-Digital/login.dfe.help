@@ -71,17 +71,17 @@ variables:
 - name: numberOfWorkers
   value: 1
 - name: tran
-  ${{ if  and(or(eq(parameters.tran, 'true'), contains(variables['Build.SourceBranch'],'feature')), not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version'))) }}:
+  ${{ if  or(eq(parameters.tran, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}:
     value: true
   ${{ else }}:
     value: false
 - name: dev
-  ${{ if or(eq(parameters.dev, 'true1'), contains(variables['Build.SourceBranch'],'feature1')) }}:
+  ${{ if or(eq(parameters.dev, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}:
     value: true
   ${{ else }}:
     value: false
 - name: test
-  ${{ if or(eq(parameters.test, 'true1'), contains(variables['Build.SourceBranch'],'feature1')) }}:
+  ${{ if or(eq(parameters.test, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}:
     value: true
   ${{ else }}:
     value: false
@@ -183,7 +183,7 @@ stages:
                 gitCheck: ${{parameters.gitCheck}}
 
 
-          - ${{ if and(eq(var.key, 'tran'),eq(location, 'westeurope')) }}:
+          - ${{ if and(eq(var.key, 'pr'),eq(location, 'westeurope')) }}:
             - stage: mergeBranch
               displayName: "GitHub Merge & Release Branch Delete"
               dependsOn: 
