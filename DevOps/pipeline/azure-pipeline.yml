@@ -16,10 +16,9 @@ resources:
 trigger:
   branches:
     include:
-    - release/*
-    - main
     - feature/*
     - main
+    - release/*
 
 pr:
   branches:
@@ -36,8 +35,8 @@ parameters:
 - name: InfrDeploy
   type: boolean
   displayName: 'Infrastrucure Deployment only'
-  default: true
-- name: tran 
+  default: false
+- name: tran
   type: boolean
   displayName: 'Transformation Deployment'
   default: false
@@ -91,7 +90,7 @@ variables:
   ${{ else }}:
     value: false
 - name: pr
-  ${{ if and(or(eq(parameters.pr, 'true'), contains(variables['Build.SourceBranch'],'release')), contains(variables['Build.SourceVersionMessage'],'Upgrade to version')) }}:
+  ${{ if and(or(eq(parameters.pr, 'true'), contains(variables['Build.SourceBranch'],'release')), not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version'))) }}:
     value: true
   ${{ else }}:
     value: false
@@ -114,7 +113,7 @@ stages:
         applicationName: ${{variables.applicationFullName}}
         custRegAuth: $(custRegAuth)
         environmentNames:
-          - ${{ if eq(variables.tran, 'true') }}: 
+          - ${{ if eq(variables.tran, 'true') }}:
             - tran
           - ${{ if eq(variables.dev, 'true') }}:
             - dev
