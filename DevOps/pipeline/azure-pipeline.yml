@@ -16,10 +16,9 @@ resources:
 trigger:
   branches:
     include:
-    - release/*
-    - main
     - feature/*
     - main
+    - release/*
 
 pr:
   branches:
@@ -36,8 +35,8 @@ parameters:
 - name: InfrDeploy
   type: boolean
   displayName: 'Infrastrucure Deployment only'
-  default: true
-- name: tran 
+  default: false
+- name: tran
   type: boolean
   displayName: 'Transformation Deployment'
   default: false
@@ -71,17 +70,17 @@ variables:
 - name: numberOfWorkers
   value: 1
 - name: tran
-  ${{ if  and(or(eq(parameters.tran, 'true'), contains(variables['Build.SourceBranch'],'feature')), not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version'))) }}:
+  ${{ if  or(eq(parameters.tran, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}:
     value: true
   ${{ else }}:
     value: false
 - name: dev
-  ${{ if or(eq(parameters.dev, 'true1'), contains(variables['Build.SourceBranch'],'feature1')) }}:
+  ${{ if or(eq(parameters.dev, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}:
     value: true
   ${{ else }}:
     value: false
 - name: test
-  ${{ if or(eq(parameters.test, 'true1'), contains(variables['Build.SourceBranch'],'feature1')) }}:
+  ${{ if or(eq(parameters.test, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}:
     value: true
   ${{ else }}:
     value: false
@@ -91,7 +90,7 @@ variables:
   ${{ else }}:
     value: false
 - name: pr
-  ${{ if and(or(eq(parameters.pr, 'true'), contains(variables['Build.SourceBranch'],'release')), contains(variables['Build.SourceVersionMessage'],'Upgrade to version')) }}:
+  ${{ if and(or(eq(parameters.pr, 'true'), contains(variables['Build.SourceBranch'],'release')), not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version'))) }}:
     value: true
   ${{ else }}:
     value: false
@@ -114,7 +113,7 @@ stages:
         applicationName: ${{variables.applicationFullName}}
         custRegAuth: $(custRegAuth)
         environmentNames:
-          - ${{ if eq(variables.tran, 'true') }}: 
+          - ${{ if eq(variables.tran, 'true') }}:
             - tran
           - ${{ if eq(variables.dev, 'true') }}:
             - dev
@@ -183,7 +182,7 @@ stages:
                 gitCheck: ${{parameters.gitCheck}}
 
 
-          - ${{ if and(eq(var.key, 'tran'),eq(location, 'westeurope')) }}:
+          - ${{ if and(eq(var.key, 'pr'),eq(location, 'westeurope')) }}:
             - stage: mergeBranch
               displayName: "GitHub Merge & Release Branch Delete"
               dependsOn: 
