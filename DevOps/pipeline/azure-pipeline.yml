@@ -137,15 +137,9 @@ stages:
           - stage: Deployment_${{var.key}}_${{location}}
             displayName: "Deployment [${{var.key}}] ${{location}}"
             ${{ if eq(location,'westeurope') }}:
-              ${{ if eq(var.key,'pr') }}:
-                dependsOn: 
-                - scanBuildApp
-                - Deployment_pp_${{location}}
-                condition: and(in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped'),in(dependencies.Deployment_pp_westeurope.result, 'Succeeded', 'Skipped'))
-              ${{ else }}:
-                dependsOn: 
-                - scanBuildApp
-                condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
+              dependsOn: 
+              - scanBuildApp
+              condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
             ${{ if eq(location,'northeurope') }}:
               ${{ if eq(length(parameters.location), 2) }}:
                 dependsOn: 
