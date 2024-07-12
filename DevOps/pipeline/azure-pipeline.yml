@@ -58,7 +58,7 @@ parameters:
   default: false
 - name: gitCheck
   type: boolean
-  displayName: 'OverWrite Git Check in Test'
+  displayName: 'Bypass Git Check in Test'
   default: false
 
 variables:
