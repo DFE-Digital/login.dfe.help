@@ -23,12 +23,12 @@
 
                 <legend class="govuk-fieldset__legend govuk-visually-hidden">Contact DfE Sign-in service desk</legend>
 
-                <div class="govuk-form-group" style="display: none !important; visibility: hidden !important">
+                <div class="govuk-form-group govuk-!-display-none">
                     <label class="govuk-label govuk-label--s" for="dsiFax">Fax number</label>
                     <div id="fax-hint" class="govuk-hint">This field is used for spam detection. Do not fill this in as your response will not be sent to the service desk.</div>
                     <input class="govuk-input govuk-!-width-three-quarters" id="dsiFax" name="dsiFax" type="text" aria-describedby="fax-hint" tabindex="-1" autocomplete="off">
                 </div>
-                <div class="govuk-form-group" style="display: none !important; visibility: hidden !important">
+                <div class="govuk-form-group govuk-!-display-none">
                     <label class="govuk-label govuk-label--s" for="dsiWebsite">Website</label>
                     <div id="website-hint" class="govuk-hint">This field is used for spam detection. Do not fill this in as your response will not be sent to the service desk.</div>
                     <input class="govuk-input govuk-!-width-three-quarters" id="dsiWebsite" name="dsiWebsite" type="text" aria-describedby="website-hint" tabindex="-1" autocomplete="off">
@@ -98,8 +98,8 @@
 
                 <!-- Forces the additional information box to display if JavaScript is disabled. -->
                 <noscript><style>#typeOtherMessageGroup { display: block !important; }</style></noscript>
-                <div id="typeOtherMessageGroup" class="govuk-form-group govuk-character-count <%= (locals.validationMessages.typeOtherMessage !== undefined) ? 'govuk-form-group--error' : '' %>"
-                    data-module="govuk-character-count" data-maxlength="200" <%- (locals.type !== 'other') ? 'style="display: none"' : '' %>>
+                <div id="typeOtherMessageGroup" class="govuk-form-group govuk-character-count<%= (locals.type !== 'other') ? ' govuk-!-display-none' : '' %><%= (locals.validationMessages.typeOtherMessage !== undefined) ? ' govuk-form-group--error' : '' %>"
+                    data-module="govuk-character-count" data-maxlength="200">
                     <label class="govuk-label govuk-label--s" for="typeOtherMessage">Give us a short summary of your issue</label>
                     <% if (locals.validationMessages.typeOtherMessage !== undefined) { %>
                         <span id="validation-typeOtherMessage" class="govuk-error-message">
@@ -168,11 +168,11 @@
         const inputGroup = document.getElementById(`${targetId}OtherMessageGroup`);
         const input = document.getElementById(`${targetId}OtherMessage`);
 
-        if (event.target.value === 'other') {
-            inputGroup.style.display = 'block';
+        if (event.target.value === "other") {
+            inputGroup.classList.remove("govuk-!-display-none");
             input.focus();
         } else {
-            inputGroup.style.display = 'none';
+            inputGroup.classList.add("govuk-!-display-none");
             input.value = '';
         }
     }
