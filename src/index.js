@@ -55,9 +55,9 @@ const init = async () => {
   const imgSources = [self, allowedOrigin];
 
   if (config.hostingEnvironment.env === 'dev') {
-    scriptSources.push('localhost');
-    styleSources.push('localhost');
-    imgSources.push('localhost');
+    scriptSources.push('localhost:*');
+    styleSources.push('localhost:*');
+    imgSources.push('localhost:*');
   }
 
   app.use(helmet.contentSecurityPolicy({
