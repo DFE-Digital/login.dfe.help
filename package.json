@@ -46,7 +46,6 @@
     "login.dfe.notifications.client": "github:DFE-Digital/login.dfe.notifications.client#v5.2.1",
     "login.dfe.sanitization": "github:DFE-Digital/login.dfe.sanitization#v3.0.1",
     "login.dfe.winston-appinsights": "github:DFE-Digital/login.dfe.winston-appinsights#v5.0.1",
-    "morgan": "^1.10.0",
     "openid-client": "^5.1.2",
     "passport": "^0.6.0",
     "simpl-schema": "^3.4.1",
