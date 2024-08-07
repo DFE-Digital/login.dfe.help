@@ -3,10 +3,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('cookie-session');
 const expressLayouts = require('express-ejs-layouts');
-const morgan = require('morgan');
 const http = require('http');
 const https = require('https');
-const fs = require('fs');
 const path = require('path');
 const helmet = require('helmet');
 const sanitization = require('login.dfe.sanitization');
@@ -47,7 +45,7 @@ const init = async () => {
         maxAge: config.hostingEnvironment.hstsMaxAge,
         preload: true,
         includeSubDomains: true,
-      }
+      },
     }));
   }
 
@@ -125,8 +123,6 @@ const init = async () => {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cookieParser());
   app.use(sanitization());
-  app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
-  app.use(morgan('dev'));
   app.set('view engine', 'ejs');
   app.use(express.static(path.resolve(__dirname, 'dist')));
   app.use(expressLayouts);
