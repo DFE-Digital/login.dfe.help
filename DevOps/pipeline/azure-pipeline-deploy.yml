@@ -13,7 +13,7 @@ resources:
       name: DFE-Digital/login.dfe.dsi-config
       ref: main
   pipelines:
-  - pipeline: help
+  - pipeline: login.dfe.help
     source: DFE-Digital.login.dfe.help
     trigger: 
       branches:
@@ -23,10 +23,6 @@ resources:
         - releases/*
 
 
-pr:
-  branches:
-    include:
-    - main
 
 parameters:
 - name: location
