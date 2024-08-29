@@ -14,7 +14,7 @@ resources:
       ref: main
   pipelines:
   - pipeline: 'Deploy to Development'
-    source: 'DFE-Digital.login.dfe.help'
+    source: \Build\DFE-Digital.login.dfe.help
     trigger: 
       branches:
         include: 
