@@ -1,4 +1,4 @@
-name: $(BuildDefinitionName)
+name: $(BuildDefinitionName)_tag-$(BuildID)_at-$(Date:yyyyMMdd)$(Rev:.r)
 resources:
   repositories:
   # Defult branch is master
@@ -26,16 +26,6 @@ pr:
     - main
 
 parameters:
-- name: location
-  type: object
-  displayName: 'Deployment locations (- westeurope & - northeurope)'
-  default:
-    - westeurope
-    - northeurope
-- name: InfrDeploy
-  type: boolean
-  displayName: 'Infrastrucure Deployment only'
-  default: false
 - name: tran
   type: boolean
   displayName: 'Transformation Deployment'
@@ -55,10 +45,6 @@ parameters:
 - name: pr
   type: boolean
   displayName: 'Prod Deployment'
-  default: false
-- name: gitCheck
-  type: boolean
-  displayName: 'Bypass Git Check in Test'
   default: false
 
 variables:
