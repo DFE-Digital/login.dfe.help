@@ -13,7 +13,7 @@ resources:
       name: DFE-Digital/login.dfe.dsi-config
       ref: main
   pipelines:
-  - pipeline: artifact
+  - pipeline: artifacts
     source: \Build\DFE-Digital.login.dfe.help
     trigger: 
       branches:
@@ -22,7 +22,8 @@ resources:
         - main
         - releases/*
 
-
+trigger: none
+pr: none
 
 parameters:
 - name: location
@@ -132,7 +133,6 @@ stages:
                 environmentName: ${{var.key}}
                 applicationShortName: ${{variables.applicationShortName}}
                 applicationFullName: ${{variables.applicationFullName}}
-                releaseArtifactName: ${{variables.applicationShortName}}-${{var.key}}-$(Build.BuildId)-release
                 InfrDeploy: ${{parameters.InfrDeploy}}
                 deploymentLocation: ${{location}}
                 runtimeStack: NODE|18-lts
