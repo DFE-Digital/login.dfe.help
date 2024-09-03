@@ -75,7 +75,7 @@ variables:
   ${{ else }}:
     value: false
 - name: dev
-  ${{ if or(eq(parameters.dev, 'true'), contains(variables['resources.pipeline.artifacts.SourceBranch'],'feature')) }}:
+  ${{ if or(eq(parameters.dev, 'true'), contains(variables.resources.pipeline.artifacts.SourceBranch,'feature')) }}:
     value: true
   ${{ else }}:
     value: false
