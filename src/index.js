@@ -51,26 +51,33 @@ const init = async () => {
 
   // Setting helmet Content Security Policy
   const scriptSources = [self, "'unsafe-inline'", "'unsafe-eval'", allowedOrigin];
-  const styleSources = [self, allowedOrigin];
-  const imgSources = [self, allowedOrigin];
+  const styleSources = [self, "'unsafe-inline'", allowedOrigin];
+  const imgSources = [self, 'data:', 'blob:', allowedOrigin];
+  const fontSources = [self, 'data:', allowedOrigin];
 
   if (config.hostingEnvironment.env === 'dev') {
-    scriptSources.push('localhost:*');
-    styleSources.push('localhost:*');
-    imgSources.push('localhost:*');
+    scriptSources.push('localhost');
+    styleSources.push('localhost');
+    imgSources.push('localhost');
+    fontSources.push('localhost');
   }
 
-  app.use(helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: [self],
-      scriptSrc: scriptSources,
-      styleSrc: styleSources,
-      imgSrc: imgSources,
-      fontSrc: [self, 'data:', allowedOrigin],
-      connectSrc: [self],
-      formAction: [self, '*'],
-    },
-  }));
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: [self],
+          scriptSrc: scriptSources,
+          styleSrc: styleSources,
+          imgSrc: imgSources,
+          fontSrc: fontSources,
+          connectSrc: [self],
+          formAction: [self, '*'],
+        },
+      },
+      crossOriginOpenerPolicy: { policy: "unsafe-none" }, // crossOriginOpenerPolicy: false is ignored and unsafe-none is the default on MDM
+    }),
+  );
 
   logger.info('Set helmet filters');
 
