@@ -16,7 +16,6 @@ const routes = (csrf) => {
   router.get('/:sid/how-to-edit-service-config', csrf, asyncWrapper(gethowtoEditServiceConfig));
   router.get('/:sid/about-manage-console', csrf, asyncWrapper(aboutManageConsole));
   router.get('/:sid/how-to-manage-users', csrf, asyncWrapper(gethowtoManageUsers));
-
   router.get('/:sid/how-to-view-and-search-organisations', csrf, asyncWrapper(gethowtoViewAndSearchOrganisations));
 
   return router;
