@@ -8,7 +8,6 @@ const { get: getDashboard } = require('./dashboard');
 const router = express.Router({ mergeParams: true });
 
 const routes = (csrf) => {
-
   router.get('/', csrf, asyncWrapper(getDashboard));
 
   return router;
