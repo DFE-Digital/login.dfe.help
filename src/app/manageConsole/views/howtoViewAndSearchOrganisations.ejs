@@ -1,0 +1,155 @@
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+        <!-- help page title and main content -->
+        <div id="view-and-search-organisations" class="help-section-title govuk-!-margin-bottom-6">
+            <h2 class="govuk-heading-xl">
+                View and search organisations
+            </h2>
+            <p class="govuk-body">
+                You can use the organisation management tool to view and search organisations on DfE Sign-in manage console.
+            </p>
+        </div>
+
+
+        <!-- help page content -->
+        <div id="search-for-organisations">
+            <h3 class="govuk-heading-l">Search for organisations</h3>
+            <p class="govuk-body">
+                On DfE Sign-in manage console, you can search for all organisations on DfE Sign-in, including organisations with access to your service.
+            </p>
+            <p class="govuk-body">
+                To search for organisations:
+            </p>
+
+            <ol class="govuk-list govuk-list--number govuk-!-margin-left-2">
+                <li>Sign into your DfE Sign-in account.</li>
+                <li>Once signed in, select 'DfE Sign-in manage console' from your list of services.</li>
+                <li>Choose which service you would like to manage.</li>
+                <li>Select 'Organisations' from the top navigation bar or click 'View and search
+                organisations' on the DfE Sign-in manage console dashboard.</li>
+                <li>
+                    Search for your organisation. You can search by:
+                    <ul class="govuk-!-margin-left-3 govuk-list govuk-list--bullet">
+                        <li>trading name</li>
+                        <li>legal name</li>
+                        <li>URN</li>
+                        <li>UPIN</li>
+                        <li>UKPRN</li>
+                    </ul>
+                </li>
+                <li>Click 'Search' and select your organisation from the list.</li>
+            </ol>
+
+            <p class="govuk-body">
+                If you cannot find the organisation you're looking for, contact the <a class="govuk-link" href="/contact-us">DfE Sign-in support team</a>.        
+            </p>
+        </div>
+
+        <div id="search-all-organisations">
+            <h4 class="govuk-heading-m">Search all organisations</h4>
+            <p class="govuk-body">
+                If you want to search for all organisations on DfE Sign-in, check that the text under the search box says 'Currently viewing all organisations'. If it says 'Currently viewing organisations with access to [service name]', click the 'Show all organisations' link.
+            </p>
+        </div>
+
+        <div id="search-organisations-with-access-to-your-service">
+            <h4 class="govuk-heading-m">Search organisations with access to your service</h4>
+            <p class="govuk-body">
+                If you want to search for organisations with access to your service, check that the text under the search box says 'Currently viewing organisations with access to [service name]'. If it says 'Currently viewing all organisations', click the 'Only show organisations with access to my service' link.
+            </p>
+        </div>
+
+        <div id="filter-your-search" class="govuk-!-margin-bottom-6">
+            <h4 class="govuk-heading-m">Filter your search</h4>
+            <p class="govuk-body">
+                You can also refine your search with the filtering tool by clicking 'Show filter'. You can filter organisations by:
+            </p>
+            
+            <ul class="govuk-list govuk-list--bullet govuk-!-margin-left-2">
+                <li>status</li>
+                <li>organisation type</li>
+            </ul>
+
+            <p class="govuk-body">
+                The filters will remain in place even if you move to another page.
+            </p>
+            <p class="govuk-body">
+                If you select 'Clear filters', the filtering tool will remove all your selections.
+            </p>
+        </div>
+
+
+
+        <div id="view-organisation-details"  class="govuk-!-margin-bottom-6">
+            <h3 class="govuk-heading-l">View organisation details</h3>
+            <p class="govuk-body">
+                Select an individual organisation from the list of search results to view its details.
+            </p>
+            <p class="govuk-body">
+                On an organisation's profile you will find their:
+            </p>
+            
+            <ul class="govuk-list govuk-list--bullet govuk-!-margin-left-2">
+                <li>legal name</li>
+                <li>address</li>
+                <li>organisation type</li>
+                <li>URN</li>
+                <li>UKPRN</li>
+                <li>UPIN</li>
+                <li>establishment number</li>
+                <li>local authority</li>
+                <li>legacy ID</li>
+                <li>status</li>                
+            </ul>
+
+            <p class="govuk-body">
+                On the organisation's profile, you can also view users who are registered with your service. In the table, you can find each user's:
+            </p>
+
+            <ul class="govuk-list govuk-list--bullet govuk-!-margin-left-2">
+                <li>name</li>
+                <li>email</li>
+                <li>permission level</li>
+                <li>status</li>
+                <li>last login</li>
+                
+            </ul>
+        </div>
+
+        <p class="govuk-body end-of-section">
+            Updated October 2024
+        </p>
+
+        <hr class="custom-section-break">
+        <!-- related articles to show at the bottom of the page -->
+        <div id="related-articles" class="help-section-title">
+            <h2 class="govuk-heading-m">
+                Related help topics
+            </h2>
+            <ul class="govuk-list">
+                <li><a class="govuk-link-bold" href="/error/<%= locals.serviceId%>/page-coming-soon">About DfE Manage Console</a></li>
+                <li><a class="govuk-link-bold" href="/manageConsole/<%= locals.serviceId%>/how-to-manage-users">Manage Users</a></li>
+                <li><a class="govuk-link-bold" href="/manageConsole/<%= locals.serviceId%>/how-to-view-and-search-organisations">Manage Organisations</a></li>
+                <li><a class="govuk-link-bold" href="/manageConsole/<%= locals.serviceId%>/how-to-edit-service-config">Edit Service Configuration</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- side menu with related actions -->
+    <div class="govuk-grid-column-one-third">
+        <aside id="related-actions">
+            <h2 class="govuk-heading-m">Related actions</h2>
+            <ul class="govuk-list">
+                <li>
+                    <h3 class="govuk-heading-s">
+                        <a class="govuk-link-bold" href="/contact-us">Contact DfE Sign-in </a>
+                    </h3>
+                </li>
+            </ul>
+        </aside>
+    </div>
+
+</div>
