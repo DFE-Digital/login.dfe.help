@@ -13,11 +13,12 @@ const get = async (req, res) => {
     const model = {
       csrfToken: req.csrfToken(),
       title: 'DfE Manage',
-      subTitle: 'DfE Manage console',
+      app: { title: 'DfE Sign-in manage console' },
+      subTitle: 'DfE Sign-in manage console',
       serviceId: req.params.sid,
       userRoles: manageRolesForService,
       backLink: bkLink,
-      tabLink: tbLink
+      tabLink: tbLink,
     };
     return res.render('manageConsole/views/howtoEditServiceConfig', model);
   }
