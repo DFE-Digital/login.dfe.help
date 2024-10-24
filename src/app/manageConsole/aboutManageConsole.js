@@ -20,7 +20,7 @@ const get = async (req, res) => {
       backLink: bkLink,
       tabLink: tbLink,
     };
-    return res.render('manageConsole/views/howtoEditServiceConfig', model);
+    return res.render('manageConsole/views/aboutManageConsole', model);
   }
 };
 
