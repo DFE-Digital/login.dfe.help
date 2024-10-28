@@ -1,7 +1,7 @@
 jest.mock('./../../../src/infrastructure/config', () => require('../../utils/jestMocks').mockConfig());
 
 const { mockRequest, mockResponse } = require('../../utils/jestMocks');
-const { get } = require('./../../../src/app/dashboard/managDashboard');
+const { get } = require('../../../src/app/manageConsole/aboutManageConsole');
 const { getSingleUserServiceAndRoles, getSingleUserService } = require('../../../src/app/manageConsole/utils');
 
 jest.mock('../../../src/app/manageConsole/utils', () => ({
@@ -15,14 +15,14 @@ jest.mock('../../../src/infrastructure/access', () => ({
 }));
 
 const res = mockResponse();
-describe('when displaying the help page for manageConsole/manageDashboard', () => {
+describe('when displaying the help page for manageConsole/aboutManageConsole', () => {
   let req;
 
   beforeEach(() => {
     req = mockRequest({
       user: { sub: 'user1' },
       params: { sid: 'service1' },
-      headers: {referer: undefined},
+      headers: { referer: undefined },
       userServices: {
         serviceId: 'service1',
         userId: 'user1',
@@ -1011,29 +1011,11 @@ describe('when displaying the help page for manageConsole/manageDashboard', () =
     ]);
   });
 
-  it('should render the help page for manageConsole/manageDashboard', async () => {
+  it('should render the help page for manageConsole/aboutManageConsole', async () => {
     await get(req, res);
 
-    expect(req.params.sid).not.toBeUndefined();
-    expect(req.isAuthenticated()).toBe(true);
     expect(res.render.mock.calls).toHaveLength(1);
-    expect(res.render.mock.calls[0][0]).toBe('dashboard/views/manageDashboard');
-  });
-
-  it('should fail when sid is undefined', async () => {
-    req.params.sid = undefined;
-    await get(req, res);
-
-    expect(req.params.sid).toBeUndefined();
-    expect(req.isAuthenticated()).toBe(true);
-  });
-
-  it('should fail when user is not authenticated', async () => {
-    req.isAuthenticated = jest.fn().mockReturnValue(false);
-    await get(req, res);
-
-    expect(req.params.sid).not.toBeUndefined();
-    expect(req.isAuthenticated()).toBe(false);
+    expect(res.render.mock.calls[0][0]).toBe('manageConsole/views/aboutManageConsole');
   });
 
   it('should include csrf token', async () => {
@@ -1048,22 +1030,6 @@ describe('when displaying the help page for manageConsole/manageDashboard', () =
 
     expect(res.render.mock.calls[0][1]).toMatchObject({
       title: 'DfE Manage',
-    });
-  });
-
-  it('should include the app title', async () => {
-    await get(req, res);
-
-    expect(res.render.mock.calls[0][1]).toMatchObject({
-      app: { title: 'DfE Sign-in manage console' },
-    });
-  });
-
-  it('should include the subTitle', async () => {
-    await get(req, res);
-
-    expect(res.render.mock.calls[0][1]).toMatchObject({
-      subTitle: 'DfE Sign-in manage console',
     });
   });
 });
