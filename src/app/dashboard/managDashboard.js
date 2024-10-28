@@ -6,7 +6,8 @@ const get = async (req, res) => {
     const model = {
       csrfToken: req.csrfToken(),
       title: 'DfE Manage',
-      subTitle: 'DfE Manage console',
+      app: { title: 'DfE Sign-in manage console' },
+      subTitle: 'DfE Sign-in manage console',
       serviceId: req.params.sid,
       userRoles: manageRolesForService,
       backLink: false,

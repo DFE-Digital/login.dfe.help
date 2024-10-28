@@ -1,7 +1,7 @@
 jest.mock('./../../../src/infrastructure/config', () => require('../../utils/jestMocks').mockConfig());
 
 const { mockRequest, mockResponse } = require('../../utils/jestMocks');
-const { get } = require('./../../../src/app/dashboard/managDashboard');
+const { get } = require('../../../src/app/manageConsole/howtoViewAndSearchOrganisations');
 const { getSingleUserServiceAndRoles, getSingleUserService } = require('../../../src/app/manageConsole/utils');
 
 jest.mock('../../../src/app/manageConsole/utils', () => ({
@@ -15,7 +15,7 @@ jest.mock('../../../src/infrastructure/access', () => ({
 }));
 
 const res = mockResponse();
-describe('when displaying the help page for manageConsole/manageDashboard', () => {
+describe('when displaying the help page for manageConsole/gethowtoViewAndSearchOrganisations', () => {
   let req;
 
   beforeEach(() => {
@@ -1011,29 +1011,11 @@ describe('when displaying the help page for manageConsole/manageDashboard', () =
     ]);
   });
 
-  it('should render the help page for manageConsole/manageDashboard', async () => {
+  it('should render the help page for manageConsole/howtoViewAndSearchOrganisations', async () => {
     await get(req, res);
 
-    expect(req.params.sid).not.toBeUndefined();
-    expect(req.isAuthenticated()).toBe(true);
     expect(res.render.mock.calls).toHaveLength(1);
-    expect(res.render.mock.calls[0][0]).toBe('dashboard/views/manageDashboard');
-  });
-
-  it('should fail when sid is undefined', async () => {
-    req.params.sid = undefined;
-    await get(req, res);
-
-    expect(req.params.sid).toBeUndefined();
-    expect(req.isAuthenticated()).toBe(true);
-  });
-
-  it('should fail when user is not authenticated', async () => {
-    req.isAuthenticated = jest.fn().mockReturnValue(false);
-    await get(req, res);
-
-    expect(req.params.sid).not.toBeUndefined();
-    expect(req.isAuthenticated()).toBe(false);
+    expect(res.render.mock.calls[0][0]).toBe('manageConsole/views/howtoViewAndSearchOrganisations');
   });
 
   it('should include csrf token', async () => {
