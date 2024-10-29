@@ -178,6 +178,7 @@ const init = async () => {
       manageConsole: config.hostingEnvironment.manageConsoleUrl,
       assets: assetsUrl,
       survey: config.hostingEnvironment.surveyUrl,
+      serviceNow: config.hostingEnvironment.serviceNowUrl,
     },
     app: {
       environmentBannerMessage: config.hostingEnvironment.environmentBannerMessage,
