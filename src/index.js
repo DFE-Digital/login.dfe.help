@@ -2,13 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('cookie-session');
+const { doubleCsrf } = require('csrf-csrf');
 const expressLayouts = require('express-ejs-layouts');
 const http = require('http');
 const https = require('https');
 const path = require('path');
 const helmet = require('helmet');
 const sanitization = require('login.dfe.sanitization');
-const csurf = require('csurf');
 const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-handling');
 const flash = require('login.dfe.express-flash-2');
 
@@ -88,26 +88,36 @@ const init = async () => {
   logger.info('helmet setup complete');
 
   let expiryInMinutes = 30;
-  const sessionExpiry = parseInt(config.hostingEnvironment.sessionCookieExpiryInMinutes);
+  const sessionExpiry = parseInt(config.hostingEnvironment.sessionCookieExpiryInMinutes, 10);
   if (!isNaN(sessionExpiry)) {
     expiryInMinutes = sessionExpiry;
   }
+
   app.use(session({
     keys: [config.hostingEnvironment.sessionSecret],
     maxAge: expiryInMinutes * 60000, // Expiry in milliseconds
     httpOnly: true,
     secure: true,
   }));
+
   app.use((req, res, next) => {
     req.session.now = Date.now();
     next();
   });
 
-  const csrf = csurf({
-    cookie: {
+  const { doubleCsrfProtection: csrf } = doubleCsrf({
+    getSecret: (req) => req.secret,
+    // eslint-disable-next-line no-underscore-dangle
+    getTokenFromRequest: (req) => req.body._csrf,
+    secret: config.hostingEnvironment.csrfSecret,
+    cookieName: `${config.hostingEnvironment.host}.x-csrf`,
+    cookieOptions: {
+      sameSite: 'strict',
       secure: true,
-      httpOnly: true,
+      signed: true,
     },
+    size: 64,
+    ignoredMethods: ['GET', 'HEAD', 'OPTIONS'],
   });
 
   if (config.hostingEnvironment.env !== 'dev') {
@@ -128,7 +138,7 @@ const init = async () => {
   // finished setting up authentication middleware
 
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(cookieParser());
+  app.use(cookieParser(config.hostingEnvironment.sessionSecret));
   app.use(sanitization());
   app.set('view engine', 'ejs');
   app.use(express.static(path.resolve(__dirname, 'dist')));

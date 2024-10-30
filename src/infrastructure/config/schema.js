@@ -22,8 +22,14 @@ const accessIdentifiers = new SimpleSchema({
   'identifiers.organisation': patterns.uuid,
 });
 
-accessIdentifiers.extend(schemas.apiClient);
+const hostingEnvironmentSchema = new SimpleSchema({
+  csrfSecret: {
+    type: String,
+    optional: true,
+  },
+});
 
+accessIdentifiers.extend(schemas.apiClient);
 
 const adapterSchema = new SimpleSchema({
   type: {
@@ -42,7 +48,7 @@ const adapterSchema = new SimpleSchema({
 
 const schema = new SimpleSchema({
   loggerSettings: schemas.loggerSettings,
-  hostingEnvironment: schemas.hostingEnvironment,
+  hostingEnvironment: schemas.hostingEnvironment.extend(hostingEnvironmentSchema),
   applications: schemas.apiClient,
   access: accessIdentifiers,
   notifications: notificationsSchema,
