@@ -1,12 +1,12 @@
 const services = [
   {
-    userId: 'user1',
-    serviceId: 'service1',
+    userId: "user1",
+    serviceId: "service1",
     roles: [
       {
-        id: 'roleId',
-        name: 'test',
-        code: 'test',
+        id: "roleId",
+        name: "test",
+        code: "test",
         status: {
           id: 1,
         },
@@ -15,11 +15,9 @@ const services = [
   },
 ];
 
-const getSingleUserService = (id, sid, oid, correlationId) => Promise.resolve([]);
-
+const getSingleUserService = (id, sid, oid, correlationId) =>
+  Promise.resolve([]);
 
 module.exports = {
-
   getSingleUserService,
- 
 };

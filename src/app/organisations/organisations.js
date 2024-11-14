@@ -1,21 +1,21 @@
-const config = require('../../infrastructure/config');
+const config = require("../../infrastructure/config");
 
 const get = async (req, res) => {
   let bkLink = true;
-  let tbLink = '';
+  let tbLink = "";
   if (req.headers.referer === undefined) {
     tbLink = `https://${config.hostingEnvironment.host}:${config.hostingEnvironment.port}/dashboard`;
     bkLink = false;
   }
-   const model = {
+  const model = {
     csrfToken: req.csrfToken(),
-    title: 'DfE Sign-in',
-	subTitle: 'DfE Sign-in',
+    title: "DfE Sign-in",
+    subTitle: "DfE Sign-in",
     backLink: bkLink,
     tabLink: tbLink,
   };
-  
-  return res.render('organisations/views/organisations', model);
+
+  return res.render("organisations/views/organisations", model);
 };
 
 module.exports = {
