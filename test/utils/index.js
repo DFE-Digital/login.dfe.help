@@ -11,52 +11,53 @@ const loggerMockFactory = () => ({
   },
 });
 
-const expressAuthenticationStub = (authenticated, extras) => (req, res, next) => {
-  req.isAuthenticated = () => authenticated;
-  req.user = {};
-  Object.assign(req, extras);
+const expressAuthenticationStub =
+  (authenticated, extras) => (req, res, next) => {
+    req.isAuthenticated = () => authenticated;
+    req.user = {};
+    Object.assign(req, extras);
 
-  if (!res.locals) {
-    res.locals = {};
-  }
-  res.locals.flash = {};
-  res.locals.profilesUrl = '';
+    if (!res.locals) {
+      res.locals = {};
+    }
+    res.locals.flash = {};
+    res.locals.profilesUrl = "";
 
-  next();
-};
+    next();
+  };
 
 const configMockFactory = (customConfig) => ({
   hostingEnvironment: {
     agentKeepAlive: {},
-    env: 'test-run',
+    env: "test-run",
   },
   applications: {
-    type: 'static',
+    type: "static",
   },
   access: {
-    type: 'static',
+    type: "static",
   },
   notifications: {
-    connectionString: 'test',
+    connectionString: "test",
   },
   loggerSettings: {},
   ...customConfig,
 });
 
 const getRequestMock = (customRequest = {}) => ({
-  id: 'correlationId',
-  accepts: jest.fn().mockReturnValue(['text/html']),
+  id: "correlationId",
+  accepts: jest.fn().mockReturnValue(["text/html"]),
   params: {},
-  csrfToken: jest.fn().mockReturnValue('token'),
+  csrfToken: jest.fn().mockReturnValue("token"),
   isAuthenticated: jest.fn().mockReturnValue(true),
   body: {},
   query: {},
   headers: {},
   user: {
-    sub: 'suser1',
-    email: 'super.user@unit.test',
+    sub: "suser1",
+    email: "super.user@unit.test",
   },
-  app: { locals: { urls: { profile: 'profileurl' }, isLoggedIn: true } },
+  app: { locals: { urls: { profile: "profileurl" }, isLoggedIn: true } },
   session: {},
   ...customRequest,
 });

@@ -1,40 +1,41 @@
-jest.mock('./../../../src/infrastructure/config', () => require('../../utils').configMockFactory());
+jest.mock("./../../../src/infrastructure/config", () =>
+  require("../../utils").configMockFactory(),
+);
 
-const { getRequestMock, getResponseMock } = require('../../utils');
+const { getRequestMock, getResponseMock } = require("../../utils");
 
 const res = getResponseMock();
 
-describe('when displaying the help page for approvers/whatIsApprover', () => {
+describe("when displaying the help page for approvers/whatIsApprover", () => {
   let req;
   let getDashboard;
 
   beforeEach(() => {
     req = getRequestMock();
     res.mockResetAll();
-    getDashboard = require('../../../src/app/approvers/whatIsApprover').get;
+    getDashboard = require("../../../src/app/approvers/whatIsApprover").get;
   });
 
-  it('should render the help page for approvers/whatIsApprover', async () => {
+  it("should render the help page for approvers/whatIsApprover", async () => {
     await getDashboard(req, res);
 
     expect(res.render.mock.calls).toHaveLength(1);
-    expect(res.render.mock.calls[0][0]).toBe('approvers/views/whatIsApprover');
+    expect(res.render.mock.calls[0][0]).toBe("approvers/views/whatIsApprover");
   });
 
-  it('should include csrf token', async () => {
+  it("should include csrf token", async () => {
     await getDashboard(req, res);
 
     expect(res.render.mock.calls[0][1]).toMatchObject({
-      csrfToken: 'token',
+      csrfToken: "token",
     });
   });
 
-  it('should include the title', async () => {
+  it("should include the title", async () => {
     await getDashboard(req, res);
 
     expect(res.render.mock.calls[0][1]).toMatchObject({
-      title: 'DfE Sign-in',
+      title: "DfE Sign-in",
     });
   });
-
 });
