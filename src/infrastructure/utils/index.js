@@ -1,5 +1,3 @@
-"use strict";
-
 const {
   getOrganisationAndServiceForUserV2,
   getAllRequestsForApprover,

@@ -1,5 +1,5 @@
 // Disabled global require for config Mock to ensure the mock factory can be used.
-// eslint-disable-next-line global-require
+
 jest.mock("./../../../src/infrastructure/config", () =>
   require("../../utils").configMockFactory(),
 );
