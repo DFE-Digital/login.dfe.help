@@ -1,5 +1,3 @@
-"use strict";
-
 const winston = require("winston");
 const AuditTransporter = require("login.dfe.audit.transporter");
 const appInsights = require("applicationinsights");

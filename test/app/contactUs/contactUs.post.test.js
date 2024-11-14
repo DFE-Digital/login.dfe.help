@@ -1,5 +1,5 @@
 // Disabled global require for config/logger mocks to ensure the mock factory can be used.
-/* eslint-disable global-require */
+
 jest.mock("./../../../src/infrastructure/config", () =>
   require("../../utils").configMockFactory({
     loggerSettings: {
@@ -13,7 +13,7 @@ jest.mock("./../../../src/infrastructure/config", () =>
 jest.mock("./../../../src/infrastructure/logger", () =>
   require("../../utils").loggerMockFactory(),
 );
-/* eslint-enable global-require */
+
 jest.mock("./../../../src/infrastructure/applications", () => ({
   listAllServices: jest.fn(),
 }));
