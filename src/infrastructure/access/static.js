@@ -15,8 +15,7 @@ const services = [
   },
 ];
 
-const getSingleUserService = (id, sid, oid, correlationId) =>
-  Promise.resolve([]);
+const getSingleUserService = () => Promise.resolve(services);
 
 module.exports = {
   getSingleUserService,

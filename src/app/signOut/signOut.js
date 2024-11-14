@@ -3,7 +3,7 @@ const passport = require("passport");
 const config = require("../../infrastructure/config");
 const logger = require("../../infrastructure/logger");
 
-const logout = (req, res) => {
+const logout = (req) => {
   req.logout(() => {
     logger.info("user logged out.");
   });

@@ -28,7 +28,7 @@ const callApi = async (method, path, correlationId, body) => {
   );
 };
 
-const getOrganisationAndServiceForUserV2 = async (userId, correlationId) => {
+const getOrganisationAndServiceForUserV2 = async (userId) => {
   return await organisation.getOrganisationsForUserIncludingServices(userId);
 };
 
