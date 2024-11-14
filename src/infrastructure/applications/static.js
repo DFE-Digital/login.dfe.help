@@ -1,10 +1,10 @@
 const applications = [];
 
-const listAllServices = async (correlationId) => {
+const listAllServices = async () => {
   return Promise.resolve(null);
 };
 
-const getServiceById = async (sid, correlationId) => {
+const getServiceById = async (sid) => {
   return applications.find(
     (a) =>
       a.id.toLowerCase() === sid.toLowerCase() ||
