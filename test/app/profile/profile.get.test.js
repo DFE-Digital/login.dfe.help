@@ -1,10 +1,12 @@
-jest.mock('./../../../src/infrastructure/config', () => require('../../utils').configMockFactory());
+jest.mock("./../../../src/infrastructure/config", () =>
+  require("../../utils").configMockFactory(),
+);
 
-const { getRequestMock, getResponseMock } = require('../../utils');
+const { getRequestMock, getResponseMock } = require("../../utils");
 
 const res = getResponseMock();
 
-describe('when displaying the help page for profile', () => {
+describe("when displaying the help page for profile", () => {
   let req;
   let getDashboard;
 
@@ -12,30 +14,29 @@ describe('when displaying the help page for profile', () => {
     req = getRequestMock();
     req.headers.referer = undefined;
     res.mockResetAll();
-    getDashboard = require('../../../src/app/profile/profile').get;
+    getDashboard = require("../../../src/app/profile/profile").get;
   });
 
-  it('should render the help page for profile', async () => {
+  it("should render the help page for profile", async () => {
     await getDashboard(req, res);
 
     expect(res.render.mock.calls).toHaveLength(1);
-    expect(res.render.mock.calls[0][0]).toBe('profile/views/profile');
+    expect(res.render.mock.calls[0][0]).toBe("profile/views/profile");
   });
 
-  it('should include csrf token', async () => {
+  it("should include csrf token", async () => {
     await getDashboard(req, res);
 
     expect(res.render.mock.calls[0][1]).toMatchObject({
-      csrfToken: 'token',
+      csrfToken: "token",
     });
   });
 
-  it('should include the title', async () => {
+  it("should include the title", async () => {
     await getDashboard(req, res);
 
     expect(res.render.mock.calls[0][1]).toMatchObject({
-      title: 'DfE Sign-in',
+      title: "DfE Sign-in",
     });
   });
-
 });

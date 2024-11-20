@@ -1,8 +1,8 @@
-const getOrganisationAndServiceForUserV2 = async (userId, correlationId) => {
+const getOrganisationAndServiceForUserV2 = async () => {
   return Promise.resolve([]);
 };
 
-const getApproversForOrganisation = async (organisationId, correlationId) => {
+const getApproversForOrganisation = async () => {
   return Promise.resolve();
 };
 
