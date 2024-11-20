@@ -1,15 +1,11 @@
-'use strict';
+const url = require("url");
+const passport = require("passport");
+const config = require("../../infrastructure/config");
+const logger = require("../../infrastructure/logger");
 
-/* eslint-disable no-underscore-dangle */
-
-const url = require('url');
-const passport = require('passport');
-const config = require('../../infrastructure/config');
-const logger = require('../../infrastructure/logger');
-
-const logout = (req, res) => {
+const logout = (req) => {
   req.logout(() => {
-    logger.info('user logged out.');
+    logger.info("user logged out.");
   });
   req.session = null; // Needed to clear session and completely logout
 };
@@ -17,25 +13,25 @@ const logout = (req, res) => {
 const signUserOut = async (req, res) => {
   if (req.user && req.user.id_token) {
     logger.audit({
-      type: 'Sign-out',
+      type: "Sign-out",
       userId: req.user.sub,
       application: config.loggerSettings.applicationName,
       env: config.hostingEnvironment.env,
-      message: 'User logged out',
+      message: "User logged out",
       meta: {
         email: req.user.email,
-        client: 'help',
+        client: "help",
       },
     });
 
     const idToken = req.user.id_token;
     let returnUrl = `${config.hostingEnvironment.profileUrl}/signout`;
 
-    if (req.query.timeout === '1') {
-      logger.info('session timeout signout');
+    if (req.query.timeout === "1") {
+      logger.info("session timeout signout");
       returnUrl = `${config.hostingEnvironment.protocol}://${config.hostingEnvironment.host}:${config.hostingEnvironment.port}/signout/session-timeout`;
     }
-    logger.info('service signout :: there is no redirect_uri and redirected');
+    logger.info("service signout :: there is no redirect_uri and redirected");
     logout(req, res);
     const issuer = passport._strategies.oidc._issuer;
     res.redirect(
@@ -51,7 +47,7 @@ const signUserOut = async (req, res) => {
     );
   } else {
     logout(req, res);
-    res.redirect('/');
+    res.redirect("/");
   }
 };
 

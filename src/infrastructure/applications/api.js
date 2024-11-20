@@ -1,6 +1,6 @@
-const config = require('./../config');
-const { fetchApi } = require('login.dfe.async-retry');
-const jwtStrategy = require('login.dfe.jwt-strategies');
+const config = require("./../config");
+const { fetchApi } = require("login.dfe.async-retry");
+const jwtStrategy = require("login.dfe.jwt-strategies");
 
 const callApi = async (endpoint, method, body, correlationId) => {
   const token = await jwtStrategy(config.applications.service).getBearerToken();
@@ -10,7 +10,7 @@ const callApi = async (endpoint, method, body, correlationId) => {
       method: method,
       headers: {
         authorization: `bearer ${token}`,
-        'x-correlation-id': correlationId,
+        "x-correlation-id": correlationId,
       },
       body: body,
     });
@@ -26,16 +26,18 @@ const callApi = async (endpoint, method, body, correlationId) => {
   }
 };
 
-
 const getPageOfService = async (pageNumber, pageSize) => {
   const token = await jwtStrategy(config.applications.service).getBearerToken();
   try {
-    const client = await fetchApi(`${config.applications.service.url}/services?page=${pageNumber}&pageSize=${pageSize}`, {
-      method: 'GET',
-      headers: {
-        authorization: `bearer ${token}`,
+    const client = await fetchApi(
+      `${config.applications.service.url}/services?page=${pageNumber}&pageSize=${pageSize}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `bearer ${token}`,
+        },
       },
-    });
+    );
     return client;
   } catch (e) {
     if (e.statusCode === 404) {
@@ -61,10 +63,16 @@ const listAllServices = async () => {
 
   return { services };
 };
-const getSingleUserService = async (id, sid, oid, correlationId) => callApi('GET', `/users/${id}/services/${sid}/organisations/${oid}`, correlationId, undefined);
+const getSingleUserService = async (id, sid, oid, correlationId) =>
+  callApi(
+    "GET",
+    `/users/${id}/services/${sid}/organisations/${oid}`,
+    correlationId,
+    undefined,
+  );
 
 const getServiceById = async (sid, correlationId) => {
-  return await callApi(`services/${sid}`, 'GET', undefined, correlationId);
+  return await callApi(`services/${sid}`, "GET", undefined, correlationId);
 };
 
 module.exports = {
