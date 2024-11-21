@@ -168,7 +168,6 @@ describe("When handling post of contact form", () => {
       type: "test type",
       typeOtherMessage: "",
       urn: req.body.urn,
-      backLink: true,
       isHidden: true,
       isHomeTopHidden: true,
       validationMessages: {
@@ -198,7 +197,7 @@ describe("When handling post of contact form", () => {
       type: "test type",
       typeOtherMessage: "",
       urn: req.body.urn,
-      backLink: true,
+
       isHidden: true,
       isHomeTopHidden: true,
       validationMessages: {
@@ -228,7 +227,7 @@ describe("When handling post of contact form", () => {
       type: "test type",
       typeOtherMessage: "",
       urn: req.body.urn,
-      backLink: true,
+
       isHidden: true,
       isHomeTopHidden: true,
       validationMessages: {
@@ -258,7 +257,7 @@ describe("When handling post of contact form", () => {
       type: "test type",
       typeOtherMessage: "",
       urn: req.body.urn,
-      backLink: true,
+
       isHidden: true,
       isHomeTopHidden: true,
       validationMessages: {
@@ -462,7 +461,7 @@ describe("When handling post of contact form", () => {
       type: "test type",
       typeOtherMessage: "",
       urn: req.body.urn,
-      backLink: true,
+
       isHidden: true,
       isHomeTopHidden: true,
       validationMessages: {
@@ -492,7 +491,6 @@ describe("When handling post of contact form", () => {
       type: "test type",
       typeOtherMessage: "",
       urn: req.body.urn,
-      backLink: true,
       isHidden: true,
       isHomeTopHidden: true,
       validationMessages: {

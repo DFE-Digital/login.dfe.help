@@ -23,7 +23,6 @@ const get = async (req, res) => {
     message: "",
     validationMessages: {},
     isHidden: true,
-    backLink: true,
     referrer: cancelLink,
     isHomeTopHidden: true,
     services,
