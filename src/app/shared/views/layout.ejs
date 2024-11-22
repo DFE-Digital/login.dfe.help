@@ -109,19 +109,6 @@
 
     <main id="content" class="govuk-width-container">
         
-        <% if (locals.backLink !== undefined) { %>
-            <% if (locals.backLink === true) { %>
-                <span id="back-link" class="js-back-link"></span>
-            <% } %>
-        <% } %>
-        <% if (locals.tabLink !== undefined && locals.tabLink !== '') { %>
-           
-               
-                <a href="<%=locals.tabLink%>" class="govuk-back-link-bold">Back</a>
-               
-            
-        <% } %>
-
         <div id="main-wrapper" class="govuk-main-wrapper">
 
             <% if (locals.validationMessages !== undefined) { %>

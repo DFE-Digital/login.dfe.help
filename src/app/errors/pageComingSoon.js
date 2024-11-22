@@ -8,7 +8,6 @@ const get = async (req, res) => {
       subTitle: "DfE Manage console",
       serviceId: req.params.sid,
       userRoles: manageRolesForService,
-      backLink: true,
     };
     return res.render("errors/views/pageComingSoon", model);
   }
