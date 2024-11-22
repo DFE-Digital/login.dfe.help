@@ -10,7 +10,6 @@ const get = async (req, res) => {
       subTitle: "DfE Sign-in manage console",
       serviceId: req.params.sid,
       userRoles: manageRolesForService,
-      backLink: false,
     };
     return res.render("dashboard/views/manageDashboard", model);
   }

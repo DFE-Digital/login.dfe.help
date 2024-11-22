@@ -3,7 +3,6 @@ const get = async (req, res) => {
     csrfToken: req.csrfToken(),
     title: "DfE Sign-in",
     subTitle: "DfE Sign-in",
-    backLink: true,
   };
   return res.render("manageUsers/views/howToManageUsers", model);
 };
