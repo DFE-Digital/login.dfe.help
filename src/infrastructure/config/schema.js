@@ -4,7 +4,7 @@ const config = require('./index');
 const logger = require('./../logger');
 
 const notificationsSchema = new SimpleSchema({
-  connectionString: patterns.redis,
+  connectionString: patterns.redis2,
 });
 
 const identifyingPartySchema = new SimpleSchema({
