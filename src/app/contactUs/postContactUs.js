@@ -4,7 +4,7 @@ const emailValidator = require("email-validator");
 const config = require("../../infrastructure/config");
 const logger = require("../../infrastructure/logger");
 const { getAndMapExternalServices } = require("../shared/utils");
-const isValidReferrer = require('./referrerValidator');
+const isValidReferrer = require("./referrerValidator");
 
 const validateEmail = (email) => {
   const emailValidationMessage = "Enter your email address";
