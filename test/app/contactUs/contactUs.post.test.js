@@ -692,15 +692,18 @@ describe("When handling post of contact form", () => {
   });
 
   it.each([
-    ['javascript:alert(81);qxss(X140084988983232Y2_2Z);"', '/dashboard'], 
-    ['/new-dashboard', '/new-dashboard'], 
-    ['https://services.dfe.com', 'https://services.dfe.com'],
-    [null, '/dashboard']])('should set the referrer correctly, and when given %s it should be %s', async (providedReferrer, expectedReferrer)=>{
+    ['javascript:alert(81);qxss(X140084988983232Y2_2Z);"', "/dashboard"],
+    ["/new-dashboard", "/new-dashboard"],
+    ["https://services.dfe.com", "https://services.dfe.com"],
+    [null, "/dashboard"],
+  ])(
+    "should set the referrer correctly, and when given %s it should be %s",
+    async (providedReferrer, expectedReferrer) => {
       req.body.message = createString(1001);
       req.body.currentReferrer = providedReferrer;
-  
+
       await postContactForm(req, res);
-  
+
       expect(sendSupportRequest.mock.calls).toHaveLength(0);
       expect(res.render.mock.calls).toHaveLength(1);
       expect(res.render.mock.calls[0][0]).toBe("contactUs/views/contactUs");
@@ -723,5 +726,6 @@ describe("When handling post of contact form", () => {
           message: "Issue details cannot be longer than 1000 characters",
         },
       });
-  });
+    },
+  );
 });
