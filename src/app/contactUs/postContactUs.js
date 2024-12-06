@@ -4,6 +4,7 @@ const emailValidator = require("email-validator");
 const config = require("../../infrastructure/config");
 const logger = require("../../infrastructure/logger");
 const { getAndMapExternalServices } = require("../shared/utils");
+const isValidReferrer = require("./referrerValidator");
 
 const validateEmail = (email) => {
   const emailValidationMessage = "Enter your email address";
@@ -150,7 +151,7 @@ const post = async (req, res) => {
   if (!validationResult.isValid) {
     // cancel button will take back to dashboard by default (if going directly to this page)
     let cancelLink = "/dashboard";
-    if (req.body.currentReferrer) {
+    if (isValidReferrer(req.body.currentReferrer) === true) {
       cancelLink = req.body.currentReferrer;
     }
     return res.render("contactUs/views/contactUs", {
