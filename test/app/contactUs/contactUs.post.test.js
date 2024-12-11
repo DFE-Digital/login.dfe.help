@@ -690,4 +690,42 @@ describe("When handling post of contact form", () => {
     expect(res.redirect.mock.calls.length).toBe(1);
     expect(res.redirect.mock.calls[0][0]).toBe("/contact-us/completed");
   });
+
+  it.each([
+    ['javascript:alert(81);qxss(X140084988983232Y2_2Z);"', "/dashboard"],
+    ["/new-dashboard", "/new-dashboard"],
+    ["https://services.dfe.com", "https://services.dfe.com"],
+    [null, "/dashboard"],
+  ])(
+    "should set the referrer correctly, and when given %s it should be %s",
+    async (providedReferrer, expectedReferrer) => {
+      req.body.message = createString(1001);
+      req.body.currentReferrer = providedReferrer;
+
+      await postContactForm(req, res);
+
+      expect(sendSupportRequest.mock.calls).toHaveLength(0);
+      expect(res.render.mock.calls).toHaveLength(1);
+      expect(res.render.mock.calls[0][0]).toBe("contactUs/views/contactUs");
+      expect(res.render.mock.calls[0][1]).toEqual({
+        csrfToken: "csrf-token",
+        name: req.body.name,
+        email: req.body.email,
+        orgName: req.body.orgName,
+        message: req.body.message,
+        referrer: expectedReferrer,
+        service: "test service",
+        services: mockServicesOutput,
+        title: "DfE Sign-in",
+        type: "test type",
+        typeOtherMessage: "",
+        urn: req.body.urn,
+        isHidden: true,
+        isHomeTopHidden: true,
+        validationMessages: {
+          message: "Issue details cannot be longer than 1000 characters",
+        },
+      });
+    },
+  );
 });
