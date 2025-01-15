@@ -1,5 +1,5 @@
 const { decode } = require("html-entities");
-const NotificationClient = require("login.dfe.notifications.client");
+const { NotificationClient } = require("login.dfe.jobs-client");
 const emailValidator = require("email-validator");
 const config = require("../../infrastructure/config");
 const logger = require("../../infrastructure/logger");

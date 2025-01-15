@@ -17,9 +17,9 @@ jest.mock("./../../../src/infrastructure/logger", () =>
 jest.mock("./../../../src/infrastructure/applications", () => ({
   listAllServices: jest.fn(),
 }));
-jest.mock("login.dfe.notifications.client");
+jest.mock("login.dfe.jobs-client");
 
-const NotificationClient = require("login.dfe.notifications.client");
+const { NotificationClient } = require("login.dfe.jobs-client");
 const {
   post: postContactForm,
 } = require("../../../src/app/contactUs/postContactUs");
