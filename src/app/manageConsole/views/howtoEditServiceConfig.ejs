@@ -8,12 +8,12 @@
                 Edit service configuration
             </h2>
             <p class="govuk-body">
-                To edit a service’s configuration on DfE manage console, you need to:
+                To edit a service’s configuration on DfE Sign-in manage console, you need to:
             </p>
             <ol class="govuk-list govuk-list--number">
                 <li>Sign into your DfE Sign-in account.</li>
-                <li>Once signed in, select ‘DfE Sign-in manage’ from your list of services.</li>
-                <li>On the DfE manage console dashboard, click ‘Edit service configuration’.</li>
+                <li>Once signed in, select ‘DfE Sign-in manage console’ from your list of services.</li>
+                <li>On the DfE Sign-in manage console dashboard, click ‘Edit service configuration’.</li>
                 <li>Select the service.</li>
                 <li>Enter the relevant fields.</li>
                 <li>Review details and click ‘Save’.</li>
@@ -24,7 +24,7 @@
         <p class="govuk-body ">
             When you configure the service, you must provide:
         </p>
-        <ol class="govuk-list govuk-list--bullet ">
+        <ul class="govuk-list govuk-list--bullet">
             <li>the service’s home URL</li>
             <li>post password-reset URL</li>
             <li>client ID</li>
@@ -32,15 +32,15 @@
             <li>logout redirect URL</li>
             <li>response type</li>
             <li>API secret</li>
-        </ol>
+        </ul>
         <p class="govuk-body ">
             Depending on the response type selected, you may also need to provide:
         </p>
-        <ol class="govuk-list govuk-list--bullet ">
+        <ul class="govuk-list govuk-list--bullet">
             <li>refresh token</li>
             <li>client secret</li>
             <li>token endpoint authentication method</li>
-        </ol>
+        </ul>
         <p class="govuk-body">
             These settings are described in more detail in the following section.
         </p>
@@ -55,6 +55,14 @@
          <p class="govuk-body">
             <span style="background-color: rgb(235, 232, 232); color:#d4351c;">https://www.apply-for-teacher-training.service.gov.uk/provider</span>
          </p>
+         <p class="govuk-body">
+            The home URL must:
+        </p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>follow http or https protocols</li>
+            <li>be 200 characters or less</li>
+            <li>not include spaces or the following characters " < > # % { } | \ ^ ~ [ ] `</li>
+        </ul>
 
          <h2 id="password-reset-url" class="govuk-heading-s ">Post password-reset URL</h2>
          <p class="govuk-body">
@@ -67,11 +75,19 @@
             <span style="background-color: rgb(235, 232, 232); color:#d4351c;">https://services.signin.education.gov.uk</span>
          </p>
          <p class="govuk-body">
+            The post password-reset URL must:
+        </p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>follow http or https protocols</li>
+            <li>be 200 characters or less</li>
+            <li>not include spaces or the following characters " < > # % { } | \ ^ ~ [ ] `</li>
+        </ul>
+         <p class="govuk-body">
             If you do not provide a post password-reset URL, the DfE Sign-in system will automatically use one of the redirect URLs provided.
          </p>
         <h3 id="openid-connect" class="govuk-heading-m ">OpenID Connect</h3>
         <p class="govuk-body">
-            DfE Sign-in is an <a  class="govuk-link" href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect (OIDC) provider</a>. OIDC is a simple user identity and authentication layer on top of the <a  class="govuk-link" href="https://www.oauth.com/">OAuth 2.0 framework</a>.
+            DfE Sign-in is an <a  class="govuk-link" href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect (OIDC)</a> provider. OIDC is a simple user identity and authentication layer on top of the <a  class="govuk-link" href="https://www.oauth.com/">OAuth 2.0 framework</a>.
         </p>
         <p class="govuk-body">
             You must first register your service with DfE Sign-in as a ‘relying party’ before being able to interact with DfE Sign-in.
@@ -86,21 +102,21 @@
         <p class="govuk-body ">
             As part of the OIDC requirements, you must provide:
         </p>
-        <ol class="govuk-list govuk-list--bullet ">
+        <ul class="govuk-list govuk-list--bullet">
             <li>client ID</li>
             <li>redirect URL</li>
             <li>logout redirect URL</li>
             <li>response type</li>
-        </ol>
+        </ul>
 
         <p class="govuk-body ">
             Depending on the response type selected, you may also need to provide:
         </p>
-        <ol class="govuk-list govuk-list--bullet ">
+        <ul class="govuk-list govuk-list--bullet">
             <li>refresh token</li>
             <li>client secret</li>
             <li>token endpoint authentication method</li>
-        </ol>
+        </ul>
         <p class="govuk-body">
             These settings are described in more detail in the following section.
         </p>
@@ -108,11 +124,11 @@
         <p class="govuk-body ">
             The client ID is a unique identifier of the service you want to configure. It is created manually by the DfE Sign-in team and must:
         </p>
-        <ol class="govuk-list govuk-list--bullet ">
+        <ul class="govuk-list govuk-list--bullet">
             <li>be unique</li>
             <li>only contain letters a to z, hyphens and numbers</li>
             <li>be 50 characters or less</li>
-        </ol>
+        </ul>
         <p class="govuk-body">
             The client ID should not be easy for third parties to guess as it can lead to phishing attacks.
         </p>
@@ -130,14 +146,14 @@
         <p class="govuk-body">
             You can add multiple redirect URLs. For security reasons, it is important to add at least 1. 
         </p>
-        <p class="govuk-body ">
-            URLs must be valid, trusted and start with <span style="background-color: rgb(235, 232, 232); color:#d4351c;">https</span>. URLs must not include:
+        <p class="govuk-body">
+            Redirect URLs must:
         </p>
-        <ol class="govuk-list govuk-list--bullet ">
-            <li>query string, for example <span style="background-color: rgb(235, 232, 232); color:#d4351c;">https://myservice.com/auth/cb?user=xyz</span></li>
-            <li>local host, for example <span style="background-color: rgb(235, 232, 232); color:#d4351c;">https://localhost</span></li>
-            <li>wildcards, for example <span style="background-color: rgb(235, 232, 232); color:#d4351c;">https://*.myservice.com</span></li>
-        </ol>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>follow http or https protocols</li>
+            <li>be 200 characters or less</li>
+            <li>not include spaces or the following characters " < > # % { } | \ ^ ~ [ ] `</li>
+        </ul>
         <p class="govuk-body">
             Users will only be redirected back to a URL if it exists in this whitelist.
         </p>
@@ -157,14 +173,14 @@
         <p class="govuk-body">
             You can add multiple redirect URLs. For security reasons, it is important to add at least 1. 
         </p>
-        <p class="govuk-body ">
-            URLs must be valid, trusted and start with <span style="background-color: rgb(235, 232, 232); color:#d4351c;">https</span>. URLs must not include:
+        <p class="govuk-body">
+            Logout redirect URLs must:
         </p>
-        <ol class="govuk-list govuk-list--bullet ">
-            <li>query string, for example <span style="background-color: rgb(235, 232, 232); color:#d4351c;">https://myservice.com/auth/cb?clientid=xyz</span></li>
-            <li>local host, for example <span style="background-color: rgb(235, 232, 232); color:#d4351c;">https://localhost</span></li>
-            <li>wildcards, for example <span style="background-color: rgb(235, 232, 232); color:#d4351c;">https://*.myservice.com</span></li>
-        </ol>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>follow http or https protocols</li>
+            <li>be 200 characters or less</li>
+            <li>not include spaces or the following characters " < > # % { } | \ ^ ~ [ ] `</li>
+        </ul>
         <p class="govuk-body">
             Users will only be redirected back to a URL if it exists in this whitelist. If you do not provide a logout redirect URL, users will be redirected to the DfE Sign-in page.
         </p>
@@ -175,19 +191,19 @@
         <p class="govuk-body ">
             The OAuth framework has several response types. When configuring a service, you can select 1 or combinations of the following response types:
         </p>
-        <ol class="govuk-list govuk-list--bullet ">
+        <ul class="govuk-list govuk-list--bullet">
             <li>span</li>
             <li>id_token</li>
             <li>token</li>
-        </ol>
+        </ul>
         <p class="govuk-body ">
             Depending on the response type you select, it will automatically determine the authentication flow. There are 3 authentication flows that can be decided:
         </p>
-        <ol class="govuk-list govuk-list--bullet ">
+        <ul class="govuk-list govuk-list--bullet">
             <li>authorization flow</li>
             <li>hybrid flow</li>
             <li>implicit flow</li>
-        </ol>
+        </ul>
         <p class="govuk-body">
             The response type and flow combinations are illustrated in the following table. 
         
@@ -256,10 +272,10 @@
         <p class="govuk-body">
             The client secret is a value that acts as a password for the service. DfE manage console automatically creates the client secret when configuring a service. It:
         </p>
-        <ol class="govuk-list govuk-list--bullet ">
+        <ul class="govuk-list govuk-list--bullet">
             <li>is usually 25 characters long</li>
             <li>can be changed</li>
-        </ol>
+        </ul>
         <p class="govuk-body">
             The client secret should be secure and not easy for third parties to guess. It is a security practice to change the client secret regularly.
         </p>
@@ -283,11 +299,11 @@
         <p class="govuk-body ">
             When configuring a service, there are 3 token endpoint authentication methods:
         </p>
-        <ol class="govuk-list govuk-list--bullet ">
+        <ul class="govuk-list govuk-list--bullet">
             <li><span style="background-color: rgb(235, 232, 232); color:#d4351c;">client_secret_basic</span></li>
             <li><span style="background-color: rgb(235, 232, 232); color:#d4351c;">client_secret_post</span></li>
             <li><span style="background-color: rgb(235, 232, 232); color:#d4351c;">none</span></li>
-        </ol>
+        </ul>
         <p class="govuk-body">
             You must select 1 method that applies to your service when configuring a service.
         </p>
@@ -305,10 +321,10 @@
         <p class="govuk-body ">
             DfE manage console automatically creates the API secret when configuring a service. It:
         </p>
-        <ol class="govuk-list govuk-list--bullet ">
+        <ul class="govuk-list govuk-list--bullet">
             <li>is usually 25 characters long</li>
             <li>can be changed</li>
-        </ol>
+        </ul>
         <p class="govuk-body">
             The client secret should be secure and not easy for third parties to guess.
         </p>
@@ -316,7 +332,7 @@
             You can view or change the API secret on the ‘Edit service configuration’ page by clicking ‘Show’ or ‘Regenerate’ next to the API secret field.
         </p>
         <p class="govuk-body end-of-section">
-            Updated September 2023
+            Updated January 2025
         </p>
 
         <hr class="custom-section-break">
