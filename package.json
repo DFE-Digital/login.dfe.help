@@ -2,9 +2,6 @@
   "name": "login.dfe.help",
   "version": "15.0.0",
   "description": "test",
-  "engines": {
-    "node": "18.x.x"
-  },
   "scripts": {
     "dev": "settings='./config/login.dfe.help.dev.json' node src/index.js",
     "dev:checks": "npm run lint && npm run test",
