@@ -98,14 +98,14 @@ variables:
 stages:
 
   - ${{ if eq(parameters.existTag, ' ') }}:
-  # Code Scans & Build the artifact for deployment
-  - stage: scanBuildApp
-    displayName: "Pre Deploy jobs"
-    jobs:
-      - template: pipeline/components/checks/checks.yml@devopsTemplates
-        parameters:
-          AppDeploy: ${{ not(parameters.InfrDeploy) }}
-          custRegAuth: $(custRegAuth)
+      # Code Scans & Build the artifact for deployment
+      - stage: scanBuildApp
+        displayName: "Pre Deploy jobs"
+        jobs:
+          - template: pipeline/components/checks/checks.yml@devopsTemplates
+            parameters:
+              AppDeploy: ${{ not(parameters.InfrDeploy) }}
+              custRegAuth: $(custRegAuth)
 
       - ${{ if and(eq(parameters.InfrDeploy, 'false'), eq(variables.buildNotNeeded, 'false')) }}:
           - template:  pipeline/components/build/buildAppServicesNodeJs.yml@devopsTemplates
