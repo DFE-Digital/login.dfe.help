@@ -118,32 +118,32 @@ stages:
   - ${{ each location in parameters.location }}:
       - ${{each env in split(variables[location],',') }}:
           - ${{ if eq(variables[env], 'true') }}:
-              - stage: Deployment_${{env}}_${{location}}
-                displayName: "Deployment [${{env}}] ${{location}}"
-                ${{ if eq(location,'westeurope') }}:
-                  dependsOn:
-                    - scanBuildApp
-                  condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
-                ${{ if eq(location,'northeurope') }}:
-                  ${{ if eq(length(parameters.location), 2) }}:
-                    dependsOn:
-                      - scanBuildApp
-                      - Deployment_${{env}}_westeurope
-                    condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
-                  ${{ else }}:
-                    dependsOn:
-                      - scanBuildApp
-                    condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
-                variables:
-                  - name: secRegionId
-                    value: $(${{ format('{0}{1}', location, 'Id') }})
-                  - name: environmentId
-                    value: $[variables['${{env}}EnvId']]
-                  - name: ServConName
-                    value: ${{ format('{0}{1}', env, 'ServCon') }}
-                  - name: ShaCodeName
-                    value: ${{ format('{0}{1}', env, 'ShaCode') }}
-                jobs:
+              # - stage: Deployment_${{env}}_${{location}}
+              #   displayName: "Deployment [${{env}}] ${{location}}"
+              #   ${{ if eq(location,'westeurope') }}:
+              #     dependsOn:
+              #       - scanBuildApp
+              #     condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
+              #   ${{ if eq(location,'northeurope') }}:
+              #     ${{ if eq(length(parameters.location), 2) }}:
+              #       dependsOn:
+              #         - scanBuildApp
+              #         - Deployment_${{env}}_westeurope
+              #       condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
+              #     ${{ else }}:
+              #       dependsOn:
+              #         - scanBuildApp
+              #       condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
+              #   variables:
+              #     - name: secRegionId
+              #       value: $(${{ format('{0}{1}', location, 'Id') }})
+              #     - name: environmentId
+              #       value: $[variables['${{env}}EnvId']]
+              #     - name: ServConName
+              #       value: ${{ format('{0}{1}', env, 'ServCon') }}
+              #     - name: ShaCodeName
+              #       value: ${{ format('{0}{1}', env, 'ShaCode') }}
+                # jobs:
                   # - template: pipeline/deployment.yml@devopsTemplates
                   #   parameters:
                   #     serviceConnection: $(${{variables.ServConName}})
