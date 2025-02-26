@@ -107,7 +107,7 @@ stages:
               AppDeploy: ${{ not(parameters.InfrDeploy) }}
               custRegAuth: $(custRegAuth)
 
-          - ${{ if eq(parameters.InfrDeploy, 'false') }}:
+          - ${{ if  not(parameters.InfrDeploy) }}:
             - template:  pipeline/components/build/buildAppServicesNodeJs.yml@devopsTemplates
               parameters:
                 applicationName: ${{variables.applicationFullName}}
