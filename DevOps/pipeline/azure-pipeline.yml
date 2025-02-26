@@ -85,7 +85,7 @@ variables:
   - name: test
     value: ${{ or(eq(parameters.test, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}
   - name: pp
-    value: ${{ and(or(eq(parameters.pp, 'true'), contains(variables['Build.SourceBranch'],'main')), not(variables.buildNotNeeded)) }}
+    value: ${{ and(or(eq(parameters.pp, 'true'), contains(variables['Build.SourceBranch'],'main')), eq(variables.buildNotNeeded, 'false')) }}
   - name: pr
     value: ${{ or(and(eq(parameters.pr, 'true'), ne(parameters.existTag, ' ')),eq(variables.pp, 'true')) }}
   - name: ContRegServerTran
@@ -107,7 +107,7 @@ stages:
               AppDeploy: ${{ not(parameters.InfrDeploy) }}
               custRegAuth: $(custRegAuth)
 
-          - ${{ if  and(not(parameters.InfrDeploy), not(variables.buildNotNeeded)) }}:
+          - ${{ if  and(not(parameters.InfrDeploy), eq(variables.buildNotNeeded, 'false')) }}:
             - template:  pipeline/components/build/buildAppServicesNodeJs.yml@devopsTemplates
               parameters:
                 applicationName: ${{variables.applicationFullName}}
