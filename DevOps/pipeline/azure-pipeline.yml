@@ -77,7 +77,7 @@ variables:
   - name: numberOfWorkers
     value: 1
   - name: buildNotNeeded
-    value: ${{ not(contains(variables['Build.SourceVersionMessage'],'Upgrade to version')) }}
+    value: ${{ contains(variables['Build.SourceVersionMessage'],'Upgrade to version') }}
   - name: tran
     value: ${{ eq(parameters.tran, 'true') }}
   - name: dev
@@ -85,7 +85,7 @@ variables:
   - name: test
     value: ${{ or(eq(parameters.test, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}
   - name: pp
-    value: ${{ and(or(eq(parameters.pp, 'true'), contains(variables['Build.SourceBranch'],'main')), eq(variables.buildNotNeeded, 'false')) }}
+    value: ${{ and(or(eq(parameters.pp, 'true'), contains(variables['Build.SourceBranch'],'main')), not(variables.buildNotNeeded)) }}
   - name: pr
     value: ${{ or(and(eq(parameters.pr, 'true'), ne(parameters.existTag, ' ')),eq(variables.pp, 'true')) }}
   - name: ContRegServerTran
@@ -107,7 +107,7 @@ stages:
               AppDeploy: ${{ not(parameters.InfrDeploy) }}
               custRegAuth: $(custRegAuth)
 
-          - ${{ if  and(not(parameters.InfrDeploy), true) }}:
+          - ${{ if  and(not(parameters.InfrDeploy), not(variables.buildNotNeeded)) }}:
             - template:  pipeline/components/build/buildAppServicesNodeJs.yml@devopsTemplates
               parameters:
                 applicationName: ${{variables.applicationFullName}}
