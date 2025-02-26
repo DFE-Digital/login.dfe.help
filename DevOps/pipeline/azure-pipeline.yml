@@ -79,15 +79,15 @@ variables:
   - name: buildNotNeeded
     value: ${{ contains(variables['Build.SourceVersionMessage'],'Upgrade to version') }}
   - name: tran
-    value: ${{ eq(parameters.tran, 'true') }}
+    value: ${{ parameters.tran }}
   - name: dev
-    value: ${{ or(eq(parameters.dev, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}
+    value: ${{ or(parameters.dev, contains(variables['Build.SourceBranch'],'feature')) }}
   - name: test
-    value: ${{ or(eq(parameters.test, 'true'), contains(variables['Build.SourceBranch'],'feature')) }}
+    value: ${{ or(parameters.test, contains(variables['Build.SourceBranch'],'feature')) }}
   - name: pp
-    value: ${{ and(or(eq(parameters.pp, 'true'), contains(variables['Build.SourceBranch'],'main')), eq(variables.buildNotNeeded, 'false')) }}
+    value: ${{ and(or(parameters.pp contains(variables['Build.SourceBranch'],'main')), eq(variables.buildNotNeeded, 'false')) }}
   - name: pr
-    value: ${{ or(and(eq(parameters.pr, 'true'), ne(parameters.existTag, ' ')),eq(variables.pp, 'true')) }}
+    value: ${{ or(and(parameters.pr, ne(parameters.existTag, ' ')),eq(variables.pp, 'true')) }}
   - name: ContRegServerTran
     value: ${{ eq(variables.tran, 'true') }}
   - name: northeurope
