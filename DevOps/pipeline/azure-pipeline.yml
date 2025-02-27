@@ -167,6 +167,8 @@ stages:
                     #   - Deployment_${{env}}_${{location}}
                     jobs:
                       - template: pipeline/releaseCreation.yml@devopsTemplates
+                        parameters:
+                          versionFilePath: "definitelyNotPackage.json"
 
               - ${{ if and(eq(env, 'tran'),eq(location, 'westeurope')) }}:
                   - stage: branchPrTag
