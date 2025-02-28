@@ -1,6 +1,6 @@
 {
   "name": "login.dfe.help",
-  "version": "18.0.0",
+  "version": "v19.0.0",
   "description": "test",
   "scripts": {
     "dev": "settings='./config/login.dfe.help.dev.json' node src/index.js",
