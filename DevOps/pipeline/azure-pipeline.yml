@@ -6,7 +6,7 @@ resources:
       type: github
       endpoint: DfE-Digital
       name: DFE-Digital/login.dfe.devops
-      ref: feature/override_pkg_json
+      ref: feature/override_pkg_json_2
     - repository: config
       type: github
       endpoint: DfE-Digital
@@ -87,13 +87,13 @@ variables:
 
 stages:
   # Code Scans & Build the artifact for deployment
-  - stage: scanBuildApp
-    displayName: "Scan tools & Build"
-    jobs:
-      - template: pipeline/scanTools.yml@devopsTemplates
-        parameters:
-          useRevisedLinting: true
-          AppDeploy: ${{ not(parameters.InfrDeploy) }}
+  # - stage: scanBuildApp
+  #   displayName: "Scan tools & Build"
+  #   jobs:
+  #     - template: pipeline/scanTools.yml@devopsTemplates
+  #       parameters:
+  #         useRevisedLinting: true
+  #         AppDeploy: ${{ not(parameters.InfrDeploy) }}
 
       # - ${{ if not(eq(parameters.InfrDeploy, 'true')) }}:
       #     - template: pipeline/build.yml@devopsTemplates
@@ -166,7 +166,7 @@ stages:
                     # dependsOn:
                     #   - Deployment_${{env}}_${{location}}
                     jobs:
-                      - template: pipeline/releaseCreation.yml@devopsTemplates
+                      - template: pipeline/releaseCreationCustom.yml@devopsTemplates
                         parameters:
                           versionFilePath: "./definitelyNotPackage.json"
 
@@ -176,6 +176,7 @@ stages:
                     dependsOn:
                       - releasebranch
                     jobs:
-                      - template: pipeline/tagCreation.yml@devopsTemplates
+                      - template: pipeline/tagCreationCustom.yml@devopsTemplates
                         parameters:
                           applicationName: ${{variables.applicationFullName}}
+                          versionFilePath: "./definitelyNotPackage.json"
