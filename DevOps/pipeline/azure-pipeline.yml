@@ -166,7 +166,7 @@ stages:
                     # dependsOn:
                     #   - Deployment_${{env}}_${{location}}
                     jobs:
-                      - template: pipeline/releaseCreationCustom.yml@devopsTemplates
+                      - template: pipeline/releaseCreation.yml@devopsTemplates
                         parameters:
                           versionFilePath: "./definitelyNotPackage.json"
 
@@ -176,7 +176,7 @@ stages:
                     dependsOn:
                       - releasebranch
                     jobs:
-                      - template: pipeline/tagCreationCustom.yml@devopsTemplates
+                      - template: pipeline/tagCreation.yml@devopsTemplates
                         parameters:
                           applicationName: ${{variables.applicationFullName}}
                           versionFilePath: "./definitelyNotPackage.json"
