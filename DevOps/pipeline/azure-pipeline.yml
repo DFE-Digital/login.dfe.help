@@ -6,7 +6,7 @@ resources:
       type: github
       endpoint: DfE-Digital
       name: DFE-Digital/login.dfe.devops
-      ref: feature/override_pkg_json_2
+      ref: feature/override_pkg_json_3
     - repository: config
       type: github
       endpoint: DfE-Digital
