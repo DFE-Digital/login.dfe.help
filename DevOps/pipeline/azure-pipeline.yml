@@ -168,7 +168,7 @@ stages:
                     jobs:
                       - template: pipeline/releaseCreation.yml@devopsTemplates
                         parameters:
-                          versionType: "minor"
+                          versionType: "major"
 
               - ${{ if and(eq(env, 'tran'),eq(location, 'westeurope')) }}:
                   - stage: branchPrTag
