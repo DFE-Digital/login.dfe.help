@@ -60,11 +60,11 @@
             </div>
             <div class="govuk-header__content">
                 <% if (locals.title != undefined && locals.title !== 'DfE Sign-in') { %>
-                    <a href="<%=locals.urls.manageConsole%>/services/500DF403-4643-4CDE-9F30-3C6D8AD27AD7" class="govuk-header__link govuk-header__link--service-name">
+                    <a href="<%=locals.urls.manageConsole%>/services/500DF403-4643-4CDE-9F30-3C6D8AD27AD7" class="govuk-header__link govuk-header__service-name">
                         <%= locals.title || (locals.app ? locals.app.title : null) || 'DfE Sign-in'%>
                     </a>
                 <% } else { %>
-                    <a href="<%=locals.urls.services%>/my-services" class="govuk-header__link govuk-header__link--service-name">
+                    <a href="<%=locals.urls.services%>/my-services" class="govuk-header__link govuk-header__service-name">
                         <%= locals.title || (locals.app ? locals.app.title : null) || 'DfE Sign-in'%>
                     </a>
                 <%}%>
