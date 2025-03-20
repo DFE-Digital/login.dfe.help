@@ -126,8 +126,8 @@ stages:
               - stage: Deployment_${{env}}_${{location}}
                 displayName: "Deployment [${{env}}] ${{location}}"
                 ${{ if eq(env, 'pr') }}:
-                  dependsOn: 
-                  - releasebranch
+                  dependsOn:
+                  - Deployment_pp_westeurope
                   condition: in(dependencies.scanBuildApp.result, 'Succeeded', 'Skipped')
                 ${{ elseif eq(parameters.existTag, ' ') }}:
                   dependsOn: 
@@ -166,29 +166,4 @@ stages:
                         ContRegServerCode: $(tranShaCode)
                       ${{ else }}:
                         ContRegServerCode: $(prShaCode)
-                      
-
-              - ${{ if and(and(eq(env, 'pp'),eq(location, 'westeurope')),eq(parameters.existTag, ' ')) }}:
-                  - stage: releasebranch
-                    displayName: "GitHub Release Branch Creation"
-                    dependsOn:
-                      - Deployment_${{env}}_${{location}}
-                    jobs:
-                      - template: pipeline/releaseCreation.yml@devopsTemplates
-                        parameters:
-                          applicationFullName: ${{variables.applicationFullName}}
-                          serviceConnection: $(prServCon)
-                          shaCode: $(prShaCode)
-
-              - ${{ if and(and(eq(env, 'pr'),eq(location, 'westeurope')),eq(parameters.existTag, ' ')) }}:
-                  - stage: branchPrTag
-                    displayName: "GitHub PR & Release Branch Tag"
-                    dependsOn:
-                      - Deployment_${{env}}_${{location}}
-                    jobs:
-                      - template: pipeline/tagCreation.yml@devopsTemplates
-                        parameters:
-                          applicationName: ${{variables.applicationFullName}}
-                          serviceConnection: $(prServCon)
-                          shaCode: $(prShaCode)
 
