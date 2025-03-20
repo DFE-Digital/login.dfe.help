@@ -81,9 +81,9 @@ variables:
   - name: tran
     value: ${{ parameters.tran }}
   - name: dev
-    value: ${{ or(parameters.dev, contains(variables['Build.SourceBranch'],'feature')) }}
+    value: ${{ or(parameters.dev, contains(variables['Build.SourceBranch'],'feature1')) }}
   - name: test
-    value: ${{ or(parameters.test, contains(variables['Build.SourceBranch'],'feature')) }}
+    value: ${{ or(parameters.test, contains(variables['Build.SourceBranch'],'feature1')) }}
   - name: pp
     value: ${{ and(or(parameters.pp, contains(variables['Build.SourceBranch'],'main')), eq(variables.buildNotNeeded, 'false')) }}
   - name: pr
