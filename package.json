@@ -44,7 +44,7 @@
     "html-entities": "^2.3.2",
     "lodash": "^4.17.21",
     "login.dfe.async-retry": "github:DFE-Digital/login.dfe.async-retry#v2.0.3",
-    "login.dfe.audit.transporter": "^4.0.2",
+    "login.dfe.audit.transporter": "^4.0.3",
     "login.dfe.config.schema.common": "^2.1.7",
     "login.dfe.dao": "^5.0.6",
     "login.dfe.express-error-handling": "github:DFE-Digital/login.dfe.express-error-handling#v3.0.2",
