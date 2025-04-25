@@ -71,12 +71,7 @@ const getSingleUserService = async (id, sid, oid, correlationId) =>
     undefined,
   );
 
-const getServiceById = async (sid, correlationId) => {
-  return await callApi(`services/${sid}`, "GET", undefined, correlationId);
-};
-
 module.exports = {
   listAllServices,
-  getServiceById,
   getSingleUserService,
 };
