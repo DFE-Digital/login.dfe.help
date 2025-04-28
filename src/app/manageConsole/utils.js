@@ -1,5 +1,5 @@
-const { getSingleUserService } = require("../../infrastructure/access");
 const config = require("../../infrastructure/config");
+const { getUserService } = require("login.dfe.api-client/users");
 
 const getUserServiceRoles = async (req) => {
   const allUserRoles = req.userServices.roles.map((role) => ({
@@ -13,12 +13,11 @@ const getUserServiceRoles = async (req) => {
 };
 
 const getSingleUserServiceAndRoles = async (req) => {
-  req.userServices = await getSingleUserService(
-    req.user.sub,
-    config.access.identifiers.service,
-    config.access.identifiers.organisation,
-    req.id,
-  );
+  req.userServices = await getUserService({
+    userId: req.user.sub,
+    serviceId: config.access.identifiers.service,
+    organisationId: config.access.identifiers.organisation,
+  });
   const manageRolesForService = await getUserServiceRoles(req);
   return manageRolesForService;
 };

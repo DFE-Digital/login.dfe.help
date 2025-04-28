@@ -1,10 +1,22 @@
-const config = require("./../config");
+const { getPaginatedServicesRaw } = require("login.dfe.api-client/services");
 
-let adapter;
-if (config.applications.type === "api") {
-  adapter = require("./api");
-} else {
-  adapter = require("./static");
-}
+const listAllServices = async () => {
+  const services = [];
 
-module.exports = adapter;
+  let pageNumber = 1;
+  let numberOfPages = undefined;
+  while (numberOfPages === undefined || pageNumber <= numberOfPages) {
+    const page = await getPaginatedServicesRaw({ pageNumber, pageSize: 50 });
+
+    services.push(...page.services);
+
+    numberOfPages = page.numberOfPages;
+    pageNumber += 1;
+  }
+
+  return { services };
+};
+
+module.exports = {
+  listAllServices,
+};
