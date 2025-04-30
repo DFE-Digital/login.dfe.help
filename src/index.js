@@ -17,7 +17,6 @@ const flash = require("login.dfe.express-flash-2");
 
 // imports for authentication
 const passport = require("passport");
-const appInsights = require("applicationinsights");
 const getPassportStrategy = require("./infrastructure/oidc");
 const { setUserContext } = require("./infrastructure/utils");
 const mountRoutes = require("./routes");
@@ -29,10 +28,6 @@ const configSchema = require("./infrastructure/config/schema");
 configSchema.validate();
 
 const init = async () => {
-  if (config.hostingEnvironment.applicationInsights) {
-    appInsights.setup(config.hostingEnvironment.applicationInsights).start();
-  }
-
   https.globalAgent.maxSockets = http.globalAgent.maxSockets =
     config.hostingEnvironment.agentKeepAlive.maxSockets || 50;
 
