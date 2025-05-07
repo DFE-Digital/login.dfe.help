@@ -8,17 +8,16 @@ const {
 } = require("../../../src/app/manageConsole/howtoEditServiceConfig");
 const {
   getSingleUserServiceAndRoles,
-  getSingleUserService,
 } = require("../../../src/app/manageConsole/utils");
+
+const { getUserService } = require("login.dfe.api-client/users");
+
+jest.mock("login.dfe.api-client/users", () => ({
+  getUserService: jest.fn(),
+}));
 
 jest.mock("../../../src/app/manageConsole/utils", () => ({
   getSingleUserServiceAndRoles: jest.fn(),
-  getSingleUserService: jest.fn(),
-}));
-jest.mock("../../../src/infrastructure/access", () => ({
-  updateUserService: jest.fn(),
-  listRolesOfService: jest.fn(),
-  getSingleUserService: jest.fn(),
 }));
 
 const res = mockResponse();
@@ -43,7 +42,7 @@ describe("when displaying the help page for manageConsole/howtoEditServiceConfig
     });
 
     res.mockResetAll();
-    getSingleUserService.mockReset().mockReturnValue({
+    getUserService.mockReset().mockReturnValue({
       userId: "A76A1DC8-0A38-459B-B2B2-E07767C6438B",
       serviceId: "B1F190AA-729A-45FC-A695-4EA209DC79D4",
       organisationId: "3DE9D503-6609-4239-BA55-14F8EBD69F56",

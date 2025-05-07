@@ -24,8 +24,30 @@ const config = require("./infrastructure/config");
 const logger = require("./infrastructure/logger");
 
 const configSchema = require("./infrastructure/config/schema");
+const { setupApi } = require("login.dfe.api-client/api/setup");
 
 configSchema.validate();
+
+setupApi({
+  auth: {
+    tenant: config.organisations.service.auth.tenant,
+    authorityHostUrl: config.organisations.service.auth.authorityHostUrl,
+    clientId: config.organisations.service.auth.clientId,
+    clientSecret: config.organisations.service.auth.clientSecret,
+    resource: config.organisations.service.auth.resource,
+  },
+  api: {
+    organisations: {
+      baseUri: config.organisations.service.url,
+    },
+    applications: {
+      baseUri: config.applications.service.url,
+    },
+    access: {
+      baseUri: config.access.service.url,
+    },
+  },
+});
 
 const init = async () => {
   https.globalAgent.maxSockets = http.globalAgent.maxSockets =

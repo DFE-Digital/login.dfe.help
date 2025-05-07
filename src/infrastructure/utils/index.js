@@ -1,7 +1,7 @@
 const {
-  getOrganisationAndServiceForUserV2,
-  getAllRequestsForApprover,
-} = require("./../organisations");
+  getUserOrganisationsRaw,
+  getPendingOrganisationRequestsRaw,
+} = require("login.dfe.api-client/users");
 
 const isLoggedIn = (req, res, next) => {
   // if user is authenticated, set local value to show navigation menu
@@ -24,10 +24,9 @@ const authenticate = (req, res, next) => {
 const setUserContext = async (req, res, next) => {
   if (req.user) {
     res.locals.user = req.user;
-    const organisations = await getOrganisationAndServiceForUserV2(
-      req.user.sub,
-      req.id,
-    );
+    const organisations = await getUserOrganisationsRaw({
+      userId: req.user.sub,
+    });
     req.userOrganisations = organisations;
     try {
       if (req.userOrganisations) {
@@ -35,10 +34,9 @@ const setUserContext = async (req, res, next) => {
           req.userOrganisations.filter((x) => x.role.id === 10000).length > 0;
       }
       if (res.locals.isApprover) {
-        const approverOrgRequests = await getAllRequestsForApprover(
-          req.user.sub,
-          req.id,
-        );
+        const approverOrgRequests = await getPendingOrganisationRequestsRaw({
+          userId: req.user.sub,
+        });
         req.organisationRequests = approverOrgRequests;
         res.locals.approverRequests = approverOrgRequests;
       }
