@@ -168,7 +168,7 @@ stages:
                         ContRegServerCode: $(prShaCode)
                       ContRegServers:
                         - ${{ if eq(variables.ContRegServerTran, 'true') }}:
-                          - name: '$(platformGlobalIdentifier)$(tranShaCode)$(platformGlobalName)shdcr'
+                          - name: '$(platformGlobalIdentifier)$(tranShaCode)$(platformGlobalName)shdcr.azurecr.io'
                             servCon: $(devServiceConnection)
-                        - name: '$(platformGlobalIdentifier)$(prShaCode)$(platformGlobalName)shdcr'
-                          servCon: $(prodServiceConnection)
+                        - name: '$(platformGlobalIdentifier)$(prShaCode)$(platformGlobalName)shdcr.azurecr.io'
+                          servCon: $(prodServiceConnection)     
