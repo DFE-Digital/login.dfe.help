@@ -30,8 +30,12 @@ const config = {
     port: process.env.LOCAL_PORT_HELP || 443,
     protocol: "https",
     hstsMaxAge: 86400,
-    sslCert: process.env.LOCAL_SSL_CERT || "",
-    sslKey: process.env.LOCAL_SSL_KEY || "",
+    sslCert: process.env.LOCAL_SSL_CERT
+      ? process.env.LOCAL_SSL_CERT.replace(/\\n/g, "\n")
+      : "",
+    sslKey: process.env.LOCAL_SSL_KEY
+      ? process.env.LOCAL_SSL_KEY.replace(/\\n/g, "\n")
+      : "",
     sessionSecret: process.env.SESSION_ENCRYPTION_SECRET_HLP,
     csrfSecret: process.env.CSRF_ENCRYPTION_SECRET_HLP,
     sessionCookieExpiryInMinutes: 480,
@@ -84,7 +88,9 @@ const config = {
     }
   },
   notifications: {
-    connectionString: process.env.REDIS_CONN + "/4?tls=true"
+    connectionString: process.env.LOCAL_REDIS_CONN
+      ? process.env.LOCAL_REDIS_CONN + "/4"
+      : process.env.REDIS_CONN + "/4?tls=true"
   },
   assets: {
     url: process.env.CDN_HOST_NAME,
@@ -159,4 +165,4 @@ function mimicLegacySettings(config) {
 
 mimicLegacySettings(config);
 
-module.exports = config; 
+module.exports = config;
