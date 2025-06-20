@@ -6,7 +6,7 @@ resources:
       type: github
       endpoint: DfE-Digital
       name: DFE-Digital/login.dfe.devops
-      ref: main
+      ref: feature/DSI-7737_implement_locks
 
 trigger:
   branches:
@@ -165,10 +165,4 @@ stages:
                       ${{ if eq(env, 'tran') }}:
                         ContRegServerCode: $(tranShaCode)
                       ${{ else }}:
-                        ContRegServerCode: $(prShaCode)
-                      ContRegServers:
-                        - ${{ if eq(variables.ContRegServerTran, 'true') }}:
-                          - name: '$(platformGlobalIdentifier)$(tranShaCode)$(platformGlobalName)shdcr'
-                            servCon: $(devServiceConnection)
-                        - name: '$(platformGlobalIdentifier)$(prShaCode)$(platformGlobalName)shdcr'
-                          servCon: $(prodServiceConnection)     
+                        ContRegServerCode: $(prShaCode) 
