@@ -255,7 +255,7 @@ const init = async () => {
 
     server.listen(config.hostingEnvironment.port, () => {
       logger.info(
-        `Dev server listening on https://${config.hostingEnvironment.host}:${config.hostingEnvironment.port} with config:\n${JSON.stringify(config)}`,
+        `Dev server listening on https://${config.hostingEnvironment.host}:${config.hostingEnvironment.port}`,
       );
     });
   } else if (config.hostingEnvironment.env === "docker") {
