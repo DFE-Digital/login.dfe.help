@@ -6,7 +6,7 @@ resources:
       type: github
       endpoint: DfE-Digital
       name: DFE-Digital/login.dfe.devops
-      ref: main
+      ref: feature/DSI-7720
 
 trigger:
   branches:
@@ -143,7 +143,7 @@ stages:
                   - name: ShaCodeName
                     value: ${{ format('{0}{1}', env, 'ShaCode') }}
                 jobs:
-                  - template: pipeline/components/deploy/deployAppServicesNodeJs.yml@devopsTemplates
+                  - template: pipeline/components/deploy/deployAppServicesNodeJsRegression.yml@devopsTemplates
                     parameters:
                       serviceConnection: $(${{variables.ServConName}})
                       shaPool: $[variables['${{env}}ShaPool']]
