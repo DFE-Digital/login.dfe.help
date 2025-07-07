@@ -107,18 +107,18 @@ stages:
               AppDeploy: ${{ not(parameters.InfrDeploy) }}
               custRegAuth: $(custRegAuth)
 
-          - ${{ if  and(not(parameters.InfrDeploy), eq(variables.buildNotNeeded, 'false')) }}:
-            - template:  pipeline/components/build/buildAppServicesNodeJs.yml@devopsTemplates
-              parameters:
-                applicationName: ${{variables.applicationFullName}}
-                custRegAuth: $(custRegAuth)
-                ContRegServers:
-                  - ${{ if eq(variables.ContRegServerTran, 'true') }}:
-                    - name: '$(platformGlobalIdentifier)$(tranShaCode)$(platformGlobalName)shdcr.azurecr.io'
-                      servCon: $(devServiceConnection)
-                  - name: '$(platformGlobalIdentifier)$(prShaCode)$(platformGlobalName)shdcr.azurecr.io'
-                    servCon: $(prodServiceConnection)
-                nodeVersionSpec: "22.11.0"
+          # - ${{ if  and(not(parameters.InfrDeploy), eq(variables.buildNotNeeded, 'false')) }}:
+          #   - template:  pipeline/components/build/buildAppServicesNodeJs.yml@devopsTemplates
+          #     parameters:
+          #       applicationName: ${{variables.applicationFullName}}
+          #       custRegAuth: $(custRegAuth)
+          #       ContRegServers:
+          #         - ${{ if eq(variables.ContRegServerTran, 'true') }}:
+          #           - name: '$(platformGlobalIdentifier)$(tranShaCode)$(platformGlobalName)shdcr.azurecr.io'
+          #             servCon: $(devServiceConnection)
+          #         - name: '$(platformGlobalIdentifier)$(prShaCode)$(platformGlobalName)shdcr.azurecr.io'
+          #           servCon: $(prodServiceConnection)
+          #       nodeVersionSpec: "22.11.0"
 
   - ${{ each location in parameters.location }}:
       - ${{each env in split(variables[location],',') }}:
