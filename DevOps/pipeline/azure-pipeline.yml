@@ -7,6 +7,11 @@ resources:
       endpoint: DfE-Digital
       name: DFE-Digital/login.dfe.devops
       ref: feature/DSI-7720
+    - repository: uiTest
+      type: github
+      endpoint: DfE-Digital
+      name: DFE-Digital/login.dfe.ui-test
+      ref: main
 
 trigger:
   branches:
