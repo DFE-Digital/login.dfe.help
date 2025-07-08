@@ -48,6 +48,7 @@ const config = {
     helpUrl: "https://" + process.env.STANDALONE_HELP_HOST_NAME,
     surveyUrl: process.env.PLATFORM_GLOBAL_USER_FEEDBACK_URL,
     manageConsoleUrl: "https://" + process.env.STANDALONE_MANAGE_HOST_NAME,
+    applicationInsights: process.env.APPLICATIONINSIGHTS_CONNECTION_STRING,
     agentKeepAlive: {
       maxSockets: 35,
       maxFreeSockets: 10,
