@@ -10,7 +10,7 @@ resources:
     - repository: uiTest
       type: github
       endpoint: DfE-Digital
-      name: DFE-Digital/login.dfe.ui-test
+      name: DFE-Digital/login.dfe.ui-tests
       ref: main
 
 trigger:
