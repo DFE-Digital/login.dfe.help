@@ -12,7 +12,7 @@ const sanitization = require("login.dfe.express-helpers/sanitization");
 const {
   getErrorHandler,
   ejsErrorPages,
-} = require("login.dfe.express-error-handling");
+} = require("login.dfe.express-helpers/error-handling");
 const flash = require("login.dfe.express-flash-2");
 
 // imports for authentication
