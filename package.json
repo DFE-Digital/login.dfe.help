@@ -47,7 +47,6 @@
     "login.dfe.audit.transporter": "^4.0.3",
     "login.dfe.config.schema.common": "^2.1.7",
     "login.dfe.dao": "^5.0.6",
-    "login.dfe.express-error-handling": "^3.0.5",
     "login.dfe.express-helpers": "github:DFE-Digital/login.dfe.express-helpers#feature/dsi-7547-combine-sanitization-and-express-error-handlers",
     "login.dfe.express-flash-2": "github:DFE-Digital/login.dfe.express-flash-2#v2.0.1",
     "login.dfe.healthcheck": "^3.0.3",

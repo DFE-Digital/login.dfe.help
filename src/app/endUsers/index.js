@@ -1,5 +1,5 @@
 const express = require("express");
-const { asyncWrapper } = require("login.dfe.express-error-handling");
+const { asyncWrapper } = require("login.dfe.express-helpers/errorHandling");
 
 const { get: getEndUsers } = require("./endUsers");
 const { get: getWhatIsEndUser } = require("./whatIsEndUser");
