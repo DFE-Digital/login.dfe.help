@@ -8,7 +8,7 @@ const http = require("http");
 const https = require("https");
 const path = require("path");
 const helmet = require("helmet");
-const sanitization = require("login.dfe.sanitization");
+const sanitization = require("login.dfe.express-helpers/sanitization");
 const {
   getErrorHandler,
   ejsErrorPages,
