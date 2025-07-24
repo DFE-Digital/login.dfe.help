@@ -1,5 +1,5 @@
 const express = require("express");
-const { asyncWrapper } = require("login.dfe.express-error-handling");
+const { asyncWrapper } = require("login.dfe.express-helpers/error-handling");
 const { get: getPageComingSoon } = require("./pageComingSoon");
 
 const router = express.Router({ mergeParams: true });
