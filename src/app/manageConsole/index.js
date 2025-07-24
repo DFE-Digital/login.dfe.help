@@ -1,5 +1,5 @@
 const express = require("express");
-const { asyncWrapper } = require("login.dfe.express-error-handling");
+const { asyncWrapper } = require("login.dfe.express-helpers/error-handling");
 const { get: getManageDashboard } = require("../dashboard/managDashboard");
 const { get: gethowtoEditServiceConfig } = require("./howtoEditServiceConfig");
 const { get: aboutManageConsole } = require("./aboutManageConsole");

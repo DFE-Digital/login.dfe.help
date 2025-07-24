@@ -8,11 +8,11 @@ const http = require("http");
 const https = require("https");
 const path = require("path");
 const helmet = require("helmet");
-const sanitization = require("login.dfe.sanitization");
+const sanitization = require("login.dfe.express-helpers/sanitization");
 const {
   getErrorHandler,
   ejsErrorPages,
-} = require("login.dfe.express-error-handling");
+} = require("login.dfe.express-helpers/error-handling");
 const flash = require("login.dfe.express-flash-2");
 
 // imports for authentication
