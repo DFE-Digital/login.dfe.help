@@ -113,14 +113,14 @@
                 </div>
 
                 <div class="govuk-form-group <%= (locals.validationMessages.service !== undefined) ? 'govuk-form-group--error' : '' %>">
-                    <label class="govuk-label govuk-label--s" for="service">What service are you trying to use?</label>
+                    <label class="govuk-label govuk-label--s" for="service">Which service are you using?</label>
                     <% if (locals.validationMessages.service !== undefined) { %>
                         <span id="validation-service" class="govuk-error-message">
                             <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.service %>
                         </span>
                     <% } %>
                     <select id="service" name="service" class="govuk-select govuk-!-width-three-quarters">
-                        <option disabled selected value>Tell us what service you are trying to use</option>
+                        <option disabled selected value>Tell us which service you are using</option>
                         <% for (let i = 0; i < locals.services.length; i++) {
                             const service = locals.services[i]; %>
                             <option value="<%= service.name %>"<%=locals.service === service.name ? 'selected' : ''%>><%= service.name %></option>
