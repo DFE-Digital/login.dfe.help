@@ -15,7 +15,7 @@
             </p>
         </div>
 
-        <form method="post" id="form-contact-servicedesk" autocomplete="off">
+        <form method="post" id="form-contact-servicedesk">
             <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
             <input type="hidden" name="currentReferrer" value="<%=locals.referrer%>" />
 
@@ -41,7 +41,7 @@
                             <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.name %>
                         </span>
                     <% } %>
-                    <input class="govuk-input govuk-!-width-three-quarters" id="name" name="name"
+                    <input class="govuk-input govuk-!-width-three-quarters" id="name" name="name" autocomplete="name"
                             type="text" <% if (locals.validationMessages.name !== undefined) { %> aria-invalid="true" aria-describedby="validation-name" <% } %> value="<%=name%>">
                 </div>
 
@@ -63,7 +63,7 @@
                             <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.orgName %>
                         </span>
                     <% } %>
-                    <input class="govuk-input govuk-!-width-three-quarters" id="orgName" name="orgName"
+                    <input class="govuk-input govuk-!-width-three-quarters" id="orgName" name="orgName" autocomplete="organization"
                             type="text" <% if (locals.validationMessages.orgName !== undefined) { %> aria-invalid="true" aria-describedby="validation-orgName" <% } %> value="<%=orgName%>">
                 </div>
 
@@ -74,7 +74,7 @@
                             <span class="govuk-visually-hidden">Error:</span> <%=locals.validationMessages.urn %>
                         </span>
                     <% } %>
-                    <input class="govuk-input govuk-!-width-three-quarters" id="urn" name="urn"]
+                    <input class="govuk-input govuk-!-width-three-quarters" id="urn" name="urn"
                             type="text" <% if (locals.validationMessages.urn !== undefined) { %> aria-invalid="true" aria-describedby="validation-urn" <% } %> value="<%=urn%>">
                 </div>
 
