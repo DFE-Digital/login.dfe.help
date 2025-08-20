@@ -40,6 +40,7 @@ const config = {
     csrfSecret: process.env.CSRF_ENCRYPTION_SECRET_HLP,
     sessionCookieExpiryInMinutes: 480,
     gaTrackingId: process.env.GOOGLE_ANALYTICS_ID,
+    accessibilityStatementUrl: process.env.ACCESSIBILITY_STATEMENT_URL,
     profileUrl: "https://" + process.env.STANDALONE_PROFILE_HOST_NAME,
     interactionsUrl: "https://" + process.env.STANDALONE_INTERACTIONS_HOST_NAME,
     servicesUrl: "https://" + process.env.STANDALONE_SERVICES_HOST_NAME,
