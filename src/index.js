@@ -9,6 +9,7 @@ const https = require("https");
 const path = require("path");
 const helmet = require("helmet");
 const sanitization = require("login.dfe.express-helpers/sanitization");
+const sanitizeHtml = require("sanitize-html");
 const {
   getErrorHandler,
   ejsErrorPages,
@@ -218,8 +219,9 @@ const init = async () => {
       serviceNow: config.hostingEnvironment.serviceNowUrl,
     },
     app: {
-      environmentBannerMessage:
+      environmentBannerMessage: sanitizeHtml(
         config.hostingEnvironment.environmentBannerMessage,
+      ),
     },
     gaTrackingId: config.hostingEnvironment.gaTrackingId,
     assets: {
