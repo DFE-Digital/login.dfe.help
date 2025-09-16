@@ -1,44 +1,41 @@
-<button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" hidden aria-label="Show or hide navigation menu">Menu</button>
-<nav>
-    <ul id="navigation" class="govuk-header__navigation " aria-label="Navigation menu">
-        <li class="govuk-header__navigation-item">
-            <a class="govuk-header__link" href="<%=locals.urls.services%>/my-services">
-                Services
+<ul class="govuk-service-navigation__list" id="navigation">
+    <li class="govuk-service-navigation__item">
+        <a class="govuk-service-navigation__link" href="<%=locals.urls.services%>/my-services">
+            Services
+        </a>
+    </li>
+    <li class="govuk-service-navigation__item">
+        <a class="govuk-service-navigation__link" href="<%=locals.urls.services%>/organisations">
+            Organisations
+        </a>
+    </li>
+    <% if (locals.isApprover) { %>
+        <li class="govuk-service-navigation__item">
+            <a class="govuk-service-navigation__link" href="<%=locals.urls.services%>/approvals/users">
+                Manage users
             </a>
         </li>
-        <li class="govuk-header__navigation-item">
-            <a class="govuk-header__link" href="<%=locals.urls.services%>/organisations">
-                Organisations
+    <% } %>
+    <% if (locals.isApprover) { %>
+        <li class="govuk-service-navigation__item">
+            <a class="govuk-service-navigation__link" href="<%=locals.urls.services%>/access-requests">
+                Requests <% if (locals.approverRequests && locals.approverRequests.length) { %> <span class="govuk-notification-badge"><%= locals.approverRequests.length %></span> <% } %>
             </a>
         </li>
-        <% if (locals.isApprover) { %>
-            <li class="govuk-header__navigation-item">
-                <a class="govuk-header__link" href="<%=locals.urls.services%>/approvals/users">
-                    Manage users
-                </a>
-            </li>
-        <% } %>
-        <% if (locals.isApprover) { %>
-            <li class="govuk-header__navigation-item">
-                <a class="govuk-header__link" href="<%=locals.urls.services%>/access-requests">
-                    Requests <% if (locals.approverRequests && locals.approverRequests.length) { %> <span class="govuk-notification-badge"><%= locals.approverRequests.length %></span> <% } %>
-                </a>
-            </li>
-        <% } %>
-        <li class="govuk-header__navigation-item">
-            <a class="govuk-header__link" href="<%=locals.urls.profile%>">
-                Profile
-            </a>
-        </li>
-        <li class="govuk-header__navigation-item govuk-header__navigation-item--active">
-            <a class="govuk-header__link" href="/dashboard">
-                Help
-            </a>
-        </li>
-        <li class="govuk-header__navigation-item">
-            <a class="govuk-header__link" href="/signout">
-                Sign out
-            </a>
-        </li>
-    </ul>
-</nav>
+    <% } %>
+    <li class="govuk-service-navigation__item">
+        <a class="govuk-service-navigation__link" href="<%=locals.urls.profile%>">
+            Profile
+        </a>
+    </li>
+    <li class="govuk-service-navigation__item govuk-service-navigation__item--active">
+        <a class="govuk-service-navigation__link" href="/dashboard">
+            Help
+        </a>
+    </li>
+    <li class="govuk-service-navigation__item">
+        <a class="govuk-service-navigation__link" href="/signout">
+            Sign out
+        </a>
+    </li>
+</ul>
