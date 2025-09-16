@@ -41,31 +41,42 @@
     <header class="govuk-header " data-module="govuk-header">
         <div class="govuk-header__container govuk-width-container">
             <div class="govuk-header__logo">
-                <a href="https://www.gov.uk/" class="govuk-header__link govuk-header__link--homepage">
+                <a href="https://www.gov.uk/government/organisations/department-for-education" class="govuk-header__link govuk-header__link--homepage">
                     <img src="<%= locals.urls.assets %>/gds-upgrade/images/department-for-education_white.png?version=<%= locals.assets.version %>" alt="Department for Education" class="govuk-header__logotype">
                 </a>
             </div>
-            <div class="govuk-header__content">
-                <% if (locals.title != undefined && locals.title !== 'DfE Sign-in') { %>
-                    <a href="<%=locals.urls.manageConsole%>/services/500DF403-4643-4CDE-9F30-3C6D8AD27AD7" class="govuk-header__link govuk-header__service-name">
-                        <%= locals.title || (locals.app ? locals.app.title : null) || 'DfE Sign-in'%>
-                    </a>
-                <% } else { %>
-                    <a href="<%=locals.urls.services%>/my-services" class="govuk-header__link govuk-header__service-name">
-                        <%= locals.title || (locals.app ? locals.app.title : null) || 'DfE Sign-in'%>
-                    </a>
-                <%}%>
-               
-                <% if (locals.isLoggedIn) { %>
-                    <% if (locals.title !== 'DfE Sign-in') { %>
-                        <%- include('../../../app/menus/views/manageConMenu'); %>
-                    <% } else { %>
-                    <%- include('../../../app/menus/views/serviceMenu'); %>
-                    <%}%>
-                <% } %>
-            </div>
         </div>
     </header>
+
+    <section aria-label="Service information" class="govuk-service-navigation" data-module="govuk-service-navigation">
+        <div class="govuk-width-container">
+            <div class="govuk-service-navigation__container">
+                <span class="govuk-service-navigation__service-name">
+                    <% if (locals.title != undefined && locals.title !== 'DfE Sign-in') { %>
+                        <a href="<%=locals.urls.manageConsole%>/services/500DF403-4643-4CDE-9F30-3C6D8AD27AD7" class="govuk-service-navigation__link">
+                            <%= locals.title || (locals.app ? locals.app.title : null) || 'DfE Sign-in'%>
+                        </a>
+                    <% } else { %>
+                        <a href="<%=locals.urls.services%>/my-services" class="govuk-service-navigation__link">
+                            <%= locals.title || (locals.app ? locals.app.title : null) || 'DfE Sign-in'%>
+                        </a>
+                    <% } %>
+                </span>
+                <nav aria-label="Menu" class="govuk-service-navigation__wrapper">
+                    <button type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls="navigation" hidden>
+                    Menu
+                    </button>
+                    <% if (locals.isLoggedIn) { %>
+                        <% if (locals.title !== 'DfE Sign-in') { %>
+                            <%- include('../../../app/menus/views/manageConMenu'); %>
+                        <% } else { %>
+                            <%- include('../../../app/menus/views/serviceMenu'); %>
+                        <% } %>
+                    <% } %>
+                </nav>
+            </div>
+        </div>
+    </section>
 
     <div id="phase-banner-container" class="header-user">
         <div class="header-inner govuk-!-margin-bottom-1">
