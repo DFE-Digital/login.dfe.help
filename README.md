@@ -4,13 +4,19 @@
 
 **DfE Sign-in Help** service provides user guidance and support content for the DfE Sign-in platform, helping users understand how to access and use DfE digital services. This service is part of the wider **login.dfe** project.
 
+## Environment Configuration
+
+### Development prerequisites
+
+Before setting up your local environment, review the [Development Prerequisites documentation](https://dfe-secureaccess.atlassian.net/wiki/spaces/NSA/pages/4643454992/Development+prerequisites) available on confluence. This guide outlines the required tools, dependencies, and permissions needed to work on DfE Sign-in services.
+
+### Local environment
+
+To set up your local environment run the PowerShell tokenization script provided in the **login.dfe.dsi-config** repository to generate local environment values for connecting to the DfE Sign-in dev environment.
+
+This script will create or update the necessary local configuration files (e.g., .env) used by this service.
+
 ## Getting Started
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/)
-- [npm](https://www.npmjs.com/)
-- [Docker](https://www.docker.com/)
 
 Install deps
 
@@ -43,9 +49,3 @@ https://localhost:4439/
 ```
 npm run test
 ```
-
-## Environment Configuration
-
-To set up your local environment run the PowerShell tokenization script provided in the **login.dfe.dsi-config** repository to generate local environment values for connecting to the DfE Sign-in dev environment.
-
-This script will create or update the necessary local configuration files (e.g., .env) used by this service.
