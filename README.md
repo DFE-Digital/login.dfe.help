@@ -1,7 +1,5 @@
 # DfE Sign-in help
 
-[![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
-
 **DfE Sign-in Help** service provides user guidance and support content for the DfE Sign-in platform, helping users understand how to access and use DfE digital services. This service is part of the wider **login.dfe** project.
 
 ## Environment Configuration
