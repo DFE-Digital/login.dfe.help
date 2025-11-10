@@ -24,13 +24,7 @@ npm install
 
 ### Run application
 
-This application requires redis to run. If running locally, the easiest way is to create an instance of redis using docker:
-
-```
-docker run -d -p 6379:6379 redis
-```
-
-Once redis is running, start it with:
+Start the application with:
 
 ```
 npm run dev
