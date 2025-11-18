@@ -26,6 +26,7 @@ const logger = require("./infrastructure/logger");
 
 const configSchema = require("./infrastructure/config/schema");
 const { setupApi } = require("login.dfe.api-client/api/setup");
+const packageConfig = require("../package.json");
 
 configSchema.validate();
 
@@ -204,10 +205,12 @@ const init = async () => {
 
   mountRoutes(app, csrf);
 
-  let assetsUrl = config.assets.url;
-  assetsUrl = assetsUrl.endsWith("/")
-    ? assetsUrl.substr(0, assetsUrl.length - 1)
-    : assetsUrl;
+  const assetsVersion = packageConfig?.assets?.version;
+  const baseAssetsUrl = config.assets.url.replace(/\/$/, "");
+  const assetsUrl = assetsVersion
+    ? `${baseAssetsUrl}/${assetsVersion}`
+    : baseAssetsUrl;
+
   Object.assign(app.locals, {
     urls: {
       accessibilityStatementUrl:
@@ -226,16 +229,12 @@ const init = async () => {
       ),
     },
     gaTrackingId: config.hostingEnvironment.gaTrackingId,
-    assets: {
-      version: config.assets.version,
-    },
   });
 
   const errorPageRenderer = ejsErrorPages.getErrorPageRenderer(
     {
       help: config.hostingEnvironment.helpUrl,
       assets: assetsUrl,
-      assetsVersion: config.assets.version,
     },
     config.hostingEnvironment.env === "dev",
   );
