@@ -96,7 +96,6 @@ const config = {
   },
   assets: {
     url: process.env.CDN_HOST_NAME,
-    version: process.env.CDN_ASSETS_VERSION
   },
   identifyingParty: {
     url: "https://" + process.env.STANDALONE_OIDC_HOST_NAME,
