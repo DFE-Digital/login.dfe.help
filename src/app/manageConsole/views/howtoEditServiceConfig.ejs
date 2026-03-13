@@ -192,9 +192,8 @@
             The OAuth framework has several response types. When configuring a service, you can select 1 or combinations of the following response types:
         </p>
         <ul class="govuk-list govuk-list--bullet">
-            <li>span</li>
+            <li>code</li>
             <li>id_token</li>
-            <li>token</li>
         </ul>
         <p class="govuk-body ">
             Depending on the response type you select, it will automatically determine the authentication flow. There are 3 authentication flows that can be decided:
@@ -224,19 +223,7 @@
                     <td class="govuk-table__cell">Implicit flow</td>
                 </tr>
                 <tr class="govuk-table__row">
-                    <td class="govuk-table__cell"><span style="background-color: rgb(235, 232, 232); color:#d4351c;">id_token</span> and <span style="background-color: rgb(235, 232, 232); color:#d4351c;">token</span></td>
-                    <td class="govuk-table__cell">Implicit flow</td>
-                </tr>
-                <tr class="govuk-table__row">
                     <td class="govuk-table__cell"><span style="background-color: rgb(235, 232, 232); color:#d4351c;">code</span> and <span style="background-color: rgb(235, 232, 232); color:#d4351c;">id_token</span></td>
-                    <td class="govuk-table__cell">Hybrid flow</td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <td class="govuk-table__cell"><span style="background-color: rgb(235, 232, 232); color:#d4351c;">code</span> and <span style="background-color: rgb(235, 232, 232); color:#d4351c;">token</span></td>
-                    <td class="govuk-table__cell">Hybrid flow</td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <td class="govuk-table__cell"><span style="background-color: rgb(235, 232, 232); color:#d4351c;">code</span>, <span style="background-color: rgb(235, 232, 232); color:#d4351c;">id_token</span> and <span style="background-color: rgb(235, 232, 232); color:#d4351c;">token</span></td>
                     <td class="govuk-table__cell">Hybrid flow</td>
                 </tr>
             </body>
@@ -247,7 +234,7 @@
             For example, if you select <span  style=" background-color: rgb(235, 232, 232); color:#d4351c;">code</span> as your response type, this means authorization flow will automatically be chosen as your flow.
         </p>
         <p class="govuk-body ">
-            If you select <span  style="background-color: rgb(235, 232, 232); color:#d4351c;">id_token</span> and <span style="background-color: rgb(235, 232, 232); color:#d4351c;">token</span> as your response type, this means implicit flow will automatically be chosen as your flow.
+            If you select <span  style="background-color: rgb(235, 232, 232); color:#d4351c;">code</span> and <span style="background-color: rgb(235, 232, 232); color:#d4351c;">id_token</span> as your response type, this means hybrid flow will automatically be chosen as your flow.
         </p>
         <p class="govuk-body ">
             For further details on response types go to ‘3. Authentication’ on <a  class="govuk-link" href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect Core 1.0</a>.
@@ -332,7 +319,7 @@
             You can view or change the API secret on the ‘Edit service configuration’ page by clicking ‘Show’ or ‘Regenerate’ next to the API secret field.
         </p>
         <p class="govuk-body end-of-section">
-            Updated January 2025
+            Updated March 2026
         </p>
 
         <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
