@@ -113,6 +113,24 @@ describe("when displaying the contact us page", () => {
     expect(res.render.mock.calls[0][1].services).toHaveLength(0);
   });
 
+  it("should exclude id-only services where isHiddenService is truthy", async () => {
+    listAllServices.mockReturnValue({
+      services: [
+        {
+          id: "svc-hidden-id-only",
+          name: "Hidden Id Only Service",
+          isExternalService: true,
+          isIdOnlyService: true,
+          isHiddenService: 1,
+        },
+      ],
+    });
+
+    await getContactUs(req, res);
+
+    expect(res.render.mock.calls[0][1].services).toHaveLength(0);
+  });
+
   it("should keep a service visible when only helpHidden is truthy", async () => {
     listAllServices.mockReturnValue({
       services: [

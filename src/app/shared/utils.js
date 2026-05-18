@@ -8,6 +8,7 @@ const getAndMapExternalServices = async (correlationId) => {
   const allServices = (await listAllServices(correlationId)) || [];
   const externalServices = allServices.services.filter((x) => {
     if (x.isExternalService !== true) return false;
+    if (x.isIdOnlyService && isTruthy(x.isHiddenService)) return false;
     const p = x.relyingParty?.params;
     const isFullyHidden =
       isTruthy(p?.hideApprover) &&
