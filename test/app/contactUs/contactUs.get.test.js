@@ -69,4 +69,84 @@ describe("when displaying the contact us page", () => {
       referrer: "/test_referrer",
     });
   });
+
+  const fullyHiddenService = (id, paramValue) => ({
+    id,
+    name: "Hidden Service",
+    isExternalService: true,
+    relyingParty: {
+      params: {
+        hideApprover: paramValue,
+        hideSupport: paramValue,
+        helpHidden: paramValue,
+      },
+    },
+  });
+
+  it("should exclude services where all three hide params are string 'true'", async () => {
+    listAllServices.mockReturnValue({
+      services: [fullyHiddenService("h1", "true")],
+    });
+
+    await getContactUs(req, res);
+
+    expect(res.render.mock.calls[0][1].services).toHaveLength(0);
+  });
+
+  it("should exclude services where all three hide params are integer 1", async () => {
+    listAllServices.mockReturnValue({
+      services: [fullyHiddenService("h2", 1)],
+    });
+
+    await getContactUs(req, res);
+
+    expect(res.render.mock.calls[0][1].services).toHaveLength(0);
+  });
+
+  it("should exclude services where all three hide params are boolean true", async () => {
+    listAllServices.mockReturnValue({
+      services: [fullyHiddenService("h3", true)],
+    });
+
+    await getContactUs(req, res);
+
+    expect(res.render.mock.calls[0][1].services).toHaveLength(0);
+  });
+
+  it("should exclude id-only services where isHiddenService is truthy", async () => {
+    listAllServices.mockReturnValue({
+      services: [
+        {
+          id: "svc-hidden-id-only",
+          name: "Hidden Id Only Service",
+          isExternalService: true,
+          isIdOnlyService: true,
+          isHiddenService: 1,
+        },
+      ],
+    });
+
+    await getContactUs(req, res);
+
+    expect(res.render.mock.calls[0][1].services).toHaveLength(0);
+  });
+
+  it("should hide a service when only helpHidden is truthy", async () => {
+    listAllServices.mockReturnValue({
+      services: [
+        {
+          id: "svc-partial",
+          name: "Partial Hide Service",
+          isExternalService: true,
+          relyingParty: { params: { helpHidden: "true" } },
+        },
+      ],
+    });
+
+    await getContactUs(req, res);
+
+    expect(res.render.mock.calls[0][1].services.map((s) => s.id)).not.toContain(
+      "svc-partial",
+    );
+  });
 });
