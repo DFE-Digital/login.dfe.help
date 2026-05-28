@@ -9,12 +9,7 @@ const getAndMapExternalServices = async (correlationId) => {
   const externalServices = allServices.services.filter((x) => {
     if (x.isExternalService !== true) return false;
     if (x.isIdOnlyService && isTruthy(x.isHiddenService)) return false;
-    const p = x.relyingParty?.params;
-    const isFullyHidden =
-      isTruthy(p?.hideApprover) &&
-      isTruthy(p?.hideSupport) &&
-      isTruthy(p?.helpHidden);
-    return !isFullyHidden;
+    return !isTruthy(x.relyingParty?.params?.helpHidden);
   });
   const services = uniqBy(
     externalServices.map((service) => ({
