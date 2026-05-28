@@ -131,7 +131,7 @@ describe("when displaying the contact us page", () => {
     expect(res.render.mock.calls[0][1].services).toHaveLength(0);
   });
 
-  it("should keep a service visible when only helpHidden is truthy", async () => {
+  it("should hide a service when only helpHidden is truthy", async () => {
     listAllServices.mockReturnValue({
       services: [
         {
@@ -145,7 +145,7 @@ describe("when displaying the contact us page", () => {
 
     await getContactUs(req, res);
 
-    expect(res.render.mock.calls[0][1].services.map((s) => s.id)).toContain(
+    expect(res.render.mock.calls[0][1].services.map((s) => s.id)).not.toContain(
       "svc-partial",
     );
   });
