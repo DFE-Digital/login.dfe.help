@@ -113,7 +113,7 @@ describe("when displaying the contact us page", () => {
     expect(res.render.mock.calls[0][1].services).toHaveLength(0);
   });
 
-  it("should exclude id-only services where isHiddenService is truthy", async () => {
+  it("should exclude id-only services only when all four hide conditions are truthy", async () => {
     listAllServices.mockReturnValue({
       services: [
         {
@@ -122,6 +122,13 @@ describe("when displaying the contact us page", () => {
           isExternalService: true,
           isIdOnlyService: true,
           isHiddenService: 1,
+          relyingParty: {
+            params: {
+              hideApprover: "true",
+              hideSupport: "true",
+              helpHidden: "true",
+            },
+          },
         },
       ],
     });
@@ -129,6 +136,27 @@ describe("when displaying the contact us page", () => {
     await getContactUs(req, res);
 
     expect(res.render.mock.calls[0][1].services).toHaveLength(0);
+  });
+
+  it("should include id-only services where isHiddenService is truthy but not all params are truthy", async () => {
+    listAllServices.mockReturnValue({
+      services: [
+        {
+          id: "svc-partial-id-only",
+          name: "Partially Hidden Id Only Service",
+          isExternalService: true,
+          isIdOnlyService: true,
+          isHiddenService: 1,
+          relyingParty: { params: { helpHidden: "true" } },
+        },
+      ],
+    });
+
+    await getContactUs(req, res);
+
+    expect(res.render.mock.calls[0][1].services.map((s) => s.id)).toContain(
+      "svc-partial-id-only",
+    );
   });
 
   it("should hide a service when only helpHidden is truthy", async () => {
