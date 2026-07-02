@@ -29,11 +29,13 @@ describe("when displaying the contact us page", () => {
           id: "service1",
           name: "analyse school performance",
           isExternalService: true,
+          isHiddenForHelp: false,
         },
         {
           id: "service2",
           name: "COLLECT",
           isExternalService: true,
+          isHiddenForHelp: false,
         },
       ],
     });
@@ -68,5 +70,38 @@ describe("when displaying the contact us page", () => {
     expect(res.render.mock.calls[0][1]).toMatchObject({
       referrer: "/test_referrer",
     });
+  });
+
+  it("should exclude services where isHiddenForHelp is true", async () => {
+    listAllServices.mockReset().mockReturnValue({
+      services: [
+        {
+          id: "hidden-svc",
+          name: "Hidden Service",
+          isExternalService: true,
+          isHiddenForHelp: true,
+        },
+      ],
+    });
+    await getContactUs(req, res);
+    const services = res.render.mock.calls[0][1].services;
+    expect(services).toHaveLength(0);
+  });
+
+  it("should include services where isHiddenForHelp is false", async () => {
+    listAllServices.mockReset().mockReturnValue({
+      services: [
+        {
+          id: "visible-svc",
+          name: "Visible Service",
+          isExternalService: true,
+          isHiddenForHelp: false,
+        },
+      ],
+    });
+    await getContactUs(req, res);
+    const services = res.render.mock.calls[0][1].services;
+    expect(services).toHaveLength(1);
+    expect(services[0].id).toBe("visible-svc");
   });
 });
