@@ -3,7 +3,9 @@ const sortBy = require("lodash/sortBy");
 const uniqBy = require("lodash/uniqBy");
 
 const getAndMapExternalServices = async (correlationId) => {
-  const allServices = (await listAllServices(correlationId)) || [];
+  const allServices = (await listAllServices(correlationId)) || {
+    services: [],
+  };
   const externalServices = allServices.services.filter(
     (x) => x.isExternalService === true && !x.isHiddenForHelp,
   );
